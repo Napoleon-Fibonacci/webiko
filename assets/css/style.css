@@ -589,6 +589,7 @@ b {
 
 .navbar__inner {
   display: flex;
+  flex-wrap: wrap; /* izinkan panel menu mobile turun ke baris sendiri */
   align-items: center;
   gap: var(--space-3);
   min-height: 64px;
@@ -654,6 +655,10 @@ b {
 }
 
 /* Mobile: menu dibuka via tombol .navbar__toggle (lihat main.js). */
+.navbar[data-open] .navbar__inner {
+  column-gap: var(--space-2);
+  row-gap: 0; /* panel menempel tepat di baris bawah brand */
+}
 .navbar[data-open] .navbar__links {
   display: flex;
   flex-basis: 100%;
@@ -982,7 +987,9 @@ b {
   }
 
   .navbar__inner {
-    gap: var(--space-4);
+    flex-wrap: nowrap;
+    column-gap: var(--space-4);
+    row-gap: var(--space-3);
   }
 
   /* Sidebar dan konten berdampingan. */

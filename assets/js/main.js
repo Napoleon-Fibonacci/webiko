@@ -8,23 +8,36 @@ document.querySelectorAll('.navbar').forEach(function (navbar) {
   var toggle = navbar.querySelector('.navbar__toggle');
   if (!toggle) return;
 
+  function close() {
+    navbar.removeAttribute('data-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Buka menu');
+  }
+
   toggle.addEventListener('click', function () {
-    var open = navbar.hasAttribute('data-open');
-    if (open) {
-      navbar.removeAttribute('data-open');
+    if (navbar.hasAttribute('data-open')) {
+      close();
     } else {
       navbar.setAttribute('data-open', '');
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', 'Tutup menu');
     }
-    toggle.setAttribute('aria-expanded', String(!open));
-    toggle.setAttribute('aria-label', open ? 'Buka menu' : 'Tutup menu');
   });
 
   // Tutup menu setelah salah satu tautan dipilih.
   navbar.querySelectorAll('.navbar__link').forEach(function (link) {
-    link.addEventListener('click', function () {
-      navbar.removeAttribute('data-open');
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.setAttribute('aria-label', 'Buka menu');
-    });
+    link.addEventListener('click', close);
   });
+
+  // Di desktop menu selalu tampil, jadi state mobile tidak boleh tertinggal.
+  var desktop = window.matchMedia('(min-width: 768px)');
+  var onBreakpoint = function (e) {
+    if (e.matches) close();
+  };
+  if (desktop.addEventListener) {
+    desktop.addEventListener('change', onBreakpoint);
+  } else {
+    desktop.addListener(onBreakpoint);
+  }
+  if (desktop.matches) close();
 });
