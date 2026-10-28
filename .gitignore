@@ -1,0 +1,13 @@
+# Vercel
+.vercel
+
+# Dependencies
+node_modules
+
+# Environment / secrets
+.env
+.env.local
+assets/js/supabase-config.js
+
+# OS
+.DS_Store
