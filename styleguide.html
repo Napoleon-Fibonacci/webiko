@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Styleguide design system Web Guide — token warna, tipografi, dan komponen dasar.">
+  <title>Styleguide — Web Guide Design System</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- ============ NAVBAR ============ -->
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        Galaksi.
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="index.html">Beranda</a>
+        <a class="navbar__link" href="#komponen">Komponen</a>
+        <a class="navbar__link" href="#warna">Warna</a>
+        <a class="navbar__link" href="#tipografi">Tipografi</a>
+        <a class="navbar__link" href="#komponen" aria-current="page">Styleguide</a>
+      </nav>
+
+      <button class="navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ============ INTRO ============ -->
+    <section class="section">
+      <div class="container">
+        <div class="card card--tint">
+          <p class="label">Rujukan visual</p>
+          <h1>Design system<br>Galaksi Edu Convey</h1>
+          <p style="margin-top: var(--space-4); font-size: var(--fs-lead);">
+            Pale lilac, border tebal 3px, dan hard shadow tanpa blur. Semua token ada di
+            <code>assets/css/style.css</code>; halaman ini menampilkan setiap komponen
+            pada lebar 375px, 768px, dan 1440px.
+          </p>
+          <div class="card__meta" style="border-top-style: solid;">
+            <span class="badge badge--accent">Vanilla CSS</span>
+            <span class="badge">Mobile-first</span>
+            <span class="badge">Tanpa dependency</span>
+            <span class="badge badge--mint">WCAG AA</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ KOMPONEN ============ -->
+    <section class="section" id="komponen" style="padding-top: 0;">
+      <div class="container">
+
+        <div class="section__header">
+          <div>
+            <p class="label">01 — Aksi</p>
+            <h2>Tombol</h2>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center;">
+            <button class="btn btn--primary" type="button">Buat Akun</button>
+            <button class="btn btn--secondary" type="button">Login</button>
+            <button class="btn" type="button">Lanjutkan</button>
+            <button class="btn btn--primary" type="button" disabled>Belum aktif</button>
+          </div>
+          <p class="card__text">
+            Hover: terangkat 2px dengan shadow 6px. Active: turun 3px, shadow hilang.
+            Focus-visible: outline aksen 3px. Disabled: abu lilac, kursor <code>not-allowed</code>.
+          </p>
+        </div>
+
+        <div class="section__header" style="margin-top: var(--space-12);">
+          <div>
+            <p class="label">02 — Wadah</p>
+            <h2>Kartu &amp; grid materi</h2>
+          </div>
+          <span class="badge">grid-3</span>
+        </div>
+
+        <div class="grid-3">
+          <article class="card card--lesson">
+            <span class="card__index" aria-hidden="true">1</span>
+            <h3 class="card__title">HTML dari nol</h3>
+            <p class="card__text">Kenali tag, teks, gambar, dan tautan. Delapan bab, satu halaman demo.</p>
+            <div class="card__meta">
+              <span class="badge badge--outline">Pemula</span>
+              <span>8 bab</span>
+            </div>
+          </article>
+
+          <article class="card card--lesson">
+            <span class="card__index" aria-hidden="true">2</span>
+            <h3 class="card__title">CSS &amp; tata letak</h3>
+            <p class="card__text">Warna, jarak, dan grid. Bangun tampilan yang rapi di layar kecil maupun besar.</p>
+            <div class="card__meta">
+              <span class="badge badge--accent">Populer</span>
+              <span>10 bab</span>
+            </div>
+          </article>
+
+          <article class="card card--lesson">
+            <span class="card__index" aria-hidden="true">3</span>
+            <h3 class="card__title">JavaScript dasar</h3>
+            <p class="card__text">Buat halaman yang merespons klik, isian formulir, dan data dari server.</p>
+            <div class="card__meta">
+              <span class="badge badge--primary">Lanjutan</span>
+              <span>12 bab</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="section__header" style="margin-top: var(--space-12);">
+          <div>
+            <p class="label">03 — Label &amp; umpan balik</p>
+            <h2>Badge &amp; alert</h2>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="display: flex; flex-wrap: wrap; gap: var(--space-3);">
+            <span class="badge">Default</span>
+            <span class="badge badge--accent">Unggulan</span>
+            <span class="badge badge--primary">Baru</span>
+            <span class="badge badge--mint">Selesai</span>
+            <span class="badge badge--pink">Segera</span>
+            <span class="badge badge--outline">Draf</span>
+          </div>
+
+          <div style="display: grid; gap: var(--space-3); margin-top: var(--space-6);">
+            <div class="alert" role="status">
+              <div>
+                <strong class="alert__title">Info</strong>
+                <p class="alert__text">Kemajuanmu tersimpan otomatis setiap kali satu bab selesai.</p>
+              </div>
+            </div>
+            <div class="alert alert--success" role="status">
+              <div>
+                <strong class="alert__title">Berhasil</strong>
+                <p class="alert__text">Jawaban kuis bab 3 benar semua. Lanjut ke bab 4?</p>
+              </div>
+            </div>
+            <div class="alert alert--error" role="alert">
+              <div>
+                <strong class="alert__title">Gagal menyimpan</strong>
+                <p class="alert__text">Koneksi terputus. Periksa internet lalu coba lagi.</p>
+              </div>
+            </div>
+            <div class="alert alert--warning" role="status">
+              <div>
+                <strong class="alert__title">Perhatian</strong>
+                <p class="alert__text">Materi berisi gambar besar. Mungkin butuh waktu lebih saat sinyal lemah.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section__header" style="margin-top: var(--space-12);">
+          <div>
+            <p class="label">04 — Isian</p>
+            <h2>Formulir</h2>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="field">
+            <label class="field__label" for="cari">Cari materi</label>
+            <input class="input" id="cari" type="search" placeholder="Galaksi itu apa sih?">
+            <p class="field__hint">Contoh: latihan membuat halaman pertama.</p>
+          </div>
+          <div class="field" style="margin-top: var(--space-6);">
+            <label class="field__label" for="nonaktif">Email akun (contoh disabled)</label>
+            <input class="input" id="nonaktif" type="email" placeholder="kamu@contoh.com" disabled>
+          </div>
+        </div>
+
+        <div class="section__header" style="margin-top: var(--space-12);">
+          <div>
+            <p class="label">05 — Navigasi</p>
+            <h2>Sidebar</h2>
+          </div>
+          <span class="badge">sticky di ≥1024px</span>
+        </div>
+
+        <aside class="sidebar" aria-label="Daftar bab">
+          <p class="sidebar__title">Bab HTML dasar</p>
+          <ul class="sidebar__list">
+            <li><a class="sidebar__link" href="#komponen" aria-current="page">1. Tag pertama</a></li>
+            <li><a class="sidebar__link" href="#komponen">2. Teks &amp; paragraf</a></li>
+            <li><a class="sidebar__link" href="#komponen">3. Gambar</a></li>
+            <li><a class="sidebar__link" href="#komponen" aria-disabled="true">4. Tabel (terkunci)</a></li>
+          </ul>
+        </aside>
+
+      </div>
+    </section>
+
+    <!-- ============ WARNA ============ -->
+    <section class="section" id="warna">
+      <div class="container">
+        <div class="section__header">
+          <div>
+            <p class="label">06 — Token</p>
+            <h2>Palet warna</h2>
+          </div>
+          <p class="text-small">Semua contoh memakai <code>var(--color-*)</code>.</p>
+        </div>
+
+        <ul role="list" class="grid-3">
+          <li class="card" style="padding: 0; overflow: hidden;">
+            <div style="height: 72px; background-color: var(--color-background); border-bottom: var(--border-w) solid var(--color-border);"></div>
+            <div style="padding: var(--space-3);">
+              <p class="label">Background</p>
+              <p class="text-small"><code>--color-background</code></p>
+            </div>
+          </li>
+          <li class="card" style="padding: 0; overflow: hidden;">
+            <div style="height: 72px; background-color: var(--color-surface); border-bottom: var(--border-w) solid var(--color-border);"></div>
+            <div style="padding: var(--space-3);">
+              <p class="label">Surface</p>
+              <p class="text-small"><code>--color-surface</code></p>
+            </div>
+          </li>
+          <li class="card" style="padding: 0; overflow: hidden;">
+            <div style="height: 72px; background-color: var(--color-primary); border-bottom: var(--border-w) solid var(--color-border);"></div>
+            <div style="padding: var(--space-3);">
+              <p class="label">Primary</p>
+              <p class="text-small"><code>--color-primary</code></p>
+            </div>
+          </li>
+          <li class="card" style="padding: 0; overflow: hidden;">
+            <div style="height: 72px; background-color: var(--color-secondary); border-bottom: var(--border-w) solid var(--color-border);"></div>
+            <div style="padding: var(--space-3);">
+              <p class="label">Secondary</p>
+              <p class="text-small"><code>--color-secondary</code></p>
+            </div>
+          </li>
+          <li class="card" style="padding: 0; overflow: hidden;">
+            <div style="height: 72px; background-color: var(--color-accent); border-bottom: var(--border-w) solid var(--color-border);"></div>
+            <div style="padding: var(--space-3);">
+              <p class="label">Accent</p>
+              <p class="text-small"><code>--color-accent</code></p>
+            </div>
+          </li>
+          <li class="card" style="padding: 0; overflow: hidden;">
+            <div style="height: 72px; background-color: var(--color-ink); border-bottom: var(--border-w) solid var(--color-border);"></div>
+            <div style="padding: var(--space-3);">
+              <p class="label">Ink</p>
+              <p class="text-small"><code>--color-ink</code></p>
+            </div>
+          </li>
+          <li class="card" style="padding: 0; overflow: hidden;">
+            <div style="height: 72px; background-color: var(--color-surface-soft); border-bottom: var(--border-w) solid var(--color-border);"></div>
+            <div style="padding: var(--space-3);">
+              <p class="label">Surface soft</p>
+              <p class="text-small"><code>--color-surface-soft</code></p>
+            </div>
+          </li>
+          <li class="card" style="padding: 0; overflow: hidden;">
+            <div style="height: 72px; background-color: var(--color-surface-raised); border-bottom: var(--border-w) solid var(--color-border);"></div>
+            <div style="padding: var(--space-3);">
+              <p class="label">Surface raised</p>
+              <p class="text-small"><code>--color-surface-raised</code></p>
+            </div>
+          </li>
+          <li class="card" style="padding: 0; overflow: hidden;">
+            <div style="height: 72px; background-color: var(--color-mint); border-bottom: var(--border-w) solid var(--color-border);"></div>
+            <div style="padding: var(--space-3);">
+              <p class="label">Mint</p>
+              <p class="text-small"><code>--color-mint</code></p>
+            </div>
+          </li>
+          <li class="card" style="padding: 0; overflow: hidden;">
+            <div style="height: 72px; background-color: var(--color-pink); border-bottom: var(--border-w) solid var(--color-border);"></div>
+            <div style="padding: var(--space-3);">
+              <p class="label">Pink</p>
+              <p class="text-small"><code>--color-pink</code></p>
+            </div>
+          </li>
+          <li class="card" style="padding: 0; overflow: hidden;">
+            <div style="height: 72px; background-color: var(--color-error-bg); border-bottom: var(--border-w) solid var(--color-border); display: grid; place-items: center; color: var(--color-error); font-weight: var(--fw-black);">Gagal</div>
+            <div style="padding: var(--space-3);">
+              <p class="label">Error</p>
+              <p class="text-small"><code>--color-error</code></p>
+            </div>
+          </li>
+          <li class="card" style="padding: 0; overflow: hidden;">
+            <div style="height: 72px; background-color: var(--color-success-bg); border-bottom: var(--border-w) solid var(--color-border); display: grid; place-items: center; color: var(--color-success); font-weight: var(--fw-black);">Berhasil</div>
+            <div style="padding: var(--space-3);">
+              <p class="label">Success</p>
+              <p class="text-small"><code>--color-success</code></p>
+            </div>
+          </li>
+        </ul>
+
+        <div class="card" style="margin-top: var(--space-6);">
+          <p class="label">Pasangan teks terperiksa</p>
+          <div class="grid-3" style="margin-top: var(--space-3); gap: var(--space-3);">
+            <p style="padding: var(--space-3); border: var(--border-w-thin) solid var(--color-border); border-radius: var(--radius-sm); background-color: var(--color-background);">Ink di atas background</p>
+            <p style="padding: var(--space-3); border: var(--border-w-thin) solid var(--color-border); border-radius: var(--radius-sm); background-color: var(--color-secondary); color: var(--color-accent-text);">Accent text di lilac</p>
+            <p style="padding: var(--space-3); border: var(--border-w-thin) solid var(--color-border); border-radius: var(--radius-sm); background-color: var(--color-surface-raised); color: var(--color-muted);">Muted di header lilac</p>
+            <p style="padding: var(--space-3); border: var(--border-w-thin) solid var(--color-border); border-radius: var(--radius-sm); background-color: var(--color-accent); color: var(--color-on-accent);">Ink di kuning</p>
+            <p style="padding: var(--space-3); border: var(--border-w-thin) solid var(--color-border); border-radius: var(--radius-sm); background-color: var(--color-surface-raised); color: var(--color-ink);">Ink di header lilac</p>
+            <p style="padding: var(--space-3); border: var(--border-w-thin) solid var(--color-border); border-radius: var(--radius-sm); background-color: var(--color-mint); color: var(--color-on-accent);">Ink di mint</p>
+            <p style="padding: var(--space-3); border: var(--border-w-thin) solid var(--color-border); border-radius: var(--radius-sm); background-color: var(--color-pink); color: var(--color-on-accent);">Ink di pink</p>
+            <p style="padding: var(--space-3); border: var(--border-w-thin) solid var(--color-border); border-radius: var(--radius-sm); background-color: var(--color-primary); color: var(--color-ink-inverse);">Putih di primary</p>
+            <p style="padding: var(--space-3); border: var(--border-w-thin) solid var(--color-border); border-radius: var(--radius-sm); background-color: var(--color-surface-soft); color: var(--color-muted);">Muted di soft lilac</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TIPOGRAFI ============ -->
+    <section class="section" id="tipografi" style="padding-top: 0;">
+      <div class="container">
+        <div class="section__header">
+          <div>
+            <p class="label">07 — Skala</p>
+            <h2>Tipografi</h2>
+          </div>
+          <p class="text-small">Sans-only, tanpa serif.</p>
+        </div>
+
+        <div class="card">
+          <div style="display: grid; gap: var(--space-4);">
+            <div>
+              <p class="label text-muted">H1 / Display</p>
+              <h1>Belajar bikin website</h1>
+            </div>
+            <div>
+              <p class="label text-muted">H2</p>
+              <h2>Mulai dari HTML</h2>
+            </div>
+            <div>
+              <p class="label text-muted">H3</p>
+              <h3>Struktur halaman</h3>
+            </div>
+            <div>
+              <p class="label text-muted">H4</p>
+              <h4>Tag pembuka dan penutup</h4>
+            </div>
+            <div>
+              <p class="label text-muted">H5</p>
+              <h5>Latihan singkat</h5>
+            </div>
+            <div>
+              <p class="label text-muted">H6</p>
+              <h6>Catatan</h6>
+            </div>
+            <div>
+              <p class="label text-muted">Body</p>
+              <p>
+                Setiap halaman web dibangun dari tiga bahan: struktur, tampilan, dan perilaku.
+                Kita mulai dari struktur dulu karena itu yang pertama dibaca browser.
+              </p>
+            </div>
+            <div>
+              <p class="label text-muted">Small</p>
+              <p class="text-small">Terakhir diperbarui 28 Oktober 2026 · 8 bab · tingkat pemula.</p>
+            </div>
+            <div>
+              <p class="label text-muted">Label / eyebrow</p>
+              <p class="label">Koleksi visual</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="section__header" style="margin-top: var(--space-12);">
+          <div>
+            <p class="label">08 — Jarak &amp; bayangan</p>
+            <h2>Spacing scale</h2>
+          </div>
+        </div>
+
+        <div class="card">
+          <ul role="list" style="display: grid; gap: var(--space-2);">
+            <li style="display: flex; align-items: center; gap: var(--space-3);">
+              <span style="height: 12px; width: var(--space-1); background-color: var(--color-primary); border: var(--border-w-thin) solid var(--color-border);"></span>
+              <span class="text-small">--space-1 · 4px</span>
+            </li>
+            <li style="display: flex; align-items: center; gap: var(--space-3);">
+              <span style="height: 12px; width: var(--space-2); background-color: var(--color-primary); border: var(--border-w-thin) solid var(--color-border);"></span>
+              <span class="text-small">--space-2 · 8px</span>
+            </li>
+            <li style="display: flex; align-items: center; gap: var(--space-3);">
+              <span style="height: 12px; width: var(--space-3); background-color: var(--color-primary); border: var(--border-w-thin) solid var(--color-border);"></span>
+              <span class="text-small">--space-3 · 12px</span>
+            </li>
+            <li style="display: flex; align-items: center; gap: var(--space-3);">
+              <span style="height: 12px; width: var(--space-4); background-color: var(--color-primary); border: var(--border-w-thin) solid var(--color-border);"></span>
+              <span class="text-small">--space-4 · 16px</span>
+            </li>
+            <li style="display: flex; align-items: center; gap: var(--space-3);">
+              <span style="height: 12px; width: var(--space-6); background-color: var(--color-primary); border: var(--border-w-thin) solid var(--color-border);"></span>
+              <span class="text-small">--space-6 · 24px</span>
+            </li>
+            <li style="display: flex; align-items: center; gap: var(--space-3);">
+              <span style="height: 12px; width: var(--space-8); background-color: var(--color-primary); border: var(--border-w-thin) solid var(--color-border);"></span>
+              <span class="text-small">--space-8 · 32px</span>
+            </li>
+            <li style="display: flex; align-items: center; gap: var(--space-3);">
+              <span style="height: 12px; width: var(--space-12); background-color: var(--color-primary); border: var(--border-w-thin) solid var(--color-border);"></span>
+              <span class="text-small">--space-12 · 48px</span>
+            </li>
+            <li style="display: flex; align-items: center; gap: var(--space-3);">
+              <span style="height: 12px; width: var(--space-16); background-color: var(--color-primary); border: var(--border-w-thin) solid var(--color-border);"></span>
+              <span class="text-small">--space-16 · 64px</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p class="label">Web Guide · Youth Tech</p>
+      <nav aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="#komponen">Komponen</a></li>
+          <li><a href="#warna">Warna</a></li>
+          <li><a href="#tipografi">Tipografi</a></li>
+          <li><a href="index.html">Beranda</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

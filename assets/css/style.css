@@ -1,4 +1,1011 @@
 /* ============================================================
    Web Guide — assets/css/style.css
    Stylesheet utama. Ditulis vanilla CSS, mobile-first.
+   Arah visual: neo-brutalist "lilac pop" (canvas Galaksi Edu Convey).
+   Tanpa framework, tanpa build step, tanpa dependency eksternal.
+
+   Struktur file:
+   1. Token (:root)
+   2. Reset ringan & base
+   3. Layout (container, section, grid)
+   4. Komponen (btn, card, navbar, sidebar, footer, badge, alert, ...)
+   5. Breakpoint (768px, 1024px)
+   6. Aksesibilitas (prefers-reduced-motion, forced-colors)
    ============================================================ */
+
+/* ============================================================
+   1. TOKEN
+   Semua warna, ukuran, dan jarak berasal dari sini.
+   Jangan hardcode warna di luar blok ini — pakai var().
+   ============================================================ */
+:root {
+  /* --- Warna: brand & aksen --------------------------------- */
+  --color-primary: #6b3fd4;          /* violet aksen (fill) */
+  --color-primary-hover: #5b2fc4;
+  --color-primary-active: #4d27a8;
+  --color-primary-soft: #a98bf0;     /* fill dekoratif / badge */
+
+  --color-secondary: #c9b4ff;        /* lilac */
+  --color-secondary-hover: #b9a6fb;
+  --color-secondary-active: #a992f7;
+
+  --color-accent: #ffe14d;           /* kuning pop */
+  --color-accent-hover: #ffe97a;
+  --color-accent-active: #f5d21f;
+
+  --color-mint: #a8f0d0;
+  --color-pink: #ffb7c5;
+
+  /* --- Warna: permukaan & teks ------------------------------ */
+  --color-background: #efeafd;       /* latar halaman */
+  --color-surface: #ffffff;          /* kartu */
+  --color-surface-soft: #e0d3ff;     /* panel lilac muda */
+  --color-surface-raised: #b9a6fb;   /* header, CTA */
+  --color-ink: #1f1a33;              /* teks utama & border */
+  --color-ink-inverse: #ffffff;      /* teks di atas fill gelap */
+  --color-on-accent: #1f1a33;        /* teks di atas fill terang (canvas) */
+  --color-border: #1f1a33;
+  --color-border-muted: #c4b8e8;     /* garis pembatas lembut */
+  --color-disabled-bg: #e6e1f5;      /* isian/tombol nonaktif */
+
+  /* Teks sekunder / aksen teks. Nilai canvas digelapkan
+     secukupnya agar lolos WCAG AA (lihat laporan di ticket). */
+  --color-muted: #4a3a7e;            /* 4.51:1 di --color-surface-raised */
+  --color-accent-text: #5530b8;      /* 4.58:1 di --color-secondary */
+  --color-accent-text-brand: #6b3fd4; /* canvas primary; teks besar/aksen di atas background */
+  --color-placeholder: #5f5b7a;      /* 4.57:1 di --color-surface-soft */
+
+  /* --- Warna: status --------------------------------------- */
+  --color-error: #b71c3a;
+  --color-error-bg: #ffe3e8;
+  --color-success: #046b3c;
+  --color-success-bg: #d6f7e4;
+  --color-warning: #7a4b00;
+  --color-warning-bg: #fff3cf;
+  --color-info: #2a2f8f;
+  --color-info-bg: #e3e3ff;
+
+  /* --- Warna: shadow (hard, tanpa blur) --------------------- */
+  --color-shadow: #1f1a33;
+  --color-shadow-accent: #5530b8;
+
+  /* --- Tipografi ------------------------------------------- */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+  --fs-h1: clamp(2rem, 6vw, 3.25rem);
+  --fs-h2: clamp(1.625rem, 4.5vw, 2.5rem);
+  --fs-h3: 1.375rem;
+  --fs-h4: 1.125rem;
+  --fs-h5: 1rem;
+  --fs-h6: 0.875rem;
+  --fs-body: 1rem;
+  --fs-lead: 1.0625rem;
+  --fs-small: 0.875rem;
+  --fs-label: 0.6875rem;             /* eyebrow / badge kecil */
+
+  --lh-display: 1.02;                /* heading besar */
+  --lh-heading: 1.2;
+  --lh-body: 1.65;
+  --lh-small: 1.5;
+
+  --fw-regular: 500;
+  --fw-bold: 700;
+  --fw-black: 900;
+
+  --tracking-display: -0.035em;
+  --tracking-tight: -0.015em;
+  --tracking-label: 0.18em;
+
+  --measure: 62ch;                   /* panjang baris maksimum */
+
+  /* --- Spacing (skala 4) ----------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* --- Border & radius ------------------------------------- */
+  --border-w: 3px;
+  --border-w-thin: 2px;              /* hanya untuk elemen hias kecil */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  /* Hard shadow: offset-x offset-y 0 (tanpa blur) warna ink. */
+  --shadow-hard-sm: 3px 3px 0 0 var(--color-shadow);
+  --shadow-hard: 4px 4px 0 0 var(--color-shadow);
+  --shadow-hard-hover: 6px 6px 0 0 var(--color-shadow);
+  --shadow-hard-lg: 8px 8px 0 0 var(--color-shadow);
+  --shadow-focus: 5px 5px 0 0 var(--color-shadow-accent);
+  --shadow-none: 0 0 0 0 var(--color-shadow);
+
+  /* --- Layout ---------------------------------------------- */
+  --container-max: 1152px;           /* setara max-w-6xl */
+  --container-pad: var(--space-4);
+  --tap-target: 44px;                /* ukuran sentuh minimum */
+
+  /* --- Motion ---------------------------------------------- */
+  --dur-fast: 120ms;
+  --dur-base: 180ms;
+  --ease-out: cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+/* Mode gelap — mengikuti preferensi sistem. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #171428;
+    --color-surface: #221d3a;
+    --color-surface-soft: #2f2750;
+    --color-surface-raised: #3a2f5e;
+    --color-ink: #f1edff;
+    --color-ink-inverse: #1f1a33;
+    --color-on-accent: #1f1a33;
+    --color-border: #f1edff;
+    --color-border-muted: #4a4270;
+    --color-disabled-bg: #33305a;
+
+    --color-muted: #a89cd8;          /* 4.81:1 di --color-surface-raised */
+    --color-accent-text: #c9b4ff;    /* 6.55:1 di --color-surface-raised */
+    --color-accent-text-brand: #c9b4ff;
+    --color-placeholder: #a89cd8;
+
+    --color-secondary: #4a3a7a;
+    --color-secondary-hover: #584688;
+    --color-secondary-active: #66529a;
+
+    --color-error: #ff8fa3;
+    --color-error-bg: #4a1424;
+    --color-success: #7fe3b0;
+    --color-success-bg: #0d3324;
+    --color-warning: #ffe14d;
+    --color-warning-bg: #3b2c05;
+    --color-info: #c9c4ff;
+    --color-info-bg: #23224a;
+
+    --color-shadow: #f1edff;
+    --color-shadow-accent: #c9b4ff;
+  }
+}
+
+/* ============================================================
+   2. RESET RINGAN & BASE
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--color-background);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+picture,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+img,
+video {
+  height: auto;
+}
+
+svg {
+  flex-shrink: 0;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: 0;
+}
+
+a {
+  color: var(--color-accent-text);
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--color-accent-text);
+}
+
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+  padding: 0;
+}
+
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+/* --- Tipografi dasar -------------------------------------- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--fw-black);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--fs-h1);
+  line-height: var(--lh-display);
+  letter-spacing: var(--tracking-display);
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: var(--fs-h2);
+}
+
+h3 {
+  font-size: var(--fs-h3);
+}
+
+h4 {
+  font-size: var(--fs-h4);
+}
+
+h5 {
+  font-size: var(--fs-h5);
+}
+
+h6 {
+  font-size: var(--fs-h6);
+}
+
+p,
+li {
+  max-width: var(--measure);
+}
+
+small,
+.text-small {
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+}
+
+strong,
+b {
+  font-weight: var(--fw-black);
+}
+
+/* Label kecil berhuruf kapital — dipakai satu bahasa visual
+   untuk eyebrow, meta, dan badge di seluruh situs. */
+.label {
+  display: inline-block;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-black);
+  line-height: var(--lh-small);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+/* Teks pendukung (tanggal, keterangan kartu). */
+.text-muted {
+  color: var(--color-muted);
+}
+
+/* Hanya untuk pembaca layar. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --- Fokus keyboard --------------------------------------- */
+:focus-visible {
+  outline: var(--border-w) solid var(--color-accent-text);
+  outline-offset: 3px;
+}
+
+/* Fallback untuk browser lama tanpa :focus-visible. */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ============================================================
+   3. LAYOUT
+   ============================================================ */
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+}
+
+.section {
+  padding-block: var(--space-12);
+}
+
+.section__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.section__header p {
+  margin-top: var(--space-1);
+  color: var(--color-muted);
+}
+
+/* Grid sederhana untuk kartu materi: mobile 1 kolom. */
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+/* ============================================================
+   4. KOMPONEN
+   ============================================================ */
+
+/* --- Tombol ----------------------------------------------- */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--tap-target);
+  padding: var(--space-2) var(--space-6);
+  border: var(--border-w) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  color: var(--color-ink);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-black);
+  line-height: 1.2;
+  letter-spacing: var(--tracking-tight);
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  box-shadow: var(--shadow-hard);
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    background-color var(--dur-base) var(--ease-out),
+    color var(--dur-base) var(--ease-out);
+}
+
+.btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-hard-hover);
+  color: var(--color-ink);
+}
+
+.btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: var(--shadow-none);
+}
+
+.btn:focus-visible {
+  outline: var(--border-w) solid var(--color-accent-text);
+  outline-offset: 4px;
+}
+
+/* Ubin dengan sudut kiri-atas terpotong — satu ciri khas
+   dari kartu judul di canvas, dipakai konsisten untuk aksi. */
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--space-4);
+  height: var(--space-4);
+  border-right: var(--border-w) solid currentColor;
+  border-bottom: var(--border-w) solid currentColor;
+  border-bottom-right-radius: var(--radius-md);
+  pointer-events: none;
+}
+
+.btn--primary,
+.btn--secondary {
+  padding-left: var(--space-8);
+}
+
+.btn--secondary {
+  background-color: var(--color-secondary);
+}
+
+.btn--secondary:hover {
+  background-color: var(--color-secondary-hover);
+}
+
+.btn--secondary:active {
+  background-color: var(--color-secondary-active);
+}
+
+.btn--primary {
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.btn--primary:hover {
+  background-color: var(--color-accent-hover);
+  color: var(--color-on-accent);
+}
+
+.btn--primary:active {
+  background-color: var(--color-accent-active);
+}
+
+/* Varian untuk latar berwarna pekat (mis. CTA lilac). */
+.btn--ghost {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.btn--ghost:hover {
+  transform: none;
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-hard);
+}
+
+.btn[disabled],
+.btn[aria-disabled="true"] {
+  background-color: var(--color-disabled-bg);
+  color: var(--color-muted);
+  box-shadow: var(--shadow-hard-sm);
+  cursor: not-allowed;
+  transform: none;
+  opacity: 1;
+}
+
+.btn[disabled]:hover,
+.btn[aria-disabled="true"]:hover {
+  transform: none;
+  box-shadow: var(--shadow-hard-sm);
+}
+
+.btn--block {
+  display: flex;
+  width: 100%;
+}
+
+/* --- Kartu ------------------------------------------------ */
+.card {
+  position: relative;
+  padding: var(--space-4);
+  border: var(--border-w) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-hard-lg);
+}
+
+.card__label {
+  margin-bottom: var(--space-3);
+}
+
+.card__title {
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-black);
+  text-transform: uppercase;
+}
+
+.card__text {
+  margin-top: var(--space-2);
+  color: var(--color-muted);
+  font-size: var(--fs-small);
+  line-height: var(--lh-body);
+}
+
+.card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  padding-top: var(--space-3);
+  border-top: var(--border-w-thin) dashed var(--color-border-muted);
+  font-size: var(--fs-small);
+  color: var(--color-muted);
+}
+
+.card--tint {
+  background-color: var(--color-surface-soft);
+}
+
+/* Kartu materi: angka progres ditulis sebagai label, bukan
+   dekorasi nomor urut. */
+.card--lesson .card__index {
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin-bottom: var(--space-3);
+  border: var(--border-w) solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-black);
+  box-shadow: var(--shadow-hard-sm);
+}
+
+/* --- Navbar ----------------------------------------------- */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  border-bottom: var(--border-w) solid var(--color-border);
+  background-color: var(--color-surface-raised);
+}
+
+.navbar__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 64px;
+  padding-block: var(--space-2);
+}
+
+.navbar__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-ink);
+  font-size: var(--fs-h6);
+  font-weight: var(--fw-black);
+  letter-spacing: var(--tracking-display);
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.navbar__brand:hover {
+  color: var(--color-ink);
+}
+
+.navbar__mark {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: var(--border-w) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+  box-shadow: var(--shadow-hard-sm);
+  transform: rotate(-3deg);
+}
+
+.navbar__links {
+  display: none;
+  align-items: center;
+  gap: var(--space-1);
+  margin-left: auto;
+}
+
+.navbar__link {
+  padding: var(--space-2) var(--space-3);
+  border: var(--border-w) solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--color-ink);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-bold);
+  text-decoration: none;
+}
+
+.navbar__link:hover {
+  border-color: var(--color-border);
+  background-color: var(--color-secondary);
+  color: var(--color-ink);
+}
+
+.navbar__link[aria-current="page"] {
+  border-color: var(--color-border);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-hard-sm);
+}
+
+.navbar__toggle {
+  display: grid;
+  place-items: center;
+  width: var(--tap-target);
+  height: var(--tap-target);
+  margin-left: auto;
+  border: var(--border-w) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-secondary);
+  color: var(--color-ink);
+  box-shadow: var(--shadow-hard-sm);
+}
+
+/* --- Sidebar (navigasi materi) ---------------------------- */
+.sidebar {
+  padding: var(--space-4);
+  border: var(--border-w) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-hard);
+}
+
+.sidebar__title {
+  margin-bottom: var(--space-3);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-black);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.sidebar__list {
+  display: grid;
+  gap: var(--space-1);
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar__link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--tap-target);
+  padding: var(--space-2) var(--space-3);
+  border: var(--border-w-thin) solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--color-ink);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-bold);
+  text-decoration: none;
+}
+
+.sidebar__link:hover {
+  background-color: var(--color-surface-soft);
+}
+
+.sidebar__link[aria-current="page"] {
+  border-color: var(--color-border);
+  background-color: var(--color-secondary);
+  box-shadow: var(--shadow-hard-sm);
+}
+
+.sidebar__link[aria-disabled="true"] {
+  color: var(--color-muted);
+  cursor: not-allowed;
+}
+
+/* --- Footer ----------------------------------------------- */
+.footer {
+  margin-top: var(--space-12);
+  padding-block: var(--space-8);
+  border-top: var(--border-w) solid var(--color-border);
+  background-color: var(--color-surface-soft);
+}
+
+.footer__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border: var(--border-w-thin) dashed var(--color-border-muted);
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2) var(--space-4);
+  padding: 0;
+  list-style: none;
+}
+
+.footer__links a {
+  padding-block: var(--space-1);
+  border-bottom: var(--border-w) solid transparent;
+  color: var(--color-ink);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-bold);
+  text-decoration: none;
+}
+
+.footer__links a:hover {
+  border-bottom-color: var(--color-accent);
+}
+
+/* --- Badge ------------------------------------------------ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 2px var(--space-2);
+  border: var(--border-w-thin) solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface-soft);
+  color: var(--color-ink);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-black);
+  line-height: 1.6;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.badge--accent {
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.badge--primary {
+  background-color: var(--color-primary);
+  color: var(--color-ink-inverse);
+}
+
+.badge--mint {
+  background-color: var(--color-mint);
+  color: var(--color-on-accent);
+}
+
+.badge--pink {
+  background-color: var(--color-pink);
+  color: var(--color-on-accent);
+}
+
+.badge--outline {
+  background-color: transparent;
+}
+
+/* --- Alert ------------------------------------------------ */
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: var(--border-w) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-info-bg);
+  color: var(--color-info);
+  box-shadow: var(--shadow-hard-sm);
+  font-size: var(--fs-small);
+}
+
+.alert__title {
+  display: block;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-black);
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+}
+
+.alert__text {
+  margin-top: var(--space-1);
+  color: inherit;
+}
+
+.alert__text a {
+  color: inherit;
+}
+
+.alert--error {
+  background-color: var(--color-error-bg);
+  color: var(--color-error);
+}
+
+.alert--success {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.alert--warning {
+  background-color: var(--color-warning-bg);
+  color: var(--color-warning);
+}
+
+/* --- Form dasar (dipakai styleguide & halaman berikutnya) -- */
+.field {
+  display: grid;
+  gap: var(--space-2);
+  max-width: 32rem;
+}
+
+.field__label {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-bold);
+}
+
+.input {
+  width: 100%;
+  min-height: var(--tap-target);
+  padding: var(--space-2) var(--space-3);
+  border: var(--border-w) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  color: var(--color-ink);
+  box-shadow: var(--shadow-hard-sm);
+  transition:
+    box-shadow var(--dur-base) var(--ease-out),
+    background-color var(--dur-base) var(--ease-out);
+}
+
+.input::placeholder {
+  color: var(--color-placeholder);
+  opacity: 1;
+}
+
+.input:hover {
+  background-color: var(--color-background);
+}
+
+.input:focus-visible {
+  outline: var(--border-w) solid var(--color-accent-text);
+  outline-offset: 2px;
+  box-shadow: var(--shadow-focus);
+}
+
+.input:disabled {
+  background-color: var(--color-disabled-bg);
+  color: var(--color-muted);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.field__hint {
+  font-size: var(--fs-small);
+  color: var(--color-muted);
+}
+
+/* ============================================================
+   5. BREAKPOINT (mobile-first)
+   ============================================================ */
+
+/* Tablet */
+@media (min-width: 768px) {
+  :root {
+    --container-pad: var(--space-6);
+  }
+
+  .section {
+    padding-block: var(--space-16);
+  }
+
+  .card {
+    padding: var(--space-6);
+  }
+
+  .grid-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+
+  .navbar__links {
+    display: flex;
+  }
+
+  .navbar__toggle {
+    display: none;
+  }
+
+  .footer__inner {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+
+  .footer__links {
+    justify-content: flex-end;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .grid-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .navbar__inner {
+    gap: var(--space-4);
+  }
+
+  /* Sidebar dan konten berdampingan. */
+  .layout--with-sidebar {
+    display: grid;
+    grid-template-columns: 16rem minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-8);
+  }
+
+  .sidebar {
+    position: sticky;
+    top: calc(64px + var(--space-6));
+  }
+}
+
+/* ============================================================
+   6. AKSESIBILITAS
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Matikan pergeseran posisi, tapi pertahankan perubahan
+     shadow supaya hover masih terbaca sebagai state. */
+  .btn:hover,
+  .btn:active {
+    transform: none;
+  }
+}
+
+/* Mode kontras tinggi: paksa border ikut warna teks. */
+@media (forced-colors: active) {
+  .btn,
+  .card,
+  .badge,
+  .alert,
+  .input,
+  .sidebar,
+  .navbar {
+    border: var(--border-w) solid CanvasText;
+    box-shadow: none;
+  }
+
+  :focus-visible {
+    outline: var(--border-w) solid Highlight;
+  }
+}
