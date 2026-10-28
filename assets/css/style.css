@@ -925,7 +925,7 @@ b {
    5. BREAKPOINT (mobile-first)
    ============================================================ */
 
-/* Tablet */
+/* Tablet — breakpoint 768px dipakai juga di main.js (matchMedia) untuk reset menu. */
 @media (min-width: 768px) {
   :root {
     --container-pad: var(--space-6);

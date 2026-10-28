@@ -30,6 +30,7 @@ document.querySelectorAll('.navbar').forEach(function (navbar) {
   });
 
   // Di desktop menu selalu tampil, jadi state mobile tidak boleh tertinggal.
+  // Nilai 768px harus sama dengan breakpoint "Tablet" di assets/css/style.css.
   var desktop = window.matchMedia('(min-width: 768px)');
   var onBreakpoint = function (e) {
     if (e.matches) close();
