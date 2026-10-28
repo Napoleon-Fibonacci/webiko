@@ -1,0 +1,12 @@
+# Vercel
+.vercel
+
+# Dependencies
+node_modules
+
+# Environment / secrets
+.env
+.env.local
+
+# OS
+.DS_Store
