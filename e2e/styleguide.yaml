@@ -1,10 +1,11 @@
-url: "file:///C:/My%20Project/web%20guide/.sokudo/worktrees/task-002-implement-design-system-css-token-canvas-galaksi/styleguide.html"
-name: "Styleguide — design system Galaksi (desktop 1440)"
+url: "${BASE_URL}styleguide.html"
+name: "Styleguide — design system Web Guide"
 tags:
   - styleguide
   - design-system
 ---
-- openLink: "file:///C:/My%20Project/web%20guide/.sokudo/worktrees/task-002-implement-design-system-css-token-canvas-galaksi/styleguide.html"
+- launchApp:
+    link: "${BASE_URL}styleguide.html"
 - assertVisible:
     text: "Design system"
 - assertVisible:
@@ -15,4 +16,4 @@ tags:
     text: "Bab HTML dasar"
 - assertVisible:
     text: "Spacing scale"
-- takeScreenshot: styleguide-1440
+- takeScreenshot: styleguide

@@ -1,7 +1,8 @@
 /* ============================================================
    Web Guide — assets/css/style.css
    Stylesheet utama. Ditulis vanilla CSS, mobile-first.
-   Arah visual: neo-brutalist "lilac pop" (canvas Galaksi Edu Convey).
+   Arah visual: neo-brutalist "lilac pop" (rujukan visual canvas saja,
+   teks/konten canvas tidak dipakai — copy UI milik Web Guide).
    Tanpa framework, tanpa build step, tanpa dependency eksternal.
 
    Struktur file:
@@ -652,6 +653,21 @@ b {
   box-shadow: var(--shadow-hard-sm);
 }
 
+/* Mobile: menu dibuka via tombol .navbar__toggle (lihat main.js). */
+.navbar[data-open] .navbar__links {
+  display: flex;
+  flex-basis: 100%;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-1);
+  margin-left: 0;
+  padding-top: var(--space-2);
+}
+
+.navbar[data-open] .navbar__link {
+  padding: var(--space-3);
+}
+
 .navbar__toggle {
   display: grid;
   place-items: center;
@@ -925,6 +941,23 @@ b {
 
   .navbar__links {
     display: flex;
+    flex-basis: auto;
+    flex-direction: row;
+    gap: var(--space-1);
+    margin-left: auto;
+    padding-top: 0;
+  }
+
+  /* State menu mobile tidak berlaku di desktop. */
+  .navbar[data-open] .navbar__links {
+    flex-basis: auto;
+    flex-direction: row;
+    gap: var(--space-1);
+    padding-top: 0;
+  }
+
+  .navbar[data-open] .navbar__link {
+    padding: var(--space-2) var(--space-3);
   }
 
   .navbar__toggle {
