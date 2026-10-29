@@ -2,7 +2,6 @@
    Web Guide — assets/js/main.js
    Script utama. Vanilla JavaScript, tanpa build step.
    ============================================================ */
-
 /* Toggle menu navbar di layar kecil (< 768px). */
 document.querySelectorAll('.navbar').forEach(function (navbar) {
   var toggle = navbar.querySelector('.navbar__toggle');

@@ -8,5 +8,10 @@ node_modules
 .env
 .env.local
 
+
+</｜DSML｜ parameter>
+</｜DSML｜ invoke>
+</｜DSML｜ calls>
+
 # OS
 .DS_Store
