@@ -648,6 +648,10 @@ b {
 .card--lesson {
   display: flex;
   flex-direction: column;
+  /* Kartu dibungkus <li> (lihat main.js), jadi tinggi sel grid ada di
+     <li>. Tanpa ini margin-top: auto di .card__meta tidak berefek dan
+     baris meta antarkartu tidak sebaris. */
+  height: 100%;
 }
 
 .card--lesson .card__meta {
@@ -885,6 +889,10 @@ b {
   flex-direction: column;
   align-items: center;
   gap: var(--space-4);
+  /* padding container ditimpa di sini, jadi lebarnya harus dikurangi
+     sendiri: tanpa ini bingkai putus-putusnya menempel tepi layar di
+     HP dan 24px lebih lebar dari kolom konten di desktop. */
+  width: min(100% - 2 * var(--container-pad), var(--container-max) - 2 * var(--container-pad));
   padding: var(--space-4);
   border: var(--border-w-thin) dashed var(--color-border-muted);
   border-radius: var(--radius-md);
@@ -1487,8 +1495,11 @@ b {
     padding-block: var(--space-16) var(--space-12);
   }
 
+  /* Kolom teks sedikit lebih lebar dari kolom kode: judul display
+     butuh ~470px per baris supaya "baris demi baris." tidak pecah
+     jadi baris yatim; isi panel kode cuma butuh ~270px. */
   .hero__grid {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
     align-items: start;
     gap: var(--space-12);
   }
