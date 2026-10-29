@@ -578,20 +578,29 @@ b {
   box-shadow: var(--shadow-hard);
 }
 
+/* Nonaktif dibaca sebagai slot kosong, bukan tombol kelabu: bingkainya
+   putus-putus, tanpa bayangan keras, dan tanpa lipatan sudut. */
 .btn[disabled],
 .btn[aria-disabled="true"] {
-  background-color: var(--color-disabled-bg);
+  border-style: dashed;
+  border-color: var(--color-placeholder);
+  background-color: transparent;
   color: var(--color-muted);
-  box-shadow: var(--shadow-hard-sm);
+  box-shadow: var(--shadow-none);
   cursor: not-allowed;
   transform: none;
   opacity: 1;
 }
 
+.btn[disabled]::before,
+.btn[aria-disabled="true"]::before {
+  display: none;
+}
+
 .btn[disabled]:hover,
 .btn[aria-disabled="true"]:hover {
   transform: none;
-  box-shadow: var(--shadow-hard-sm);
+  box-shadow: var(--shadow-none);
 }
 
 .btn--block {
