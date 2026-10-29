@@ -12,16 +12,21 @@ Website pembelajaran untuk anak sekolah yang ingin belajar membuat website dari 
 
 ```
 .
-├── index.html          # Halaman utama
-├── vercel.json         # Konfigurasi deploy Vercel
+├── index.html              # Halaman utama
+├── styleguide.html         # Design system (acuan komponen & token)
+├── vercel.json             # Konfigurasi deploy Vercel
 ├── assets/
-│   ├── css/style.css   # Stylesheet utama
-│   ├── js/main.js      # Script utama
-│   ├── js/main.js      # Script utama
-│   └── img/            # Gambar
+│   ├── css/style.css       # Stylesheet utama (token + komponen)
+│   ├── js/main.js          # Script utama (interaksi halaman)
+│   ├── js/supabase.js      # Klien Supabase (ESM)
+│   ├── js/supabase-config.example.js  # Contoh config (salin jadi supabase-config.js)
+│   └── img/                # Gambar
 ├── data/
-│   └── kurikulum.js    # Daftar kurikulum materi
-└── materi/             # Materi pelajaran
+│   └── kurikulum.js        # Daftar kurikulum materi
+├── materi/                 # Materi pelajaran (satu file HTML per bab)
+├── scripts/
+│   └── verify-supabase.md  # Panduan setup Supabase untuk pemula
+└── supabase/               # SQL skema, policy RLS, dan lint
 ```
 
 ## Setup Supabase (3 langkah)
