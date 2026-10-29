@@ -12,6 +12,7 @@ Arah visual: neo-brutalist "lilac pop" (rujukan visual canvas saja,
    4. Komponen (btn, card, navbar, sidebar, footer, badge, alert, ...)
    5. Breakpoint (768px, 1024px)
    6. Aksesibilitas (prefers-reduced-motion, forced-colors)
+   7. Halaman beranda (hero, panel kode, langkah, rapor contoh)
    ============================================================ */
 
 /* ============================================================
@@ -77,6 +78,8 @@ Arah visual: neo-brutalist "lilac pop" (rujukan visual canvas saja,
 
   /* --- Tipografi ------------------------------------------- */
   --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  /* Monospace hanya untuk potongan kode — bahannya memang kode. */
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   --fs-h1: clamp(2rem, 6vw, 3.25rem);
   --fs-h2: clamp(1.625rem, 4.5vw, 2.5rem);
@@ -91,11 +94,13 @@ Arah visual: neo-brutalist "lilac pop" (rujukan visual canvas saja,
   --fs-sm: 0.9375rem;                /* teks UI sekunder */
   --fs-xs: 0.75rem;                  /* keterangan sangat kecil */
   --fs-label: 0.6875rem;             /* eyebrow / badge kecil */
+  --fs-code: 0.8125rem;              /* potongan kode */
 
   --lh-display: 1.02;                /* heading besar */
   --lh-heading: 1.2;
   --lh-body: 1.65;
   --lh-small: 1.5;
+  --lh-code: 1.75;
 
   --fw-regular: 500;
   --fw-bold: 700;
@@ -142,6 +147,17 @@ Arah visual: neo-brutalist "lilac pop" (rujukan visual canvas saja,
   --navbar-h: 64px;                  /* tinggi navbar */
   --sidebar-w: 17.5rem;              /* lebar sidebar materi */
 
+  /* --- Kode (panel contoh) --------------------------------- */
+  /* Panel kode sengaja gelap di kedua tema: potongan kode harus
+     terbaca sama, dan warna di dalamnya memakai fill brand. */
+  --color-code-bg: #1f1a33;
+  --color-code-bar: #2b2450;
+  --color-code-ink: #f3efff;
+  --color-code-muted: #b6a9e4;
+  --color-code-tag: #a98bf0;
+  --color-code-attr: #ffe14d;
+  --color-code-string: #a8f0d0;
+
   /* --- Motion ---------------------------------------------- */
   --dur-fast: 120ms;
   --dur-base: 180ms;
@@ -149,40 +165,58 @@ Arah visual: neo-brutalist "lilac pop" (rujukan visual canvas saja,
   --transition: var(--dur-base) var(--ease-out);
 }
 
-/* Mode gelap — mengikuti preferensi sistem. */
+/* Mode gelap — mengikuti preferensi sistem.
+   Prinsipnya: garis dan shadow tidak memakai putih penuh (menyilaukan),
+   melainkan lilac; permukaan dibedakan lewat tiga tingkat terang; dan
+   setiap pasangan teks tetap >= 4.5:1 (angkanya ada di tiap baris). */
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-background: #171428;
-    --color-surface: #221d3a;
-    --color-surface-soft: #2f2750;
-    --color-surface-raised: #3a2f5e;
-    --color-ink: #f1edff;
-    --color-ink-inverse: #1f1a33;
+    --color-background: #15112b;
+    --color-surface: #1e1a3a;
+    --color-surface-soft: #2b2450;
+    --color-surface-raised: #453870;
+    --color-ink: #f3efff;            /* 9.06:1 di --color-surface-raised */
+    --color-ink-inverse: #16122d;    /* teks di atas fill terang */
     --color-on-accent: #1f1a33;
-    --color-border: #f1edff;
-    --color-border-muted: #4a4270;
-    --color-disabled-bg: #33305a;
+    --color-border: #9f8ada;         /* lilac, bukan putih: 6.21:1 di background */
+    --color-border-muted: #403a68;
+    --color-disabled-bg: #322b57;
 
-    --color-muted: #a89cd8;          /* 4.81:1 di --color-surface-raised */
-    --color-accent-text: #c9b4ff;    /* 6.55:1 di --color-surface-raised */
-    --color-accent-text-brand: #c9b4ff;
-    --color-placeholder: #a89cd8;
+    --color-muted: #c0b4ea;          /* 5.34:1 di --color-surface-raised */
+    --color-accent-text: #d5c6ff;    /* 6.50:1 di --color-surface-raised */
+    --color-accent-text-brand: #d5c6ff;
+    --color-placeholder: #b6a9e4;    /* 6.65:1 di --color-surface-soft */
 
-    --color-secondary: #4a3a7a;
-    --color-secondary-hover: #584688;
-    --color-secondary-active: #66529a;
+    /* Violet dinaikkan terangnya supaya teks --color-ink-inverse di
+       atasnya lolos AA (5.63:1; tema sebelumnya cuma 2.62:1). */
+    --color-primary: #9d7bf0;
+    --color-primary-hover: #8b65ec;
+    --color-primary-active: #7a52e6;
+    --color-primary-soft: #b49bf5;
 
-    --color-error: #ff8fa3;
-    --color-error-bg: #4a1424;
-    --color-success: #7fe3b0;
-    --color-success-bg: #0d3324;
-    --color-warning: #ffe14d;
-    --color-warning-bg: #3b2c05;
-    --color-info: #c9c4ff;
-    --color-info-bg: #23224a;
+    --color-secondary: #4c388f;      /* 8.20:1 dengan --color-ink */
+    --color-secondary-hover: #573fa0;
+    --color-secondary-active: #63489f;
 
-    --color-shadow: #f1edff;
-    --color-shadow-accent: #c9b4ff;
+    --color-mint: #a8f0d0;
+    --color-pink: #ffb7c5;
+
+    --color-error: #ff9aae;          /* 7.44:1 di --color-error-bg */
+    --color-error-bg: #47152a;
+    --color-success: #7de0af;        /* 9.02:1 di --color-success-bg */
+    --color-success-bg: #0b3021;
+    --color-warning: #ffe14d;        /* 10.45:1 di --color-warning-bg */
+    --color-warning-bg: #3a2c06;
+    --color-info: #b9b3ff;           /* 7.70:1 di --color-info-bg */
+    --color-info-bg: #232059;
+
+    /* Shadow tetap offset keras, tapi jadi langkah violet (2.49:1 dari
+       background) — bukan balok putih 8px yang bikin kartu menyilaukan. */
+    --color-shadow: #5b4a94;
+    --color-shadow-accent: #8b6ff0;
+
+    --color-code-bg: #100d22;
+    --color-code-bar: #1e1a3a;
   }
 }
 
@@ -575,7 +609,17 @@ b {
 }
 
 /* Kartu materi: angka progres ditulis sebagai label, bukan
-   dekorasi nomor urut. */
+   dekorasi nomor urut. Tingginya disamakan supaya baris meta
+   antarkartu tetap sebaris walau panjang teksnya beda. */
+.card--lesson {
+  display: flex;
+  flex-direction: column;
+}
+
+.card--lesson .card__meta {
+  margin-top: auto;
+}
+
 .card--lesson .card__index {
   display: inline-grid;
   place-items: center;
@@ -1060,5 +1104,320 @@ b {
 
   :focus-visible {
     outline: var(--border-w) solid Highlight;
+  }
+}
+
+/* ============================================================
+   7. HALAMAN BERANDA
+   Tata letak khusus index.html. Semua warna dan ukuran memakai
+   token di bagian 1, jadi tema gelap ikut berubah sendiri.
+   ============================================================ */
+
+/* --- Aksi yang berjajar (hero & ajakan) ------------------- */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.actions--spaced {
+  margin-top: var(--space-6);
+}
+
+/* --- Hero ------------------------------------------------- */
+.hero {
+  padding-block: var(--space-12) var(--space-8);
+}
+
+.hero__grid {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.hero__title {
+  margin-top: var(--space-3);
+}
+
+.hero__lead {
+  margin-top: var(--space-4);
+  color: var(--color-muted);
+  font-size: var(--fs-lead);
+}
+
+.hero__note {
+  margin-top: var(--space-4);
+  color: var(--color-muted);
+}
+
+/* --- Panel (wadah kode dan hasilnya) ---------------------- */
+.pane {
+  overflow: hidden;
+  border: var(--border-w) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-hard-lg);
+}
+
+.pane__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-bottom: var(--border-w) solid var(--color-border);
+  background-color: var(--color-surface-soft);
+}
+
+.pane__name {
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pane__badge {
+  margin-left: auto;
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+}
+
+.pane__dots {
+  display: flex;
+  gap: 6px;
+}
+
+.pane__dot {
+  width: 10px;
+  height: 10px;
+  border: var(--border-w-thin) solid var(--color-border);
+  border-radius: var(--radius-pill);
+}
+
+.pane__dot:nth-child(1) {
+  background-color: var(--color-pink);
+}
+
+.pane__dot:nth-child(2) {
+  background-color: var(--color-accent);
+}
+
+.pane__dot:nth-child(3) {
+  background-color: var(--color-mint);
+}
+
+/* Panel kode sengaja selalu gelap — lihat token --color-code-*. */
+.code-pane {
+  background-color: var(--color-code-bg);
+}
+
+.code-pane .pane__bar {
+  border-bottom-color: var(--color-code-bar);
+  background-color: var(--color-code-bar);
+}
+
+.code-pane .pane__name {
+  color: var(--color-code-ink);
+}
+
+.code-pane .pane__badge {
+  color: var(--color-code-muted);
+}
+
+.code {
+  margin: 0;
+  padding: var(--space-4);
+  overflow-x: auto;
+  color: var(--color-code-ink);
+  font-family: var(--font-mono);
+  font-size: var(--fs-code);
+  line-height: var(--lh-code);
+}
+
+.code__line {
+  display: block;
+  /* Spasi di awal baris ikut ditulis di HTML; newline antar-baris
+     source dibuang, jadi markup tetap menjorok rapi. */
+  white-space: pre;
+}
+
+/* Nama token, bukan hiasan: tiap warna menandai satu jenis isi. */
+.tok-tag {
+  color: var(--color-code-tag);
+}
+
+.tok-attr {
+  color: var(--color-code-attr);
+}
+
+.tok-string {
+  color: var(--color-code-string);
+}
+
+.tok-punct {
+  color: var(--color-code-muted);
+}
+
+/* Hasil: halaman kecil yang benar-benar dirender browser. */
+.demo-page {
+  padding: var(--space-6) var(--space-4);
+  background-color: var(--color-surface);
+}
+
+.demo-page h1 {
+  font-size: var(--fs-h4);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--lh-heading);
+  text-transform: none;
+}
+
+.demo-page p {
+  margin-top: var(--space-3);
+}
+
+/* Konektor dari kode ke hasilnya. */
+.workbench__flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.workbench__flow::before,
+.workbench__flow::after {
+  content: "";
+  height: var(--space-4);
+  border-left: var(--border-w-thin) dashed var(--color-border-muted);
+}
+
+/* Satu gerakan untuk seluruh halaman: baris kode muncul
+   berurutan, lalu panel hasilnya. Tidak ada animasi lain. */
+@keyframes wg-line {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes wg-appear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.code__line {
+  animation: wg-line 220ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+.result-pane {
+  animation: wg-appear 320ms var(--ease-out) both;
+  animation-delay: 900ms;
+}
+
+/* --- Langkah (urutan asli: 1 lalu 2 lalu 3) --------------- */
+.steps {
+  display: grid;
+  gap: var(--space-6);
+  padding: 0;
+  list-style: none;
+  counter-reset: langkah;
+}
+
+.steps__item {
+  position: relative;
+  padding-left: calc(36px + var(--space-4));
+}
+
+.steps__item::before {
+  counter-increment: langkah;
+  content: counter(langkah);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: var(--border-w) solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-accent);
+  box-shadow: var(--shadow-hard-sm);
+  color: var(--color-on-accent);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-black);
+}
+
+.steps__title {
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-black);
+  text-transform: uppercase;
+}
+
+.steps__text {
+  margin-top: var(--space-2);
+  color: var(--color-muted);
+  font-size: var(--fs-small);
+}
+
+/* --- Rapor contoh (kemajuan yang tersimpan) --------------- */
+.report {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.report__stack {
+  display: grid;
+  align-content: start;
+  gap: var(--space-4);
+}
+
+.report__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+/* Di dalam daftar bab, lencana status menempel ke kanan. */
+.sidebar__link .badge {
+  margin-left: auto;
+}
+
+/* --- Breakpoint halaman beranda --------------------------- */
+@media (min-width: 768px) {
+  .report {
+    grid-template-columns: 20rem minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    padding-block: var(--space-16) var(--space-12);
+  }
+
+  .hero__grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: start;
+    gap: var(--space-12);
+  }
+}
+
+/* Pengguna yang minta gerakan minim langsung dapat keadaan akhir. */
+@media (prefers-reduced-motion: reduce) {
+  .code__line,
+  .result-pane {
+    animation-delay: 0ms;
   }
 }

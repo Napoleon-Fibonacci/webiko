@@ -3,13 +3,256 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Web Guide — Belajar Bikin Website</title>
+  <meta name="description" content="Web Guide — belajar membuat website dari nol dengan HTML, CSS, dan JavaScript, dalam bahasa Indonesia. Tanpa install, tanpa framework.">
+  <title>Web Guide — Belajar bikin website dari nol</title>
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <h1>Web Guide — Belajar Bikin Website</h1>
-  <!-- Config Supabase: file gitignored, diisi manual. Lihat README. -->
-  <script src="assets/js/supabase-config.js"></script>
+
+  <!-- ============ NAVBAR ============ -->
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        Web Guide.
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="index.html" aria-current="page">Beranda</a>
+        <a class="navbar__link" href="#kurikulum">Kurikulum</a>
+        <a class="navbar__link" href="#cara-pakai">Cara pakai</a>
+        <a class="navbar__link" href="styleguide.html">Styleguide</a>
+      </nav>
+
+      <button class="navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="container hero__grid">
+
+        <div class="hero__copy">
+          <p class="label">Untuk pelajar SMP &amp; SMA</p>
+          <h1 class="hero__title">Bikin website pertamamu, baris demi baris.</h1>
+          <p class="hero__lead">
+            Kamu menulis HTML, CSS, dan JavaScript sendiri, lalu melihat hasilnya
+            langsung di browser. Tidak perlu memasang apa pun.
+          </p>
+          <div class="actions actions--spaced">
+            <a class="btn btn--primary" href="#kurikulum">Lihat kurikulum</a>
+            <a class="btn btn--secondary" href="#cara-pakai">Cara pakai</a>
+          </div>
+          <p class="hero__note text-small">
+            Gratis, berbahasa Indonesia, dan bisa dimulai tanpa akun.
+          </p>
+        </div>
+
+        <!-- Kode di kiri, hasilnya di kanan — inti seluruh situs ini. -->
+        <div class="hero__workbench">
+
+          <figure class="pane code-pane">
+            <figcaption class="pane__bar">
+              <span class="pane__name">index.html</span>
+              <span class="pane__badge">bab 1</span>
+            </figcaption>
+            <pre class="code"><code><span class="code__line" style="--i:0">&lt;<span class="tok-punct">!DOCTYPE html</span>&gt;</span><span class="code__line" style="--i:1">&lt;<span class="tok-tag">html</span> <span class="tok-attr">lang</span><span class="tok-punct">=</span><span class="tok-string">"id"</span>&gt;</span><span class="code__line" style="--i:2">  &lt;<span class="tok-tag">head</span>&gt;</span><span class="code__line" style="--i:3">    &lt;<span class="tok-tag">meta</span> <span class="tok-attr">charset</span><span class="tok-punct">=</span><span class="tok-string">"UTF-8"</span>&gt;</span><span class="code__line" style="--i:4">    &lt;<span class="tok-tag">title</span>&gt;Halo, dunia!&lt;<span class="tok-punct">/</span><span class="tok-tag">title</span>&gt;</span><span class="code__line" style="--i:5">  &lt;<span class="tok-punct">/</span><span class="tok-tag">head</span>&gt;</span><span class="code__line" style="--i:6">  &lt;<span class="tok-tag">body</span>&gt;</span><span class="code__line" style="--i:7">    &lt;<span class="tok-tag">h1</span>&gt;Halo, dunia!&lt;<span class="tok-punct">/</span><span class="tok-tag">h1</span>&gt;</span><span class="code__line" style="--i:8">    &lt;<span class="tok-tag">p</span>&gt;Ini halaman pertamaku.&lt;<span class="tok-punct">/</span><span class="tok-tag">p</span>&gt;</span><span class="code__line" style="--i:9">  &lt;<span class="tok-punct">/</span><span class="tok-tag">body</span>&gt;</span><span class="code__line" style="--i:10">&lt;<span class="tok-punct">/</span><span class="tok-tag">html</span>&gt;</span></code></pre>
+          </figure>
+
+          <p class="workbench__flow">
+            <span class="badge badge--accent">Hasil di browser</span>
+          </p>
+
+          <figure class="pane result-pane">
+            <figcaption class="pane__bar">
+              <span class="pane__dots" aria-hidden="true">
+                <span class="pane__dot"></span>
+                <span class="pane__dot"></span>
+                <span class="pane__dot"></span>
+              </span>
+              <span class="pane__name">Halo, dunia!</span>
+              <span class="pane__badge">index.html</span>
+            </figcaption>
+            <div class="demo-page">
+              <h1>Halo, dunia!</h1>
+              <p>Ini halaman pertamaku.</p>
+            </div>
+          </figure>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============ KURIKULUM ============ -->
+    <section class="section" id="kurikulum">
+      <div class="container">
+        <div class="section__header">
+          <div>
+            <p class="label">Rencana materi</p>
+            <h2>Tiga jalur, dari nol sampai jalan</h2>
+          </div>
+          <p class="text-small text-muted">Bab dibuka bertahap, satu per satu.</p>
+        </div>
+
+        <!-- Isi daftar ini datang dari data/kurikulum.js (lihat main.js). -->
+        <ul role="list" class="grid-3" data-kurikulum aria-label="Daftar jalur materi"></ul>
+
+        <noscript>
+          <p class="text-small text-muted">Daftar bab butuh JavaScript untuk tampil.</p>
+        </noscript>
+      </div>
+    </section>
+
+    <!-- ============ CARA PAKAI ============ -->
+    <section class="section" id="cara-pakai" style="padding-top: 0;">
+      <div class="container">
+        <div class="section__header">
+          <div>
+            <p class="label">Cara pakai</p>
+            <h2>Tiga langkah, tanpa alat tambahan</h2>
+          </div>
+        </div>
+
+        <ol role="list" class="steps">
+          <li class="steps__item">
+            <h3 class="steps__title">Buka satu bab</h3>
+            <p class="steps__text">
+              Tiap bab pendek: satu konsep, satu contoh kode, satu latihan. Tidak perlu
+              menghabiskan satu sore untuk satu halaman.
+            </p>
+          </li>
+          <li class="steps__item">
+            <h3 class="steps__title">Ubah contohnya</h3>
+            <p class="steps__text">
+              Salin kodenya ke file <code>.html</code>, lalu ubah sesukamu. Rusaknya juga
+              bagian dari belajar — pesan errornya kami jelaskan satu per satu.
+            </p>
+          </li>
+          <li class="steps__item">
+            <h3 class="steps__title">Bandingkan hasilnya</h3>
+            <p class="steps__text">
+              Buka file itu di browser dan lihat bedanya. Kalau sudah sesuai, lanjut ke
+              bab berikutnya dan tandai bab yang selesai.
+            </p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ CONTOH PROGRES ============ -->
+    <section class="section" id="progres" style="padding-top: 0;">
+      <div class="container">
+        <div class="section__header">
+          <div>
+            <p class="label">Contoh tampilan</p>
+            <h2>Kemajuanmu kelihatan</h2>
+          </div>
+          <p class="text-small text-muted">Tampilan contoh, bukan data sungguhan.</p>
+        </div>
+
+        <div class="report">
+          <aside class="sidebar" aria-label="Contoh daftar bab">
+            <p class="sidebar__title">Bab HTML dasar</p>
+            <ul class="sidebar__list">
+              <li>
+                <a class="sidebar__link" href="#progres">
+                  1. Apa itu website
+                  <span class="badge badge--mint">Selesai</span>
+                </a>
+              </li>
+              <li>
+                <a class="sidebar__link" href="#progres">
+                  2. File HTML pertamamu
+                  <span class="badge badge--mint">Selesai</span>
+                </a>
+              </li>
+              <li>
+                <a class="sidebar__link" href="#progres" aria-current="page">3. Judul dan paragraf</a>
+              </li>
+              <li>
+                <a class="sidebar__link" href="#progres" aria-disabled="true">
+                  4. Tautan
+                  <span class="badge">Belum dibuka</span>
+                </a>
+              </li>
+            </ul>
+          </aside>
+
+          <div class="report__stack">
+            <div class="alert alert--success" role="status">
+              <div>
+                <strong class="alert__title">Skor tersimpan</strong>
+                <p class="alert__text">
+                  Kuis bab 2: 4 dari 5 benar. Skornya masuk ke riwayatmu begitu kamu login.
+                </p>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3 class="card__title">Badge terkumpul</h3>
+              <p class="card__text">
+                Badge muncul sendiri saat satu bab atau satu kuis selesai.
+              </p>
+              <div class="report__chips">
+                <span class="badge badge--accent">Langkah pertama</span>
+                <span class="badge badge--accent">Tag master</span>
+                <span class="badge badge--outline">2 dari 30</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ AKUN ============ -->
+    <section class="section" id="daftar" style="padding-top: 0;">
+      <div class="container">
+        <div class="card card--tint">
+          <p class="label">Akun</p>
+          <h2>Progres, kuis, dan badge butuh akun</h2>
+          <p class="card__text">
+            Daftar cukup dengan username dan password, tanpa email. Riwayat bab, skor
+            kuis, dan komentar tersimpan di akunmu. Formulir pendaftaran dibuka setelah
+            bab pertama terbit.
+          </p>
+          <div class="actions actions--spaced">
+            <button class="btn btn--primary" type="button" disabled>Buat akun</button>
+            <span class="badge badge--pink">Segera</span>
+            <a class="btn btn--ghost" href="#kurikulum">Baca kurikulum dulu</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p class="label">Web Guide · Belajar bikin website</p>
+      <nav aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="#kurikulum">Kurikulum</a></li>
+          <li><a href="#cara-pakai">Cara pakai</a></li>
+          <li><a href="styleguide.html">Styleguide</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="data/kurikulum.js"></script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>

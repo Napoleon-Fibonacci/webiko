@@ -41,3 +41,53 @@ document.querySelectorAll('.navbar').forEach(function (navbar) {
   }
   if (desktop.matches) close();
 });
+
+/* Daftar kurikulum di beranda (datanya di data/kurikulum.js).
+   Elemennya dibangun lewat DOM API, bukan innerHTML, supaya isi
+   data tidak pernah diperlakukan sebagai markup. */
+document.querySelectorAll('[data-kurikulum]').forEach(function (host) {
+  if (typeof KURIKULUM === 'undefined') return;
+
+  KURIKULUM.forEach(function (jalur, urutan) {
+    var nomor = document.createElement('span');
+    nomor.className = 'card__index';
+    nomor.setAttribute('aria-hidden', 'true');
+    nomor.textContent = String(urutan + 1);
+
+    var judul = document.createElement('h3');
+    judul.className = 'card__title';
+    judul.textContent = jalur.judul;
+
+    var ringkas = document.createElement('p');
+    ringkas.className = 'card__text';
+    ringkas.textContent = jalur.ringkas;
+
+    var meta = document.createElement('div');
+    meta.className = 'card__meta';
+
+    var tingkat = document.createElement('span');
+    tingkat.className = 'badge badge--outline';
+    tingkat.textContent = jalur.tingkat;
+
+    var jumlahBab = document.createElement('span');
+    jumlahBab.textContent = jalur.bab.length + ' bab';
+
+    meta.append(tingkat, jumlahBab);
+
+    if (jalur.status === 'segera') {
+      var status = document.createElement('span');
+      status.className = 'badge badge--pink';
+      status.textContent = 'Segera';
+      meta.append(status);
+    }
+
+    var kartu = document.createElement('article');
+    kartu.className = 'card card--lesson';
+    kartu.append(nomor, judul, ringkas, meta);
+
+    var item = document.createElement('li');
+    item.append(kartu);
+    host.append(item);
+  });
+});
+

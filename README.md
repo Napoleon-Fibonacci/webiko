@@ -17,12 +17,12 @@ Website pembelajaran untuk anak sekolah yang ingin belajar membuat website dari 
 ├── vercel.json             # Konfigurasi deploy Vercel
 ├── assets/
 │   ├── css/style.css       # Stylesheet utama (token + komponen)
-│   ├── js/main.js          # Script utama (interaksi halaman)
+│   ├── js/main.js          # Script utama (menu navbar, render kurikulum)
 │   ├── js/supabase.js      # Klien Supabase (ESM)
 │   ├── js/supabase-config.example.js  # Contoh config (salin jadi supabase-config.js)
 │   └── img/                # Gambar
 ├── data/
-│   └── kurikulum.js        # Daftar kurikulum materi
+│   └── kurikulum.js        # Jalur & bab materi (dirender oleh beranda)
 ├── materi/                 # Materi pelajaran (satu file HTML per bab)
 ├── scripts/
 │   └── verify-supabase.md  # Panduan setup Supabase untuk pemula
@@ -121,7 +121,8 @@ plus uji `set local role anon`): lihat `supabase/README.md`.
 `assets/js/supabase.js` adalah ESM module yang memuat
 `@supabase/supabase-js` v2 dari CDN (`https://esm.sh/@supabase/supabase-js@2`) —
 tidak ada npm atau build step. Muat `supabase-config.js` (script biasa)
-**dulu**, lalu modul. Urutan ini sudah dipasang di `index.html`:
+**dulu**, baru modul yang memakainya. Halaman akun belum ada, jadi urutan ini
+belum dipasang di halaman mana pun; tambahkan saat halaman akun dibuat:
 
 ```html
 <script src="assets/js/supabase-config.js"></script>
@@ -140,6 +141,18 @@ await signIn("budi_01", "rahasia123");
 const session = await getSession();
 await signOut();
 ```
+
+`index.html` (beranda) belum butuh akun, jadi yang dipasang di sana dua script
+biasa — data kurikulum lebih dulu, baru `main.js`:
+
+```html
+<script src="data/kurikulum.js"></script>
+<script src="assets/js/main.js"></script>
+```
+
+`main.js` mengurus tombol menu navbar dan merender daftar jalur materi dari
+`data/kurikulum.js` ke elemen `[data-kurikulum]`.
+
 ## Menjalankan secara lokal
 
 Tidak perlu install apa pun — cukup serve folder ini sebagai static site.
@@ -158,4 +171,6 @@ Install ekstensi *Live Server*, klik kanan `index.html`, pilih **Open with Live 
 
 ## Kontribusi materi
 
-Materi ditulis langsung sebagai file HTML di folder `materi/` — cukup edit filenya, tidak ada panel admin.
+Materi ditulis langsung sebagai file HTML di folder `materi/` — cukup edit filenya, tidak ada panel admin. Jalur dan daftar babnya diambil dari `data/kurikulum.js`; tiap bab punya `slug` yang dipakai untuk nama file dan untuk `bab_id` di tabel `progress`.
+
+Beranda hanya menampilkan jalur dari file itu, jadi menambah bab tidak perlu menyentuh `index.html`. Judul dan tingkatnya punya satu sumber: `data/kurikulum.js`.
