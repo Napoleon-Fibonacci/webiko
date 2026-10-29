@@ -34,6 +34,11 @@ Arah visual: neo-brutalist "lilac pop" (rujukan visual canvas saja,
   --color-accent-hover: #ffe97a;
   --color-accent-active: #f5d21f;
 
+  /* Alias untuk layout.css. Bukan warna baru: cukup menamai ulang
+     token yang sudah ada agar konsumen lama tidak putus. */
+  --color-lilac: var(--color-secondary);
+  --color-accent-2: var(--color-accent);
+
   --color-mint: #a8f0d0;
   --color-pink: #ffb7c5;
 
@@ -80,8 +85,11 @@ Arah visual: neo-brutalist "lilac pop" (rujukan visual canvas saja,
   --fs-h5: 1rem;
   --fs-h6: 0.875rem;
   --fs-body: 1rem;
+  --fs-lg: 1.125rem;                 /* body besar / sub-judul kecil */
   --fs-lead: 1.0625rem;
   --fs-small: 0.875rem;
+  --fs-sm: 0.9375rem;                /* teks UI sekunder */
+  --fs-xs: 0.75rem;                  /* keterangan sangat kecil */
   --fs-label: 0.6875rem;             /* eyebrow / badge kecil */
 
   --lh-display: 1.02;                /* heading besar */
@@ -115,6 +123,7 @@ Arah visual: neo-brutalist "lilac pop" (rujukan visual canvas saja,
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
+  --radius-xl: 1.25rem;
   --radius-pill: 999px;
 
   /* Hard shadow: offset-x offset-y 0 (tanpa blur) warna ink. */
@@ -124,16 +133,20 @@ Arah visual: neo-brutalist "lilac pop" (rujukan visual canvas saja,
   --shadow-hard-lg: 8px 8px 0 0 var(--color-shadow);
   --shadow-focus: 5px 5px 0 0 var(--color-shadow-accent);
   --shadow-none: 0 0 0 0 var(--color-shadow);
+  --shadow-tile: 4px 4px 0 var(--color-ink);
 
   /* --- Layout ---------------------------------------------- */
   --container-max: 1152px;           /* setara max-w-6xl */
   --container-pad: var(--space-4);
   --tap-target: 44px;                /* ukuran sentuh minimum */
+  --navbar-h: 64px;                  /* tinggi navbar */
+  --sidebar-w: 17.5rem;              /* lebar sidebar materi */
 
   /* --- Motion ---------------------------------------------- */
   --dur-fast: 120ms;
   --dur-base: 180ms;
   --ease-out: cubic-bezier(0.2, 0.7, 0.3, 1);
+  --transition: var(--dur-base) var(--ease-out);
 }
 
 /* Mode gelap — mengikuti preferensi sistem. */
