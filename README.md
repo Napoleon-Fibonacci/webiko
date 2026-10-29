@@ -150,8 +150,26 @@ biasa — data kurikulum lebih dulu, baru `main.js`:
 <script src="assets/js/main.js"></script>
 ```
 
-`main.js` mengurus tombol menu navbar dan merender daftar jalur materi dari
-`data/kurikulum.js` ke elemen `[data-kurikulum]`.
+`main.js` mengurus tombol menu navbar, merender daftar jalur materi dari
+`data/kurikulum.js` ke elemen `[data-kurikulum]`, dan mengurus tombol tema.
+
+## Tema
+
+Tema punya tiga pilihan: ikut setelan sistem, selalu terang, selalu gelap.
+Tombolnya di navbar, kanan atas. Aturannya:
+
+- Atribut `data-tema` di `<html>` diisi script kecil di `<head>` **sebelum**
+  halaman digambar, jadi tidak ada kedipan. Nilainya `"terang"` atau `"gelap"`.
+- Pilihan pengguna disimpan di `localStorage` dengan kunci `tema`. Tidak ada
+  simpanan berarti "ikut sistem".
+- Token tema gelap hidup di satu tempat: blok `:root[data-tema="gelap"]` di
+  `assets/css/style.css`. Tidak ada salinan di dalam media query, jadi
+  mengubah warna gelap cukup di satu blok itu.
+- Di tema gelap `--color-marker-bg` jadi lilac, supaya kuning hanya dipakai
+  untuk aksi (tombol utama dan badge penekanan), bukan untuk semua penanda.
+
+Tanpa JavaScript, atribut `data-tema` tidak pernah dipasang dan halaman
+memakai tema terang.
 
 ## Menjalankan secara lokal
 

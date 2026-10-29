@@ -91,3 +91,78 @@ document.querySelectorAll('[data-kurikulum]').forEach(function (host) {
   });
 });
 
+/* Tema: terang, gelap, atau ikut setelan sistem.
+   Atribut data-tema di <html> sudah dipasang script di <head> sebelum
+   halaman digambar; di sini hanya tombolnya. Pilihan disimpan di
+   localStorage "tema"; tidak ada simpanan berarti "ikut sistem". */
+(function () {
+  var KUNCI = 'tema';
+  var LABEL = { sistem: 'Sistem', terang: 'Terang', gelap: 'Gelap' };
+  var KETERANGAN = {
+    sistem: 'ikut setelan sistem',
+    terang: 'selalu terang',
+    gelap: 'selalu gelap',
+  };
+  var URUTAN = { sistem: 'terang', terang: 'gelap', gelap: 'sistem' };
+
+  var pilihan = bacaPilihan();
+  var sistem = window.matchMedia('(prefers-color-scheme: dark)');
+
+  function bacaPilihan() {
+    try {
+      var nilai = localStorage.getItem(KUNCI);
+      if (nilai === 'terang' || nilai === 'gelap') return nilai;
+    } catch (e) {
+      /* localStorage bisa dimatikan; anggap saja ikut sistem. */
+    }
+    return 'sistem';
+  }
+
+  function terapkan(pilihanBaru) {
+    pilihan = pilihanBaru;
+
+    var gelap = pilihan === 'gelap' || (pilihan === 'sistem' && sistem.matches);
+    document.documentElement.setAttribute('data-tema', gelap ? 'gelap' : 'terang');
+
+    try {
+      if (pilihan === 'sistem') {
+        localStorage.removeItem(KUNCI);
+      } else {
+        localStorage.setItem(KUNCI, pilihan);
+      }
+    } catch (e) {
+      /* Pilihan tetap berlaku untuk sesi ini walau tidak bisa disimpan. */
+    }
+
+    document.querySelectorAll('[data-tema-toggle]').forEach(function (tombol) {
+      tombol.setAttribute('data-pilihan', pilihan);
+      tombol.setAttribute(
+        'aria-label',
+        'Tema: ' + KETERANGAN[pilihan] + '. Ubah ke ' + LABEL[URUTAN[pilihan]] + '.'
+      );
+
+      var label = tombol.querySelector('.theme-toggle__label');
+      if (label) label.textContent = LABEL[pilihan];
+    });
+  }
+
+  document.querySelectorAll('[data-tema-toggle]').forEach(function (tombol) {
+    tombol.addEventListener('click', function () {
+      terapkan(URUTAN[pilihan]);
+    });
+  });
+
+  /* Selama pilihan "sistem", tema ikut berubah saat setelan OS berubah. */
+  var onSistem = function () {
+    if (pilihan === 'sistem') terapkan('sistem');
+  };
+  if (sistem.addEventListener) {
+    sistem.addEventListener('change', onSistem);
+  } else {
+    sistem.addListener(onSistem);
+  }
+
+  terapkan(pilihan);
+})();
+
+

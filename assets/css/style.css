@@ -21,6 +21,9 @@ Arah visual: neo-brutalist "lilac pop" (rujukan visual canvas saja,
    Jangan hardcode warna di luar blok ini — pakai var().
    ============================================================ */
 :root {
+  /* Native control (scrollbar, isian) ikut tema halaman, bukan OS. */
+  color-scheme: light;
+
   /* --- Warna: brand & aksen --------------------------------- */
   --color-primary: #6b3fd4;          /* violet aksen (fill) */
   --color-primary-hover: #5b2fc4;
@@ -34,6 +37,11 @@ Arah visual: neo-brutalist "lilac pop" (rujukan visual canvas saja,
   --color-accent: #ffe14d;           /* kuning pop */
   --color-accent-hover: #ffe97a;
   --color-accent-active: #f5d21f;
+
+  /* Fill penanda (nomor bab, nomor langkah, logo). Di tema terang
+     sama dengan aksen; di tema gelap jadi lilac supaya kuning tetap
+     jadi warna aksi, bukan warna seragam semua elemen. */
+  --color-marker-bg: var(--color-accent);
 
   /* Alias untuk layout.css. Bukan warna baru: cukup menamai ulang
      token yang sudah ada agar konsumen lama tidak putus. */
@@ -165,59 +173,85 @@ Arah visual: neo-brutalist "lilac pop" (rujukan visual canvas saja,
   --transition: var(--dur-base) var(--ease-out);
 }
 
-/* Mode gelap — mengikuti preferensi sistem.
-   Prinsipnya: garis dan shadow tidak memakai putih penuh (menyilaukan),
-   melainkan lilac; permukaan dibedakan lewat tiga tingkat terang; dan
-   setiap pasangan teks tetap >= 4.5:1 (angkanya ada di tiap baris). */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: #15112b;
-    --color-surface: #1e1a3a;
-    --color-surface-soft: #2b2450;
-    --color-surface-raised: #453870;
-    --color-ink: #f3efff;            /* 9.06:1 di --color-surface-raised */
-    --color-ink-inverse: #16122d;    /* teks di atas fill terang */
-    --color-on-accent: #1f1a33;
-    --color-border: #9f8ada;         /* lilac, bukan putih: 6.21:1 di background */
-    --color-border-muted: #403a68;
-    --color-disabled-bg: #322b57;
+/* ============================================================
+   TEMA GELAP
+   Bukan lewat media query, tapi lewat atribut `data-tema` di <html>.
+   Alasannya: pengguna harus bisa memaksa tema sendiri, tidak cuma
+   ikut setelan sistem.
 
-    --color-muted: #c0b4ea;          /* 5.34:1 di --color-surface-raised */
-    --color-accent-text: #d5c6ff;    /* 6.50:1 di --color-surface-raised */
-    --color-accent-text-brand: #d5c6ff;
-    --color-placeholder: #b6a9e4;    /* 6.65:1 di --color-surface-soft */
+   Script kecil di <head> tiap halaman mengisi atribut itu SEBELUM
+   halaman digambar — "terang" atau "gelap", hasil gabungan pilihan
+   tersimpan (localStorage "tema") dan setelan sistem. Jadi blok ini
+   satu-satunya sumber token gelap; tidak ada salinan kedua.
 
-    /* Violet dinaikkan terangnya supaya teks --color-ink-inverse di
-       atasnya lolos AA (5.63:1; tema sebelumnya cuma 2.62:1). */
-    --color-primary: #9d7bf0;
-    --color-primary-hover: #8b65ec;
-    --color-primary-active: #7a52e6;
-    --color-primary-soft: #b49bf5;
+   Tanpa JavaScript atributnya tidak pernah ada, dan halaman memakai
+   token terang di :root.
 
-    --color-secondary: #4c388f;      /* 8.20:1 dengan --color-ink */
-    --color-secondary-hover: #573fa0;
-    --color-secondary-active: #63489f;
+   Prinsip warna: garis dan shadow tidak memakai putih penuh
+   (menyilaukan) melainkan lilac; permukaan dibedakan lewat tiga
+   tingkat terang; kuning hanya untuk aksi; dan setiap pasangan teks
+   tetap >= 4.5:1 (angkanya ada di tiap baris).
+   ============================================================ */
 
-    --color-mint: #a8f0d0;
-    --color-pink: #ffb7c5;
+:root[data-tema="gelap"] {
+  color-scheme: dark;
 
-    --color-error: #ff9aae;          /* 7.44:1 di --color-error-bg */
-    --color-error-bg: #47152a;
-    --color-success: #7de0af;        /* 9.02:1 di --color-success-bg */
-    --color-success-bg: #0b3021;
-    --color-warning: #ffe14d;        /* 10.45:1 di --color-warning-bg */
-    --color-warning-bg: #3a2c06;
-    --color-info: #b9b3ff;           /* 7.70:1 di --color-info-bg */
-    --color-info-bg: #232059;
+  --color-background: #15112b;
+  --color-surface: #1e1a3a;
+  --color-surface-soft: #2b2450;
+  --color-surface-raised: #453870;
+  --color-ink: #f3efff;            /* 9.06:1 di --color-surface-raised */
+  --color-ink-inverse: #16122d;    /* teks di atas fill terang */
+  --color-on-accent: #1f1a33;
+  --color-border: #9f8ada;         /* lilac, bukan putih: 6.21:1 di background */
+  --color-border-muted: #403a68;
+  --color-disabled-bg: #322b57;
 
-    /* Shadow tetap offset keras, tapi jadi langkah violet (2.49:1 dari
-       background) — bukan balok putih 8px yang bikin kartu menyilaukan. */
-    --color-shadow: #5b4a94;
-    --color-shadow-accent: #8b6ff0;
+  --color-muted: #c0b4ea;          /* 5.34:1 di --color-surface-raised */
+  --color-accent-text: #d5c6ff;    /* 6.50:1 di --color-surface-raised */
+  --color-accent-text-brand: #d5c6ff;
+  --color-placeholder: #b6a9e4;    /* 6.65:1 di --color-surface-soft */
 
-    --color-code-bg: #100d22;
-    --color-code-bar: #1e1a3a;
-  }
+  /* Violet dinaikkan terangnya supaya teks --color-ink-inverse di
+     atasnya lolos AA (5.63:1; tema sebelumnya cuma 2.62:1). */
+  --color-primary: #9d7bf0;
+  --color-primary-hover: #8b65ec;
+  --color-primary-active: #7a52e6;
+  --color-primary-soft: #b49bf5;
+
+  --color-secondary: #4c388f;      /* 8.20:1 dengan --color-ink */
+  --color-secondary-hover: #573fa0;
+  --color-secondary-active: #63489f;
+
+  --color-mint: #a8f0d0;
+  --color-pink: #ffb7c5;
+
+  /* Kuning diturunkan dari #ffe14d. Di latar sedalam ini kuning murni
+     jadi satu-satunya titik paling terang, dan karena warnanya dipakai
+     di banyak elemen, halaman terbaca seperti pola peringatan.
+     11.25:1 dengan --color-on-accent. */
+  --color-accent: #f0d264;
+  --color-accent-hover: #f5dc81;
+  --color-accent-active: #e0bf4a;
+
+  --color-marker-bg: var(--color-primary-soft);  /* 7.14:1 dengan on-accent */
+
+  --color-error: #ff9aae;          /* 7.44:1 di --color-error-bg */
+  --color-error-bg: #47152a;
+  --color-success: #7de0af;        /* 9.02:1 di --color-success-bg */
+  --color-success-bg: #0b3021;
+  --color-warning: #f0d264;        /* 9.14:1 di --color-warning-bg */
+  --color-warning-bg: #3a2c06;
+  --color-info: #b9b3ff;           /* 7.70:1 di --color-info-bg */
+  --color-info-bg: #232059;
+
+  /* Shadow tetap offset keras, tapi jadi langkah violet (2.49:1 dari
+     background) — bukan balok putih 8px yang bikin kartu menyilaukan. */
+  --color-shadow: #5b4a94;
+  --color-shadow-accent: #8b6ff0;
+
+  --color-code-bg: #100d22;
+  --color-code-bar: #1e1a3a;
 }
 
 /* ============================================================
@@ -628,7 +662,7 @@ b {
   margin-bottom: var(--space-3);
   border: var(--border-w) solid var(--color-border);
   border-radius: var(--radius-sm);
-  background-color: var(--color-accent);
+  background-color: var(--color-marker-bg);
   color: var(--color-on-accent);
   font-size: var(--fs-small);
   font-weight: var(--fw-black);
@@ -676,7 +710,7 @@ b {
   height: 40px;
   border: var(--border-w) solid var(--color-border);
   border-radius: var(--radius-md);
-  background-color: var(--color-accent);
+  background-color: var(--color-marker-bg);
   color: var(--color-on-accent);
   box-shadow: var(--shadow-hard-sm);
   transform: rotate(-3deg);
@@ -730,17 +764,59 @@ b {
   padding: var(--space-3);
 }
 
-.navbar__toggle {
+/* Deretan tombol di ujung kanan navbar: tema, lalu menu (menu hanya
+   muncul di layar kecil). */
+.navbar__tools {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-left: auto;
+}
+
+/* Dasar visual untuk tombol ikon navbar. */
+.navbar__btn {
   display: grid;
   place-items: center;
-  width: var(--tap-target);
+  min-width: var(--tap-target);
   height: var(--tap-target);
-  margin-left: auto;
+  padding-inline: var(--space-2);
   border: var(--border-w) solid var(--color-border);
   border-radius: var(--radius-md);
   background-color: var(--color-secondary);
   color: var(--color-ink);
   box-shadow: var(--shadow-hard-sm);
+}
+
+.navbar__btn:hover {
+  background-color: var(--color-secondary-hover);
+  color: var(--color-ink);
+}
+
+/* Tombol tema: ikon mengikuti pilihan aktif, teksnya muncul di layar
+   lebar. Logikanya di assets/js/main.js. */
+.theme-toggle {
+  grid-auto-flow: column;
+  gap: var(--space-2);
+}
+
+.theme-toggle__label {
+  display: none;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+}
+
+.theme-toggle__ikon {
+  display: none;
+}
+
+.theme-toggle[data-pilihan="sistem"] .theme-toggle__ikon--sistem,
+.theme-toggle[data-pilihan="terang"] .theme-toggle__ikon--terang,
+.theme-toggle[data-pilihan="gelap"] .theme-toggle__ikon--gelap {
+  display: block;
+}
+
+.navbar__toggle {
+  display: grid;
 }
 
 /* --- Sidebar (navigasi materi) ---------------------------- */
@@ -1024,6 +1100,10 @@ b {
 
   .navbar__toggle {
     display: none;
+  }
+
+  .theme-toggle__label {
+    display: inline;
   }
 
   .footer__inner {
@@ -1351,7 +1431,7 @@ b {
   height: 36px;
   border: var(--border-w) solid var(--color-border);
   border-radius: var(--radius-sm);
-  background-color: var(--color-accent);
+  background-color: var(--color-marker-bg);
   box-shadow: var(--shadow-hard-sm);
   color: var(--color-on-accent);
   font-size: var(--fs-small);
