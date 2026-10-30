@@ -915,6 +915,10 @@ b {
 
 .theme-toggle__label {
   display: none;
+  /* Lebar dipatok: teks "Terang"/"Gelap"/"Sistem" panjangnya beda, dan
+     tanpa ini tombolnya (serta seluruh navbar) bergeser tiap ganti
+     pilihan. */
+  min-width: 2.5rem;
   font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
 }
