@@ -7,21 +7,21 @@
   <title>Styleguide — Webiko Design System</title>
 
   <!-- Pasang tema sebelum halaman digambar, supaya tidak berkedip.
-       Logika tombolnya ada di assets/js/main.js. -->
+       Bawaan tanpa pilihan tersimpan: terang. "sistem" hanya dipakai
+       kalau pengguna memilihnya sendiri. Logika tombolnya ada di
+       assets/js/main.js. -->
   <script>
     (function () {
       try {
         var pilihan = localStorage.getItem("tema");
         var gelap =
           pilihan === "gelap" ||
-          (pilihan !== "terang" &&
+          (pilihan === "sistem" &&
             window.matchMedia("(prefers-color-scheme: dark)").matches);
         document.documentElement.setAttribute("data-tema", gelap ? "gelap" : "terang");
       } catch (e) {
-        document.documentElement.setAttribute(
-          "data-tema",
-          window.matchMedia("(prefers-color-scheme: dark)").matches ? "gelap" : "terang"
-        );
+        /* localStorage mati: pakai bawaan terang. */
+        document.documentElement.setAttribute("data-tema", "terang");
       }
     })();
   </script>
@@ -52,7 +52,7 @@
       </nav>
 
       <div class="navbar__tools">
-        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="sistem" aria-label="Tema: ikut setelan sistem. Ubah ke Terang.">
+        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
           <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="12" cy="12" r="9"></circle>
             <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path>
@@ -64,7 +64,7 @@
           <svg class="theme-toggle__ikon theme-toggle__ikon--gelap" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
           </svg>
-          <span class="theme-toggle__label">Sistem</span>
+          <span class="theme-toggle__label">Terang</span>
         </button>
 
         <button class="navbar__btn navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
@@ -87,9 +87,9 @@
           <p style="margin-top: var(--space-4); font-size: var(--fs-lead);">
             Pale indigo-lilac, border tebal 3px, dan hard shadow tanpa blur. Semua token ada di
             <code>assets/css/style.css</code>; halaman ini menampilkan setiap komponen
-            pada lebar 375px, 768px, dan 1440px. Tombol tema di navbar menukar terang,
-            gelap, dan ikut setelan sistem — token gelapnya ada di blok
-            <code>:root[data-tema="gelap"]</code>.
+            pada lebar 375px, 768px, dan 1440px. Bawaannya tema terang; tombol tema di
+            navbar menukar terang, gelap, dan ikut setelan sistem. Token gelapnya ada di
+            blok <code>:root[data-tema="gelap"]</code>.
           </p>
           <div class="card__meta" style="border-top-style: solid;">
             <span class="badge badge--accent">Vanilla CSS</span>

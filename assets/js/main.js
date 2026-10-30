@@ -95,7 +95,8 @@ document.querySelectorAll('[data-kurikulum]').forEach(function (host) {
 /* Tema: terang, gelap, atau ikut setelan sistem.
    Atribut data-tema di <html> sudah dipasang script di <head> sebelum
    halaman digambar; di sini hanya tombolnya. Pilihan disimpan di
-   localStorage "tema"; tidak ada simpanan berarti "ikut sistem". */
+   localStorage "tema". Tanpa simpanan, bawaannya terang; "sistem"
+   cuma berlaku kalau pengguna memilihnya sendiri. */
 (function () {
   var KUNCI = 'tema';
   var LABEL = { sistem: 'Sistem', terang: 'Terang', gelap: 'Gelap' };
@@ -112,11 +113,11 @@ document.querySelectorAll('[data-kurikulum]').forEach(function (host) {
   function bacaPilihan() {
     try {
       var nilai = localStorage.getItem(KUNCI);
-      if (nilai === 'terang' || nilai === 'gelap') return nilai;
+      if (nilai === 'terang' || nilai === 'gelap' || nilai === 'sistem') return nilai;
     } catch (e) {
-      /* localStorage bisa dimatikan; anggap saja ikut sistem. */
+      /* localStorage bisa dimatikan; pakai bawaan terang. */
     }
-    return 'sistem';
+    return 'terang';
   }
 
   function terapkan(pilihanBaru) {
@@ -126,11 +127,9 @@ document.querySelectorAll('[data-kurikulum]').forEach(function (host) {
     document.documentElement.setAttribute('data-tema', gelap ? 'gelap' : 'terang');
 
     try {
-      if (pilihan === 'sistem') {
-        localStorage.removeItem(KUNCI);
-      } else {
-        localStorage.setItem(KUNCI, pilihan);
-      }
+      /* "sistem" ikut disimpan, bukan dihapus, supaya beda dari
+         pengguna baru yang belum memilih apa pun (bawaannya terang). */
+      localStorage.setItem(KUNCI, pilihan);
     } catch (e) {
       /* Pilihan tetap berlaku untuk sesi ini walau tidak bisa disimpan. */
     }

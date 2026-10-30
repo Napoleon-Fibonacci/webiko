@@ -161,8 +161,10 @@ Tombolnya di navbar, kanan atas. Aturannya:
 
 - Atribut `data-tema` di `<html>` diisi script kecil di `<head>` **sebelum**
   halaman digambar, jadi tidak ada kedipan. Nilainya `"terang"` atau `"gelap"`.
-- Pilihan pengguna disimpan di `localStorage` dengan kunci `tema`. Tidak ada
-  simpanan berarti "ikut sistem".
+- Pilihan pengguna disimpan di `localStorage` dengan kunci `tema`. **Tanpa
+  simpanan, bawaannya terang** — jadi situs selalu terbuka cerah, tidak ikut
+  setelan gelap sistem operasi. Pilihan "Sistem" juga disimpan (nilainya
+  `"sistem"`), jadi ia berbeda dari pengguna baru yang belum memilih apa pun.
 - Token tema gelap hidup di satu tempat: blok `:root[data-tema="gelap"]` di
   `assets/css/style.css`. Tidak ada salinan di dalam media query, jadi
   mengubah warna gelap cukup di satu blok itu.
