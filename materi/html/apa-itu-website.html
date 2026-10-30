@@ -235,72 +235,65 @@
             </p>
           </div>
 
-          <section class="lab" data-lab aria-labelledby="lab-judul">
-            <p class="label">Latihan langsung</p>
-            <h2 id="lab-judul">Isi kerangka HTML5</h2>
-            <p>
-              Kerangka di panel kiri sudah lengkap, tetapi
-              <code>&lt;body&gt;</code> masih kosong. Kerjakan tiga hal, lalu
-              klik <strong>Jalankan</strong>.
+          <h2>Contoh halaman yang sudah diisi</h2>
+          <p>
+            Kerangka tadi belum punya isi. Berikut contoh halaman lengkap yang
+            sudah menambahkan judul dan paragraf di dalam
+            <code>&lt;body&gt;</code>.
+          </p>
+
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">index.html</span>
+                <span class="pane__badge">HTML</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-punct">&lt;!DOCTYPE html&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;html</span> <span class="tok-attr">lang</span><span class="tok-punct">=</span><span class="tok-string">"id"</span><span class="tok-tag">&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;head&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;meta</span> <span class="tok-attr">charset</span><span class="tok-punct">=</span><span class="tok-string">"UTF-8"</span><span class="tok-tag">&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;title&gt;</span>Halo, dunia!<span class="tok-tag">&lt;/title&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/head&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;body&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;h1&gt;</span>Halo, dunia!<span class="tok-tag">&lt;/h1&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;p&gt;</span>Ini halaman web pertamaku.<span class="tok-tag">&lt;/p&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/body&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/html&gt;</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Di browser, <code>&lt;h1&gt;</code> tampil sebagai judul besar dan
+              <code>&lt;p&gt;</code> sebagai paragraf biasa. Judul pada tab
+              browser diambil dari <code>&lt;title&gt;</code>.
             </p>
-            <ol>
-              <li>Ganti isi <code>&lt;title&gt;</code> dengan namamu.</li>
-              <li>
-                Di dalam <code>&lt;body&gt;</code>, tambah
-                <code>&lt;h1&gt;</code> berisi namamu.
-              </li>
-              <li>
-                Tambah satu <code>&lt;p&gt;</code> berisi satu kalimat tentang
-                hobimu.
-              </li>
-            </ol>
+          </div>
 
-            <div class="lab__meja">
-              <div class="lab__panel lab__panel--kode">
-                <div class="lab__bar">
-                  <span class="lab__prompt" aria-hidden="true">&gt;_</span>
-                  <span class="lab__nama">index.html</span>
-                  <span class="lab__isyarat">bisa diubah</span>
-                </div>
-                <textarea class="lab__editor" data-lab-editor rows="11" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Kode HTML latihan" aria-describedby="lab-status">&lt;!DOCTYPE html&gt;
-&lt;html lang="id"&gt;
-&lt;head&gt;
-  &lt;meta charset="UTF-8"&gt;
-  &lt;title&gt;Halaman pertamaku&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
+          <p>
+            Setiap tag pembuka punya pasangan penutup yang ditandai garis miring.
+            Isi di antara keduanya disebut <mark>elemen</mark>. Elemen boleh
+            berada di dalam elemen lain; <code>&lt;body&gt;</code> membungkus
+            semua isi yang terlihat.
+          </p>
+          <ul>
+            <li>
+              <code>&lt;h1&gt;Halo, dunia!&lt;/h1&gt;</code> membungkus satu
+              judul. Angka 1 menandai judul terpenting.
+            </li>
+            <li>
+              <code>&lt;p&gt;Ini halaman web pertamaku.&lt;/p&gt;</code>
+              membungkus satu paragraf.
+            </li>
+            <li>
+              Elemen bisa bersarang, misalnya
+              <code>&lt;p&gt;Halo &lt;strong&gt;dunia&lt;/strong&gt;!&lt;/p&gt;</code>.
+              Tag <code>&lt;strong&gt;</code> membuat kata di dalamnya tebal.
+            </li>
+            <li>
+              <mark>Atribut</mark> menempel pada tag pembuka dan memberi
+              keterangan tambahan, seperti <code>lang="id"</code> pada
+              <code>&lt;html&gt;</code>.
+            </li>
+          </ul>
 
-&lt;/body&gt;
-&lt;/html&gt;</textarea>
-              </div>
-
-              <div class="lab__panel lab__panel--hasil">
-                <div class="lab__bar">
-                  <span class="pane__dots" aria-hidden="true">
-                    <span class="pane__dot"></span>
-                    <span class="pane__dot"></span>
-                    <span class="pane__dot"></span>
-                  </span>
-                  <span class="lab__nama">Hasil</span>
-                  <span class="lab__isyarat">pratinjau</span>
-                </div>
-                <iframe class="lab__pratinjau" data-lab-pratinjau title="Pratinjau hasil kode HTML" sandbox="" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;id&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;title&gt;Halaman pertamaku&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
-              </div>
-            </div>
-
-            <div class="lab__aksi">
-              <button class="btn btn--primary" type="button" data-lab-jalankan hidden>Jalankan</button>
-              <button class="btn btn--ghost" type="button" data-lab-reset hidden>Atur ulang</button>
-              <p class="lab__status" id="lab-status" data-lab-status role="status">Halaman masih kosong. Isi bagian body, lalu klik Jalankan.</p>
-            </div>
-
-            <noscript>
-              <p class="lab__catatan">
-                Editor butuh JavaScript. Salin kode di atas ke file .html, lalu
-                buka di browser.
+          <div class="alert" role="note">
+            <div>
+              <strong class="alert__title">Spasi tidak menentukan tampilan</strong>
+              <p class="alert__text">
+                Browser menggabungkan beberapa spasi dan baris baru menjadi satu
+                spasi. Susunan halaman diatur oleh tag, bukan oleh banyaknya
+                tombol Enter.
               </p>
-            </noscript>
-          </section>
+            </div>
+          </div>
 
           <h2>Dari server ke layar</h2>
           <p>
@@ -490,7 +483,6 @@
     </div>
   </footer>
 
-  <script src="../../assets/js/latihan-html.js"></script>
   <script src="../../assets/js/main.js"></script>
 </body>
 </html>

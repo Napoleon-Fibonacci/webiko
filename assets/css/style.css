@@ -2070,6 +2070,17 @@ b {
   white-space: nowrap;
 }
 
+/* Di layar sempit, kode panjang di tengah kalimat boleh pecah. Tanpa ini
+   satu tag panjang melebarkan seluruh halaman sampai 320px pun meluber. */
+@media (max-width: 480px) {
+  .materi p code,
+  .materi li code,
+  .materi .card__text code {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
+
 .materi mark {
   padding-inline: 2px;
   background-color: var(--color-marker-bg);
