@@ -23,6 +23,19 @@
           window.matchMedia("(prefers-color-scheme: dark)").matches ? "gelap" : "terang"
         );
       }
+
+      // Gerak masuk layar (lihat main.js) hanya menyembunyikan elemen
+      // lebih dulu kalau observer-nya memang ada. Kalau main.js gagal
+      // dimuat, isi halaman tidak boleh tetap tersembunyi: lepaskan
+      // lagi setelah 2 detik.
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-siap");
+        window.setTimeout(function () {
+          if (!window.__wgReveal) {
+            document.documentElement.classList.remove("reveal-siap");
+          }
+        }, 2000);
+      }
     })();
   </script>
 
@@ -135,7 +148,7 @@
     <!-- ============ KURIKULUM ============ -->
     <section class="section" id="kurikulum">
       <div class="container">
-        <div class="section__header">
+        <div class="section__header" data-reveal>
           <div>
             <h2>Tiga jalur, dari nol sampai jalan</h2>
           </div>
@@ -154,28 +167,28 @@
     <!-- ============ CARA PAKAI ============ -->
     <section class="section" id="cara-pakai" style="padding-top: 0;">
       <div class="container">
-        <div class="section__header">
+        <div class="section__header" data-reveal>
           <div>
             <h2>Tiga langkah, tanpa alat tambahan</h2>
           </div>
         </div>
 
         <ol role="list" class="steps">
-          <li class="steps__item">
+          <li class="steps__item" data-reveal>
             <h3 class="steps__title">Buka satu bab</h3>
             <p class="steps__text">
               Tiap bab pendek: satu konsep, satu contoh kode, satu latihan. Tidak perlu
               menghabiskan satu sore untuk satu halaman.
             </p>
           </li>
-          <li class="steps__item">
+          <li class="steps__item" data-reveal>
             <h3 class="steps__title">Ubah contohnya</h3>
             <p class="steps__text">
               Salin kodenya ke file <code>.html</code>, lalu ubah sesukamu. Rusaknya juga
               bagian dari belajar — pesan errornya kami jelaskan satu per satu.
             </p>
           </li>
-          <li class="steps__item">
+          <li class="steps__item" data-reveal>
             <h3 class="steps__title">Bandingkan hasilnya</h3>
             <p class="steps__text">
               Buka file itu di browser dan lihat bedanya. Kalau sudah sesuai, lanjut ke
@@ -189,7 +202,7 @@
     <!-- ============ CONTOH PROGRES ============ -->
     <section class="section" id="progres" style="padding-top: 0;">
       <div class="container">
-        <div class="section__header">
+        <div class="section__header" data-reveal>
           <div>
             <h2>Kemajuanmu kelihatan</h2>
           </div>
@@ -197,7 +210,7 @@
         </div>
 
         <div class="report">
-          <aside class="sidebar" aria-label="Contoh daftar bab">
+          <aside class="sidebar" aria-label="Contoh daftar bab" data-reveal>
             <p class="sidebar__title">Bab HTML dasar</p>
             <ul class="sidebar__list">
               <li>
@@ -225,7 +238,7 @@
           </aside>
 
           <div class="report__stack">
-            <div class="alert alert--success" role="status">
+            <div class="alert alert--success" role="status" data-reveal>
               <div>
                 <strong class="alert__title">Skor tersimpan</strong>
                 <p class="alert__text">
@@ -234,7 +247,7 @@
               </div>
             </div>
 
-            <div class="card">
+            <div class="card" data-reveal>
               <h3 class="card__title">Badge terkumpul</h3>
               <p class="card__text">
                 Badge muncul sendiri saat satu bab atau satu kuis selesai.
@@ -253,7 +266,7 @@
     <!-- ============ AKUN ============ -->
     <section class="section" id="daftar" style="padding-top: 0;">
       <div class="container">
-        <div class="card card--tint">
+        <div class="card card--tint" data-reveal>
           <h2>Progres, kuis, dan badge butuh akun</h2>
           <p class="card__text">
             Daftar cukup dengan username dan password, tanpa email. Riwayat bab, skor

@@ -48,6 +48,7 @@
         <a class="navbar__link" href="#komponen">Komponen</a>
         <a class="navbar__link" href="#warna">Warna</a>
         <a class="navbar__link" href="#tipografi">Tipografi</a>
+        <a class="navbar__link" href="#gerak">Gerak</a>
       </nav>
 
       <div class="navbar__tools">
@@ -484,6 +485,50 @@
             </li>
           </ul>
         </div>
+
+        <div class="section__header" id="gerak" style="margin-top: var(--space-12);">
+          <div>
+            <p class="label">09 — Gerak</p>
+            <h2>Animasi &amp; transisi</h2>
+          </div>
+        </div>
+
+        <div class="card">
+          <ul role="list" style="display: grid; gap: var(--space-2);">
+            <li class="text-small"><code>--dur-fast</code> · 120ms — hover dan perpindahan kecil</li>
+            <li class="text-small"><code>--dur-base</code> · 180ms — perubahan warna latar</li>
+            <li class="text-small"><code>--dur-reveal</code> · 520ms — gerak masuk layar</li>
+            <li class="text-small"><code>--stagger</code> · 70ms — jeda antar elemen saat masuk</li>
+            <li class="text-small"><code>--ease-out</code> · cubic-bezier(0.2, 0.7, 0.3, 1)</li>
+          </ul>
+        </div>
+
+        <div class="card" style="margin-top: var(--space-6);">
+          <p class="label">Aturan</p>
+          <ul role="list" style="display: grid; gap: var(--space-2); margin-top: var(--space-3);">
+            <li class="text-small">
+              Gerak cuma pakai <code>transform</code> dan <code>opacity</code>, jadi
+              tidak ada tata letak yang bergeser.
+            </li>
+            <li class="text-small">
+              Elemen bertanda <code>data-reveal</code> naik 14px sambil memudar saat
+              masuk viewport, sekali saja. Pengaturnya di <code>assets/js/main.js</code>.
+            </li>
+            <li class="text-small">
+              Satu-satunya gerak berulang: logo navbar bergoyang pelan
+              (<code>wg-rock</code>, 5,5 detik, bolak-balik).
+            </li>
+            <li class="text-small">
+              Hover: tombol ikon navbar terangkat 2px dengan bayangan lebih panjang,
+              tautan navbar naik 1px, baris sidebar geser 2px dengan badge membesar,
+              tautan footer naik 1px.
+            </li>
+            <li class="text-small">
+              <code>prefers-reduced-motion: reduce</code> mematikan semua gerak, dan
+              tanpa JavaScript tidak ada isi yang disembunyikan.
+            </li>
+          </ul>
+        </div>
       </div>
     </section>
 
@@ -498,6 +543,7 @@
           <li><a href="#komponen">Komponen</a></li>
           <li><a href="#warna">Warna</a></li>
           <li><a href="#tipografi">Tipografi</a></li>
+          <li><a href="#gerak">Gerak</a></li>
           <li><a href="index.html">Beranda</a></li>
         </ul>
       </nav>

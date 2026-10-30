@@ -86,6 +86,7 @@ document.querySelectorAll('[data-kurikulum]').forEach(function (host) {
     kartu.append(nomor, judul, ringkas, meta);
 
     var item = document.createElement('li');
+    item.setAttribute('data-reveal', '');
     item.append(kartu);
     host.append(item);
   });
@@ -163,6 +164,48 @@ document.querySelectorAll('[data-kurikulum]').forEach(function (host) {
   }
 
   terapkan(pilihan);
+})();
+
+/* Gerak masuk layar untuk elemen bertanda [data-reveal].
+   Kelas .reveal-siap dipasang script di <head> sebelum halaman digambar,
+   jadi tanpa JavaScript atau tanpa IntersectionObserver tidak ada isi
+   yang disembunyikan. Tiap elemen dianimasikan sekali saja; setelah
+   tampil, pengamatnya dilepas supaya tidak ada kerja sia-sia.
+
+   Jeda antar elemen dihitung dari giliran masuknya (kelipatan --stagger
+   di stylesheet), jadi satu kelompok yang muncul bersamaan tampil
+   bertahap walau tata letaknya beda-beda. */
+(function () {
+  /* Tanda bahwa pengatur gerak sudah jalan, dibaca script <head> supaya
+     isi halaman tidak dilepas paksa kalau script ini gagal dimuat. */
+  window.__wgReveal = true;
+
+  var sasaran = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
+  if (!sasaran.length) return;
+
+  function tampilkan(el, urutan) {
+    el.style.setProperty('--reveal-step', Math.min(urutan, 5));
+    el.classList.add('is-in');
+  }
+
+  /* Gerakan minim atau observer tidak ada: tampilkan semuanya sekaligus. */
+  if (!('IntersectionObserver' in window) ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    sasaran.forEach(function (el) { tampilkan(el, 0); });
+    return;
+  }
+
+  var pengamat = new IntersectionObserver(function (entries) {
+    var urutan = 0;
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      tampilkan(entry.target, urutan);
+      pengamat.unobserve(entry.target);
+      urutan += 1;
+    });
+  }, { rootMargin: '0px 0px -12% 0px', threshold: 0.05 });
+
+  sasaran.forEach(function (el) { pengamat.observe(el); });
 })();
 
 

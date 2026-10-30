@@ -151,7 +151,8 @@ biasa — data kurikulum lebih dulu, baru `main.js`:
 ```
 
 `main.js` mengurus tombol menu navbar, merender daftar jalur materi dari
-`data/kurikulum.js` ke elemen `[data-kurikulum]`, dan mengurus tombol tema.
+`data/kurikulum.js` ke elemen `[data-kurikulum]`, mengurus tombol tema, dan
+mengatur gerak masuk layar elemen `[data-reveal]`.
 
 ## Tema
 
@@ -170,6 +171,26 @@ Tombolnya di navbar, kanan atas. Aturannya:
 
 Tanpa JavaScript, atribut `data-tema` tidak pernah dipasang dan halaman
 memakai tema terang.
+
+## Gerak
+
+Semua gerak cuma memakai `transform` dan `opacity`, jadi tidak ada tata letak
+yang bergeser dan tidak ada library. Kontraknya:
+
+- Token durasi dan easing ada di blok `/* --- Motion --- */` di
+  `assets/css/style.css`: `--dur-fast`, `--dur-base`, `--dur-reveal`,
+  `--stagger`, `--ease-out`.
+- **Masuk layar.** Elemen bertanda `data-reveal` naik 14px sambil memudar saat
+  masuk viewport, sekali saja. Pengaturnya IIFE terakhir di `assets/js/main.js`
+  (satu `IntersectionObserver`, jeda bertahap 70ms per elemen).
+- **Berulang.** Cuma satu: logo navbar bergoyang pelan (`@keyframes wg-rock`).
+- **Hover.** Tombol terangkat dengan bayangan lebih panjang, tautan navbar naik
+  1px, baris sidebar geser 2px, badge di dalamnya membesar.
+- **Aman.** `prefers-reduced-motion: reduce` mematikan semua gerak. Kelas
+  `reveal-siap` dipasang script di `<head>` halaman beranda hanya kalau
+  `IntersectionObserver` ada, dan script yang sama melepasnya lagi setelah 2
+  detik kalau `main.js` gagal jalan. Jadi tanpa JavaScript, atau saat `main.js`
+  gagal dimuat, tidak ada isi halaman yang tetap tersembunyi.
 
 ## Menjalankan secara lokal
 
