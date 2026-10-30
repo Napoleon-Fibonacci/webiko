@@ -197,6 +197,11 @@ yang bergeser dan tidak ada library. Kontraknya:
   masuk viewport, sekali saja. Pengaturnya IIFE terakhir di `assets/js/main.js`
   (satu `IntersectionObserver`, jeda bertahap 70ms per elemen).
 - **Berulang.** Cuma satu: logo navbar bergoyang pelan (`@keyframes wg-rock`).
+- **Menu mobile.** Tombol hamburger membuka panel melayang di bawah navbar:
+  panelnya meluncur turun sambil memudar dan tiap tautan menyusul bertahap.
+  Karena panel keluar dari aliran flex, tinggi navbar dan isi halaman di
+  bawahnya tidak bergeser. Menutup pun ikut beranimasi (butuh
+  `transition-behavior: allow-discrete`; browser lama cuma langsung hilang).
 - **Hover.** Tombol terangkat dengan bayangan lebih panjang, tautan navbar naik
   1px, baris sidebar geser 2px, badge di dalamnya membesar.
 - **Aman.** `prefers-reduced-motion: reduce` mematikan semua gerak. Kelas

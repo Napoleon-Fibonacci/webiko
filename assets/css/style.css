@@ -739,11 +739,35 @@ b {
   animation: wg-rock 5.5s ease-in-out infinite alternate;
 }
 
+/* Panel menu. Di layar kecil melayang turun di bawah navbar, keluar
+   dari aliran flex, supaya tinggi navbar tidak ikut berubah dan isi
+   halaman tidak bergeser. Di desktop direset jadi baris biasa (lihat
+   breakpoint "Tablet"). Tanpa JavaScript panel tetap display:none,
+   jadi tidak ada isi yang tersembunyi karena script. */
 .navbar__links {
   display: none;
-  align-items: center;
+  position: absolute;
+  inset: 100% 0 auto 0;
+  flex-direction: column;
+  align-items: stretch;
   gap: var(--space-1);
-  margin-left: auto;
+  margin-left: 0;
+  padding: var(--space-3) var(--container-pad) var(--space-4);
+  background-color: var(--color-surface-raised);
+  border-bottom: var(--border-w) solid var(--color-border);
+  box-shadow: var(--shadow-hard);
+  opacity: 0;
+  transform: translateY(-14px);
+  /* Baris pertama = cadangan untuk browser tanpa `allow-discrete`:
+     kalau tidak didukung, deklarasinya dibuang dan animasi buka tetap
+     jalan, hanya tutup yang langsung hilang. */
+  transition:
+    opacity var(--dur-base) var(--ease-out),
+    transform var(--dur-base) var(--ease-out);
+  transition:
+    opacity var(--dur-base) var(--ease-out),
+    transform var(--dur-base) var(--ease-out),
+    display var(--dur-base) allow-discrete;
 }
 
 .navbar__link {
@@ -773,23 +797,50 @@ b {
   box-shadow: var(--shadow-hard-sm);
 }
 
-/* Mobile: menu dibuka via tombol .navbar__toggle (lihat main.js). */
-.navbar[data-open] .navbar__inner {
-  column-gap: var(--space-2);
-  row-gap: 0; /* panel menempel tepat di baris bawah brand */
-}
+/* Mobile: menu dibuka via tombol .navbar__toggle (lihat main.js).
+   Panel meluncur turun dari bawah navbar, lalu tautannya menyusul
+   satu per satu. Gerak cuma transform dan opacity. */
 .navbar[data-open] .navbar__links {
   display: flex;
-  flex-basis: 100%;
-  flex-direction: column;
-  align-items: stretch;
-  gap: var(--space-1);
-  margin-left: 0;
-  padding-top: var(--space-2);
+  opacity: 1;
+  transform: none;
+}
+
+/* Panel baru muncul setelah display berubah dari none ke flex, jadi
+   browser belum punya "keadaan sebelum" untuk dianimasikan. Blok ini
+   memberi titik awalnya. Browser tanpa @starting-style hanya kehilangan
+   animasi buka; panel tetap tampil penuh. */
+@starting-style {
+  .navbar[data-open] .navbar__links {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
 }
 
 .navbar[data-open] .navbar__link {
+  animation: wg-menu-tautan 260ms var(--ease-out) backwards;
+}
+
+/* Ukuran sentuh tautan di panel dipatok di satu tempat, bukan cuma saat
+   dibuka, supaya tinggi panel tidak menyusut sekejap ketika ditutup. */
+.navbar__links .navbar__link {
   padding: var(--space-3);
+}
+
+.navbar[data-open] .navbar__link:nth-child(2) {
+  animation-delay: 40ms;
+}
+
+.navbar[data-open] .navbar__link:nth-child(3) {
+  animation-delay: 80ms;
+}
+
+.navbar[data-open] .navbar__link:nth-child(4) {
+  animation-delay: 120ms;
+}
+
+.navbar[data-open] .navbar__link:nth-child(5) {
+  animation-delay: 160ms;
 }
 
 /* Deretan tombol di ujung kanan navbar: tema, lalu menu (menu hanya
@@ -1138,13 +1189,23 @@ b {
     gap: var(--space-6);
   }
 
+  /* Desktop: menu jadi baris biasa di navbar, bukan panel melayang. */
   .navbar__links {
     display: flex;
+    position: static;
+    inset: auto;
     flex-basis: auto;
     flex-direction: row;
+    align-items: center;
     gap: var(--space-1);
     margin-left: auto;
-    padding-top: 0;
+    padding: 0;
+    background-color: transparent;
+    border-bottom: 0;
+    box-shadow: none;
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 
   /* State menu mobile tidak berlaku di desktop. */
@@ -1152,10 +1213,12 @@ b {
     flex-basis: auto;
     flex-direction: row;
     gap: var(--space-1);
-    padding-top: 0;
+    padding: 0;
+    opacity: 1;
+    transform: none;
   }
 
-  .navbar[data-open] .navbar__link {
+  .navbar__links .navbar__link {
     padding: var(--space-2) var(--space-3);
   }
 
@@ -1456,7 +1519,9 @@ b {
    2. Logo navbar bergoyang pelan terus-menerus (satu-satunya gerakan
       berulang).
    3. Elemen [data-reveal] naik halus saat masuk viewport, diatur
-      assets/js/main.js. */
+      assets/js/main.js.
+   4. Panel menu mobile meluncur turun dan tautannya menyusul
+      (wg-menu-tautan); menutup pun beranimasi. */
 @keyframes wg-line {
   from {
     opacity: 0;
@@ -1483,6 +1548,17 @@ b {
   from {
     opacity: 0;
     transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes wg-menu-tautan {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
   }
   to {
     opacity: 1;
