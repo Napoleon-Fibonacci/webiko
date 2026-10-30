@@ -2042,7 +2042,9 @@ b {
   max-width: var(--measure);
 }
 
-.materi p + p {
+.materi p + p,
+.materi ul + p,
+.materi ol + p {
   margin-top: var(--space-3);
 }
 

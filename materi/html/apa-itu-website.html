@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Bab 1 HTML dari nol: apa itu website, cara browser menampilkan halaman, dan tiga bahasa dasar HTML, CSS, serta JavaScript. Materi Webiko untuk pelajar SMP dan SMA.">
+  <meta name="description" content="Bab 1 HTML dari nol: apa itu website, bedanya internet dan web, kerangka HTML5, cara browser mengambil halaman dari server, alamat web, domain, hosting, dan website statis atau dinamis. Materi Webiko untuk pelajar SMP dan SMA.">
   <title>Apa itu website — HTML dari nol · Webiko</title>
 
   <!-- Pasang tema sebelum halaman digambar, sama seperti beranda. -->
@@ -123,6 +123,24 @@
             mengetik alamat baru.
           </p>
 
+          <h2>Internet dan web bukan hal yang sama</h2>
+          <p>
+            <mark>Internet</mark> adalah jaringan komputer yang saling
+            terhubung di seluruh dunia. Jaringan ini dipakai banyak layanan
+            sekaligus: surel, panggilan video, permainan online, dan web.
+          </p>
+          <p>
+            <mark>Web</mark> adalah salah satu layanan di internet: kumpulan
+            dokumen yang diakses lewat HTTP atau HTTPS lalu ditampilkan browser.
+            Semua halaman web ada di internet, tetapi tidak semua isi internet
+            adalah web.
+          </p>
+          <p>
+            Sehari-hari orang sering berkata “buka internet” padahal maksudnya
+            “buka website”. Dua istilah itu dipakai bergantian, tetapi secara
+            teknis berbeda.
+          </p>
+
           <h2>Tiga bahasa, tiga tugas</h2>
           <p>
             Hampir semua halaman web dibangun dari tiga bahasa yang bekerja
@@ -168,6 +186,122 @@
             </div>
           </div>
 
+          <h2>Kerangka halaman HTML5</h2>
+          <p>
+            Semua halaman web berdiri di atas kerangka yang sama. Kerangka ini
+            tidak menampilkan apa pun sampai kamu mengisi bagian isinya.
+          </p>
+          <ul>
+            <li>
+              <code>&lt;!DOCTYPE html&gt;</code> memberi tahu browser bahwa
+              berkas ini memakai HTML5.
+            </li>
+            <li>
+              <code>&lt;html lang="id"&gt;</code> adalah akar halaman.
+              <code>lang="id"</code> menandai bahwa isinya berbahasa Indonesia.
+            </li>
+            <li>
+              <code>&lt;head&gt;</code> menyimpan keterangan halaman, seperti
+              <code>charset</code> dan <code>title</code>. Isinya tidak tampil
+              di jendela browser, kecuali judul pada tab.
+            </li>
+            <li>
+              <code>&lt;body&gt;</code> memuat semua yang terlihat: judul,
+              paragraf, gambar, dan tautan.
+            </li>
+          </ul>
+
+          <p>
+            Isi halaman ditulis dengan <mark>tag</mark>, yaitu perintah di dalam
+            kurung siku seperti <code>&lt;h1&gt;</code>. Sebagian besar tag
+            punya pasangan: <code>&lt;h1&gt;</code> membuka,
+            <code>&lt;/h1&gt;</code> menutup, dan isi di antaranya tampil di
+            halaman. Tag pembuka juga bisa membawa <mark>atribut</mark>,
+            keterangan tambahan seperti <code>lang="id"</code> pada
+            <code>&lt;html&gt;</code>.
+          </p>
+
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">index.html</span>
+                <span class="pane__badge">HTML</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-punct">&lt;!DOCTYPE html&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;html</span> <span class="tok-attr">lang</span><span class="tok-punct">=</span><span class="tok-string">"id"</span><span class="tok-tag">&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;head&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;meta</span> <span class="tok-attr">charset</span><span class="tok-punct">=</span><span class="tok-string">"UTF-8"</span><span class="tok-tag">&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;title&gt;</span>Halaman pertamaku<span class="tok-tag">&lt;/title&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/head&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;body&gt;</span></span><span class="code__line">  </span><span class="code__line"><span class="tok-tag">&lt;/body&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/html&gt;</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Kerangka kosong. Baris di dalam <code>&lt;body&gt;</code> sengaja
+              dibiarkan kosong karena di situlah isi halaman ditulis.
+            </p>
+          </div>
+
+          <section class="lab" data-lab aria-labelledby="lab-judul">
+            <p class="label">Latihan langsung</p>
+            <h2 id="lab-judul">Isi kerangka HTML5</h2>
+            <p>
+              Kerangka di panel kiri sudah lengkap, tetapi
+              <code>&lt;body&gt;</code> masih kosong. Kerjakan tiga hal, lalu
+              klik <strong>Jalankan</strong>.
+            </p>
+            <ol>
+              <li>Ganti isi <code>&lt;title&gt;</code> dengan namamu.</li>
+              <li>
+                Di dalam <code>&lt;body&gt;</code>, tambah
+                <code>&lt;h1&gt;</code> berisi namamu.
+              </li>
+              <li>
+                Tambah satu <code>&lt;p&gt;</code> berisi satu kalimat tentang
+                hobimu.
+              </li>
+            </ol>
+
+            <div class="lab__meja">
+              <div class="lab__panel lab__panel--kode">
+                <div class="lab__bar">
+                  <span class="lab__prompt" aria-hidden="true">&gt;_</span>
+                  <span class="lab__nama">index.html</span>
+                  <span class="lab__isyarat">bisa diubah</span>
+                </div>
+                <textarea class="lab__editor" data-lab-editor rows="11" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Kode HTML latihan" aria-describedby="lab-status">&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Halaman pertamaku&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+              </div>
+
+              <div class="lab__panel lab__panel--hasil">
+                <div class="lab__bar">
+                  <span class="pane__dots" aria-hidden="true">
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                  </span>
+                  <span class="lab__nama">Hasil</span>
+                  <span class="lab__isyarat">pratinjau</span>
+                </div>
+                <iframe class="lab__pratinjau" data-lab-pratinjau title="Pratinjau hasil kode HTML" sandbox="" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;id&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;title&gt;Halaman pertamaku&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+              </div>
+            </div>
+
+            <div class="lab__aksi">
+              <button class="btn btn--primary" type="button" data-lab-jalankan hidden>Jalankan</button>
+              <button class="btn btn--ghost" type="button" data-lab-reset hidden>Atur ulang</button>
+              <p class="lab__status" id="lab-status" data-lab-status role="status">Halaman masih kosong. Isi bagian body, lalu klik Jalankan.</p>
+            </div>
+
+            <noscript>
+              <p class="lab__catatan">
+                Editor butuh JavaScript. Salin kode di atas ke file .html, lalu
+                buka di browser.
+              </p>
+            </noscript>
+          </section>
+
           <h2>Dari server ke layar</h2>
           <p>
             Saat kamu membuka website dari internet, berkasnya tidak tersimpan
@@ -189,9 +323,14 @@
             meminta — dan server adalah pihak yang menjawab.
           </p>
           <p>
+            Setelah berkas sampai, browser membaca HTML dari atas ke bawah,
+            menyusun elemennya, memuat CSS dan gambar, lalu menggambar hasilnya
+            di layar. Proses ini disebut <mark>render</mark>.
+          </p>
+          <p>
             Karena harus menempuh perjalanan ini, halaman bisa terasa lambat
             saat pertama dibuka. Berkas yang lebih kecil dan gambar yang tidak
-            terlalu besar membuat halaman lebih cepat sampai.
+            terlalu besar membuat halaman lebih cepat sampai dan dirender.
           </p>
 
           <h2>Alamat punya bagian</h2>
@@ -213,6 +352,32 @@
               diminta dari website itu.
             </li>
           </ul>
+
+          <h2>Domain, hosting, dan DNS</h2>
+          <p>
+            Tiga hal ini menjelaskan bagaimana alamat yang kamu ketik bisa
+            menemukan halaman yang benar.
+          </p>
+          <ul>
+            <li>
+              <strong>Domain</strong> — nama website yang disewa, misalnya
+              <code>webiko.my.id</code>. Nama ini yang kamu ketik dan ingat.
+            </li>
+            <li>
+              <strong>DNS</strong> — sistem yang menerjemahkan domain menjadi
+              alamat IP server. Ibarat buku telepon: kamu mengetik nama, DNS
+              memberi nomor tujuan.
+            </li>
+            <li>
+              <strong>Hosting</strong> — tempat berkas website disimpan di
+              server. Bisa server milik sendiri atau layanan sewa.
+            </li>
+          </ul>
+          <p>
+            Domain dan hosting dipisah supaya kamu bisa pindah server tanpa
+            mengganti nama website. Cukup arahkan domain ke server baru lewat
+            DNS.
+          </p>
 
           <h2>Website statis dan dinamis</h2>
           <p>
@@ -248,65 +413,30 @@
               biasanya berada di bawah satu domain.
             </li>
             <li>
+              Internet adalah jaringan komputernya; web adalah salah satu
+              layanan yang berjalan di atasnya.
+            </li>
+            <li>
               HTML menyusun isi, CSS mengatur tampilan, JavaScript menambah
               perilaku.
+            </li>
+            <li>
+              Halaman HTML5 punya kerangka: <code>&lt;!DOCTYPE html&gt;</code>,
+              <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code>, dan
+              <code>&lt;body&gt;</code>.
             </li>
             <li>
               Browser meminta berkas ke server lewat HTTP atau HTTPS, lalu
               menampilkan hasilnya.
             </li>
             <li>
-              Alamat web terdiri dari protokol, domain, dan path.
+              Alamat web terdiri dari protokol, domain, dan path. DNS
+              menerjemahkan domain ke alamat IP server.
+            </li>
+            <li>
+              Domain adalah namanya, hosting adalah tempat berkasnya.
             </li>
           </ul>
-
-          <section class="lab" data-lab aria-labelledby="lab-judul">
-            <p class="label">Latihan langsung</p>
-            <h2 id="lab-judul">Coba tulis HTML-mu</h2>
-            <p>
-              Ganti nama dan kalimat di panel kiri, lalu klik
-              <strong>Jalankan</strong>. Panel kanan langsung menampilkan
-              hasilnya.
-            </p>
-
-            <div class="lab__meja">
-              <div class="lab__panel lab__panel--kode">
-                <div class="lab__bar">
-                  <span class="lab__prompt" aria-hidden="true">&gt;_</span>
-                  <span class="lab__nama">index.html</span>
-                  <span class="lab__isyarat">bisa diubah</span>
-                </div>
-                <textarea class="lab__editor" data-lab-editor rows="8" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Kode HTML latihan" aria-describedby="lab-status">&lt;h1&gt;Halo, dunia!&lt;/h1&gt;
-&lt;p&gt;Ini halaman web pertamaku.&lt;/p&gt;</textarea>
-              </div>
-
-              <div class="lab__panel lab__panel--hasil">
-                <div class="lab__bar">
-                  <span class="pane__dots" aria-hidden="true">
-                    <span class="pane__dot"></span>
-                    <span class="pane__dot"></span>
-                    <span class="pane__dot"></span>
-                  </span>
-                  <span class="lab__nama">Hasil</span>
-                  <span class="lab__isyarat">pratinjau</span>
-                </div>
-                <iframe class="lab__pratinjau" data-lab-pratinjau title="Pratinjau hasil kode HTML" sandbox="" srcdoc="&lt;h1&gt;Halo, dunia!&lt;/h1&gt;&lt;p&gt;Ini halaman web pertamaku.&lt;/p&gt;"></iframe>
-              </div>
-            </div>
-
-            <div class="lab__aksi">
-              <button class="btn btn--primary" type="button" data-lab-jalankan hidden>Jalankan</button>
-              <button class="btn btn--ghost" type="button" data-lab-reset hidden>Atur ulang</button>
-              <p class="lab__status" id="lab-status" data-lab-status role="status">Panel kanan menampilkan contoh hasil.</p>
-            </div>
-
-            <noscript>
-              <p class="lab__catatan">
-                Editor butuh JavaScript. Salin kode di atas ke file .html, lalu
-                buka di browser.
-              </p>
-            </noscript>
-          </section>
 
           <footer class="materi__kaki">
             <section class="kaki__sumber" aria-labelledby="sumber-judul">
