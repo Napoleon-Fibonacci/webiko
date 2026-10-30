@@ -166,8 +166,21 @@ Tombolnya di navbar, kanan atas. Aturannya:
 - Token tema gelap hidup di satu tempat: blok `:root[data-tema="gelap"]` di
   `assets/css/style.css`. Tidak ada salinan di dalam media query, jadi
   mengubah warna gelap cukup di satu blok itu.
-- Di tema gelap `--color-marker-bg` jadi lilac, supaya kuning hanya dipakai
-  untuk aksi (tombol utama dan badge penekanan), bukan untuk semua penanda.
+- Di tema gelap penanda (logo navbar, nomor bab, nomor langkah) tetap kuning
+  `#ffe14d`, sama persis dengan tema terang. Sisanya (`--color-accent`) versi
+  redup `#f0d264`, karena di latar sedalam ini kuning mentah menyilaukan
+  kalau dipakai di bidang yang lebar (tombol, badge).
+
+### Palet
+
+Keluarga violet-nya condong ke biru (indigo), hue 231-242 derajat — bukan
+ungu kemerahan. Alasannya: di panel layar bermutu rendah (gamut sempit) ungu
+kemerahan turun menjadi hampir hitam, sedangkan indigo tetap terbaca sebagai
+ungu-biru. Semua pasangan teks tetap >= 4.5:1, angkanya ada di komentar tiap
+token di `assets/css/style.css`.
+
+Kuning `#ffe14d` (tema terang) sengaja dipertahankan: dengan latar indigo,
+lawan warnanya makin kontras, jadi satu-satunya warna aksi tetap menonjol.
 
 Tanpa JavaScript, atribut `data-tema` tidak pernah dipasang dan halaman
 memakai tema terang.

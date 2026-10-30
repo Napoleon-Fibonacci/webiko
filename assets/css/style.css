@@ -1,7 +1,7 @@
 /* ============================================================
    Web Guide — assets/css/style.css
    Stylesheet utama. Ditulis vanilla CSS, mobile-first.
-Arah visual: neo-brutalist "lilac pop" (rujukan visual canvas saja,
+Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
    teks/konten canvas tidak dipakai — copy UI milik Web Guide).
    Tanpa framework, tanpa build step, tanpa dependency eksternal.
 
@@ -24,23 +24,25 @@ Arah visual: neo-brutalist "lilac pop" (rujukan visual canvas saja,
   /* Native control (scrollbar, isian) ikut tema halaman, bukan OS. */
   color-scheme: light;
 
-  /* --- Warna: brand & aksen --------------------------------- */
-  --color-primary: #6b3fd4;          /* violet aksen (fill) */
-  --color-primary-hover: #5b2fc4;
-  --color-primary-active: #4d27a8;
-  --color-primary-soft: #a98bf0;     /* fill dekoratif / badge */
+  /* --- Warna: brand & aksen ---------------------------------
+     Keluarga violet-nya condong ke biru (indigo), hue 231-242
+     derajat, bukan ungu kemerahan. Kuning tetap jadi satu-satunya
+     warna aksi supaya lawan warnanya makin kontras. */
+  --color-primary: #433fd4;          /* violet aksen (fill), 7.24:1 di atas putih */
+  --color-primary-hover: #332fc4;
+  --color-primary-active: #2b27a8;
+  --color-primary-soft: #8e8bf0;     /* fill dekoratif / badge */
 
-  --color-secondary: #c9b4ff;        /* lilac */
-  --color-secondary-hover: #b9a6fb;
-  --color-secondary-active: #a992f7;
+  --color-secondary: #b8befb;        /* lilac indigo, 9.45:1 dengan --color-ink */
+  --color-secondary-hover: #aab5f7;
+  --color-secondary-active: #97a4f2;
 
-  --color-accent: #ffe14d;           /* kuning pop */
+  --color-accent: #ffe14d;           /* kuning pop, 12.86:1 dengan --color-on-accent */
   --color-accent-hover: #ffe97a;
   --color-accent-active: #f5d21f;
 
-  /* Fill penanda (nomor bab, nomor langkah, logo). Di tema terang
-     sama dengan aksen; di tema gelap jadi lilac supaya kuning tetap
-     jadi warna aksi, bukan warna seragam semua elemen. */
+  /* Fill penanda (nomor bab, nomor langkah, logo). Sama dengan aksen di
+     kedua tema, dan di tema gelap ikut aksen versi redup. */
   --color-marker-bg: var(--color-accent);
 
   /* Alias untuk layout.css. Bukan warna baru: cukup menamai ulang
@@ -52,23 +54,23 @@ Arah visual: neo-brutalist "lilac pop" (rujukan visual canvas saja,
   --color-pink: #ffb7c5;
 
   /* --- Warna: permukaan & teks ------------------------------ */
-  --color-background: #efeafd;       /* latar halaman */
+  --color-background: #ecedfb;       /* latar halaman */
   --color-surface: #ffffff;          /* kartu */
-  --color-surface-soft: #e0d3ff;     /* panel lilac muda */
-  --color-surface-raised: #b9a6fb;   /* header, CTA */
-  --color-ink: #1f1a33;              /* teks utama & border */
+  --color-surface-soft: #d6d9fc;     /* panel lilac indigo muda */
+  --color-surface-raised: #aab5f7;   /* header, CTA */
+  --color-ink: #1a1b33;              /* teks utama & border, 14.48:1 di latar */
   --color-ink-inverse: #ffffff;      /* teks di atas fill gelap */
   --color-on-accent: #1f1a33;        /* teks di atas fill terang (canvas) */
-  --color-border: #1f1a33;
-  --color-border-muted: #c4b8e8;     /* garis pembatas lembut */
-  --color-disabled-bg: #e6e1f5;      /* isian/tombol nonaktif */
+  --color-border: #1a1b33;
+  --color-border-muted: #bdc1e3;     /* garis pembatas lembut */
+  --color-disabled-bg: #e3e4f3;      /* isian/tombol nonaktif */
 
   /* Teks sekunder / aksen teks. Nilai canvas digelapkan
      secukupnya agar lolos WCAG AA (lihat laporan di ticket). */
-  --color-muted: #4a3a7e;            /* 4.51:1 di --color-surface-raised */
-  --color-accent-text: #5530b8;      /* 4.58:1 di --color-secondary */
-  --color-accent-text-brand: #6b3fd4; /* canvas primary; teks besar/aksen di atas background */
-  --color-placeholder: #5f5b7a;      /* 4.57:1 di --color-surface-soft */
+  --color-muted: #3a3c7e;            /* 5.01:1 di --color-surface-raised */
+  --color-accent-text: #3130b8;      /* 5.25:1 di --color-secondary */
+  --color-accent-text-brand: #433fd4; /* canvas primary; teks besar/aksen di atas background */
+  --color-placeholder: #595b73;      /* 4.79:1 di --color-surface-soft */
 
   /* --- Warna: status --------------------------------------- */
   --color-error: #b71c3a;
@@ -81,8 +83,8 @@ Arah visual: neo-brutalist "lilac pop" (rujukan visual canvas saja,
   --color-info-bg: #e3e3ff;
 
   /* --- Warna: shadow (hard, tanpa blur) --------------------- */
-  --color-shadow: #1f1a33;
-  --color-shadow-accent: #5530b8;
+  --color-shadow: #1a1b33;
+  --color-shadow-accent: #3130b8;
 
   /* --- Tipografi ------------------------------------------- */
   --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
@@ -158,11 +160,11 @@ Arah visual: neo-brutalist "lilac pop" (rujukan visual canvas saja,
   /* --- Kode (panel contoh) --------------------------------- */
   /* Panel kode sengaja gelap di kedua tema: potongan kode harus
      terbaca sama, dan warna di dalamnya memakai fill brand. */
-  --color-code-bg: #1f1a33;
-  --color-code-bar: #2b2450;
-  --color-code-ink: #f3efff;
-  --color-code-muted: #b6a9e4;
-  --color-code-tag: #a98bf0;
+  --color-code-bg: #1a1b33;
+  --color-code-bar: #242750;
+  --color-code-ink: #f3efff;         /* 16.78:1 di --color-code-bg */
+  --color-code-muted: #a9aae4;       /* 7.65:1 di --color-code-bg */
+  --color-code-tag: #8e8bf0;         /* 5.69:1 di --color-code-bg */
   --color-code-attr: #ffe14d;
   --color-code-string: #a8f0d0;
 
@@ -190,7 +192,7 @@ Arah visual: neo-brutalist "lilac pop" (rujukan visual canvas saja,
    token terang di :root.
 
    Prinsip warna: garis dan shadow tidak memakai putih penuh
-   (menyilaukan) melainkan lilac; permukaan dibedakan lewat tiga
+   (menyilaukan) melainkan lilac indigo; permukaan dibedakan lewat tiga
    tingkat terang; kuning hanya untuk aksi; dan setiap pasangan teks
    tetap >= 4.5:1 (angkanya ada di tiap baris).
    ============================================================ */
@@ -198,32 +200,32 @@ Arah visual: neo-brutalist "lilac pop" (rujukan visual canvas saja,
 :root[data-tema="gelap"] {
   color-scheme: dark;
 
-  --color-background: #15112b;
-  --color-surface: #1e1a3a;
-  --color-surface-soft: #2b2450;
-  --color-surface-raised: #453870;
-  --color-ink: #f3efff;            /* 9.06:1 di --color-surface-raised */
-  --color-ink-inverse: #16122d;    /* teks di atas fill terang */
+  --color-background: #11132b;
+  --color-surface: #1a1d3a;
+  --color-surface-soft: #242750;
+  --color-surface-raised: #383a70;
+  --color-ink: #f1efff;            /* 9.23:1 di --color-surface-raised */
+  --color-ink-inverse: #12142d;    /* teks di atas fill terang, 5.14:1 di --color-primary */
   --color-on-accent: #1f1a33;
-  --color-border: #9f8ada;         /* lilac, bukan putih: 6.21:1 di background */
-  --color-border-muted: #403a68;
-  --color-disabled-bg: #322b57;
+  --color-border: #8a8dda;         /* lilac indigo, bukan putih: 5.99:1 di background */
+  --color-border-muted: #3a3f68;
+  --color-disabled-bg: #2b2e57;
 
-  --color-muted: #c0b4ea;          /* 5.34:1 di --color-surface-raised */
-  --color-accent-text: #d5c6ff;    /* 6.50:1 di --color-surface-raised */
-  --color-accent-text-brand: #d5c6ff;
-  --color-placeholder: #b6a9e4;    /* 6.65:1 di --color-surface-soft */
+  --color-muted: #b4b5ea;          /* 5.35:1 di --color-surface-raised */
+  --color-accent-text: #c8c6ff;    /* 6.47:1 di --color-surface-raised */
+  --color-accent-text-brand: #c8c6ff;
+  --color-placeholder: #a9aae4;    /* 6.45:1 di --color-surface-soft */
 
   /* Violet dinaikkan terangnya supaya teks --color-ink-inverse di
-     atasnya lolos AA (5.63:1; tema sebelumnya cuma 2.62:1). */
-  --color-primary: #9d7bf0;
-  --color-primary-hover: #8b65ec;
-  --color-primary-active: #7a52e6;
-  --color-primary-soft: #b49bf5;
+     atasnya lolos AA (5.14:1; tema sebelumnya cuma 2.62:1). */
+  --color-primary: #7e7bf0;
+  --color-primary-hover: #6765ec;
+  --color-primary-active: #5352e6;
+  --color-primary-soft: #9c9bf5;
 
-  --color-secondary: #4c388f;      /* 8.20:1 dengan --color-ink */
-  --color-secondary-hover: #573fa0;
-  --color-secondary-active: #63489f;
+  --color-secondary: #383e8f;      /* 8.22:1 dengan --color-ink */
+  --color-secondary-hover: #3f44a0;
+  --color-secondary-active: #49489f;
 
   --color-mint: #a8f0d0;
   --color-pink: #ffb7c5;
@@ -236,7 +238,11 @@ Arah visual: neo-brutalist "lilac pop" (rujukan visual canvas saja,
   --color-accent-hover: #f5dc81;
   --color-accent-active: #e0bf4a;
 
-  --color-marker-bg: var(--color-primary-soft);  /* 7.14:1 dengan on-accent */
+  /* Penanda tetap pakai kuning mentah #ffe14d seperti tema terang, bukan
+     --color-accent yang sudah diredupkan: penanda bentuknya kecil, jadi
+     warnanya yang terang justru membantu, dan penampangnya sama dengan
+     tema terang. Kontras dengan --color-on-accent 12.86:1. */
+  --color-marker-bg: #ffe14d;
 
   --color-error: #ff9aae;          /* 7.44:1 di --color-error-bg */
   --color-error-bg: #47152a;
@@ -247,13 +253,14 @@ Arah visual: neo-brutalist "lilac pop" (rujukan visual canvas saja,
   --color-info: #b9b3ff;           /* 7.70:1 di --color-info-bg */
   --color-info-bg: #232059;
 
-  /* Shadow tetap offset keras, tapi jadi langkah violet (2.49:1 dari
-     background) — bukan balok putih 8px yang bikin kartu menyilaukan. */
-  --color-shadow: #5b4a94;
-  --color-shadow-accent: #8b6ff0;
+  /* Shadow tetap offset keras, tapi jadi langkah violet-biru (2.41:1
+     dari background) — bukan balok putih 8px yang bikin kartu
+     menyilaukan. */
+  --color-shadow: #4a4d94;
+  --color-shadow-accent: #6f75f0;
 
-  --color-code-bg: #100d22;
-  --color-code-bar: #1e1a3a;
+  --color-code-bg: #0d0f22;
+  --color-code-bar: #1a1d3a;
 }
 
 /* ============================================================
