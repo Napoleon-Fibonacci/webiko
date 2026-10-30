@@ -1678,6 +1678,13 @@ b {
     grid-template-columns: 20rem minmax(0, 1fr);
     align-items: start;
   }
+
+  /* Di lebar ini hero masih satu kolom. Tanpa batas, panel kode melar
+     selebar halaman padahal isinya cuma ~270px, jadi separuh panel
+     tinggal gelap kosong. Dipatok saja. */
+  .hero__workbench {
+    max-width: 34rem;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -1687,11 +1694,18 @@ b {
 
   /* Kolom teks sedikit lebih lebar dari kolom kode: judul display
      butuh ~470px per baris supaya "baris demi baris." tidak pecah
-     jadi baris yatim; isi panel kode cuma butuh ~270px. */
+     jadi baris yatim; isi panel kode cuma butuh ~270px. Kolom teks
+     selalu lebih pendek dari panel kode, jadi ditengahkan vertikal:
+     sisa ruangnya terbagi rata atas dan bawah, tidak menumpuk jadi
+     lubang di kiri bawah. */
   .hero__grid {
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-    align-items: start;
+    align-items: center;
     gap: var(--space-12);
+  }
+
+  .hero__workbench {
+    max-width: none;
   }
 }
 
