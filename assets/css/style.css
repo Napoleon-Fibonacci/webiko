@@ -2145,15 +2145,43 @@ b {
 
 .kaki__sumber ul {
   display: grid;
-  gap: var(--space-2);
+  gap: 0;
   margin-top: var(--space-3);
   padding: 0;
   list-style: none;
 }
 
+.kaki__sumber li + li {
+  border-top: var(--border-w-thin) dashed var(--color-border-muted);
+}
+
 .kaki__sumber a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.kaki__sumber a::after {
+  content: "↗";
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: var(--space-6);
+  height: var(--space-6);
+  border: var(--border-w-thin) solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-marker-bg);
+  color: var(--color-on-accent);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-black);
+}
+
+.kaki__sumber a:hover {
   color: var(--color-accent-text);
-  text-underline-offset: var(--space-1);
 }
 
 .kaki__pager {
@@ -2178,9 +2206,19 @@ b {
   box-shadow: var(--shadow-hard-sm);
 }
 
-.kaki__bab--kembali:hover,
-.kaki__bab--lanjut:hover {
+.kaki__bab--kembali:hover {
   background-color: var(--color-surface-soft);
+  box-shadow: var(--shadow-hard);
+}
+
+/* Tombol bab berikutnya diberi isi marker supaya jadi ajakan utama. */
+.kaki__bab--lanjut {
+  background-color: var(--color-marker-bg);
+  color: var(--color-on-accent);
+}
+
+.kaki__bab--lanjut:hover {
+  background-color: var(--color-accent-hover);
   box-shadow: var(--shadow-hard);
 }
 
