@@ -672,8 +672,17 @@ b {
   height: 100%;
 }
 
+/* Garis putus-putus di kepala baris meta diberi jarak sama besar ke
+   ringkasan di atas dan ke lencana di bawahnya, jadi terbaca duduk di
+   tengah. Baris meta tetap dipaku ke bawah kartu supaya lencananya
+   sebaris antarkartu. */
+.card--lesson .card__text {
+  margin-bottom: var(--space-6);
+}
+
 .card--lesson .card__meta {
   margin-top: auto;
+  padding-top: var(--space-6);
 }
 
 .card--lesson .card__index {
