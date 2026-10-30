@@ -107,6 +107,32 @@
           <p class="hero__note text-small">
             Gratis, berbahasa Indonesia, dan bisa dimulai tanpa akun.
           </p>
+
+          <!-- Hiasan: mengisi sisa ruang di bawah kolom teks pada tata
+               letak dua kolom. Murni dekoratif, jadi disembunyikan dari
+               pembaca layar; geraknya mati saat prefers-reduced-motion. -->
+          <div class="hero__deco" aria-hidden="true">
+            <svg viewBox="0 0 640 160" focusable="false">
+              <path class="hero__deco-jalur" d="M60 118C150 150 220 60 320 84s132 48 240 20" />
+              <g class="hero__deco-chip hero__deco-chip--1">
+                <rect class="hero__deco-bayang" x="27" y="83" width="118" height="46" rx="11" />
+                <rect class="hero__deco-badan" x="22" y="78" width="118" height="46" rx="11" />
+                <text class="hero__deco-teks" x="81" y="107">&lt;/&gt;</text>
+              </g>
+              <g class="hero__deco-chip hero__deco-chip--2">
+                <rect class="hero__deco-bayang" x="257" y="21" width="134" height="46" rx="11" />
+                <rect class="hero__deco-badan" x="252" y="16" width="134" height="46" rx="11" />
+                <text class="hero__deco-teks" x="319" y="45">{ }</text>
+              </g>
+              <g class="hero__deco-chip hero__deco-chip--3">
+                <rect class="hero__deco-bayang" x="479" y="89" width="118" height="46" rx="11" />
+                <rect class="hero__deco-badan" x="474" y="84" width="118" height="46" rx="11" />
+                <text class="hero__deco-teks" x="533" y="113">css</text>
+              </g>
+              <circle class="hero__deco-titik" cx="182" cy="130" r="7" />
+              <circle class="hero__deco-titik hero__deco-titik--2" cx="438" cy="30" r="6" />
+            </svg>
+          </div>
         </div>
 
         <!-- Kode di kiri, hasilnya di kanan — inti seluruh situs ini. -->

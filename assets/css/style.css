@@ -1371,6 +1371,63 @@ b {
   color: var(--color-muted);
 }
 
+/* --- Hiasan hero ------------------------------------------ */
+/* Mengisi sisa ruang di bawah kolom teks pada tata letak dua kolom.
+   Cuma ditampilkan dari 1024px ke atas; di bawah itu hero satu kolom
+   dan tidak ada ruang sisa. */
+.hero__deco {
+  display: none;
+}
+
+.hero__deco svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.hero__deco-jalur {
+  fill: none;
+  stroke: var(--color-border-muted);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 7 10;
+}
+
+/* Bayangan keras digambar sebagai kotak terpisah, bukan filter. */
+.hero__deco-bayang {
+  fill: var(--color-shadow);
+}
+
+.hero__deco-badan {
+  fill: var(--color-surface-soft);
+  stroke: var(--color-ink);
+  stroke-width: 3;
+}
+
+.hero__deco-chip--2 .hero__deco-badan {
+  fill: var(--color-marker-bg);
+}
+
+.hero__deco-chip--3 .hero__deco-badan {
+  fill: var(--color-secondary);
+}
+
+.hero__deco-teks {
+  fill: var(--color-ink);
+  font-family: var(--font-mono);
+  font-size: 21px;
+  font-weight: var(--fw-bold);
+  text-anchor: middle;
+}
+
+.hero__deco-titik {
+  fill: var(--color-primary);
+}
+
+.hero__deco-titik--2 {
+  fill: var(--color-marker-bg);
+}
+
 /* --- Panel (wadah kode dan hasilnya) ---------------------- */
 .pane {
   overflow: hidden;
@@ -1521,7 +1578,10 @@ b {
    3. Elemen [data-reveal] naik halus saat masuk viewport, diatur
       assets/js/main.js.
    4. Panel menu mobile meluncur turun dan tautannya menyusul
-      (wg-menu-tautan); menutup pun beranimasi. */
+      (wg-menu-tautan); menutup pun beranimasi.
+   5. Hiasan hero terapung naik-turun dan titiknya berkedip
+      (wg-deco-terapung, wg-deco-kedip), hanya tampil di tata letak
+      dua kolom. */
 @keyframes wg-line {
   from {
     opacity: 0;
@@ -1563,6 +1623,24 @@ b {
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+@keyframes wg-deco-terapung {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-9px);
+  }
+}
+
+@keyframes wg-deco-kedip {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 1;
   }
 }
 
@@ -1695,17 +1773,43 @@ b {
   /* Kolom teks sedikit lebih lebar dari kolom kode: judul display
      butuh ~470px per baris supaya "baris demi baris." tidak pecah
      jadi baris yatim; isi panel kode cuma butuh ~270px. Kolom teks
-     selalu lebih pendek dari panel kode, jadi ditengahkan vertikal:
-     sisa ruangnya terbagi rata atas dan bawah, tidak menumpuk jadi
-     lubang di kiri bawah. */
+     lebih pendek dari panel kode; sisa ruang di bawahnya diisi hiasan
+     .hero__deco, jadi tidak menganga kosong. */
   .hero__grid {
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-    align-items: center;
+    align-items: start;
     gap: var(--space-12);
   }
 
   .hero__workbench {
     max-width: none;
+  }
+
+  /* Hiasan hero baru muncul di sini. Tiga chip terapung dengan durasi
+     dan jeda berbeda supaya tidak bergerak serempak. */
+  .hero__deco {
+    display: block;
+    margin-top: var(--space-6);
+  }
+
+  .hero__deco-chip--1 {
+    animation: wg-deco-terapung 3.2s var(--ease-out) infinite alternate;
+  }
+
+  .hero__deco-chip--2 {
+    animation: wg-deco-terapung 4.2s var(--ease-out) -1.4s infinite alternate;
+  }
+
+  .hero__deco-chip--3 {
+    animation: wg-deco-terapung 3.6s var(--ease-out) -2.1s infinite alternate;
+  }
+
+  .hero__deco-titik {
+    animation: wg-deco-kedip 2.6s var(--ease-out) infinite alternate;
+  }
+
+  .hero__deco-titik--2 {
+    animation: wg-deco-kedip 3.1s var(--ease-out) -1.2s infinite alternate;
   }
 }
 
@@ -1714,5 +1818,13 @@ b {
   .code__line,
   .result-pane {
     animation-delay: 0ms;
+  }
+
+  /* Hiasan hero dimatikan total (bukan cuma dipercepat), jadi chip dan
+     titiknya diam di tempat. Ditaruh di sini, setelah aturan animasinya
+     di breakpoint Desktop, supaya benar-benar menang. */
+  .hero__deco-chip,
+  .hero__deco-titik {
+    animation: none;
   }
 }

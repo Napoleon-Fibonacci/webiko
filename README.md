@@ -198,7 +198,9 @@ yang bergeser dan tidak ada library. Kontraknya:
 - **Masuk layar.** Elemen bertanda `data-reveal` naik 14px sambil memudar saat
   masuk viewport, sekali saja. Pengaturnya IIFE terakhir di `assets/js/main.js`
   (satu `IntersectionObserver`, jeda bertahap 70ms per elemen).
-- **Berulang.** Cuma satu: logo navbar bergoyang pelan (`@keyframes wg-rock`).
+- **Berulang.** Logo navbar bergoyang pelan (`@keyframes wg-rock`) dan hiasan di
+  bawah kolom teks hero terapung naik-turun (`wg-deco-terapung` + `wg-deco-kedip`;
+  hiasan ini hanya tampil di tata letak dua kolom, 1024px ke atas).
 - **Menu mobile.** Tombol hamburger membuka panel melayang di bawah navbar:
   panelnya meluncur turun sambil memudar dan tiap tautan menyusul bertahap.
   Karena panel keluar dari aliran flex, tinggi navbar dan isi halaman di
