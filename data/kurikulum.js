@@ -24,13 +24,15 @@ const KURIKULUM = [
     slug: "html",
     judul: "HTML dari nol",
     ringkas:
-      "Kenali tag, teks, gambar, dan tautan. Delapan bab menuju halaman pertamamu.",
+      "Kenali tag, teks, gambar, dan tautan. Sepuluh bab menuju halaman pertamamu.",
     tingkat: "Pemula",
     status: "terbit",
     tautan: "materi/html/apa-itu-website.html",
     bab: [
       { slug: "apa-itu-website", judul: "Apa itu website" },
+      { slug: "dari-server-ke-layar", judul: "Dari server ke layar" },
       { slug: "file-html-pertama", judul: "File HTML pertamamu" },
+      { slug: "mengenal-tag-html", judul: "Mengenal tag HTML" },
       { slug: "judul-dan-paragraf", judul: "Judul dan paragraf" },
       { slug: "tautan", judul: "Tautan antar halaman" },
       { slug: "gambar", judul: "Menampilkan gambar" },

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bab 2 HTML dari nol: perjalanan halaman dari server ke layar, peran client dan server, render, bagian alamat web, domain, hosting, dan DNS. Materi Webiko untuk pelajar SMP dan SMA.">
+  <title>Dari server ke layar — HTML dari nol · Webiko</title>
+
+  <!-- Pasang tema sebelum halaman digambar, sama seperti beranda. -->
+  <script>
+    (function () {
+      try {
+        var pilihan = localStorage.getItem("tema");
+        var gelap =
+          pilihan === "gelap" ||
+          (pilihan === "sistem" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-tema", gelap ? "gelap" : "terang");
+      } catch (e) {
+        document.documentElement.setAttribute("data-tema", "terang");
+      }
+
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-siap");
+        window.setTimeout(function () {
+          if (!window.__wgReveal) {
+            document.documentElement.classList.remove("reveal-siap");
+          }
+        }, 2000);
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+  <!-- ============ NAVBAR ============ -->
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="../../index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        Webiko
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="../../index.html">Beranda</a>
+        <a class="navbar__link" href="../../index.html#kurikulum" aria-current="page">Kurikulum</a>
+        <a class="navbar__link" href="../../index.html#cara-pakai">Cara pakai</a>
+      </nav>
+
+      <div class="navbar__tools">
+        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
+          <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--terang" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--gelap" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
+          </svg>
+          <span class="theme-toggle__label">Terang</span>
+        </button>
+
+        <button class="navbar__btn navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section">
+      <div class="layout--with-sidebar">
+
+        <!-- ============ SIDEBAR BAB ============ -->
+        <aside class="sidebar" aria-label="Daftar bab HTML dari nol">
+          <p class="sidebar__title">HTML dari nol</p>
+          <ul class="sidebar__list">
+            <li><a class="sidebar__link" href="apa-itu-website.html">Apa itu website</a></li>
+            <li><a class="sidebar__link" href="dari-server-ke-layar.html" aria-current="page">Dari server ke layar</a></li>
+            <li><a class="sidebar__link" href="file-html-pertama.html">File HTML pertamamu</a></li>
+            <li><a class="sidebar__link" href="mengenal-tag-html.html">Mengenal tag HTML</a></li>
+            <li><a class="sidebar__link" href="judul-dan-paragraf.html">Judul dan paragraf</a></li>
+            <li><span class="sidebar__link" aria-disabled="true">Tautan antar halaman</span></li>
+            <li><span class="sidebar__link" aria-disabled="true">Menampilkan gambar</span></li>
+            <li><span class="sidebar__link" aria-disabled="true">Daftar berurutan dan tidak</span></li>
+            <li><span class="sidebar__link" aria-disabled="true">Tabel sederhana</span></li>
+            <li><span class="sidebar__link" aria-disabled="true">Merangkai halaman lengkap</span></li>
+          </ul>
+        </aside>
+
+        <!-- ============ ISI BAB ============ -->
+        <article class="materi">
+          <p class="label materi__eyebrow">HTML dari nol · Bab 2 dari 10</p>
+          <h1>Dari server ke layar</h1>
+          <p class="materi__lead">
+            Halaman web tidak disimpan di HP-mu. Berkasnya diambil dari server,
+            lalu digambar browser. Kenali perjalanan singkatnya.
+          </p>
+
+          <h2>Browser meminta, server menjawab</h2>
+          <p>
+            Saat kamu membuka website dari internet, berkasnya tidak tersimpan
+            di HP atau laptopmu. Berkas itu ada di <mark>server</mark>, komputer
+            yang menyala terus dan tersambung ke internet. Browser meminta
+            berkas kepada server, lalu menggambar hasilnya di layar.
+          </p>
+          <ol>
+            <li>Kamu mengetik alamat atau mengeklik sebuah tautan.</li>
+            <li>Browser mengirim permintaan ke server lewat HTTP atau HTTPS.</li>
+            <li>
+              Server membalas dengan berkas HTML, lalu CSS, JavaScript, dan
+              gambar yang dipakai halaman itu.
+            </li>
+            <li>Browser membaca HTML dari atas ke bawah dan menampilkan isinya.</li>
+          </ol>
+          <p>
+            Dalam hubungan ini, browser disebut <mark>client</mark> — pihak yang
+            meminta — dan server adalah pihak yang menjawab.
+          </p>
+          <p>
+            Setelah berkas sampai, browser membaca HTML, menyusun elemennya,
+            memuat CSS dan gambar, lalu menggambar hasilnya di layar. Proses ini
+            disebut <mark>render</mark>.
+          </p>
+          <p>
+            Karena harus menempuh perjalanan ini, halaman bisa terasa lambat
+            saat pertama dibuka. Berkas yang lebih kecil dan gambar yang tidak
+            terlalu besar membuat halaman lebih cepat sampai dan dirender.
+          </p>
+
+          <h2>Alamat punya bagian</h2>
+          <p>
+            Alamat web terdiri dari tiga bagian. Kamu tidak perlu menghafalnya
+            sekarang, tetapi mengenalnya membantu saat membaca tautan.
+          </p>
+          <ul>
+            <li>
+              <code>https://</code> — protokol, cara browser berbicara dengan
+              server. HTTPS adalah versi terenkripsi dari HTTP.
+            </li>
+            <li>
+              <code>sekolahku.sch.id</code> — domain, nama website yang kamu
+              tuju.
+            </li>
+            <li>
+              <code>/profil/rani.html</code> — path, halaman tertentu yang
+              diminta dari website itu.
+            </li>
+          </ul>
+          <p>
+            Ketiganya dibaca berurutan. Contoh lengkap:
+            <code>https://sekolahku.sch.id/profil/rani.html</code>.
+          </p>
+
+          <h2>Domain, hosting, dan DNS</h2>
+          <p>
+            Tiga hal ini menjelaskan bagaimana alamat yang kamu ketik bisa
+            menemukan halaman yang benar.
+          </p>
+          <ul>
+            <li>
+              <strong>Domain</strong> — nama website yang disewa, misalnya
+              <code>webiko.my.id</code>. Nama ini yang kamu ketik dan ingat.
+            </li>
+            <li>
+              <strong>DNS</strong> — sistem yang menerjemahkan domain menjadi
+              alamat IP server. Ibarat buku telepon: kamu mengetik nama, DNS
+              memberi nomor tujuan.
+            </li>
+            <li>
+              <strong>Hosting</strong> — tempat berkas website disimpan di
+              server. Bisa server milik sendiri atau layanan sewa.
+            </li>
+          </ul>
+          <p>
+            Domain dan hosting dipisah supaya kamu bisa pindah server tanpa
+            mengganti nama website. Cukup arahkan domain ke server baru lewat
+            DNS.
+          </p>
+
+          <h2>Rangkuman</h2>
+          <ul>
+            <li>
+              Browser adalah client yang meminta; server adalah pihak yang
+              menjawab.
+            </li>
+            <li>
+              Permintaan dan balasan berjalan lewat HTTP atau HTTPS. HTTPS
+              menambahkan enkripsi.
+            </li>
+            <li>
+              Browser menyusun elemen, memuat CSS dan gambar, lalu merender
+              halaman.
+            </li>
+            <li>
+              Alamat web terdiri dari protokol, domain, dan path.
+            </li>
+            <li>
+              DNS menerjemahkan domain ke alamat IP server. Domain adalah
+              namanya, hosting adalah tempat berkasnya.
+            </li>
+          </ul>
+
+          <footer class="materi__kaki">
+            <section class="kaki__sumber" aria-labelledby="sumber-judul">
+              <h2 class="kaki__label" id="sumber-judul">Bacaan asli</h2>
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works">MDN — How the web works</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server">MDN — What is a web server?</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_URL">MDN — What is a URL?</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_domain_name">MDN — What is a domain name?</a></li>
+              </ul>
+            </section>
+
+            <nav class="kaki__pager" aria-label="Bab sebelumnya dan berikutnya">
+              <a class="kaki__bab kaki__bab--kembali" href="apa-itu-website.html">
+                <span class="kaki__arah">Sebelumnya</span>
+                <span class="kaki__judul">Apa itu website</span>
+              </a>
+              <a class="kaki__bab kaki__bab--lanjut" href="file-html-pertama.html">
+                <span class="kaki__arah">Bab berikutnya</span>
+                <span class="kaki__judul">File HTML pertamamu</span>
+              </a>
+            </nav>
+          </footer>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer__row">
+      <div>
+        <p class="footer__wordmark">Webiko</p>
+        <p class="footer__tagline">
+          Belajar bikin website dari nol, dalam bahasa Indonesia.
+          Tanpa install, tanpa framework.
+        </p>
+      </div>
+      <nav class="footer__nav" aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="../../index.html#kurikulum">Kurikulum</a></li>
+          <li><a href="../../index.html#cara-pakai">Cara pakai</a></li>
+          <li><a href="../../index.html#progres">Progres</a></li>
+          <li><a href="../../index.html#daftar">Buat akun</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <p>© 2026 Webiko · Dibuat tanpa framework dan tanpa dependency.</p>
+      <p>Untuk pelajar SMP &amp; SMA</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>

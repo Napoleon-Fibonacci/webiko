@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bab 4 HTML dari nol: mengenal tag pembuka dan penutup, elemen, atribut, nesting, serta cara membaca kode halaman HTML. Materi Webiko untuk pelajar SMP dan SMA.">
+  <title>Mengenal tag HTML — HTML dari nol · Webiko</title>
+
+  <!-- Pasang tema sebelum halaman digambar, sama seperti beranda. -->
+  <script>
+    (function () {
+      try {
+        var pilihan = localStorage.getItem("tema");
+        var gelap =
+          pilihan === "gelap" ||
+          (pilihan === "sistem" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-tema", gelap ? "gelap" : "terang");
+      } catch (e) {
+        document.documentElement.setAttribute("data-tema", "terang");
+      }
+
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-siap");
+        window.setTimeout(function () {
+          if (!window.__wgReveal) {
+            document.documentElement.classList.remove("reveal-siap");
+          }
+        }, 2000);
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+  <!-- ============ NAVBAR ============ -->
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="../../index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        Webiko
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="../../index.html">Beranda</a>
+        <a class="navbar__link" href="../../index.html#kurikulum" aria-current="page">Kurikulum</a>
+        <a class="navbar__link" href="../../index.html#cara-pakai">Cara pakai</a>
+      </nav>
+
+      <div class="navbar__tools">
+        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
+          <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--terang" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--gelap" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
+          </svg>
+          <span class="theme-toggle__label">Terang</span>
+        </button>
+
+        <button class="navbar__btn navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section">
+      <div class="layout--with-sidebar">
+
+        <!-- ============ SIDEBAR BAB ============ -->
+        <aside class="sidebar" aria-label="Daftar bab HTML dari nol">
+          <p class="sidebar__title">HTML dari nol</p>
+          <ul class="sidebar__list">
+            <li><a class="sidebar__link" href="apa-itu-website.html">Apa itu website</a></li>
+            <li><a class="sidebar__link" href="dari-server-ke-layar.html">Dari server ke layar</a></li>
+            <li><a class="sidebar__link" href="file-html-pertama.html">File HTML pertamamu</a></li>
+            <li><a class="sidebar__link" href="mengenal-tag-html.html" aria-current="page">Mengenal tag HTML</a></li>
+            <li><a class="sidebar__link" href="judul-dan-paragraf.html">Judul dan paragraf</a></li>
+            <li><span class="sidebar__link" aria-disabled="true">Tautan antar halaman</span></li>
+            <li><span class="sidebar__link" aria-disabled="true">Menampilkan gambar</span></li>
+            <li><span class="sidebar__link" aria-disabled="true">Daftar berurutan dan tidak</span></li>
+            <li><span class="sidebar__link" aria-disabled="true">Tabel sederhana</span></li>
+            <li><span class="sidebar__link" aria-disabled="true">Merangkai halaman lengkap</span></li>
+          </ul>
+        </aside>
+
+        <!-- ============ ISI BAB ============ -->
+        <article class="materi">
+          <p class="label materi__eyebrow">HTML dari nol · Bab 4 dari 10</p>
+          <h1>Mengenal tag HTML</h1>
+          <p class="materi__lead">
+            Kode HTML tersusun dari tag. Kenali tag pembuka, penutup, elemen,
+            dan atribut supaya kamu bisa membaca halaman dengan tenang.
+          </p>
+
+          <h2>Tag, elemen, dan atribut</h2>
+          <p>
+            <mark>Tag</mark> adalah perintah di dalam kurung siku, seperti
+            <code>&lt;h1&gt;</code>. Sebagian besar tag punya pasangan penutup
+            yang ditandai garis miring: <code>&lt;h1&gt;</code> membuka dan
+            <code>&lt;/h1&gt;</code> menutup.
+          </p>
+          <p>
+            Tag pembuka, isi, dan tag penutup bersama-sama disebut
+            <mark>elemen</mark>. Contohnya
+            <code>&lt;h1&gt;Halo, dunia!&lt;/h1&gt;</code> adalah satu elemen
+            judul.
+          </p>
+          <p>
+            <mark>Atribut</mark> menempel pada tag pembuka dan memberi keterangan
+            tambahan. Pada <code>&lt;html lang="id"&gt;</code>, bagian
+            <code>lang="id"</code> adalah atribut yang menandai bahasa halaman.
+          </p>
+
+          <h2>Contoh halaman lengkap</h2>
+          <p>
+            Perhatikan bagaimana tag tersusun dari luar ke dalam. Kerangka
+            membungkus isi, lalu isi ditulis di dalam
+            <code>&lt;body&gt;</code>.
+          </p>
+
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">index.html</span>
+                <span class="pane__badge">HTML</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-punct">&lt;!DOCTYPE html&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;html</span> <span class="tok-attr">lang</span><span class="tok-punct">=</span><span class="tok-string">"id"</span><span class="tok-tag">&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;head&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;meta</span> <span class="tok-attr">charset</span><span class="tok-punct">=</span><span class="tok-string">"UTF-8"</span><span class="tok-tag">&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;title&gt;</span>Halo, dunia!<span class="tok-tag">&lt;/title&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/head&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;body&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;h1&gt;</span>Halo, dunia!<span class="tok-tag">&lt;/h1&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;p&gt;</span>Ini halaman web pertamaku.<span class="tok-tag">&lt;/p&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/body&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/html&gt;</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Di browser, <code>&lt;h1&gt;</code> tampil sebagai judul besar dan
+              <code>&lt;p&gt;</code> sebagai paragraf biasa. Judul pada tab
+              browser diambil dari <code>&lt;title&gt;</code>.
+            </p>
+          </div>
+
+          <h2>Membaca dari dalam ke luar</h2>
+          <ul>
+            <li>
+              <code>&lt;h1&gt;Halo, dunia!&lt;/h1&gt;</code> membungkus satu
+              judul. Angka 1 menandai judul terpenting.
+            </li>
+            <li>
+              <code>&lt;p&gt;Ini halaman web pertamaku.&lt;/p&gt;</code>
+              membungkus satu paragraf.
+            </li>
+            <li>
+              Elemen bisa bersarang, misalnya
+              <code>&lt;p&gt;Halo &lt;strong&gt;dunia&lt;/strong&gt;!&lt;/p&gt;</code>.
+              Tag <code>&lt;strong&gt;</code> membuat kata di dalamnya tebal.
+            </li>
+            <li>
+              <code>&lt;head&gt;</code> dan <code>&lt;body&gt;</code> berada di
+              dalam <code>&lt;html&gt;</code>. Isi yang terlihat selalu berada
+              di dalam <code>&lt;body&gt;</code>.
+            </li>
+          </ul>
+
+          <div class="alert" role="note">
+            <div>
+              <strong class="alert__title">Spasi tidak menentukan tampilan</strong>
+              <p class="alert__text">
+                Browser menggabungkan beberapa spasi dan baris baru menjadi satu
+                spasi. Susunan halaman diatur oleh tag, bukan oleh banyaknya
+                tombol Enter.
+              </p>
+            </div>
+          </div>
+
+          <h2>Rangkuman</h2>
+          <ul>
+            <li>
+              Tag adalah perintah dalam kurung siku; pasangan penutupnya memakai
+              garis miring.
+            </li>
+            <li>
+              Elemen terdiri dari tag pembuka, isi, dan tag penutup.
+            </li>
+            <li>
+              Atribut memberi keterangan tambahan pada tag pembuka.
+            </li>
+            <li>
+              Elemen boleh bersarang, tetapi isi yang terlihat harus berada di
+              dalam <code>&lt;body&gt;</code>.
+            </li>
+          </ul>
+
+          <footer class="materi__kaki">
+            <section class="kaki__sumber" aria-labelledby="sumber-judul">
+              <h2 class="kaki__label" id="sumber-judul">Bacaan asli</h2>
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/Basic_HTML_syntax">MDN — Basic HTML syntax</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">MDN — HTML elements reference</a></li>
+                <li><a href="https://web.dev/learn/html">web.dev — Learn HTML</a></li>
+              </ul>
+            </section>
+
+            <nav class="kaki__pager" aria-label="Bab sebelumnya dan berikutnya">
+              <a class="kaki__bab kaki__bab--kembali" href="file-html-pertama.html">
+                <span class="kaki__arah">Sebelumnya</span>
+                <span class="kaki__judul">File HTML pertamamu</span>
+              </a>
+              <a class="kaki__bab kaki__bab--lanjut" href="judul-dan-paragraf.html">
+                <span class="kaki__arah">Bab berikutnya</span>
+                <span class="kaki__judul">Judul dan paragraf</span>
+              </a>
+            </nav>
+          </footer>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer__row">
+      <div>
+        <p class="footer__wordmark">Webiko</p>
+        <p class="footer__tagline">
+          Belajar bikin website dari nol, dalam bahasa Indonesia.
+          Tanpa install, tanpa framework.
+        </p>
+      </div>
+      <nav class="footer__nav" aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="../../index.html#kurikulum">Kurikulum</a></li>
+          <li><a href="../../index.html#cara-pakai">Cara pakai</a></li>
+          <li><a href="../../index.html#progres">Progres</a></li>
+          <li><a href="../../index.html#daftar">Buat akun</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <p>© 2026 Webiko · Dibuat tanpa framework dan tanpa dependency.</p>
+      <p>Untuk pelajar SMP &amp; SMA</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/latihan-html.js"></script>
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>

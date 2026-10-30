@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Bab 1 HTML dari nol: apa itu website, bedanya internet dan web, kerangka HTML5, cara browser mengambil halaman dari server, alamat web, domain, hosting, dan website statis atau dinamis. Materi Webiko untuk pelajar SMP dan SMA.">
+  <meta name="description" content="Bab 1 HTML dari nol: apa itu website, bedanya internet dan web, tiga bahasa dasar HTML, CSS, JavaScript, serta website statis dan dinamis. Materi Webiko untuk pelajar SMP dan SMA.">
   <title>Apa itu website — HTML dari nol · Webiko</title>
 
   <!-- Pasang tema sebelum halaman digambar, sama seperti beranda. -->
@@ -88,7 +88,9 @@
           <p class="sidebar__title">HTML dari nol</p>
           <ul class="sidebar__list">
             <li><a class="sidebar__link" href="apa-itu-website.html" aria-current="page">Apa itu website</a></li>
+            <li><a class="sidebar__link" href="dari-server-ke-layar.html">Dari server ke layar</a></li>
             <li><a class="sidebar__link" href="file-html-pertama.html">File HTML pertamamu</a></li>
+            <li><a class="sidebar__link" href="mengenal-tag-html.html">Mengenal tag HTML</a></li>
             <li><a class="sidebar__link" href="judul-dan-paragraf.html">Judul dan paragraf</a></li>
             <li><span class="sidebar__link" aria-disabled="true">Tautan antar halaman</span></li>
             <li><span class="sidebar__link" aria-disabled="true">Menampilkan gambar</span></li>
@@ -100,7 +102,7 @@
 
         <!-- ============ ISI BAB ============ -->
         <article class="materi">
-          <p class="label materi__eyebrow">HTML dari nol · Bab 1 dari 8</p>
+          <p class="label materi__eyebrow">HTML dari nol · Bab 1 dari 10</p>
           <h1>Apa itu website</h1>
           <p class="materi__lead">
             Website adalah kumpulan halaman yang bisa dibuka lewat alamat di
@@ -186,192 +188,6 @@
             </div>
           </div>
 
-          <h2>Kerangka halaman HTML5</h2>
-          <p>
-            Semua halaman web berdiri di atas kerangka yang sama. Kerangka ini
-            tidak menampilkan apa pun sampai kamu mengisi bagian isinya.
-          </p>
-          <ul>
-            <li>
-              <code>&lt;!DOCTYPE html&gt;</code> memberi tahu browser bahwa
-              berkas ini memakai HTML5.
-            </li>
-            <li>
-              <code>&lt;html lang="id"&gt;</code> adalah akar halaman.
-              <code>lang="id"</code> menandai bahwa isinya berbahasa Indonesia.
-            </li>
-            <li>
-              <code>&lt;head&gt;</code> menyimpan keterangan halaman, seperti
-              <code>charset</code> dan <code>title</code>. Isinya tidak tampil
-              di jendela browser, kecuali judul pada tab.
-            </li>
-            <li>
-              <code>&lt;body&gt;</code> memuat semua yang terlihat: judul,
-              paragraf, gambar, dan tautan.
-            </li>
-          </ul>
-
-          <p>
-            Isi halaman ditulis dengan <mark>tag</mark>, yaitu perintah di dalam
-            kurung siku seperti <code>&lt;h1&gt;</code>. Sebagian besar tag
-            punya pasangan: <code>&lt;h1&gt;</code> membuka,
-            <code>&lt;/h1&gt;</code> menutup, dan isi di antaranya tampil di
-            halaman. Tag pembuka juga bisa membawa <mark>atribut</mark>,
-            keterangan tambahan seperti <code>lang="id"</code> pada
-            <code>&lt;html&gt;</code>.
-          </p>
-
-          <div class="materi__gambar">
-            <div class="code-pane pane">
-              <div class="pane__bar">
-                <span class="pane__name">index.html</span>
-                <span class="pane__badge">HTML</span>
-              </div>
-              <pre class="code"><code><span class="code__line"><span class="tok-punct">&lt;!DOCTYPE html&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;html</span> <span class="tok-attr">lang</span><span class="tok-punct">=</span><span class="tok-string">"id"</span><span class="tok-tag">&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;head&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;meta</span> <span class="tok-attr">charset</span><span class="tok-punct">=</span><span class="tok-string">"UTF-8"</span><span class="tok-tag">&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;title&gt;</span>Halaman pertamaku<span class="tok-tag">&lt;/title&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/head&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;body&gt;</span></span><span class="code__line">  </span><span class="code__line"><span class="tok-tag">&lt;/body&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/html&gt;</span></span></code></pre>
-            </div>
-            <p class="materi__keterangan">
-              Kerangka kosong. Baris di dalam <code>&lt;body&gt;</code> sengaja
-              dibiarkan kosong karena di situlah isi halaman ditulis.
-            </p>
-          </div>
-
-          <h2>Contoh halaman yang sudah diisi</h2>
-          <p>
-            Kerangka tadi belum punya isi. Berikut contoh halaman lengkap yang
-            sudah menambahkan judul dan paragraf di dalam
-            <code>&lt;body&gt;</code>.
-          </p>
-
-          <div class="materi__gambar">
-            <div class="code-pane pane">
-              <div class="pane__bar">
-                <span class="pane__name">index.html</span>
-                <span class="pane__badge">HTML</span>
-              </div>
-              <pre class="code"><code><span class="code__line"><span class="tok-punct">&lt;!DOCTYPE html&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;html</span> <span class="tok-attr">lang</span><span class="tok-punct">=</span><span class="tok-string">"id"</span><span class="tok-tag">&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;head&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;meta</span> <span class="tok-attr">charset</span><span class="tok-punct">=</span><span class="tok-string">"UTF-8"</span><span class="tok-tag">&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;title&gt;</span>Halo, dunia!<span class="tok-tag">&lt;/title&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/head&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;body&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;h1&gt;</span>Halo, dunia!<span class="tok-tag">&lt;/h1&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;p&gt;</span>Ini halaman web pertamaku.<span class="tok-tag">&lt;/p&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/body&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/html&gt;</span></span></code></pre>
-            </div>
-            <p class="materi__keterangan">
-              Di browser, <code>&lt;h1&gt;</code> tampil sebagai judul besar dan
-              <code>&lt;p&gt;</code> sebagai paragraf biasa. Judul pada tab
-              browser diambil dari <code>&lt;title&gt;</code>.
-            </p>
-          </div>
-
-          <p>
-            Setiap tag pembuka punya pasangan penutup yang ditandai garis miring.
-            Isi di antara keduanya disebut <mark>elemen</mark>. Elemen boleh
-            berada di dalam elemen lain; <code>&lt;body&gt;</code> membungkus
-            semua isi yang terlihat.
-          </p>
-          <ul>
-            <li>
-              <code>&lt;h1&gt;Halo, dunia!&lt;/h1&gt;</code> membungkus satu
-              judul. Angka 1 menandai judul terpenting.
-            </li>
-            <li>
-              <code>&lt;p&gt;Ini halaman web pertamaku.&lt;/p&gt;</code>
-              membungkus satu paragraf.
-            </li>
-            <li>
-              Elemen bisa bersarang, misalnya
-              <code>&lt;p&gt;Halo &lt;strong&gt;dunia&lt;/strong&gt;!&lt;/p&gt;</code>.
-              Tag <code>&lt;strong&gt;</code> membuat kata di dalamnya tebal.
-            </li>
-            <li>
-              <mark>Atribut</mark> menempel pada tag pembuka dan memberi
-              keterangan tambahan, seperti <code>lang="id"</code> pada
-              <code>&lt;html&gt;</code>.
-            </li>
-          </ul>
-
-          <div class="alert" role="note">
-            <div>
-              <strong class="alert__title">Spasi tidak menentukan tampilan</strong>
-              <p class="alert__text">
-                Browser menggabungkan beberapa spasi dan baris baru menjadi satu
-                spasi. Susunan halaman diatur oleh tag, bukan oleh banyaknya
-                tombol Enter.
-              </p>
-            </div>
-          </div>
-
-          <h2>Dari server ke layar</h2>
-          <p>
-            Saat kamu membuka website dari internet, berkasnya tidak tersimpan
-            di HP atau laptopmu. Berkas itu ada di <mark>server</mark>, komputer
-            yang menyala terus dan tersambung ke internet. Browser meminta
-            berkas kepada server, lalu menggambar hasilnya di layar.
-          </p>
-          <ol>
-            <li>Kamu mengetik alamat atau mengeklik sebuah tautan.</li>
-            <li>Browser mengirim permintaan ke server lewat HTTP atau HTTPS.</li>
-            <li>
-              Server membalas dengan berkas HTML, lalu CSS, JavaScript, dan
-              gambar yang dipakai halaman itu.
-            </li>
-            <li>Browser membaca HTML dari atas ke bawah dan menampilkan isinya.</li>
-          </ol>
-          <p>
-            Dalam hubungan ini, browser disebut <mark>client</mark> — pihak yang
-            meminta — dan server adalah pihak yang menjawab.
-          </p>
-          <p>
-            Setelah berkas sampai, browser membaca HTML dari atas ke bawah,
-            menyusun elemennya, memuat CSS dan gambar, lalu menggambar hasilnya
-            di layar. Proses ini disebut <mark>render</mark>.
-          </p>
-          <p>
-            Karena harus menempuh perjalanan ini, halaman bisa terasa lambat
-            saat pertama dibuka. Berkas yang lebih kecil dan gambar yang tidak
-            terlalu besar membuat halaman lebih cepat sampai dan dirender.
-          </p>
-
-          <h2>Alamat punya bagian</h2>
-          <p>
-            Alamat web terdiri dari tiga bagian. Kamu tidak perlu menghafalnya
-            sekarang, tetapi mengenalnya membantu saat membaca tautan.
-          </p>
-          <ul>
-            <li>
-              <code>https://</code> — protokol, cara browser berbicara dengan
-              server. HTTPS adalah versi terenkripsi dari HTTP.
-            </li>
-            <li>
-              <code>sekolahku.sch.id</code> — domain, nama website yang kamu
-              tuju.
-            </li>
-            <li>
-              <code>/profil/rani.html</code> — path, halaman tertentu yang
-              diminta dari website itu.
-            </li>
-          </ul>
-
-          <h2>Domain, hosting, dan DNS</h2>
-          <p>
-            Tiga hal ini menjelaskan bagaimana alamat yang kamu ketik bisa
-            menemukan halaman yang benar.
-          </p>
-          <ul>
-            <li>
-              <strong>Domain</strong> — nama website yang disewa, misalnya
-              <code>webiko.my.id</code>. Nama ini yang kamu ketik dan ingat.
-            </li>
-            <li>
-              <strong>DNS</strong> — sistem yang menerjemahkan domain menjadi
-              alamat IP server. Ibarat buku telepon: kamu mengetik nama, DNS
-              memberi nomor tujuan.
-            </li>
-            <li>
-              <strong>Hosting</strong> — tempat berkas website disimpan di
-              server. Bisa server milik sendiri atau layanan sewa.
-            </li>
-          </ul>
-          <p>
-            Domain dan hosting dipisah supaya kamu bisa pindah server tanpa
-            mengganti nama website. Cukup arahkan domain ke server baru lewat
-            DNS.
-          </p>
-
           <h2>Website statis dan dinamis</h2>
           <p>
             Kalau semua pengunjung melihat isi yang sama, website itu
@@ -395,7 +211,7 @@
           </p>
           <p>
             Tidak ada framework, paket, atau aplikasi tambahan yang harus
-            dipasang untuk delapan bab ini. Semua berkas ditulis sebagai teks
+            dipasang untuk sepuluh bab ini. Semua berkas ditulis sebagai teks
             biasa dan disimpan dengan akhiran <code>.html</code>.
           </p>
 
@@ -414,20 +230,8 @@
               perilaku.
             </li>
             <li>
-              Halaman HTML5 punya kerangka: <code>&lt;!DOCTYPE html&gt;</code>,
-              <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code>, dan
-              <code>&lt;body&gt;</code>.
-            </li>
-            <li>
-              Browser meminta berkas ke server lewat HTTP atau HTTPS, lalu
-              menampilkan hasilnya.
-            </li>
-            <li>
-              Alamat web terdiri dari protokol, domain, dan path. DNS
-              menerjemahkan domain ke alamat IP server.
-            </li>
-            <li>
-              Domain adalah namanya, hosting adalah tempat berkasnya.
+              Website statis menampilkan isi yang sama; website dinamis
+              menyusun isi berbeda untuk setiap permintaan.
             </li>
           </ul>
 
@@ -436,7 +240,7 @@
               <h2 class="kaki__label" id="sumber-judul">Bacaan asli</h2>
               <ul>
                 <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works">MDN — How the web works</a></li>
-                <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server">MDN — What is a web server?</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Glossary/Website">MDN — Website</a></li>
                 <li><a href="https://web.dev/learn/html">web.dev — Learn HTML</a></li>
               </ul>
             </section>
@@ -446,9 +250,9 @@
                 <span class="kaki__arah">Kembali</span>
                 <span class="kaki__judul">Kurikulum</span>
               </a>
-              <a class="kaki__bab kaki__bab--lanjut" href="file-html-pertama.html">
+              <a class="kaki__bab kaki__bab--lanjut" href="dari-server-ke-layar.html">
                 <span class="kaki__arah">Bab berikutnya</span>
-                <span class="kaki__judul">File HTML pertamamu</span>
+                <span class="kaki__judul">Dari server ke layar</span>
               </a>
             </nav>
           </footer>
