@@ -260,31 +260,76 @@
             </li>
           </ul>
 
-          <div class="card materi__latihan">
-            <p class="card__label">Latihan</p>
-            <h2 class="card__title">Bedah satu website</h2>
-            <p class="card__text">
-              Buka website sekolah atau pemerintah daerahmu. Temukan satu judul
-              besar, satu paragraf, dan satu tautan. Klik tautannya, lalu
-              perhatikan bagaimana alamat di browser berubah. Tulis tiga
-              kalimat: halaman apa yang kamu buka, ke mana tautannya pergi, dan
-              bagian mana yang menurutmu diatur CSS.
+          <section class="lab" data-lab aria-labelledby="lab-judul">
+            <p class="label">Latihan langsung</p>
+            <h2 id="lab-judul">Coba tulis HTML-mu</h2>
+            <p>
+              Ganti nama dan kalimat di panel kiri, lalu klik
+              <strong>Jalankan</strong>. Panel kanan langsung menampilkan
+              hasilnya.
             </p>
-          </div>
 
-          <div class="materi__sumber">
-            <p>Bacaan asli untuk bab ini:</p>
-            <ul>
-              <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works">MDN — How the web works</a></li>
-              <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server">MDN — What is a web server?</a></li>
-              <li><a href="https://web.dev/learn/html">web.dev — Learn HTML</a></li>
-            </ul>
-          </div>
+            <div class="lab__meja">
+              <div class="lab__panel lab__panel--kode">
+                <div class="lab__bar">
+                  <span class="lab__prompt" aria-hidden="true">&gt;_</span>
+                  <span class="lab__nama">index.html</span>
+                  <span class="lab__isyarat">bisa diubah</span>
+                </div>
+                <textarea class="lab__editor" data-lab-editor rows="8" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Kode HTML latihan" aria-describedby="lab-status">&lt;h1&gt;Halo, dunia!&lt;/h1&gt;
+&lt;p&gt;Ini halaman web pertamaku.&lt;/p&gt;</textarea>
+              </div>
 
-          <nav class="materi__pager" aria-label="Bab sebelumnya dan berikutnya">
-            <a class="btn btn--ghost materi__sebelum" href="../../index.html#kurikulum">← Kembali ke kurikulum</a>
-            <span class="btn btn--primary materi__berikut" aria-disabled="true">File HTML pertamamu →</span>
-          </nav>
+              <div class="lab__panel lab__panel--hasil">
+                <div class="lab__bar">
+                  <span class="pane__dots" aria-hidden="true">
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                  </span>
+                  <span class="lab__nama">Hasil</span>
+                  <span class="lab__isyarat">pratinjau</span>
+                </div>
+                <iframe class="lab__pratinjau" data-lab-pratinjau title="Pratinjau hasil kode HTML" sandbox="" srcdoc="&lt;h1&gt;Halo, dunia!&lt;/h1&gt;&lt;p&gt;Ini halaman web pertamaku.&lt;/p&gt;"></iframe>
+              </div>
+            </div>
+
+            <div class="lab__aksi">
+              <button class="btn btn--primary" type="button" data-lab-jalankan hidden>Jalankan</button>
+              <button class="btn btn--ghost" type="button" data-lab-reset hidden>Atur ulang</button>
+              <p class="lab__status" id="lab-status" data-lab-status role="status">Panel kanan menampilkan contoh hasil.</p>
+            </div>
+
+            <noscript>
+              <p class="lab__catatan">
+                Editor butuh JavaScript. Salin kode di atas ke file .html, lalu
+                buka di browser.
+              </p>
+            </noscript>
+          </section>
+
+          <footer class="materi__kaki">
+            <section class="kaki__sumber" aria-labelledby="sumber-judul">
+              <h2 class="kaki__label" id="sumber-judul">Bacaan asli</h2>
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works">MDN — How the web works</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server">MDN — What is a web server?</a></li>
+                <li><a href="https://web.dev/learn/html">web.dev — Learn HTML</a></li>
+              </ul>
+            </section>
+
+            <nav class="kaki__pager" aria-label="Bab sebelumnya dan berikutnya">
+              <a class="kaki__bab kaki__bab--kembali" href="../../index.html#kurikulum">
+                <span class="kaki__arah">Kembali</span>
+                <span class="kaki__judul">Kurikulum</span>
+              </a>
+              <div class="kaki__bab kaki__bab--mati" aria-disabled="true">
+                <span class="kaki__arah">Bab berikutnya</span>
+                <span class="kaki__judul">File HTML pertamamu</span>
+                <span class="badge badge--pink">Segera</span>
+              </div>
+            </nav>
+          </footer>
         </article>
 
       </div>
@@ -316,6 +361,7 @@
     </div>
   </footer>
 
+  <script src="../../assets/js/latihan-html.js"></script>
   <script src="../../assets/js/main.js"></script>
 </body>
 </html>

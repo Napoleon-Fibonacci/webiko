@@ -172,19 +172,28 @@
             </p>
           </div>
 
-          <div class="materi__sumber">
-            <p>Bacaan asli untuk bab ini:</p>
-            <ul>
-              <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/Headings_and_paragraphs">MDN — Headings and paragraphs</a></li>
-              <li><a href="https://www.w3.org/WAI/tutorials/page-structure/headings/">W3C WAI — Headings</a></li>
-              <li><a href="https://web.dev/learn/html">web.dev — Learn HTML</a></li>
-            </ul>
-          </div>
+          <footer class="materi__kaki">
+            <section class="kaki__sumber" aria-labelledby="sumber-judul">
+              <h2 class="kaki__label" id="sumber-judul">Bacaan asli</h2>
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/Headings_and_paragraphs">MDN — Headings and paragraphs</a></li>
+                <li><a href="https://www.w3.org/WAI/tutorials/page-structure/headings/">W3C WAI — Headings</a></li>
+                <li><a href="https://web.dev/learn/html">web.dev — Learn HTML</a></li>
+              </ul>
+            </section>
 
-          <nav class="materi__pager" aria-label="Bab sebelumnya dan berikutnya">
-            <a class="btn btn--ghost materi__sebelum" href="../../index.html#kurikulum">← Kembali ke kurikulum</a>
-            <span class="btn btn--primary materi__berikut" aria-disabled="true">Tautan antar halaman →</span>
-          </nav>
+            <nav class="kaki__pager" aria-label="Bab sebelumnya dan berikutnya">
+              <a class="kaki__bab kaki__bab--kembali" href="../../index.html#kurikulum">
+                <span class="kaki__arah">Kembali</span>
+                <span class="kaki__judul">Kurikulum</span>
+              </a>
+              <div class="kaki__bab kaki__bab--mati" aria-disabled="true">
+                <span class="kaki__arah">Bab berikutnya</span>
+                <span class="kaki__judul">Tautan antar halaman</span>
+                <span class="badge badge--pink">Segera</span>
+              </div>
+            </nav>
+          </footer>
         </article>
 
       </div>
