@@ -11,6 +11,7 @@
        slug, judul, ringkas,
        tingkat: "Pemula" | "Pemula+" | "Lanjutan",
        status: "segera" | "terbit",
+       tautan: "materi/<jalur>/<bab>.html" (opsional; ada = kartu bisa diklik),
        bab: [{ slug, judul }]
      }
 
@@ -25,7 +26,8 @@ const KURIKULUM = [
     ringkas:
       "Kenali tag, teks, gambar, dan tautan. Delapan bab menuju halaman pertamamu.",
     tingkat: "Pemula",
-    status: "segera",
+    status: "terbit",
+    tautan: "materi/html/apa-itu-website.html",
     bab: [
       { slug: "apa-itu-website", judul: "Apa itu website" },
       { slug: "file-html-pertama", judul: "File HTML pertamamu" },

@@ -81,8 +81,17 @@ document.querySelectorAll('[data-kurikulum]').forEach(function (host) {
       meta.append(status);
     }
 
-    var kartu = document.createElement('article');
-    kartu.className = 'card card--lesson';
+    /* Jalur yang sudah punya bab memakai <a> supaya seluruh kartu bisa
+       diklik. Jalur "segera" tetap <article>, bukan tautan palsu. */
+    var kartu;
+    if (jalur.tautan) {
+      kartu = document.createElement('a');
+      kartu.className = 'card card--lesson card--tautan';
+      kartu.href = jalur.tautan;
+    } else {
+      kartu = document.createElement('article');
+      kartu.className = 'card card--lesson';
+    }
     kartu.append(nomor, judul, ringkas, meta);
 
     var item = document.createElement('li');

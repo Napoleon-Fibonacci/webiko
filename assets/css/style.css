@@ -672,6 +672,17 @@ b {
   height: 100%;
 }
 
+/* Jalur yang sudah punya bab: seluruh kartu jadi tautan. Warna dan
+   garis bawah bawaan tautan dimatikan supaya tampilannya tetap kartu. */
+.card--tautan {
+  color: inherit;
+  text-decoration: none;
+}
+
+.card--tautan:hover .card__title {
+  text-decoration: underline;
+}
+
 /* Garis putus-putus di kepala baris meta diberi jarak sama besar ke
    ringkasan di atas dan ke lencana di bawahnya, jadi terbaca duduk di
    tengah. Baris meta tetap dipaku ke bawah kartu supaya lencananya
