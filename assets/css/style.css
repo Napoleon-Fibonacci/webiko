@@ -146,9 +146,6 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
   --shadow-hard: 4px 4px 0 0 var(--color-shadow);
   --shadow-hard-hover: 6px 6px 0 0 var(--color-shadow);
   --shadow-hard-lg: 8px 8px 0 0 var(--color-shadow);
-  /* Panel kode & hasil pakai bayangan putih, bukan tinta: bayangan tinta
-     membuat panel tampak dobel bertumpuk. */
-  --shadow-pane: 8px 8px 0 0 #ffffff;
   --shadow-focus: 5px 5px 0 0 var(--color-shadow-accent);
   --shadow-none: 0 0 0 0 var(--color-shadow);
   --shadow-tile: 4px 4px 0 var(--color-ink);
@@ -1438,7 +1435,7 @@ b {
   border: var(--border-w) solid var(--color-border);
   border-radius: var(--radius-lg);
   background-color: var(--color-surface);
-  box-shadow: var(--shadow-pane);
+  box-shadow: var(--shadow-hard-lg);
 }
 
 .pane__bar {
@@ -1492,6 +1489,10 @@ b {
 /* Panel kode sengaja selalu gelap — lihat token --color-code-*. */
 .code-pane {
   background-color: var(--color-code-bg);
+  /* Bayangan panel kode pakai indigo navbar, bukan tinta, supaya tidak
+     tampak dobel bertumpuk dengan panelnya yang gelap. Panel hasil
+     tetap pakai bayangan tinta bawaan .pane. */
+  box-shadow: 8px 8px 0 0 var(--color-surface-raised);
 }
 
 .code-pane .pane__bar {
