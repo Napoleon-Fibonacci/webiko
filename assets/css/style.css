@@ -1372,9 +1372,10 @@ b {
 }
 
 /* --- Hiasan hero ------------------------------------------ */
-/* Mengisi sisa ruang di bawah kolom teks pada tata letak dua kolom.
-   Cuma ditampilkan dari 1024px ke atas; di bawah itu hero satu kolom
-   dan tidak ada ruang sisa. */
+/* Mengisi ruang kosong di kolom kiri pada tata letak dua kolom:
+   --lebar untuk desktop (kolom pendek & lebar, dari 1024px), --tinggi
+   untuk tablet (kolom sempit tapi tinggi, 768-1023px). Di luar itu
+   hero satu kolom dan tidak ada ruang sisa, jadi keduanya dimatikan. */
 .hero__deco {
   display: none;
 }
@@ -1573,15 +1574,15 @@ b {
    digambar; tidak ada yang menggeser tata letak.
 
    1. Baris kode di hero muncul berurutan, lalu panel hasilnya.
-   2. Logo navbar bergoyang pelan terus-menerus (satu-satunya gerakan
-      berulang).
+   2. Logo navbar bergoyang pelan terus-menerus; ini dan hiasan hero
+      (nomor 5) gerakan yang berulang.
    3. Elemen [data-reveal] naik halus saat masuk viewport, diatur
       assets/js/main.js.
    4. Panel menu mobile meluncur turun dan tautannya menyusul
       (wg-menu-tautan); menutup pun beranimasi.
    5. Hiasan hero terapung naik-turun dan titiknya berkedip
-      (wg-deco-terapung, wg-deco-kedip), hanya tampil di tata letak
-      dua kolom. */
+      (wg-deco-terapung, wg-deco-kedip), tampil di tata letak dua kolom
+      (768px ke atas): varian --lebar di desktop, --tinggi di tablet. */
 @keyframes wg-line {
   from {
     opacity: 0;
@@ -1757,41 +1758,57 @@ b {
     align-items: start;
   }
 
-  /* Di lebar ini hero masih satu kolom. Tanpa batas, panel kode melar
-     selebar halaman padahal isinya cuma ~270px, jadi separuh panel
-     tinggal gelap kosong. Dipatok saja. */
-  .hero__workbench {
-    max-width: 34rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .hero {
-    padding-block: var(--space-16) var(--space-12);
-  }
-
-  /* Kolom teks sedikit lebih lebar dari kolom kode: judul display
-     butuh ~470px per baris supaya "baris demi baris." tidak pecah
-     jadi baris yatim; isi panel kode cuma butuh ~270px. Kolom teks
-     lebih pendek dari panel kode; sisa ruang di bawahnya diisi hiasan
-     .hero__deco, jadi tidak menganga kosong. */
+  /* Hero tablet: band judul penuh di atas, lalu dua kolom di bawahnya —
+     kiri sisa elemen hero (tombol, catatan, hiasan), kanan panel kode
+     dan hasilnya yang tinggi. Judul dibiarkan selebar band supaya
+     barisnya tidak pecah jadi terlalu banyak potongan. */
   .hero__grid {
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "intro intro"
+      "ekstra kerja";
     align-items: start;
-    gap: var(--space-12);
+  }
+
+  /* display: contents membuat --intro dan --extras naik jadi anak grid
+     langsung, jadi keduanya bisa menempati area sendiri. Di luar
+     rentang ini --copy tetap kotak biasa, jadi mobile & desktop sama. */
+  .hero__copy {
+    display: contents;
+  }
+
+  .hero__intro {
+    grid-area: intro;
+  }
+
+  .hero__extras {
+    grid-area: ekstra;
   }
 
   .hero__workbench {
-    max-width: none;
+    grid-area: kerja;
   }
 
-  /* Hiasan hero baru muncul di sini. Tiga chip terapung dengan durasi
-     dan jeda berbeda supaya tidak bergerak serempak. */
-  .hero__deco {
+  /* Jarak tombol dari teks judul diatur row-gap grid, bukan margin. */
+  .hero__extras .actions--spaced {
+    margin-top: 0;
+  }
+
+  /* Hiasan varian tinggi mengisi kolom kiri yang sempit tapi tinggi.
+     Lebarnya dipatok: kalau ikut lebar kolom, tingginya (yang mengikuti
+     rasio) melampaui tinggi panel kode di lebar besar. */
+  .hero__deco--tinggi {
     display: block;
     margin-top: var(--space-6);
   }
 
+  .hero__deco--tinggi svg {
+    max-width: 25rem;
+    margin-inline: auto;
+  }
+
+  /* Tiga chip terapung dengan durasi dan jeda berbeda supaya tidak
+     bergerak serempak; dua titiknya berkedip. */
   .hero__deco-chip--1 {
     animation: wg-deco-terapung 3.2s var(--ease-out) infinite alternate;
   }
@@ -1813,6 +1830,50 @@ b {
   }
 }
 
+@media (min-width: 1024px) {
+  .hero {
+    padding-block: var(--space-16) var(--space-12);
+  }
+
+  /* Kembali ke dua kolom: teks di kiri, panel kode di kanan. Kolom
+     teks sedikit lebih lebar dari kolom kode: judul display butuh
+     ~470px per baris supaya "baris demi baris." tidak pecah jadi baris
+     yatim; isi panel kode cuma butuh ~270px. Kolom teks lebih pendek
+     dari panel kode; sisa ruang di bawahnya diisi hiasan --lebar, jadi
+     tidak menganga kosong. */
+  .hero__grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    grid-template-areas: none;
+    align-items: start;
+    gap: var(--space-12);
+  }
+
+  /* Batalkan pengaturan khusus tablet: --copy kembali jadi kotak biasa
+     dan tak ada lagi area grid bernama. */
+  .hero__copy {
+    display: block;
+  }
+
+  .hero__intro,
+  .hero__extras,
+  .hero__workbench {
+    grid-area: auto;
+  }
+
+  .hero__extras .actions--spaced {
+    margin-top: var(--space-6);
+  }
+
+  .hero__deco--tinggi {
+    display: none;
+  }
+
+  .hero__deco--lebar {
+    display: block;
+    margin-top: var(--space-6);
+  }
+}
+
 /* Pengguna yang minta gerakan minim langsung dapat keadaan akhir. */
 @media (prefers-reduced-motion: reduce) {
   .code__line,
@@ -1821,8 +1882,8 @@ b {
   }
 
   /* Hiasan hero dimatikan total (bukan cuma dipercepat), jadi chip dan
-     titiknya diam di tempat. Ditaruh di sini, setelah aturan animasinya
-     di breakpoint Desktop, supaya benar-benar menang. */
+     titiknya diam di tempat. Ditaruh paling akhir, setelah aturan
+     animasinya di breakpoint Tablet, supaya benar-benar menang. */
   .hero__deco-chip,
   .hero__deco-titik {
     animation: none;

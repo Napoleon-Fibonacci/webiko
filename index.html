@@ -94,45 +94,78 @@
       <div class="container hero__grid">
 
         <div class="hero__copy">
-          <p class="label">Untuk pelajar SMP &amp; SMA</p>
-          <h1 class="hero__title">Bikin website pertamamu, baris demi baris.</h1>
-          <p class="hero__lead">
-            Kamu menulis HTML, CSS, dan JavaScript sendiri, lalu melihat hasilnya
-            langsung di browser. Tidak perlu memasang apa pun.
-          </p>
-          <div class="actions actions--spaced">
-            <a class="btn btn--primary" href="#kurikulum">Lihat kurikulum</a>
-            <a class="btn btn--secondary" href="#cara-pakai">Cara pakai</a>
-          </div>
-          <p class="hero__note text-small">
-            Gratis, berbahasa Indonesia, dan bisa dimulai tanpa akun.
-          </p>
 
-          <!-- Hiasan: mengisi sisa ruang di bawah kolom teks pada tata
-               letak dua kolom. Murni dekoratif, jadi disembunyikan dari
-               pembaca layar; geraknya mati saat prefers-reduced-motion. -->
-          <div class="hero__deco" aria-hidden="true">
-            <svg viewBox="0 0 640 160" focusable="false">
-              <path class="hero__deco-jalur" d="M60 118C150 150 220 60 320 84s132 48 240 20" />
-              <g class="hero__deco-chip hero__deco-chip--1">
-                <rect class="hero__deco-bayang" x="27" y="83" width="118" height="46" rx="11" />
-                <rect class="hero__deco-badan" x="22" y="78" width="118" height="46" rx="11" />
-                <text class="hero__deco-teks" x="81" y="107">&lt;/&gt;</text>
-              </g>
-              <g class="hero__deco-chip hero__deco-chip--2">
-                <rect class="hero__deco-bayang" x="257" y="21" width="134" height="46" rx="11" />
-                <rect class="hero__deco-badan" x="252" y="16" width="134" height="46" rx="11" />
-                <text class="hero__deco-teks" x="319" y="45">{ }</text>
-              </g>
-              <g class="hero__deco-chip hero__deco-chip--3">
-                <rect class="hero__deco-bayang" x="479" y="89" width="118" height="46" rx="11" />
-                <rect class="hero__deco-badan" x="474" y="84" width="118" height="46" rx="11" />
-                <text class="hero__deco-teks" x="533" y="113">css</text>
-              </g>
-              <circle class="hero__deco-titik" cx="182" cy="130" r="7" />
-              <circle class="hero__deco-titik hero__deco-titik--2" cx="438" cy="30" r="6" />
-            </svg>
+          <div class="hero__intro">
+            <p class="label">Untuk pelajar SMP &amp; SMA</p>
+            <h1 class="hero__title">Bikin website pertamamu, baris demi baris.</h1>
+            <p class="hero__lead">
+              Kamu menulis HTML, CSS, dan JavaScript sendiri, lalu melihat hasilnya
+              langsung di browser. Tidak perlu memasang apa pun.
+            </p>
           </div>
+
+          <div class="hero__extras">
+            <div class="actions actions--spaced">
+              <a class="btn btn--primary" href="#kurikulum">Lihat kurikulum</a>
+              <a class="btn btn--secondary" href="#cara-pakai">Cara pakai</a>
+            </div>
+            <p class="hero__note text-small">
+              Gratis, berbahasa Indonesia, dan bisa dimulai tanpa akun.
+            </p>
+
+            <!-- Hiasan: murni dekoratif, disembunyikan dari pembaca layar,
+                 dan geraknya mati saat prefers-reduced-motion. Ada dua
+                 varian karena bentuk ruang kosongnya beda: --lebar untuk
+                 desktop (kolom kiri pendek dan lebar), --tinggi untuk
+                 tablet (kolom kiri sempit tapi setinggi panel kode).
+                 Cuma satu yang tampil di tiap breakpoint. -->
+            <div class="hero__deco hero__deco--lebar" aria-hidden="true">
+              <svg viewBox="0 0 640 160" focusable="false">
+                <path class="hero__deco-jalur" d="M60 118C150 150 220 60 320 84s132 48 240 20" />
+                <g class="hero__deco-chip hero__deco-chip--1">
+                  <rect class="hero__deco-bayang" x="27" y="83" width="118" height="46" rx="11" />
+                  <rect class="hero__deco-badan" x="22" y="78" width="118" height="46" rx="11" />
+                  <text class="hero__deco-teks" x="81" y="107">&lt;/&gt;</text>
+                </g>
+                <g class="hero__deco-chip hero__deco-chip--2">
+                  <rect class="hero__deco-bayang" x="257" y="21" width="134" height="46" rx="11" />
+                  <rect class="hero__deco-badan" x="252" y="16" width="134" height="46" rx="11" />
+                  <text class="hero__deco-teks" x="319" y="45">{ }</text>
+                </g>
+                <g class="hero__deco-chip hero__deco-chip--3">
+                  <rect class="hero__deco-bayang" x="479" y="89" width="118" height="46" rx="11" />
+                  <rect class="hero__deco-badan" x="474" y="84" width="118" height="46" rx="11" />
+                  <text class="hero__deco-teks" x="533" y="113">css</text>
+                </g>
+                <circle class="hero__deco-titik" cx="182" cy="130" r="7" />
+                <circle class="hero__deco-titik hero__deco-titik--2" cx="438" cy="30" r="6" />
+              </svg>
+            </div>
+
+            <div class="hero__deco hero__deco--tinggi" aria-hidden="true">
+              <svg viewBox="0 0 420 470" focusable="false">
+                <path class="hero__deco-jalur" d="M210 26C336 104 92 170 198 248S338 372 214 446" />
+                <g class="hero__deco-chip hero__deco-chip--1">
+                  <rect class="hero__deco-bayang" x="32" y="70" width="150" height="52" rx="12" />
+                  <rect class="hero__deco-badan" x="26" y="64" width="150" height="52" rx="12" />
+                  <text class="hero__deco-teks" x="101" y="99">&lt;/&gt;</text>
+                </g>
+                <g class="hero__deco-chip hero__deco-chip--2">
+                  <rect class="hero__deco-bayang" x="250" y="202" width="152" height="52" rx="12" />
+                  <rect class="hero__deco-badan" x="244" y="196" width="152" height="52" rx="12" />
+                  <text class="hero__deco-teks" x="320" y="231">{ }</text>
+                </g>
+                <g class="hero__deco-chip hero__deco-chip--3">
+                  <rect class="hero__deco-bayang" x="36" y="336" width="132" height="52" rx="12" />
+                  <rect class="hero__deco-badan" x="30" y="330" width="132" height="52" rx="12" />
+                  <text class="hero__deco-teks" x="96" y="365">css</text>
+                </g>
+                <circle class="hero__deco-titik" cx="196" cy="152" r="7" />
+                <circle class="hero__deco-titik hero__deco-titik--2" cx="332" cy="300" r="6" />
+              </svg>
+            </div>
+          </div>
+
         </div>
 
         <!-- Kode di kiri, hasilnya di kanan — inti seluruh situs ini. -->

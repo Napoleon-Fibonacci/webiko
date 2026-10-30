@@ -199,8 +199,10 @@ yang bergeser dan tidak ada library. Kontraknya:
   masuk viewport, sekali saja. Pengaturnya IIFE terakhir di `assets/js/main.js`
   (satu `IntersectionObserver`, jeda bertahap 70ms per elemen).
 - **Berulang.** Logo navbar bergoyang pelan (`@keyframes wg-rock`) dan hiasan di
-  bawah kolom teks hero terapung naik-turun (`wg-deco-terapung` + `wg-deco-kedip`;
-  hiasan ini hanya tampil di tata letak dua kolom, 1024px ke atas).
+  kolom kiri hero terapung naik-turun (`wg-deco-terapung` + `wg-deco-kedip`).
+  Hiasan ini tampil di tata letak dua kolom, 768px ke atas — varian `--lebar`
+  di desktop (kolom kiri pendek dan lebar), varian `--tinggi` di tablet (kolom
+  kiri sempit tapi setinggi panel kode).
 - **Menu mobile.** Tombol hamburger membuka panel melayang di bawah navbar:
   panelnya meluncur turun sambil memudar dan tiap tautan menyusul bertahap.
   Karena panel keluar dari aliran flex, tinggi navbar dan isi halaman di
