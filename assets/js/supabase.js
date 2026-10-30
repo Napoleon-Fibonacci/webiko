@@ -1,5 +1,5 @@
 /* ============================================================
-   Web Guide — assets/js/supabase.js
+   Webiko — assets/js/supabase.js
    Klien Supabase (ESM, tanpa build step).
 
    Kredensial TIDAK disimpan di sini. Buat file
@@ -22,9 +22,9 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 /**
  * Domain email sintetis. Supabase Auth memakai email, sedangkan
  * user kami mendaftar dengan username saja, jadi username dipetakan
- * ke `<username>@webguide.local`.
+ * ke `<username>@webiko.local`.
  */
-export const SYNTHETIC_EMAIL_DOMAIN = "webguide.local";
+export const SYNTHETIC_EMAIL_DOMAIN = "webiko.local";
 
 // window.__ENV__ = mekanisme utama (lihat supabase-config.example.js).
 // window.SUPABASE_URL / window.SUPABASE_ANON_KEY = alias lama.

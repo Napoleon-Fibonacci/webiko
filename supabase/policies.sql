@@ -1,5 +1,5 @@
 -- ============================================================
---  Web Guide — supabase/policies.sql
+--  Webiko — supabase/policies.sql
 --  RLS (Row Level Security) + policy + trigger profil.
 --
 --  Cara pakai: jalankan SETELAH supabase/schema.sql.
@@ -10,7 +10,7 @@
 -- ------------------------------------------------------------
 -- 0. Helper: username unik lintas profiles
 --    Diperlukan karena kita memakai email sintetis
---    (username@webguide.local) sehingga dua username berbeda
+--    (username@webiko.local) sehingga dua username berbeda
 --    bisa menghasilkan email yang sama secara case-insensitive.
 --    SECURITY DEFINER supaya pengecekan bisa melihat semua baris
 --    meskipun RLS membatasi pembacaan.

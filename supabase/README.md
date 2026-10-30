@@ -1,6 +1,6 @@
 # Supabase — skema, RLS, dan verifikasi
 
-Folder ini berisi SQL untuk database Web Guide. Semua dijalankan manual
+Folder ini berisi SQL untuk database Webiko. Semua dijalankan manual
 di **Supabase Dashboard → SQL Editor** (tidak ada `psql`/migration runner
 di project ini).
 

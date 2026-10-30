@@ -1,11 +1,11 @@
 -- ============================================================
---  Web Guide — supabase/lint.sql
+--  Webiko — supabase/lint.sql
 --  Pemeriksaan bukti bahwa schema.sql + policies.sql SUDAH jalan.
 --  Read-only: file ini HANYA SELECT, tidak mengubah apa pun.
 --  Jalankan PALING AKHIR, setelah schema.sql lalu policies.sql.
 --
 --  Hasil yang diharapkan:
---   - saklar "Web Guide"  -> 'LULUS' (bukan 'GAGAL')
+--   - saklar "Webiko"  -> 'LULUS' (bukan 'GAGAL')
 --   - tabel_ok            -> 5 dari 5, semua rowsecurity = true
 --   - policy_ok           -> 13 dari 13
 --   - fungsi_ok           -> 2 dari 2
@@ -56,7 +56,7 @@ select
     else 'GAGAL — ulangi scripts/verify-supabase.md'
   end as saklar
 from (
-  select 'Web Guide'::text as nama,
+  select 'Webiko'::text as nama,
          (select count(*) from tabel where rowsecurity) as tabel_ok,
          (select count(*) from policy) as policy_ok,
          (select count(*) from fungsi) as fungsi_ok,

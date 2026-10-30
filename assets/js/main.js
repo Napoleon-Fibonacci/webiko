@@ -1,5 +1,5 @@
 /* ============================================================
-   Web Guide — assets/js/main.js
+   Webiko — assets/js/main.js
    Script utama. Vanilla JavaScript, tanpa build step.
    ============================================================ */
 /* Toggle menu navbar di layar kecil (< 768px). */

@@ -1,5 +1,5 @@
 -- ============================================================
---  Web Guide — supabase/schema.sql
+--  Webiko — supabase/schema.sql
 --  Skema tabel untuk auth, progres, kuis, komentar, dan badge.
 --
 --  Cara pakai: buka Supabase Dashboard → SQL Editor → tempel isi

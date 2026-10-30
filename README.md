@@ -1,4 +1,4 @@
-# Web Guide
+# Webiko
 
 Website pembelajaran untuk anak sekolah yang ingin belajar membuat website dari dasar, ditulis dalam Bahasa Indonesia.
 
@@ -90,7 +90,7 @@ Supabase Auth berbasis email, sedangkan user mendaftar dengan
 **username + password saja** (tanpa nama asli, email asli, atau data
 pribadi lain). Pendekatan:
 
-- Username dipetakan ke email sintetis: `username@webguide.local`.
+- Username dipetakan ke email sintetis: `username@webiko.local`.
 - Saat `signUp`, username juga dikirim sebagai
   `options.data.username`; trigger `handle_new_user()` memakainya
   untuk mengisi `profiles.username`.

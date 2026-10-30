@@ -1,5 +1,5 @@
 /* ============================================================
-   Web Guide — data/kurikulum.js
+   Webiko — data/kurikulum.js
    Daftar kurikulum materi pembelajaran.
 
    Dimuat sebagai script biasa lewat <script> di index.html, jadi

@@ -1,5 +1,5 @@
 /* ============================================================
-   Web Guide — assets/js/supabase-config.example.js
+   Webiko — assets/js/supabase-config.example.js
 
    CONTOH saja. Salin file ini menjadi:
      assets/js/supabase-config.js

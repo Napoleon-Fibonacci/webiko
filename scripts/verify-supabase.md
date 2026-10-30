@@ -12,7 +12,7 @@ chat, laporan, commit, atau file di repo. Yang dipakai frontend hanya
 
 ## 0. Siapkan (sekali saja)
 
-- Akun <https://supabase.com> dan satu **project** Web Guide
+- Akun <https://supabase.com> dan satu **project** Webiko
   (buat lewat **New project**; simpan password database di tempat aman —
   tidak dibutuhkan oleh situs).
 - Folder repo ini terbuka di editor.
@@ -109,7 +109,7 @@ reset role;
 
 ## 5. Sambungkan ke Vercel (Integrasi Vercel ↔ Supabase)
 
-1. Buka dashboard Vercel → project Web Guide → tab **Integrations** →
+1. Buka dashboard Vercel → project Webiko → tab **Integrations** →
    cari **Supabase** → **Add Integration** → pilih project Supabase Anda.
 2. Selesai. Integrasi ini berguna untuk akses dashboard/CLI, tetapi **tidak**
    menyuntikkan URL/anon key ke file statis (tidak ada build step), jadi
@@ -137,7 +137,7 @@ Tidak ada pesan `[supabase] window.__ENV__…` dan tidak ada error
 **Authentication → Sign In / Providers → Email**:
 
 - Matikan **Confirm email** (user daftar pakai username, email-nya sintetis
-  `username@webguide.local` sehingga tidak bisa dikirimi email).
+  `username@webiko.local` sehingga tidak bisa dikirimi email).
 - Biarkan signup publik aktif.
 
 **Tanda berhasil:** uji daftar dari situs berhasil tanpa perlu klik link email,
