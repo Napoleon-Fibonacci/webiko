@@ -779,20 +779,26 @@ b {
   font-size: var(--fs-small);
   font-weight: var(--fw-bold);
   text-decoration: none;
+  box-shadow: none;
   transition:
     box-shadow var(--dur-fast) var(--ease-out),
     background-color var(--dur-base) var(--ease-out),
     border-color var(--dur-base) var(--ease-out);
 }
 
-/* Tiap tautan punya kotak yang sama bentuknya. Saat hover dan di halaman
-   aktif, garisnya menebal; dipakai inset shadow supaya teks tidak
-   bergeser saat kotaknya mengeras. */
-.navbar__link:hover,
-.navbar__link[aria-current="page"] {
+/* Semua tautan cuma kotak outline. Saat hover garisnya mulai terangkat,
+   dan halaman yang sedang dibuka jadi kotak padat + bayangan keras,
+   senada dengan tombol kecil di footer. */
+.navbar__link:hover {
   border-color: var(--color-border);
   background-color: transparent;
-  box-shadow: inset 0 0 0 1px var(--color-border);
+  box-shadow: 2px 2px 0 0 var(--color-shadow);
+}
+
+.navbar__link[aria-current="page"] {
+  border-color: var(--color-border);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-hard-sm);
 }
 
 /* Mobile: menu dibuka via tombol .navbar__toggle (lihat main.js).
