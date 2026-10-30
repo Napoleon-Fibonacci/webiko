@@ -793,6 +793,9 @@ b {
 .navbar__link[aria-current="page"] {
   border-color: var(--color-border);
   background-color: var(--color-surface);
+  /* Tautan global berubah indigo saat hover (lihat aturan `a:hover`);
+     di navbar teksnya tetap tinta supaya cuma kotaknya yang berubah. */
+  color: var(--color-ink);
   box-shadow: var(--shadow-hard-sm);
 }
 
