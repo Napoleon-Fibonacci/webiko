@@ -786,19 +786,23 @@ b {
     border-color var(--dur-base) var(--ease-out);
 }
 
-/* Semua tautan cuma kotak outline. Saat hover garisnya mulai terangkat,
-   dan halaman yang sedang dibuka jadi kotak padat + bayangan keras,
-   senada dengan tombol kecil di footer. */
-.navbar__link:hover {
-  border-color: var(--color-border);
-  background-color: transparent;
-  box-shadow: 2px 2px 0 0 var(--color-shadow);
-}
-
+/* Semua tautan cuma kotak outline. Yang sedang di-hover dan halaman yang
+   sedang dibuka jadi kotak padat + bayangan keras, senada dengan tombol
+   kecil di footer. */
+.navbar__link:hover,
 .navbar__link[aria-current="page"] {
   border-color: var(--color-border);
   background-color: var(--color-surface);
   box-shadow: var(--shadow-hard-sm);
+}
+
+/* Putih "pindah": begitu satu tautan di-hover, tautan aktif yang tidak
+   di-hover kehilangan isinya, jadi cuma satu kotak putih yang tampak.
+   Tanpa dukungan :has() browser lama cuma kehilangan efek pindah ini;
+   keduanya tetap terbaca sebagai tautan aktif/hover. */
+.navbar__links:has(.navbar__link:hover) .navbar__link[aria-current="page"]:not(:hover) {
+  background-color: transparent;
+  box-shadow: none;
 }
 
 /* Mobile: menu dibuka via tombol .navbar__toggle (lihat main.js).
