@@ -146,6 +146,9 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
   --shadow-hard: 4px 4px 0 0 var(--color-shadow);
   --shadow-hard-hover: 6px 6px 0 0 var(--color-shadow);
   --shadow-hard-lg: 8px 8px 0 0 var(--color-shadow);
+  /* Panel kode & hasil pakai bayangan putih, bukan tinta: bayangan tinta
+     membuat panel tampak dobel bertumpuk. */
+  --shadow-pane: 8px 8px 0 0 #ffffff;
   --shadow-focus: 5px 5px 0 0 var(--color-shadow-accent);
   --shadow-none: 0 0 0 0 var(--color-shadow);
   --shadow-tile: 4px 4px 0 var(--color-ink);
@@ -1435,7 +1438,7 @@ b {
   border: var(--border-w) solid var(--color-border);
   border-radius: var(--radius-lg);
   background-color: var(--color-surface);
-  box-shadow: var(--shadow-hard-lg);
+  box-shadow: var(--shadow-pane);
 }
 
 .pane__bar {
@@ -1555,7 +1558,8 @@ b {
   margin-top: var(--space-3);
 }
 
-/* Konektor dari kode ke hasilnya. */
+/* Konektor dari kode ke hasilnya: panah turun penuh (batang + kepala).
+   Digambar lewat clip-path supaya tetap satu elemen, tanpa gambar. */
 .workbench__flow {
   display: flex;
   flex-direction: column;
@@ -1566,8 +1570,10 @@ b {
 .workbench__flow::before,
 .workbench__flow::after {
   content: "";
+  width: 15px;
   height: var(--space-4);
-  border-left: var(--border-w-thin) dashed var(--color-border-muted);
+  background-color: var(--color-ink);
+  clip-path: polygon(50% 100%, 0 46%, 31% 46%, 31% 0, 69% 0, 69% 46%, 100% 46%);
 }
 
 /* Gerak halaman. Semuanya cuma opacity dan transform supaya murah
