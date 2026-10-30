@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bab 3 HTML dari nol: memakai judul h1 sampai h6 dan paragraf p dengan urutan yang benar. Materi Webiko untuk pelajar SMP dan SMA.">
+  <title>Judul dan paragraf — HTML dari nol · Webiko</title>
+
+  <!-- Pasang tema sebelum halaman digambar, sama seperti beranda. -->
+  <script>
+    (function () {
+      try {
+        var pilihan = localStorage.getItem("tema");
+        var gelap =
+          pilihan === "gelap" ||
+          (pilihan === "sistem" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-tema", gelap ? "gelap" : "terang");
+      } catch (e) {
+        document.documentElement.setAttribute("data-tema", "terang");
+      }
+
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-siap");
+        window.setTimeout(function () {
+          if (!window.__wgReveal) {
+            document.documentElement.classList.remove("reveal-siap");
+          }
+        }, 2000);
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+  <!-- ============ NAVBAR ============ -->
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="../../index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        Webiko
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="../../index.html">Beranda</a>
+        <a class="navbar__link" href="../../index.html#kurikulum" aria-current="page">Kurikulum</a>
+        <a class="navbar__link" href="../../index.html#cara-pakai">Cara pakai</a>
+      </nav>
+
+      <div class="navbar__tools">
+        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
+          <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--terang" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--gelap" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
+          </svg>
+          <span class="theme-toggle__label">Terang</span>
+        </button>
+
+        <button class="navbar__btn navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section">
+      <div class="layout--with-sidebar">
+
+        <!-- ============ SIDEBAR BAB ============ -->
+        <aside class="sidebar" aria-label="Daftar bab HTML dari nol">
+          <p class="sidebar__title">HTML dari nol</p>
+          <ul class="sidebar__list">
+            <li><span class="sidebar__link" aria-disabled="true">Apa itu website</span></li>
+            <li><span class="sidebar__link" aria-disabled="true">File HTML pertamamu</span></li>
+            <li><a class="sidebar__link" href="judul-dan-paragraf.html" aria-current="page">Judul dan paragraf</a></li>
+            <li><span class="sidebar__link" aria-disabled="true">Tautan antar halaman</span></li>
+            <li><span class="sidebar__link" aria-disabled="true">Menampilkan gambar</span></li>
+            <li><span class="sidebar__link" aria-disabled="true">Daftar berurutan dan tidak</span></li>
+            <li><span class="sidebar__link" aria-disabled="true">Tabel sederhana</span></li>
+            <li><span class="sidebar__link" aria-disabled="true">Merangkai halaman lengkap</span></li>
+          </ul>
+        </aside>
+
+        <!-- ============ ISI BAB ============ -->
+        <article class="materi">
+          <p class="label materi__eyebrow">HTML dari nol · Bab 3 dari 8</p>
+          <h1>Judul dan paragraf</h1>
+          <p class="materi__lead">
+            Halaman tanpa judul dan teks itu kosong. Dua tag ini yang paling sering
+            kamu tulis, jadi mari kita mulai dari sini.
+          </p>
+
+          <h2>Judul punya enam tingkat</h2>
+          <p>
+            HTML punya enam tingkat judul, dari <code>&lt;h1&gt;</code> sampai
+            <code>&lt;h6&gt;</code>. Angkanya menunjukkan
+            <mark>tingkat kepentingan</mark>, bukan ukuran huruf.
+            <code>&lt;h1&gt;</code> adalah judul utama halaman, <code>&lt;h2&gt;</code>
+            untuk bagian besar di bawahnya, lalu <code>&lt;h3&gt;</code> untuk
+            bagian yang lebih kecil.
+          </p>
+
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">profil.html</span>
+                <span class="pane__badge">HTML</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">&lt;h1&gt;</span>Profil Rani<span class="tok-tag">&lt;/h1&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;h2&gt;</span>Sekolah<span class="tok-tag">&lt;/h2&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;p&gt;</span>Aku kelas 8 di SMP Harapan.<span class="tok-tag">&lt;/p&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;h2&gt;</span>Hobi<span class="tok-tag">&lt;/h2&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;p&gt;</span>Aku suka menggambar dan main basket.<span class="tok-tag">&lt;/p&gt;</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Satu <code>&lt;h1&gt;</code> untuk judul halaman, dua
+              <code>&lt;h2&gt;</code> untuk bagian, dan <code>&lt;p&gt;</code>
+              untuk isi tiap bagian.
+            </p>
+          </div>
+
+          <div class="alert" role="note">
+            <div>
+              <strong class="alert__title">Jangan pakai judul untuk memperbesar teks</strong>
+              <p class="alert__text">
+                Kalau kamu cuma ingin tulisan terlihat besar, itu tugas CSS nanti.
+                Judul dipakai kalau isinya memang judul.
+              </p>
+            </div>
+          </div>
+
+          <h2>Paragraf dan jarak baris</h2>
+          <p>
+            Satu <code>&lt;p&gt;</code> membungkus satu paragraf. Browser
+            menggabungkan spasi dan baris baru di dalam kode jadi satu spasi biasa.
+            Jadi menekan Enter berkali-kali tidak menambah jarak.
+          </p>
+          <p>
+            Untuk memisahkan dua paragraf, buat dua tag <code>&lt;p&gt;</code>.
+            Jangan pakai <code>&lt;br&gt;</code> berulang hanya untuk memberi
+            jarak — itu bukan tugasnya.
+          </p>
+
+          <h2>Urutan judul yang rapi</h2>
+          <ul>
+            <li>Pakai <code>&lt;h1&gt;</code> sekali saja per halaman.</li>
+            <li>Jangan lompat dari <code>&lt;h2&gt;</code> langsung ke <code>&lt;h4&gt;</code>.</li>
+            <li>Tulis judul yang menjelaskan isinya, bukan “Bagian 1”.</li>
+          </ul>
+
+          <div class="card materi__latihan">
+            <p class="card__label">Latihan</p>
+            <h2 class="card__title">Halaman profilmu</h2>
+            <p class="card__text">
+              Buat file baru berisi satu <code>&lt;h1&gt;</code> berisi namamu,
+              lalu dua bagian dengan <code>&lt;h2&gt;</code>: “Sekolah” dan
+              “Hobi”. Isi tiap bagian dengan satu paragraf. Buka di browser dan
+              cek urutannya.
+            </p>
+          </div>
+
+          <div class="materi__sumber">
+            <p>Bacaan asli untuk bab ini:</p>
+            <ul>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/Headings_and_paragraphs">MDN — Headings and paragraphs</a></li>
+              <li><a href="https://www.w3.org/WAI/tutorials/page-structure/headings/">W3C WAI — Headings</a></li>
+              <li><a href="https://web.dev/learn/html">web.dev — Learn HTML</a></li>
+            </ul>
+          </div>
+
+          <nav class="materi__pager" aria-label="Bab sebelumnya dan berikutnya">
+            <a class="btn btn--ghost materi__sebelum" href="../../index.html#kurikulum">← Kembali ke kurikulum</a>
+            <span class="btn btn--primary materi__berikut" aria-disabled="true">Tautan antar halaman →</span>
+          </nav>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer__row">
+      <div>
+        <p class="footer__wordmark">Webiko</p>
+        <p class="footer__tagline">
+          Belajar bikin website dari nol, dalam bahasa Indonesia.
+          Tanpa install, tanpa framework.
+        </p>
+      </div>
+      <nav class="footer__nav" aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="../../index.html#kurikulum">Kurikulum</a></li>
+          <li><a href="../../index.html#cara-pakai">Cara pakai</a></li>
+          <li><a href="../../index.html#progres">Progres</a></li>
+          <li><a href="../../index.html#daftar">Buat akun</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <p>© 2026 Webiko · Dibuat tanpa framework dan tanpa dependency.</p>
+      <p>Untuk pelajar SMP &amp; SMA</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>

@@ -1950,3 +1950,158 @@ b {
     animation: none;
   }
 }
+
+/* ============================================================
+   7. MATERI
+   Halaman bab: sidebar daftar bab + kolom baca.
+   ============================================================ */
+
+.layout--with-sidebar {
+  display: grid;
+  gap: var(--space-8);
+}
+
+/* Di layar kecil, isi bab tampil dulu; daftar bab pindah ke bawah
+   supaya yang pertama terlihat bukan delapan baris menu. */
+.layout--with-sidebar > .materi {
+  order: 1;
+}
+
+.layout--with-sidebar > .sidebar {
+  order: 2;
+}
+
+@media (min-width: 1024px) {
+  .layout--with-sidebar > .materi,
+  .layout--with-sidebar > .sidebar {
+    order: 0;
+  }
+}
+
+/* Kolom baca dipatok supaya baris tidak kepanjangan di layar lebar. */
+.materi {
+  max-width: 42rem;
+}
+
+.materi__eyebrow {
+  display: inline-block;
+  margin-bottom: var(--space-2);
+}
+
+/* Judul bab tidak perlu sebesar judul hero, dan tidak dipaksa kapital:
+   judul bab panjang, kapital semua membuatnya sulit dibaca. */
+.materi h1 {
+  font-size: var(--fs-h2);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--tracking-tight);
+  text-transform: none;
+}
+
+.materi__lead {
+  margin-top: var(--space-3);
+  color: var(--color-muted);
+  font-size: var(--fs-lead);
+  max-width: var(--measure);
+}
+
+.materi h2 {
+  margin-block: var(--space-8) var(--space-3);
+  font-size: var(--fs-h3);
+}
+
+.materi h3 {
+  margin-block: var(--space-6) var(--space-2);
+  font-size: var(--fs-h4);
+}
+
+.materi p,
+.materi li {
+  max-width: var(--measure);
+}
+
+.materi p + p {
+  margin-top: var(--space-3);
+}
+
+.materi ul,
+.materi ol {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  padding-left: var(--space-6);
+}
+
+/* Hanya kode di dalam teks. Selector `code` polos ikut mengenai <code>
+   di dalam panel kode dan merusak tampilannya. */
+.materi p code,
+.materi li code,
+.materi .card__text code {
+  padding: 1px var(--space-1);
+  border: var(--border-w-thin) solid var(--color-border-muted);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface-soft);
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  white-space: nowrap;
+}
+
+.materi mark {
+  padding-inline: 2px;
+  background-color: var(--color-marker-bg);
+  color: var(--color-on-accent);
+  font-weight: var(--fw-bold);
+}
+
+.materi__gambar {
+  margin-block: var(--space-6);
+}
+
+.materi__keterangan {
+  margin-top: var(--space-2);
+  color: var(--color-muted);
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+}
+
+.materi__latihan {
+  margin-top: var(--space-8);
+}
+
+.materi__latihan .card__title {
+  margin-block: 0;
+  font-size: var(--fs-h4);
+}
+
+.materi__sumber {
+  margin-top: var(--space-8);
+  padding-top: var(--space-4);
+  border-top: var(--border-w-thin) solid var(--color-border-muted);
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+  color: var(--color-muted);
+}
+
+.materi__sumber ul {
+  margin-top: var(--space-2);
+  font-size: var(--fs-small);
+}
+
+.materi__pager {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-12);
+  padding-top: var(--space-6);
+  border-top: var(--border-w) solid var(--color-border);
+}
+
+@media (min-width: 640px) {
+  .materi__pager {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+
+  .materi__pager .materi__berikut {
+    justify-self: end;
+  }
+}
+
