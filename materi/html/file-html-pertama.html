@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bab 2 HTML dari nol: membuat berkas HTML pertama, menyimpan sebagai index.html dengan encoding UTF-8, membuka di browser, dan memperbaiki kesalahan umum. Materi Webiko untuk pelajar SMP dan SMA.">
+  <title>File HTML pertamamu — HTML dari nol · Webiko</title>
+
+  <!-- Pasang tema sebelum halaman digambar, sama seperti beranda. -->
+  <script>
+    (function () {
+      try {
+        var pilihan = localStorage.getItem("tema");
+        var gelap =
+          pilihan === "gelap" ||
+          (pilihan === "sistem" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-tema", gelap ? "gelap" : "terang");
+      } catch (e) {
+        document.documentElement.setAttribute("data-tema", "terang");
+      }
+
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-siap");
+        window.setTimeout(function () {
+          if (!window.__wgReveal) {
+            document.documentElement.classList.remove("reveal-siap");
+          }
+        }, 2000);
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+  <!-- ============ NAVBAR ============ -->
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="../../index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        Webiko
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="../../index.html">Beranda</a>
+        <a class="navbar__link" href="../../index.html#kurikulum" aria-current="page">Kurikulum</a>
+        <a class="navbar__link" href="../../index.html#cara-pakai">Cara pakai</a>
+      </nav>
+
+      <div class="navbar__tools">
+        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
+          <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--terang" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--gelap" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
+          </svg>
+          <span class="theme-toggle__label">Terang</span>
+        </button>
+
+        <button class="navbar__btn navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section">
+      <div class="layout--with-sidebar">
+
+        <!-- ============ SIDEBAR BAB ============ -->
+        <aside class="sidebar" aria-label="Daftar bab HTML dari nol">
+          <p class="sidebar__title">HTML dari nol</p>
+          <ul class="sidebar__list">
+            <li><a class="sidebar__link" href="apa-itu-website.html">Apa itu website</a></li>
+            <li><a class="sidebar__link" href="file-html-pertama.html" aria-current="page">File HTML pertamamu</a></li>
+            <li><a class="sidebar__link" href="judul-dan-paragraf.html">Judul dan paragraf</a></li>
+            <li><span class="sidebar__link" aria-disabled="true">Tautan antar halaman</span></li>
+            <li><span class="sidebar__link" aria-disabled="true">Menampilkan gambar</span></li>
+            <li><span class="sidebar__link" aria-disabled="true">Daftar berurutan dan tidak</span></li>
+            <li><span class="sidebar__link" aria-disabled="true">Tabel sederhana</span></li>
+            <li><span class="sidebar__link" aria-disabled="true">Merangkai halaman lengkap</span></li>
+          </ul>
+        </aside>
+
+        <!-- ============ ISI BAB ============ -->
+        <article class="materi">
+          <p class="label materi__eyebrow">HTML dari nol · Bab 2 dari 8</p>
+          <h1>File HTML pertamamu</h1>
+          <p class="materi__lead">
+            Satu berkas teks sudah cukup untuk membuat halaman web. Simpan,
+            buka di browser, lalu ubah sesukamu.
+          </p>
+
+          <h2>HTML itu berkas teks</h2>
+          <p>
+            Halaman yang kamu lihat di browser berasal dari berkas teks biasa.
+            Isinya bukan gambar atau aplikasi, melainkan huruf dan tag yang bisa
+            kamu baca serta ubah sendiri.
+          </p>
+          <p>
+            Akhiran nama berkas menentukan cara komputer memperlakukannya.
+            Berkas <code>.html</code> dibuka browser sebagai halaman web.
+            Berkas <code>.txt</code> hanya dibuka sebagai teks biasa, jadi
+            kodenya terlihat mentah.
+          </p>
+          <p>
+            Nama <mark>index.html</mark> biasa dipakai untuk halaman depan.
+            Saat membuka alamat website tanpa nama berkas, server mencari
+            <code>index.html</code> lebih dulu. Untuk latihan, nama itu juga
+            memudahkanmu mengenali halaman utama.
+          </p>
+
+          <h2>Buat dan simpan berkas</h2>
+          <ol>
+            <li>
+              Buka editor teks. Notepad sudah cukup; Visual Studio Code lebih
+              nyaman karena tag berwarna.
+            </li>
+            <li>Tulis kerangka HTML5 seperti di bagian berikutnya.</li>
+            <li>
+              Pilih <strong>File &gt; Save As</strong>, lalu beri nama
+              <code>index.html</code>.
+            </li>
+            <li>
+              Di Notepad, ubah <strong>Save as type</strong> menjadi
+              <strong>All Files</strong>. Kalau tidak, berkas bisa tersimpan
+              sebagai <code>index.html.txt</code>.
+            </li>
+            <li>
+              Simpan di folder khusus, misalnya <code>latihan-web</code>, dan
+              pastikan berkas disimpan dengan encoding <code>UTF-8</code>.
+            </li>
+          </ol>
+
+          <div class="alert" role="note">
+            <div>
+              <strong class="alert__title">Satu folder, satu halaman</strong>
+              <p class="alert__text">
+                Simpan semua berkas latihan di satu folder. Nanti, saat
+                menambahkan gambar atau halaman lain, alamatnya cukup ditulis
+                relatif terhadap folder itu.
+              </p>
+            </div>
+          </div>
+
+          <h2>Kerangka yang harus ada</h2>
+          <p>
+            Halaman HTML5 minimal memuat kerangka ini. Tanpa
+            <code>&lt;body&gt;</code>, tidak ada isi yang tampil; tanpa
+            <code>&lt;head&gt;</code>, judul tab dan encoding bisa bermasalah.
+          </p>
+
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">index.html</span>
+                <span class="pane__badge">HTML</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-punct">&lt;!DOCTYPE html&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;html</span> <span class="tok-attr">lang</span><span class="tok-punct">=</span><span class="tok-string">"id"</span><span class="tok-tag">&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;head&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;meta</span> <span class="tok-attr">charset</span><span class="tok-punct">=</span><span class="tok-string">"UTF-8"</span><span class="tok-tag">&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;title&gt;</span>Halaman pertamaku<span class="tok-tag">&lt;/title&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/head&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;body&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;h1&gt;</span>Halo, dunia!<span class="tok-tag">&lt;/h1&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;p&gt;</span>Ini halaman pertamaku.<span class="tok-tag">&lt;/p&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/body&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/html&gt;</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Baris <code>&lt;h1&gt;</code> dan <code>&lt;p&gt;</code> adalah
+              isi halaman. Ganti keduanya dengan tulisanmu sendiri.
+            </p>
+          </div>
+
+          <ul>
+            <li>
+              <code>&lt;!DOCTYPE html&gt;</code> menandai berkas sebagai HTML5.
+            </li>
+            <li>
+              <code>&lt;html lang="id"&gt;</code> membungkus seluruh halaman.
+            </li>
+            <li>
+              <code>&lt;head&gt;</code> memuat keterangan yang tidak tampil,
+              kecuali judul pada tab.
+            </li>
+            <li>
+              <code>&lt;body&gt;</code> memuat semua isi yang terlihat.
+            </li>
+          </ul>
+
+          <h2>Buka di browser</h2>
+          <ol>
+            <li>Buka folder tempat <code>index.html</code> disimpan.</li>
+            <li>
+              Klik dua kali berkas itu, atau seret berkasnya ke jendela
+              browser.
+            </li>
+            <li>
+              Alamat di bilah browser akan dimulai dengan
+              <code>file:///</code>, bukan <code>https://</code>.
+            </li>
+            <li>
+              Setelah mengubah kode, simpan berkas lalu muat ulang halaman
+              dengan <kbd>F5</kbd> atau <kbd>Ctrl</kbd> + <kbd>R</kbd>.
+            </li>
+          </ol>
+
+          <div class="alert" role="note">
+            <div>
+              <strong class="alert__title">Alamat file:/// itu wajar</strong>
+              <p class="alert__text">
+                Halaman yang dibuka langsung dari komputermu belum melewati
+                server. Karena itu alamatnya berupa lokasi berkas, bukan nama
+                domain. Halaman tetap tampil, hanya belum bisa diakses orang
+                lain.
+              </p>
+            </div>
+          </div>
+
+          <h2>Kalau hasilnya tidak sesuai</h2>
+          <ul>
+            <li>
+              <strong>Kode terlihat di halaman.</strong> Berkas mungkin
+              tersimpan sebagai <code>.txt</code> atau dibuka lewat editor.
+              Periksa akhirannya, lalu buka ulang di browser.
+            </li>
+            <li>
+              <strong>Huruf aneh seperti Ã©.</strong> Encoding bukan UTF-8 atau
+              <code>&lt;meta charset="UTF-8"&gt;</code> belum ada. Simpan ulang
+              sebagai UTF-8.
+            </li>
+            <li>
+              <strong>Perubahan tidak muncul.</strong> Berkas belum disimpan
+              atau browser masih memakai salinan lama. Simpan, lalu muat ulang
+              dengan <kbd>Ctrl</kbd> + <kbd>F5</kbd>.
+            </li>
+            <li>
+              <strong>Judul tab kosong.</strong> Isi
+              <code>&lt;title&gt;</code> di dalam
+              <code>&lt;head&gt;</code>.
+            </li>
+          </ul>
+
+          <section class="lab" data-lab aria-labelledby="lab-judul">
+            <p class="label">Latihan langsung</p>
+            <h2 id="lab-judul">Isi halaman pertamamu</h2>
+            <p>
+              Kerangka di panel kiri sudah siap, tetapi judul dan isinya masih
+              kosong. Lengkapi, lalu klik <strong>Jalankan</strong>.
+            </p>
+            <ol>
+              <li>
+                Isi <code>&lt;title&gt;</code> dengan <em>Perkenalan</em>.
+              </li>
+              <li>
+                Di dalam <code>&lt;body&gt;</code>, tambah
+                <code>&lt;h1&gt;</code> berisi nama lengkapmu.
+              </li>
+              <li>
+                Tambah dua <code>&lt;p&gt;</code>: satu tentang kelas dan
+                sekolahmu, satu tentang hobimu.
+              </li>
+            </ol>
+
+            <div class="lab__meja">
+              <div class="lab__panel lab__panel--kode">
+                <div class="lab__bar">
+                  <span class="lab__prompt" aria-hidden="true">&gt;_</span>
+                  <span class="lab__nama">index.html</span>
+                  <span class="lab__isyarat">bisa diubah</span>
+                </div>
+                <textarea class="lab__editor" data-lab-editor rows="11" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Kode HTML latihan" aria-describedby="lab-status">&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+              </div>
+
+              <div class="lab__panel lab__panel--hasil">
+                <div class="lab__bar">
+                  <span class="pane__dots" aria-hidden="true">
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                  </span>
+                  <span class="lab__nama">Hasil</span>
+                  <span class="lab__isyarat">pratinjau</span>
+                </div>
+                <iframe class="lab__pratinjau" data-lab-pratinjau title="Pratinjau hasil kode HTML" sandbox="" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;id&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;title&gt;&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+              </div>
+            </div>
+
+            <div class="lab__aksi">
+              <button class="btn btn--primary" type="button" data-lab-jalankan hidden>Jalankan</button>
+              <button class="btn btn--ghost" type="button" data-lab-reset hidden>Atur ulang</button>
+              <p class="lab__status" id="lab-status" data-lab-status role="status">Halaman masih polos. Isi judul dan body, lalu klik Jalankan.</p>
+            </div>
+
+            <noscript>
+              <p class="lab__catatan">
+                Editor butuh JavaScript. Salin kode di atas ke file .html, lalu
+                buka di browser.
+              </p>
+            </noscript>
+          </section>
+
+          <h2>Rangkuman</h2>
+          <ul>
+            <li>
+              Halaman HTML adalah berkas teks berakhiran
+              <code>.html</code> yang dibuka browser.
+            </li>
+            <li>
+              <code>index.html</code> biasa dipakai sebagai halaman depan.
+            </li>
+            <li>
+              Kerangka minimal berisi <code>&lt;!DOCTYPE html&gt;</code>,
+              <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code>, dan
+              <code>&lt;body&gt;</code>.
+            </li>
+            <li>
+              Simpan sebagai UTF-8, lalu muat ulang browser setiap kali kode
+              berubah.
+            </li>
+            <li>
+              Alamat <code>file:///</code> berarti halaman dibuka langsung dari
+              komputermu, belum lewat server.
+            </li>
+          </ul>
+
+          <footer class="materi__kaki">
+            <section class="kaki__sumber" aria-labelledby="sumber-judul">
+              <h2 class="kaki__label" id="sumber-judul">Bacaan asli</h2>
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Your_first_website/Creating_the_content">MDN — Creating the content</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Environment_setup/Dealing_with_files">MDN — Dealing with files</a></li>
+                <li><a href="https://web.dev/learn/html">web.dev — Learn HTML</a></li>
+              </ul>
+            </section>
+
+            <nav class="kaki__pager" aria-label="Bab sebelumnya dan berikutnya">
+              <a class="kaki__bab kaki__bab--kembali" href="apa-itu-website.html">
+                <span class="kaki__arah">Sebelumnya</span>
+                <span class="kaki__judul">Apa itu website</span>
+              </a>
+              <a class="kaki__bab kaki__bab--lanjut" href="judul-dan-paragraf.html">
+                <span class="kaki__arah">Bab berikutnya</span>
+                <span class="kaki__judul">Judul dan paragraf</span>
+              </a>
+            </nav>
+          </footer>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer__row">
+      <div>
+        <p class="footer__wordmark">Webiko</p>
+        <p class="footer__tagline">
+          Belajar bikin website dari nol, dalam bahasa Indonesia.
+          Tanpa install, tanpa framework.
+        </p>
+      </div>
+      <nav class="footer__nav" aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="../../index.html#kurikulum">Kurikulum</a></li>
+          <li><a href="../../index.html#cara-pakai">Cara pakai</a></li>
+          <li><a href="../../index.html#progres">Progres</a></li>
+          <li><a href="../../index.html#daftar">Buat akun</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <p>© 2026 Webiko · Dibuat tanpa framework dan tanpa dependency.</p>
+      <p>Untuk pelajar SMP &amp; SMA</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/latihan-html.js"></script>
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>

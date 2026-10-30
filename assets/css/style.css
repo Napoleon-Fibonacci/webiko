@@ -2162,11 +2162,13 @@ b {
   text-decoration: none;
 }
 
-.kaki__bab--kembali {
+.kaki__bab--kembali,
+.kaki__bab--lanjut {
   box-shadow: var(--shadow-hard-sm);
 }
 
-.kaki__bab--kembali:hover {
+.kaki__bab--kembali:hover,
+.kaki__bab--lanjut:hover {
   background-color: var(--color-surface-soft);
   box-shadow: var(--shadow-hard);
 }
@@ -2187,6 +2189,10 @@ b {
 
 .kaki__bab--kembali .kaki__arah::before {
   content: "← ";
+}
+
+.kaki__bab--lanjut .kaki__arah::after {
+  content: " →";
 }
 
 .kaki__judul {
