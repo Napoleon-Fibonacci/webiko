@@ -2141,8 +2141,8 @@ b {
   font-size: var(--fs-h4);
 }
 
-/* Cek pemahaman: kuis singkat memakai <details> bawaan, tanpa
-   JavaScript. Jawaban tetap bisa dibuka walau script dimatikan. */
+/* Cek pemahaman: kuis pilihan ganda. Tanpa JavaScript semua soal dan
+   pilihan tetap terbaca; kunci jawaban tampil lewat <noscript>. */
 .cek-paham {
   margin-top: var(--space-8);
 }
@@ -2152,57 +2152,138 @@ b {
   font-size: var(--fs-h4);
 }
 
-.cek-paham__daftar {
-  display: grid;
-  gap: var(--space-4);
-  margin-top: var(--space-4);
-  padding-left: var(--space-6);
-}
-
-.cek-paham__tanya {
-  margin: 0;
-  font-weight: var(--fw-bold);
-}
-
 .cek-paham .pane {
   margin-block: var(--space-4);
 }
 
-.cek-paham details {
-  margin-top: var(--space-2);
+.kuis__form {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
 }
 
-.cek-paham summary {
-  width: fit-content;
-  cursor: pointer;
-  color: var(--color-primary);
+.kuis__soal {
+  min-width: 0;
+  margin: 0;
+  padding: var(--space-4);
+  border: var(--border-w-thin) solid var(--color-border-muted);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+}
+
+.kuis__soal--benar {
+  border-color: var(--color-success);
+  background-color: var(--color-success-bg);
+}
+
+.kuis__soal--salah {
+  border-color: var(--color-error);
+  background-color: var(--color-error-bg);
+}
+
+.kuis__tanya {
+  max-width: 100%;
+  padding-inline: var(--space-1);
   font-weight: var(--fw-bold);
+  line-height: var(--lh-body);
+  overflow-wrap: anywhere;
 }
 
-.cek-paham summary:hover {
-  text-decoration: underline;
+.kuis__tanya code {
+  overflow-wrap: anywhere;
 }
 
-.cek-paham summary:focus-visible {
-  outline: var(--border-w) solid var(--color-accent);
-  outline-offset: 2px;
-  border-radius: var(--radius-xs);
-}
-
-.cek-paham__jawab {
-  margin-top: var(--space-2);
-  padding: var(--space-3) var(--space-4);
-  border-left: var(--border-w) solid var(--color-primary);
+.kuis__pilihan {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  border: var(--border-w-thin) solid transparent;
   border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.kuis__pilihan:hover {
   background-color: var(--color-surface-soft);
 }
 
-.cek-paham__jawab > :first-child {
-  margin-top: 0;
+.kuis__pilihan:has(input:checked) {
+  border-color: var(--color-primary);
+  background-color: var(--color-surface-soft);
 }
 
-.cek-paham__jawab > :last-child {
-  margin-bottom: 0;
+.kuis__pilihan input {
+  flex: none;
+  margin-top: var(--space-1);
+  accent-color: var(--color-primary);
+}
+
+.kuis__huruf {
+  flex: none;
+  min-width: var(--space-4);
+  color: var(--color-primary);
+  font-weight: var(--fw-black);
+}
+
+/* Kode panjang seperti href="profil.html" harus bisa pecah di layar
+   sempit, bukan menembus tepi kartu. */
+.kuis__pilihan > span:last-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.kuis__pilihan input:checked ~ .kuis__huruf {
+  text-decoration: underline;
+}
+
+.kuis__balikan {
+  margin: var(--space-3) 0 0;
+  padding: var(--space-3) var(--space-4);
+  border-left: var(--border-w) solid currentColor;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+}
+
+.kuis__balikan--benar {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.kuis__balikan--salah {
+  background-color: var(--color-error-bg);
+  color: var(--color-error);
+}
+
+.kuis__aksi {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.kuis__skor {
+  margin: 0;
+  font-weight: var(--fw-bold);
+}
+
+.kuis__skor--benar {
+  color: var(--color-success);
+}
+
+.kuis__skor--salah {
+  color: var(--color-error);
+}
+
+.kuis__catatan {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border-left: var(--border-w) solid var(--color-warning);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-warning-bg);
+  color: var(--color-warning);
+  font-size: var(--fs-small);
 }
 
 /* Kaki materi: sumber bacaan di satu sisi, pager bab di sisi lain.

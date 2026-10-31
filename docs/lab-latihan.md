@@ -23,9 +23,13 @@ Lab latihan harus terasa seperti satu editor kecil yang konsisten:
 | `materi/css/*.html` | Lab CSS: `mengenal-css`, `warna-dan-latar`, `ukuran-dan-jarak`. |
 | `materi/html/*.html` | Lab HTML: `file-html-pertama`, `judul-dan-paragraf`, `gambar`, `tautan`, `daftar`, `tabel`, `halaman-lengkap`. |
 
-Bab konsep `apa-itu-website` dan `dari-server-ke-layar` memakai kuis
-`<details>`, bukan lab kode. `mengenal-tag-html` memakai latihan "Bedah satu
-tag".
+Bab konsep `apa-itu-website` dan `dari-server-ke-layar` memakai kuis pilihan
+ganda, bukan lab kode. `mengenal-tag-html` memakai latihan "Bedah satu tag"
+yang juga ditutup kuis pilihan ganda.
+
+Kuis ditangani `assets/js/kuis-pilihan.js`. Tanpa JavaScript semua soal dan
+pilihan tetap terlihat; `<noscript>` menampilkan kunci jawaban. Skor, jawaban
+benar, dan tombol Ulangi baru muncul setelah siswa memeriksa jawaban.
 
 ## Aturan pratinjau
 

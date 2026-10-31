@@ -215,41 +215,85 @@
             biasa dan disimpan dengan akhiran <code>.html</code>.
           </p>
 
-                    <section class="card cek-paham" aria-labelledby="cek-judul">
+                                        <section class="card cek-paham kuis" aria-labelledby="cek-judul">
             <p class="card__label">Cek pemahaman</p>
-            <h2 class="card__title" id="cek-judul">Tiga pertanyaan</h2>
+            <h2 class="card__title" id="cek-judul">Kuis pilihan ganda</h2>
             <p>
-              Jawab dulu di kepalamu, baru buka kuncinya.
+              Pilih satu jawaban untuk setiap soal, lalu klik <strong>Periksa jawaban</strong>.
             </p>
-            <ol class="cek-paham__daftar">
-              <li>
-                <p class="cek-paham__tanya">Apa bedanya internet dan web?</p>
-                <details>
-                  <summary>Lihat jawaban</summary>
-                  <div class="cek-paham__jawab">
-                    <p>Internet adalah jaringan komputernya. Web adalah salah satu layanan yang berjalan di atas internet, diakses lewat HTTP atau HTTPS dan ditampilkan browser.</p>
-                  </div>
-                </details>
-              </li>
-              <li>
-                <p class="cek-paham__tanya">Satu website punya beranda, profil, dan daftar guru. Itu satu website atau tiga?</p>
-                <details>
-                  <summary>Lihat jawaban</summary>
-                  <div class="cek-paham__jawab">
-                    <p>Satu website, selama halamannya saling terhubung dan biasanya berada di bawah satu domain, misalnya <code>sekolahku.sch.id</code>.</p>
-                  </div>
-                </details>
-              </li>
-              <li>
-                <p class="cek-paham__tanya">Halaman profil sekolah menampilkan isi yang sama untuk semua pengunjung. Termasuk statis atau dinamis?</p>
-                <details>
-                  <summary>Lihat jawaban</summary>
-                  <div class="cek-paham__jawab">
-                    <p>Statis. Server mengirim berkas yang sudah jadi. Website dinamis menyusun isi berbeda untuk setiap permintaan.</p>
-                  </div>
-                </details>
-              </li>
-            </ol>
+            <form class="kuis__form" data-kuis>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="b"
+                data-penjelasan="Internet adalah jaringan komputer. Web adalah salah satu layanan yang berjalan di atasnya, diakses lewat HTTP atau HTTPS dan ditampilkan browser.">
+                <legend class="kuis__tanya">Apa bedanya internet dan web?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-internet" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Internet dan web adalah nama lain untuk hal yang sama.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-internet" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Internet adalah jaringan komputernya; web adalah layanan yang berjalan di atasnya.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-internet" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Web adalah jaringan komputernya; internet adalah layanan di atasnya.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="b"
+                data-penjelasan="Satu website, selama halamannya saling terhubung dan biasanya berada di bawah satu domain, misalnya sekolahku.sch.id.">
+                <legend class="kuis__tanya">Satu website punya beranda, profil, dan daftar guru. Itu satu website atau tiga?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-halaman" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Tiga website, karena ada tiga halaman.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-halaman" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Satu website, selama halamannya saling terhubung dan biasanya satu domain.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-halaman" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Tergantung jumlah pengunjungnya.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="a"
+                data-penjelasan="Statis. Server mengirim berkas yang sudah jadi. Website dinamis menyusun isi berbeda untuk setiap permintaan.">
+                <legend class="kuis__tanya">Halaman profil sekolah menampilkan isi yang sama untuk semua pengunjung. Termasuk statis atau dinamis?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-statis" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Statis. Server mengirim berkas yang sudah jadi.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-statis" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Dinamis, karena semua pengunjung melihat halaman.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-statis" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Dinamis, karena halamannya punya gambar.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <div class="kuis__aksi">
+                <button class="btn btn--primary" type="button" data-kuis-periksa hidden>Periksa jawaban</button>
+                <button class="btn btn--ghost" type="button" data-kuis-ulangi hidden>Ulangi</button>
+              </div>
+              <p class="kuis__skor" data-kuis-skor role="status" aria-live="polite"></p>
+              <noscript>
+                <p class="kuis__catatan">
+                  JavaScript mati, jadi jawaban tidak bisa diperiksa otomatis.
+                  Kunci jawaban: 1B, 2B, 3A.
+                </p>
+              </noscript>
+            </form>
           </section>
 
           <h2>Rangkuman</h2>
@@ -324,6 +368,7 @@
     </div>
   </footer>
 
+  <script src="../../assets/js/kuis-pilihan.js"></script>
   <script src="../../assets/js/main.js"></script>
 </body>
 </html>
