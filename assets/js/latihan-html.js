@@ -609,9 +609,9 @@
     if (pakaiKartu) {
       aturan +=
         'html{background-color:#ffffff;}' +
-        'body{max-width:36rem;margin:1rem auto;padding:2rem;' +
-        'background-color:' + warnaKartu + ';color:#1a1b33;' +
-        'box-sizing:border-box;}';
+        'body{margin:0;padding:1rem;' +
+        'background-color:' + warnaKartu + ';color:#1a1b33;}' +
+        'h1{margin-top:0;}';
     }
 
     var gaya = '<style>' + aturan + '</style>';
@@ -631,6 +631,28 @@
 
     pratinjau.srcdoc = kode;
   }
+
+  /* Pratinjau memanjang mengikuti isinya, bukan bergulir di dalam kotak
+     tetap. Tinggi hanya bisa dibaca karena iframe mengizinkan
+     same-origin; script di dalam pratinjau tetap dilarang sandbox. */
+  function aturTinggi() {
+    var isi;
+    try {
+      isi = pratinjau.contentDocument;
+    } catch (err) {
+      return;
+    }
+    if (!isi || !isi.documentElement) return;
+
+    /* Kecilkan dulu supaya scrollHeight mengikuti isi, bukan tinggi
+       iframe sebelumnya. min-height 240px tetap menjadi batas bawah. */
+    pratinjau.style.height = '0px';
+    var tinggi = isi.documentElement.scrollHeight;
+    if (tinggi > 0) pratinjau.style.height = tinggi + 'px';
+  }
+
+  pratinjau.addEventListener('load', aturTinggi);
+  window.addEventListener('resize', aturTinggi);
 
   var kotakPeringatan = null;
   var teksPeringatan = null;
@@ -748,5 +770,6 @@
      dibuka. Teks baru dibuat transparan setelah lapisan siap. */
   tampilkan();
   perbarui();
+  aturTinggi();
   editor.classList.add('lab__editor--sorot');
 })();

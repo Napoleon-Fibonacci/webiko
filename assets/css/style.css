@@ -2580,7 +2580,7 @@ b {
 
 .lab__pratinjau {
   display: block;
-  flex: 1;
+  flex: 0 0 auto;
   width: 100%;
   min-height: 240px;
   border: 0;
