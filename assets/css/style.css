@@ -2141,6 +2141,70 @@ b {
   font-size: var(--fs-h4);
 }
 
+/* Cek pemahaman: kuis singkat memakai <details> bawaan, tanpa
+   JavaScript. Jawaban tetap bisa dibuka walau script dimatikan. */
+.cek-paham {
+  margin-top: var(--space-8);
+}
+
+.cek-paham .card__title {
+  margin-block: 0;
+  font-size: var(--fs-h4);
+}
+
+.cek-paham__daftar {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+  padding-left: var(--space-6);
+}
+
+.cek-paham__tanya {
+  margin: 0;
+  font-weight: var(--fw-bold);
+}
+
+.cek-paham .pane {
+  margin-block: var(--space-4);
+}
+
+.cek-paham details {
+  margin-top: var(--space-2);
+}
+
+.cek-paham summary {
+  width: fit-content;
+  cursor: pointer;
+  color: var(--color-primary);
+  font-weight: var(--fw-bold);
+}
+
+.cek-paham summary:hover {
+  text-decoration: underline;
+}
+
+.cek-paham summary:focus-visible {
+  outline: var(--border-w) solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+.cek-paham__jawab {
+  margin-top: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-left: var(--border-w) solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface-soft);
+}
+
+.cek-paham__jawab > :first-child {
+  margin-top: 0;
+}
+
+.cek-paham__jawab > :last-child {
+  margin-bottom: 0;
+}
+
 /* Kaki materi: sumber bacaan di satu sisi, pager bab di sisi lain.
    Pager tidak memakai tombol palsu untuk bab yang belum terbit. */
 .materi__kaki {
