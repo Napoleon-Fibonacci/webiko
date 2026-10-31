@@ -2388,9 +2388,10 @@ b {
   overflow-y: hidden;
 }
 
+/* Editor tidak memakai outline saat fokus: kotak kuningnya menutupi
+   area pilihan teks ketika siswa menyeret untuk memblok kode. */
 .lab__editor:focus-visible {
-  outline: var(--border-w) solid var(--color-code-attr);
-  outline-offset: calc(var(--border-w) * -1);
+  outline: none;
 }
 
 /* --- Sorot sintaks di editor latihan ---------------------- */
