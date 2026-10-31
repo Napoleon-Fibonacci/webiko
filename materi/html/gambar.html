@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bab 7 HTML dari nol: menampilkan gambar dengan img, menulis alt yang benar, mengatur ukuran, memakai figure dan figcaption, serta memilih format file. Materi Webiko untuk pelajar SMP dan SMA.">
+  <title>Menampilkan gambar — HTML dari nol · Webiko</title>
+
+  <!-- Pasang tema sebelum halaman digambar, sama seperti beranda. -->
+  <script>
+    (function () {
+      try {
+        var pilihan = localStorage.getItem("tema");
+        var gelap =
+          pilihan === "gelap" ||
+          (pilihan === "sistem" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-tema", gelap ? "gelap" : "terang");
+      } catch (e) {
+        document.documentElement.setAttribute("data-tema", "terang");
+      }
+
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-siap");
+        window.setTimeout(function () {
+          if (!window.__wgReveal) {
+            document.documentElement.classList.remove("reveal-siap");
+          }
+        }, 2000);
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+  <!-- ============ NAVBAR ============ -->
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="../../index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        Webiko
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="../../index.html">Beranda</a>
+        <a class="navbar__link" href="../../index.html#kurikulum" aria-current="page">Kurikulum</a>
+        <a class="navbar__link" href="../../index.html#cara-pakai">Cara pakai</a>
+      </nav>
+
+      <div class="navbar__tools">
+        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
+          <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--terang" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--gelap" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
+          </svg>
+          <span class="theme-toggle__label">Terang</span>
+        </button>
+
+        <button class="navbar__btn navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section">
+      <div class="layout--with-sidebar">
+
+        <!-- ============ SIDEBAR BAB ============ -->
+        <aside class="sidebar" aria-label="Daftar bab HTML dari nol">
+          <p class="sidebar__title">HTML dari nol</p>
+          <ul class="sidebar__list">
+            <li><a class="sidebar__link" href="apa-itu-website.html">Apa itu website</a></li>
+            <li><a class="sidebar__link" href="dari-server-ke-layar.html">Dari server ke layar</a></li>
+            <li><a class="sidebar__link" href="file-html-pertama.html">File HTML pertamamu</a></li>
+            <li><a class="sidebar__link" href="mengenal-tag-html.html">Mengenal tag HTML</a></li>
+            <li><a class="sidebar__link" href="judul-dan-paragraf.html">Judul dan paragraf</a></li>
+            <li><a class="sidebar__link" href="tautan.html">Tautan antar halaman</a></li>
+            <li><a class="sidebar__link" href="gambar.html" aria-current="page">Menampilkan gambar</a></li>
+            <li><a class="sidebar__link" href="daftar.html">Daftar berurutan dan tidak</a></li>
+            <li><a class="sidebar__link" href="tabel.html">Tabel sederhana</a></li>
+            <li><a class="sidebar__link" href="halaman-lengkap.html">Merangkai halaman lengkap</a></li>
+          </ul>
+        </aside>
+
+        <!-- ============ ISI BAB ============ -->
+        <article class="materi">
+          <p class="label materi__eyebrow">HTML dari nol · Bab 7 dari 10</p>
+          <h1>Menampilkan gambar</h1>
+          <p class="materi__lead">
+            Gambar membuat halaman lebih hidup, tetapi gambar yang salah bisa
+            memperlambat halaman atau tidak terbaca oleh semua orang.
+          </p>
+
+          <h2>Tag img dan dua atribut penting</h2>
+          <p>
+            Gambar dipasang dengan <code>&lt;img&gt;</code>. Tag ini
+            <mark>tag kosong</mark>: tidak punya isi dan tidak perlu ditutup.
+            Dua atribut yang harus ada adalah <code>src</code> untuk lokasi
+            berkas dan <code>alt</code> untuk deskripsi gambar.
+          </p>
+
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">index.html</span>
+                <span class="pane__badge">HTML</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">&lt;img src="foto-sekolah.jpg" alt="Gedung SMP Harapan dilihat dari halaman depan"&gt;</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Nama berkas ditulis di <code>src</code>. Kalau gambar dan halaman
+              berada di folder yang sama, cukup tulis nama berkasnya.
+            </p>
+          </div>
+
+          <h2>Alt yang benar</h2>
+          <ul>
+            <li>
+              <strong>Gambar informatif:</strong> tulis isi atau fungsi
+              gambarnya. Contoh: “Grafik nilai ujian naik dari 70 ke 85”.
+            </li>
+            <li>
+              <strong>Gambar hiasan:</strong> pakai <code>alt=""</code> yang
+              kosong, bukan menghapus atributnya. Pembaca layar akan
+              melewatinya.
+            </li>
+            <li>
+              Jangan menulis “gambar” atau “foto” di awal alt. Pembaca layar
+              sudah memberi tahu bahwa itu gambar.
+            </li>
+            <li>
+              Jangan mengulang isi paragraf di sekitar gambar. Alt menjelaskan
+              hal yang tidak sudah dijelaskan teks.
+            </li>
+            <li>
+              Kalau gambar menjadi tautan, alt menjelaskan tujuan tautannya,
+              bukan bentuk gambarnya.
+            </li>
+          </ul>
+
+          <div class="alert" role="note">
+            <div>
+              <strong class="alert__title">Alt bukan tempat kata kunci</strong>
+              <p class="alert__text">
+                Menumpuk kata kunci di <code>alt</code> tidak membantu mesin
+                pencari dan menyulitkan pembaca layar. Tulis kalimat pendek
+                yang benar-benar menggambarkan gambar.
+              </p>
+            </div>
+          </div>
+
+          <h2>Ukuran dan ruang halaman</h2>
+          <p>
+            Atribut <code>width</code> dan <code>height</code> memberi tahu
+            browser ukuran gambar sebelum gambarnya selesai dimuat. Halaman
+            jadi tidak melompat saat gambar muncul.
+          </p>
+
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">index.html</span>
+                <span class="pane__badge">HTML</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">&lt;img</span> <span class="tok-attr">src</span><span class="tok-punct">=</span><span class="tok-string">"logo-sekolah.png"</span></span><span class="code__line">     <span class="tok-attr">alt</span><span class="tok-punct">=</span><span class="tok-string">"Logo SMP Harapan"</span></span><span class="code__line">     <span class="tok-attr">width</span><span class="tok-punct">=</span><span class="tok-string">"120"</span> <span class="tok-attr">height</span><span class="tok-punct">=</span><span class="tok-string">"120"</span><span class="tok-tag">&gt;</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Angka pada <code>width</code> dan <code>height</code> memakai piksel
+              CSS. Pertahankan perbandingan sisi aslinya agar gambar tidak
+              gepeng.
+            </p>
+          </div>
+
+          <div class="alert" role="note">
+            <div>
+              <strong class="alert__title">Jangan meregangkan gambar</strong>
+              <p class="alert__text">
+                Kalau ukuran di atribut berbeda jauh dari ukuran asli, gambar
+                bisa pecah atau gepeng. Atur ukuran tampilan lewat CSS nanti;
+                <code>width</code> dan <code>height</code> di HTML cukup untuk
+                memberi tahu ruang yang dibutuhkan.
+              </p>
+            </div>
+          </div>
+
+          <h2>Gambar dengan keterangan</h2>
+          <p>
+            Kalau gambar perlu keterangan yang terlihat, bungkus dengan
+            <code>&lt;figure&gt;</code> dan tulis keterangannya di
+            <code>&lt;figcaption&gt;</code>.
+          </p>
+
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">index.html</span>
+                <span class="pane__badge">HTML</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">&lt;figure&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;img src="foto-kelas.jpg" alt="Murid kelas 8 sedang bekerja kelompok di meja panjang"&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;figcaption&gt;</span>Kerja kelompok di kelas 8.<span class="tok-tag">&lt;/figcaption&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/figure&gt;</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Keterangan boleh diletakkan sebelum atau sesudah gambar, tetapi
+              biasanya sesudah. Isi <code>alt</code> tetap diperlukan walaupun
+              sudah ada <code>figcaption</code>.
+            </p>
+          </div>
+
+          <h2>Format file yang sering dipakai</h2>
+          <ul>
+            <li><strong>JPG:</strong> foto dengan banyak warna.</li>
+            <li>
+              <strong>PNG:</strong> tangkapan layar atau gambar yang butuh latar
+              transparan.
+            </li>
+            <li>
+              <strong>SVG:</strong> logo dan ikon yang tetap tajam saat
+              diperbesar.
+            </li>
+            <li>
+              <strong>WebP:</strong> ukuran lebih kecil dengan kualitas baik;
+              didukung browser modern.
+            </li>
+          </ul>
+          <p>
+            Pastikan ekstensi di <code>src</code> sama dengan format berkas
+            aslinya. Menulis <code>foto.png</code> untuk berkas JPG akan membuat
+            gambar gagal tampil.
+          </p>
+
+          <h2>Menulis alamat gambar</h2>
+          <p>
+            Aturan alamatnya sama dengan tautan. <code>foto.jpg</code> berarti
+            satu folder, <code>img/foto.jpg</code> berarti di dalam folder
+            <code>img</code>, dan <code>../foto.jpg</code> berarti naik satu
+            folder.
+          </p>
+
+          <div class="card materi__latihan">
+            <p class="card__label">Latihan</p>
+            <h2 class="card__title">Gambar plus keterangan</h2>
+            <p class="card__text">
+              Buat folder <code>img</code> di samping <code>index.html</code>,
+              masukkan satu foto, lalu tampilkan dengan
+              <code>&lt;img&gt;</code>. Bungkus memakai
+              <code>&lt;figure&gt;</code>, tambahkan
+              <code>&lt;figcaption&gt;</code>, dan tulis
+              <code>alt</code> yang menjelaskan isi foto. Coba juga gambar
+              hiasan dengan <code>alt=""</code>.
+            </p>
+          </div>
+
+          <h2>Rangkuman</h2>
+          <ul>
+            <li>
+              <code>&lt;img&gt;</code> adalah tag kosong; isinya diatur lewat
+              atribut.
+            </li>
+            <li>
+              <code>src</code> menunjuk berkas gambar, <code>alt</code>
+              menjelaskan gambar untuk pembaca layar dan saat gambar gagal
+              dimuat.
+            </li>
+            <li>Gambar hiasan memakai <code>alt=""</code>.</li>
+            <li>
+              <code>width</code> dan <code>height</code> menjaga ruang gambar
+              sejak awal.
+            </li>
+            <li>
+              <code>&lt;figure&gt;</code> dan <code>&lt;figcaption&gt;</code>
+              dipakai saat gambar butuh keterangan.
+            </li>
+          </ul>
+
+          <footer class="materi__kaki">
+            <section class="kaki__sumber" aria-labelledby="sumber-judul">
+              <h2 class="kaki__label" id="sumber-judul">Bacaan asli</h2>
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/HTML_images">MDN — HTML images</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img">MDN — img element</a></li>
+                <li><a href="https://www.w3.org/WAI/tutorials/images/">W3C WAI — Images tutorial</a></li>
+                <li><a href="https://html.spec.whatwg.org/multipage/images.html">WHATWG — Images</a></li>
+              </ul>
+            </section>
+
+            <nav class="kaki__pager" aria-label="Bab sebelumnya dan berikutnya">
+              <a class="kaki__bab kaki__bab--kembali" href="tautan.html">
+                <span class="kaki__arah">Sebelumnya</span>
+                <span class="kaki__judul">Tautan antar halaman</span>
+              </a>
+              <a class="kaki__bab kaki__bab--lanjut" href="daftar.html">
+                <span class="kaki__arah">Bab berikutnya</span>
+                <span class="kaki__judul">Daftar berurutan dan tidak</span>
+              </a>
+            </nav>
+          </footer>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer__row">
+      <div>
+        <p class="footer__wordmark">Webiko</p>
+        <p class="footer__tagline">
+          Belajar bikin website dari nol, dalam bahasa Indonesia.
+          Tanpa install, tanpa framework.
+        </p>
+      </div>
+      <nav class="footer__nav" aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="../../index.html#kurikulum">Kurikulum</a></li>
+          <li><a href="../../index.html#cara-pakai">Cara pakai</a></li>
+          <li><a href="../../index.html#progres">Progres</a></li>
+          <li><a href="../../index.html#daftar">Buat akun</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <p>© 2026 Webiko · Dibuat tanpa framework dan tanpa dependency.</p>
+      <p>Untuk pelajar SMP &amp; SMA</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>

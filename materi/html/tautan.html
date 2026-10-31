@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bab 6 HTML dari nol: membuat tautan dengan a dan href, alamat relatif dan absolut, membuka tab baru, serta tautan ke bagian halaman. Materi Webiko untuk pelajar SMP dan SMA.">
+  <title>Tautan antar halaman — HTML dari nol · Webiko</title>
+
+  <!-- Pasang tema sebelum halaman digambar, sama seperti beranda. -->
+  <script>
+    (function () {
+      try {
+        var pilihan = localStorage.getItem("tema");
+        var gelap =
+          pilihan === "gelap" ||
+          (pilihan === "sistem" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-tema", gelap ? "gelap" : "terang");
+      } catch (e) {
+        document.documentElement.setAttribute("data-tema", "terang");
+      }
+
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-siap");
+        window.setTimeout(function () {
+          if (!window.__wgReveal) {
+            document.documentElement.classList.remove("reveal-siap");
+          }
+        }, 2000);
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+  <!-- ============ NAVBAR ============ -->
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="../../index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        Webiko
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="../../index.html">Beranda</a>
+        <a class="navbar__link" href="../../index.html#kurikulum" aria-current="page">Kurikulum</a>
+        <a class="navbar__link" href="../../index.html#cara-pakai">Cara pakai</a>
+      </nav>
+
+      <div class="navbar__tools">
+        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
+          <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--terang" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--gelap" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
+          </svg>
+          <span class="theme-toggle__label">Terang</span>
+        </button>
+
+        <button class="navbar__btn navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section">
+      <div class="layout--with-sidebar">
+
+        <!-- ============ SIDEBAR BAB ============ -->
+        <aside class="sidebar" aria-label="Daftar bab HTML dari nol">
+          <p class="sidebar__title">HTML dari nol</p>
+          <ul class="sidebar__list">
+            <li><a class="sidebar__link" href="apa-itu-website.html">Apa itu website</a></li>
+            <li><a class="sidebar__link" href="dari-server-ke-layar.html">Dari server ke layar</a></li>
+            <li><a class="sidebar__link" href="file-html-pertama.html">File HTML pertamamu</a></li>
+            <li><a class="sidebar__link" href="mengenal-tag-html.html">Mengenal tag HTML</a></li>
+            <li><a class="sidebar__link" href="judul-dan-paragraf.html">Judul dan paragraf</a></li>
+            <li><a class="sidebar__link" href="tautan.html" aria-current="page">Tautan antar halaman</a></li>
+            <li><a class="sidebar__link" href="gambar.html">Menampilkan gambar</a></li>
+            <li><a class="sidebar__link" href="daftar.html">Daftar berurutan dan tidak</a></li>
+            <li><a class="sidebar__link" href="tabel.html">Tabel sederhana</a></li>
+            <li><a class="sidebar__link" href="halaman-lengkap.html">Merangkai halaman lengkap</a></li>
+          </ul>
+        </aside>
+
+        <!-- ============ ISI BAB ============ -->
+        <article class="materi">
+          <p class="label materi__eyebrow">HTML dari nol · Bab 6 dari 10</p>
+          <h1>Tautan antar halaman</h1>
+          <p class="materi__lead">
+            Tautan membuat satu halaman terhubung ke halaman lain. Tanpa tautan,
+            setiap halaman berdiri sendiri dan tidak ada yang bisa menemukannya.
+          </p>
+
+          <h2>Tag a dan atribut href</h2>
+          <p>
+            Tautan dibuat dengan tag <code>&lt;a&gt;</code>, singkatan dari
+            <em>anchor</em> atau jangkar. Alamat tujuan ditulis di atribut
+            <code>href</code>, sedangkan teks di antara
+            <code>&lt;a&gt;</code> dan <code>&lt;/a&gt;</code> adalah bagian
+            yang bisa diklik.
+          </p>
+
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">index.html</span>
+                <span class="pane__badge">HTML</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">&lt;a href="profil.html"&gt;</span>Buka profil Rani<span class="tok-tag">&lt;/a&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;a href="https://developer.mozilla.org/"&gt;</span>Dokumentasi MDN<span class="tok-tag">&lt;/a&gt;</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Baris pertama menuju berkas di folder yang sama. Baris kedua menuju
+              alamat lengkap di internet.
+            </p>
+          </div>
+
+          <div class="alert" role="note">
+            <div>
+              <strong class="alert__title">Tulis tujuan, bukan “klik di sini”</strong>
+              <p class="alert__text">
+                Pembaca layar bisa menampilkan daftar tautan tanpa kalimat di
+                sekitarnya. “Buka profil Rani” tetap jelas, sedangkan “klik di
+                sini” tidak menjelaskan apa pun.
+              </p>
+            </div>
+          </div>
+
+          <h2>Alamat relatif dan absolut</h2>
+          <p>
+            Ada dua cara menulis <code>href</code>. Alamat <mark>relatif</mark>
+            menunjuk berkas di sekitar halaman yang sedang dibuka. Alamat
+            <mark>absolut</mark> menulis protokol dan nama domain lengkap.
+          </p>
+
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">index.html</span>
+                <span class="pane__badge">HTML</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">&lt;a href="profil.html"&gt;</span>Satu folder<span class="tok-tag">&lt;/a&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;a href="materi/profil.html"&gt;</span>Masuk folder materi<span class="tok-tag">&lt;/a&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;a href="../index.html"&gt;</span>Naik satu folder<span class="tok-tag">&lt;/a&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;a href="https://webiko.my.id/index.html"&gt;</span>Alamat lengkap<span class="tok-tag">&lt;/a&gt;</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Empat bentuk alamat yang sering dipakai. Perhatikan garis miring,
+              titik dua, dan dua titik.
+            </p>
+          </div>
+
+          <ul>
+            <li>
+              <code>profil.html</code> berarti berkas di folder yang sama dengan
+              halaman ini.
+            </li>
+            <li>
+              <code>materi/profil.html</code> berarti masuk ke folder
+              <code>materi</code> lebih dulu.
+            </li>
+            <li>
+              <code>../index.html</code> berarti naik satu folder, lalu buka
+              <code>index.html</code>.
+            </li>
+            <li>
+              <code>https://...</code> adalah alamat absolut yang bisa dibuka
+              dari mana saja.
+            </li>
+          </ul>
+
+          <div class="alert" role="note">
+            <div>
+              <strong class="alert__title">Relatif terhadap berkas HTML</strong>
+              <p class="alert__text">
+                Alamat relatif dihitung dari lokasi berkas HTML yang sedang
+                dibuka, bukan dari halaman pertama di browser. Karena itu
+                <code>profil.html</code> di dalam folder <code>materi/</code>
+                berbeda dengan <code>profil.html</code> di folder utamanya.
+              </p>
+            </div>
+          </div>
+
+          <h2>Tautan ke bagian halaman</h2>
+          <p>
+            Tautan juga bisa menuju bagian tertentu di halaman yang sama. Beri
+            <code>id</code> pada bagian tujuan, lalu tulis
+            <code>href="#id"</code>.
+          </p>
+
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">index.html</span>
+                <span class="pane__badge">HTML</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">&lt;h2 id="hobi"&gt;</span>Hobi<span class="tok-tag">&lt;/h2&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;p&gt;</span>Aku suka menggambar dan main basket.<span class="tok-tag">&lt;/p&gt;</span></span><span class="code__line"></span><span class="code__line"><span class="tok-tag">&lt;a href="#hobi"&gt;</span>Lompat ke bagian hobi<span class="tok-tag">&lt;/a&gt;</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Klik tautan terakhir, dan browser langsung menggulir ke judul
+              “Hobi”. Dari halaman lain, tulis nama berkasnya lebih dulu:
+              <code>profil.html#hobi</code>.
+            </p>
+          </div>
+
+          <h2>Membuka tab baru</h2>
+          <p>
+            Atribut <code>target="_blank"</code> membuka tautan di tab baru.
+            Tambahkan juga <code>rel="noopener"</code> agar halaman tujuan tidak
+            bisa mengakses halaman asal lewat <code>window.opener</code>.
+          </p>
+
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">index.html</span>
+                <span class="pane__badge">HTML</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">&lt;a href="https://developer.mozilla.org/" target="_blank" rel="noopener"&gt;</span></span><span class="code__line">  Buka MDN di tab baru</span><span class="code__line"><span class="tok-tag">&lt;/a&gt;</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Browser modern sudah memasang <code>noopener</code> otomatis, tetapi
+              menuliskannya membuat maksudmu jelas dan aman di browser lama.
+            </p>
+          </div>
+
+          <h2>Tautan yang ramah semua orang</h2>
+          <ul>
+            <li>Teks tautan menjelaskan ke mana ia membawa pembaca.</li>
+            <li>
+              Jangan hanya mengandalkan warna. Di halaman ini tautan juga
+              bergaris bawah agar tetap terlihat tanpa membedakan warna.
+            </li>
+            <li>
+              Tautan email ditulis <code>mailto:nama@contoh.com</code>.
+            </li>
+            <li>
+              Tautan telepon ditulis <code>tel:+628123456789</code>.
+            </li>
+            <li>
+              Kalau hanya menjalankan aksi di halaman, misalnya membuka menu,
+              pakai <code>&lt;button&gt;</code>, bukan <code>&lt;a&gt;</code>.
+            </li>
+          </ul>
+
+          <div class="card materi__latihan">
+            <p class="card__label">Latihan</p>
+            <h2 class="card__title">Tiga tautan dalam satu halaman</h2>
+            <p class="card__text">
+              Buat <code>index.html</code> berisi tiga tautan: satu ke
+              <code>profil.html</code> di folder yang sama, satu ke
+              <code>https://developer.mozilla.org/</code> yang terbuka di tab
+              baru, dan satu ke bagian <code>&lt;h2 id="kontak"&gt;</code> di
+              halaman itu sendiri. Buka di browser, lalu coba ketiganya.
+            </p>
+          </div>
+
+          <h2>Rangkuman</h2>
+          <ul>
+            <li>
+              Tautan memakai <code>&lt;a href="..."&gt;</code> dan ditutup
+              dengan <code>&lt;/a&gt;</code>.
+            </li>
+            <li>
+              Alamat relatif menunjuk berkas di sekitar halaman; alamat absolut
+              menulis <code>https://</code> lengkap.
+            </li>
+            <li>
+              <code>#id</code> menuju bagian halaman, dan
+              <code>berkas.html#id</code> menuju bagian di halaman lain.
+            </li>
+            <li>
+              <code>target="_blank"</code> sebaiknya ditemani
+              <code>rel="noopener"</code>.
+            </li>
+            <li>Teks tautan harus menjelaskan tujuannya.</li>
+          </ul>
+
+          <footer class="materi__kaki">
+            <section class="kaki__sumber" aria-labelledby="sumber-judul">
+              <h2 class="kaki__label" id="sumber-judul">Bacaan asli</h2>
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/Creating_links">MDN — Creating links</a></li>
+                <li><a href="https://html.spec.whatwg.org/multipage/links.html">WHATWG — Links</a></li>
+                <li><a href="https://www.w3.org/WAI/tips/writing/">W3C WAI — Writing for web accessibility</a></li>
+              </ul>
+            </section>
+
+            <nav class="kaki__pager" aria-label="Bab sebelumnya dan berikutnya">
+              <a class="kaki__bab kaki__bab--kembali" href="judul-dan-paragraf.html">
+                <span class="kaki__arah">Sebelumnya</span>
+                <span class="kaki__judul">Judul dan paragraf</span>
+              </a>
+              <a class="kaki__bab kaki__bab--lanjut" href="gambar.html">
+                <span class="kaki__arah">Bab berikutnya</span>
+                <span class="kaki__judul">Menampilkan gambar</span>
+              </a>
+            </nav>
+          </footer>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer__row">
+      <div>
+        <p class="footer__wordmark">Webiko</p>
+        <p class="footer__tagline">
+          Belajar bikin website dari nol, dalam bahasa Indonesia.
+          Tanpa install, tanpa framework.
+        </p>
+      </div>
+      <nav class="footer__nav" aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="../../index.html#kurikulum">Kurikulum</a></li>
+          <li><a href="../../index.html#cara-pakai">Cara pakai</a></li>
+          <li><a href="../../index.html#progres">Progres</a></li>
+          <li><a href="../../index.html#daftar">Buat akun</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <p>© 2026 Webiko · Dibuat tanpa framework dan tanpa dependency.</p>
+      <p>Untuk pelajar SMP &amp; SMA</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>

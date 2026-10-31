@@ -2002,6 +2002,15 @@ b {
   gap: var(--space-8);
 }
 
+/* Item grid tidak boleh melebar mengikuti baris kode terpanjang.
+   Tanpa ini, satu contoh kode panjang mendorong seluruh kolom —
+   termasuk sidebar — melewati lebar layar. Panel kode yang menggulir
+   sendiri, bukan halamannya. */
+.layout--with-sidebar > .materi,
+.layout--with-sidebar > .sidebar {
+  min-width: 0;
+}
+
 /* Di layar kecil, isi bab tampil dulu; daftar bab pindah ke bawah
    supaya yang pertama terlihat bukan delapan baris menu. */
 .layout--with-sidebar > .materi {

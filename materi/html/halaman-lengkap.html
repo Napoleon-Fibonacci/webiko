@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bab 10 HTML dari nol: merangkai halaman lengkap dengan doctype, html lang, head, body, header, nav, main, section, footer, judul, tautan, gambar, daftar, dan tabel. Materi Webiko untuk pelajar SMP dan SMA.">
+  <title>Merangkai halaman lengkap — HTML dari nol · Webiko</title>
+
+  <!-- Pasang tema sebelum halaman digambar, sama seperti beranda. -->
+  <script>
+    (function () {
+      try {
+        var pilihan = localStorage.getItem("tema");
+        var gelap =
+          pilihan === "gelap" ||
+          (pilihan === "sistem" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-tema", gelap ? "gelap" : "terang");
+      } catch (e) {
+        document.documentElement.setAttribute("data-tema", "terang");
+      }
+
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-siap");
+        window.setTimeout(function () {
+          if (!window.__wgReveal) {
+            document.documentElement.classList.remove("reveal-siap");
+          }
+        }, 2000);
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+  <!-- ============ NAVBAR ============ -->
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="../../index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        Webiko
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="../../index.html">Beranda</a>
+        <a class="navbar__link" href="../../index.html#kurikulum" aria-current="page">Kurikulum</a>
+        <a class="navbar__link" href="../../index.html#cara-pakai">Cara pakai</a>
+      </nav>
+
+      <div class="navbar__tools">
+        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
+          <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--terang" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--gelap" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
+          </svg>
+          <span class="theme-toggle__label">Terang</span>
+        </button>
+
+        <button class="navbar__btn navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section">
+      <div class="layout--with-sidebar">
+
+        <!-- ============ SIDEBAR BAB ============ -->
+        <aside class="sidebar" aria-label="Daftar bab HTML dari nol">
+          <p class="sidebar__title">HTML dari nol</p>
+          <ul class="sidebar__list">
+            <li><a class="sidebar__link" href="apa-itu-website.html">Apa itu website</a></li>
+            <li><a class="sidebar__link" href="dari-server-ke-layar.html">Dari server ke layar</a></li>
+            <li><a class="sidebar__link" href="file-html-pertama.html">File HTML pertamamu</a></li>
+            <li><a class="sidebar__link" href="mengenal-tag-html.html">Mengenal tag HTML</a></li>
+            <li><a class="sidebar__link" href="judul-dan-paragraf.html">Judul dan paragraf</a></li>
+            <li><a class="sidebar__link" href="tautan.html">Tautan antar halaman</a></li>
+            <li><a class="sidebar__link" href="gambar.html">Menampilkan gambar</a></li>
+            <li><a class="sidebar__link" href="daftar.html">Daftar berurutan dan tidak</a></li>
+            <li><a class="sidebar__link" href="tabel.html">Tabel sederhana</a></li>
+            <li><a class="sidebar__link" href="halaman-lengkap.html" aria-current="page">Merangkai halaman lengkap</a></li>
+          </ul>
+        </aside>
+
+        <!-- ============ ISI BAB ============ -->
+        <article class="materi">
+          <p class="label materi__eyebrow">HTML dari nol · Bab 10 dari 10</p>
+          <h1>Merangkai halaman lengkap</h1>
+          <p class="materi__lead">
+            Semua tag yang sudah kamu pelajari sekarang digabung menjadi satu
+            halaman utuh yang rapi, mudah dibaca, dan siap dibuka di HP.
+          </p>
+
+          <h2>Kerangka dokumen</h2>
+          <p>
+            Setiap halaman HTML dimulai dengan <code>&lt;!DOCTYPE html&gt;</code>,
+            lalu <code>&lt;html&gt;</code> sebagai pembungkus utama. Di dalamnya
+            ada <code>&lt;head&gt;</code> untuk informasi halaman dan
+            <code>&lt;body&gt;</code> untuk isi yang terlihat.
+          </p>
+
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">index.html</span>
+                <span class="pane__badge">HTML</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">&lt;!DOCTYPE html&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;html lang="id"&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;head&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;meta charset="UTF-8"&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;title&gt;</span>Halaman pertamaku<span class="tok-tag">&lt;/title&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/head&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;body&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;h1&gt;</span>Halo!<span class="tok-tag">&lt;/h1&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/body&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/html&gt;</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Sepuluh baris ini adalah fondasi semua halaman. Isi yang terlihat
+              selalu berada di dalam <code>&lt;body&gt;</code>.
+            </p>
+          </div>
+
+          <h2>Isi head yang penting</h2>
+          <p>
+            <code>&lt;head&gt;</code> tidak menampilkan teks di halaman, tetapi
+            memberi tahu browser dan mesin pencari tentang halaman itu.
+          </p>
+
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">index.html</span>
+                <span class="pane__badge">HTML</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">&lt;head&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;meta charset="UTF-8"&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;title&gt;</span>Profil Rani — Kelas 8<span class="tok-tag">&lt;/title&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;meta name="description" content="Profil singkat Rani, pelajar kelas 8 SMP Harapan."&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/head&gt;</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              <code>charset</code> membuat huruf dan simbol tampil benar.
+              <code>viewport</code> membuat halaman menyesuaikan lebar layar
+              HP. <code>title</code> muncul di tab browser, dan
+              <code>description</code> dipakai mesin pencari.
+            </p>
+          </div>
+
+          <h2>Bagian-bagian halaman</h2>
+          <p>
+            Halaman yang panjang sebaiknya dipecah menjadi bagian yang punya
+            arti. Tag semantik membantu pembaca layar melompat ke bagian yang
+            mereka butuhkan.
+          </p>
+          <ul>
+            <li><code>&lt;header&gt;</code>: bagian pembuka, sering berisi judul dan logo.</li>
+            <li><code>&lt;nav&gt;</code>: kumpulan tautan navigasi.</li>
+            <li><code>&lt;main&gt;</code>: isi utama halaman, hanya satu per halaman.</li>
+            <li><code>&lt;section&gt;</code>: bagian bertema, biasanya punya judul sendiri.</li>
+            <li><code>&lt;footer&gt;</code>: penutup, misalnya hak cipta dan kontak.</li>
+          </ul>
+
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">index.html</span>
+                <span class="pane__badge">HTML</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">&lt;body&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;header&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;h1&gt;</span>Profil Rani<span class="tok-tag">&lt;/h1&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;/header&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;nav aria-label="Navigasi halaman"&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;a href="#sekolah"&gt;</span>Sekolah<span class="tok-tag">&lt;/a&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;a href="#hobi"&gt;</span>Hobi<span class="tok-tag">&lt;/a&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;/nav&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;main&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;section id="sekolah"&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;h2&gt;</span>Sekolah<span class="tok-tag">&lt;/h2&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;p&gt;</span>Aku kelas 8 di SMP Harapan.<span class="tok-tag">&lt;/p&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;/section&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;/main&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;footer&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;p&gt;</span>© 2026 Rani<span class="tok-tag">&lt;/p&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;/footer&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/body&gt;</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Setiap bagian punya tugas yang jelas. Tautan navigasi menuju
+              <code>id</code> bagian yang sesuai.
+            </p>
+          </div>
+
+          <h2>Urutan judul yang konsisten</h2>
+          <p>
+            Satu halaman punya satu <code>&lt;h1&gt;</code>. Setiap bagian
+            memakai <code>&lt;h2&gt;</code>, dan subbagian memakai
+            <code>&lt;h3&gt;</code>. Jangan melompat dari
+            <code>&lt;h2&gt;</code> ke <code>&lt;h4&gt;</code> hanya karena
+            ukurannya terlihat pas.
+          </p>
+
+          <h2>Contoh halaman lengkap</h2>
+          <p>
+            Berikut halaman profil yang memakai hampir semua tag dari bab
+            sebelumnya: judul, paragraf, tautan, gambar, daftar, dan tabel.
+          </p>
+
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">index.html</span>
+                <span class="pane__badge">HTML</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">&lt;!DOCTYPE html&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;html lang="id"&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;head&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;meta charset="UTF-8"&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;title&gt;</span>Profil Rani — Kelas 8<span class="tok-tag">&lt;/title&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;meta name="description" content="Profil singkat Rani, pelajar kelas 8 SMP Harapan."&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/head&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;body&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;header&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;h1&gt;</span>Profil Rani<span class="tok-tag">&lt;/h1&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;nav aria-label="Navigasi halaman"&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;a href="#sekolah"&gt;</span>Sekolah<span class="tok-tag">&lt;/a&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;a href="#hobi"&gt;</span>Hobi<span class="tok-tag">&lt;/a&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;a href="galeri.html"&gt;</span>Galeri<span class="tok-tag">&lt;/a&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;/nav&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;/header&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;main&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;section id="sekolah"&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;h2&gt;</span>Sekolah<span class="tok-tag">&lt;/h2&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;p&gt;</span>Aku kelas 8 di <span class="tok-tag">&lt;strong&gt;</span>SMP Harapan<span class="tok-tag">&lt;/strong&gt;</span>.<span class="tok-tag">&lt;/p&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;figure&gt;</span></span><span class="code__line">        <span class="tok-tag">&lt;img src="img/sekolah.jpg" alt="Gedung SMP Harapan dari halaman depan" width="480" height="320"&gt;</span></span><span class="code__line">        <span class="tok-tag">&lt;figcaption&gt;</span>Gedung sekolahku.<span class="tok-tag">&lt;/figcaption&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;/figure&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;/section&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;section id="hobi"&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;h2&gt;</span>Hobi<span class="tok-tag">&lt;/h2&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;ul&gt;</span></span><span class="code__line">        <span class="tok-tag">&lt;li&gt;</span>Menggambar<span class="tok-tag">&lt;/li&gt;</span></span><span class="code__line">        <span class="tok-tag">&lt;li&gt;</span>Basket<span class="tok-tag">&lt;/li&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;/ul&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;/section&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;section&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;h2&gt;</span>Jadwal<span class="tok-tag">&lt;/h2&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;table&gt;</span></span><span class="code__line">        <span class="tok-tag">&lt;caption&gt;</span>Jadwal ekstrakurikuler<span class="tok-tag">&lt;/caption&gt;</span></span><span class="code__line">        <span class="tok-tag">&lt;thead&gt;</span></span><span class="code__line">          <span class="tok-tag">&lt;tr&gt;</span><span class="tok-tag">&lt;th scope="col"&gt;</span>Hari<span class="tok-tag">&lt;/th&gt;</span><span class="tok-tag">&lt;th scope="col"&gt;</span>Kegiatan<span class="tok-tag">&lt;/th&gt;</span><span class="tok-tag">&lt;/tr&gt;</span></span><span class="code__line">        <span class="tok-tag">&lt;/thead&gt;</span></span><span class="code__line">        <span class="tok-tag">&lt;tbody&gt;</span></span><span class="code__line">          <span class="tok-tag">&lt;tr&gt;</span><span class="tok-tag">&lt;th scope="row"&gt;</span>Rabu<span class="tok-tag">&lt;/th&gt;</span><span class="tok-tag">&lt;td&gt;</span>Basket<span class="tok-tag">&lt;/td&gt;</span><span class="tok-tag">&lt;/tr&gt;</span></span><span class="code__line">        <span class="tok-tag">&lt;/tbody&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;/table&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;/section&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;/main&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;footer&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;p&gt;</span>Hubungi: <span class="tok-tag">&lt;a href="mailto:rani@contoh.com"&gt;</span>rani@contoh.com<span class="tok-tag">&lt;/a&gt;</span><span class="tok-tag">&lt;/p&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;p&gt;</span>© 2026 Rani<span class="tok-tag">&lt;/p&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;/footer&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/body&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/html&gt;</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Halaman ini punya satu <code>&lt;h1&gt;</code>, tiga bagian
+              <code>&lt;h2&gt;</code>, navigasi, gambar beralt, daftar, dan
+              tabel berjudul.
+            </p>
+          </div>
+
+          <h2>Daftar periksa sebelum dibagikan</h2>
+          <ul>
+            <li>Ada <code>&lt;!DOCTYPE html&gt;</code> dan <code>lang="id"</code>.</li>
+            <li>Semua tag sudah ditutup, kecuali tag kosong seperti <code>&lt;img&gt;</code>.</li>
+            <li><code>&lt;title&gt;</code> dan <code>description</code> sudah diisi.</li>
+            <li>Setiap gambar punya <code>alt</code> yang sesuai.</li>
+            <li>Semua tautan sudah diklik dan tidak ada yang rusak.</li>
+            <li>Halaman dibuka di layar HP dan tidak melebar ke samping.</li>
+            <li>Hanya ada satu <code>&lt;h1&gt;</code>, dan urutan judul tidak melompat.</li>
+          </ul>
+
+          <div class="card materi__latihan">
+            <p class="card__label">Latihan</p>
+            <h2 class="card__title">Halaman profil lengkap</h2>
+            <p class="card__text">
+              Buat <code>profil.html</code> lengkap dengan header, navigasi,
+              dua section, footer, satu gambar beralt, satu daftar, dan satu
+              tabel. Hubungkan dari <code>index.html</code> memakai tautan
+              relatif. Setelah selesai, periksa dengan daftar periksa di atas.
+            </p>
+          </div>
+
+          <h2>Rangkuman</h2>
+          <ul>
+            <li>
+              Halaman dimulai dari doctype, lalu <code>&lt;html&gt;</code>,
+              <code>&lt;head&gt;</code>, dan <code>&lt;body&gt;</code>.
+            </li>
+            <li>
+              <code>&lt;head&gt;</code> memuat charset, viewport, title, dan
+              description.
+            </li>
+            <li>
+              <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>,
+              <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, dan
+              <code>&lt;footer&gt;</code> memberi arti pada bagian halaman.
+            </li>
+            <li>
+              Satu <code>&lt;h1&gt;</code> per halaman dan urutan judul yang
+              tidak melompat membuat isi mudah diikuti.
+            </li>
+            <li>
+              Halaman lengkap menggabungkan teks, tautan, gambar, daftar, dan
+              tabel secara rapi.
+            </li>
+          </ul>
+
+          <footer class="materi__kaki">
+            <section class="kaki__sumber" aria-labelledby="sumber-judul">
+              <h2 class="kaki__label" id="sumber-judul">Bacaan asli</h2>
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/Document_and_website_structure">MDN — Document and website structure</a></li>
+                <li><a href="https://html.spec.whatwg.org/multipage/dom.html">WHATWG — The HTML syntax and DOM</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/section">MDN — section element</a></li>
+                <li><a href="https://www.w3.org/WAI/tutorials/page-structure/">W3C WAI — Page structure</a></li>
+              </ul>
+            </section>
+
+            <nav class="kaki__pager" aria-label="Bab sebelumnya dan berikutnya">
+              <a class="kaki__bab kaki__bab--kembali" href="tabel.html">
+                <span class="kaki__arah">Sebelumnya</span>
+                <span class="kaki__judul">Tabel sederhana</span>
+              </a>
+              <a class="kaki__bab kaki__bab--lanjut" href="../../index.html#kurikulum">
+                <span class="kaki__arah">Selesai</span>
+                <span class="kaki__judul">Kembali ke kurikulum</span>
+              </a>
+            </nav>
+          </footer>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer__row">
+      <div>
+        <p class="footer__wordmark">Webiko</p>
+        <p class="footer__tagline">
+          Belajar bikin website dari nol, dalam bahasa Indonesia.
+          Tanpa install, tanpa framework.
+        </p>
+      </div>
+      <nav class="footer__nav" aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="../../index.html#kurikulum">Kurikulum</a></li>
+          <li><a href="../../index.html#cara-pakai">Cara pakai</a></li>
+          <li><a href="../../index.html#progres">Progres</a></li>
+          <li><a href="../../index.html#daftar">Buat akun</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <p>© 2026 Webiko · Dibuat tanpa framework dan tanpa dependency.</p>
+      <p>Untuk pelajar SMP &amp; SMA</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>
