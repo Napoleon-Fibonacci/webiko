@@ -45,11 +45,12 @@ const KURIKULUM = [
     slug: "css",
     judul: "CSS & tata letak",
     ringkas:
-      "Warna, jarak, dan grid. Sepuluh bab untuk membuat tampilan rapi di HP maupun laptop.",
+      "Warna, jarak, dan grid. Sebelas bab untuk membuat tampilan rapi di HP maupun laptop.",
     tingkat: "Pemula+",
     status: "terbit",
-    tautan: "materi/css/warna-dan-latar.html",
+    tautan: "materi/css/mengenal-css.html",
     bab: [
+      { slug: "mengenal-css", judul: "Mengenal CSS" },
       { slug: "warna-dan-latar", judul: "Warna dan latar" },
       { slug: "ukuran-dan-jarak", judul: "Ukuran dan jarak" },
       { slug: "font-dan-baris", judul: "Font dan tinggi baris" },
