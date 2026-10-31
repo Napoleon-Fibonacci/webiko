@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bab 3 CSS & tata letak: satuan px, rem, dan persen, mengatur width dan max-width, memberi padding di dalam serta margin di luar elemen. Materi Webiko untuk pelajar SMP dan SMA.">
+  <title>Ukuran dan jarak — CSS &amp; tata letak · Webiko</title>
+
+  <script>
+    (function () {
+      try {
+        var pilihan = localStorage.getItem("tema");
+        var gelap =
+          pilihan === "gelap" ||
+          (pilihan === "sistem" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-tema", gelap ? "gelap" : "terang");
+      } catch (e) {
+        document.documentElement.setAttribute("data-tema", "terang");
+      }
+
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-siap");
+        window.setTimeout(function () {
+          if (!window.__wgReveal) {
+            document.documentElement.classList.remove("reveal-siap");
+          }
+        }, 2000);
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="../../index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        Webiko
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="../../index.html">Beranda</a>
+        <a class="navbar__link" href="../../index.html#kurikulum" aria-current="page">Kurikulum</a>
+        <a class="navbar__link" href="../../index.html#cara-pakai">Cara pakai</a>
+      </nav>
+
+      <div class="navbar__tools">
+        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
+          <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--terang" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--gelap" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
+          </svg>
+          <span class="theme-toggle__label">Terang</span>
+        </button>
+
+        <button class="navbar__btn navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section">
+      <div class="layout--with-sidebar">
+
+        <aside class="sidebar" aria-label="Daftar bab CSS &amp; tata letak">
+          <p class="sidebar__title">CSS &amp; tata letak</p>
+          <ul class="sidebar__list">
+            <li><a class="sidebar__link" href="mengenal-css.html">Mengenal CSS</a></li>
+            <li><a class="sidebar__link" href="warna-dan-latar.html">Warna dan latar</a></li>
+            <li><a class="sidebar__link" href="ukuran-dan-jarak.html" aria-current="page">Ukuran dan jarak</a></li>
+            <li><span class="sidebar__link" aria-disabled="true">Font dan tinggi baris <span class="badge">Segera</span></span></li>
+          </ul>
+        </aside>
+
+        <article class="materi">
+          <p class="label materi__eyebrow">CSS &amp; tata letak · Bab 3 dari 11</p>
+          <h1>Ukuran dan jarak</h1>
+          <p class="materi__lead">
+            Kartu profil sudah punya warna. Sekarang atur ukurannya supaya enak
+            dibaca: tidak terlalu lebar, teks tidak menempel tepi, dan tetap rapi
+            di layar kecil.
+          </p>
+
+          <h2>Tiga satuan yang sering dipakai</h2>
+          <p>
+            CSS punya beberapa satuan ukuran. Tiga yang paling sering dipakai
+            adalah <code>px</code>, <code>rem</code>, dan <code>%</code>.
+          </p>
+          <ul>
+            <li>
+              <strong><code>px</code> (piksel):</strong> ukuran tetap. Cocok untuk
+              garis tipis atau jarak kecil yang tidak perlu berubah.
+            </li>
+            <li>
+              <strong><code>rem</code>:</strong> kelipatan ukuran huruf akar
+              halaman. Bawaan browser 16px, jadi <code>2rem</code> sama dengan
+              32px. Kalau pengguna memperbesar huruf, ukuran rem ikut membesar.
+            </li>
+            <li>
+              <strong><code>%</code> (persen):</strong> dihitung dari elemen
+              induknya. <code>width: 90%</code> berarti 90% lebar induk.
+            </li>
+          </ul>
+
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">style.css</span>
+                <span class="pane__badge">CSS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">h1</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">font-size</span><span class="tok-punct">:</span> <span class="tok-string">2rem</span><span class="tok-punct">;</span> <span class="tok-komentar">/* 32px saat akar 16px */</span></span><span class="code__line"><span class="tok-punct">}</span></span><span class="code__line"></span><span class="code__line"><span class="tok-tag">.kartu</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">max-width</span><span class="tok-punct">:</span> <span class="tok-string">90%</span><span class="tok-punct">;</span> <span class="tok-komentar">/* tidak lebih lebar dari induk */</span></span><span class="code__line"><span class="tok-punct">}</span></span><span class="code__line"></span><span class="code__line"><span class="tok-tag">p</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">margin-top</span><span class="tok-punct">:</span> <span class="tok-string">16px</span><span class="tok-punct">;</span> <span class="tok-komentar">/* tetap 16px */</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              <code>rem</code> dan <code>%</code> lebih lentur; <code>px</code>
+              memberi ukuran yang tetap.
+            </p>
+          </div>
+
+          <p>
+            Untuk teks dan jarak antarbagian, biasakan memakai
+            <code>rem</code>. Untuk lebar yang harus mengikuti layar, pakai
+            <code>%</code>. Simpan <code>px</code> untuk hal kecil yang memang
+            tidak perlu berubah.
+          </p>
+
+          <h2>Lebar, tinggi, dan batas lebar</h2>
+          <p>
+            <code>width</code> mengatur lebar elemen dan <code>height</code>
+            mengatur tingginya. Untuk kotak berisi teks, hindari
+            <code>height</code> tetap: saat teks membungkus di layar kecil, isinya
+            bisa terpotong. Biarkan tinggi mengikuti isi.
+          </p>
+          <p>
+            <code>max-width</code> memberi batas lebar tanpa mengunci ukurannya.
+            Elemen tetap menyusut saat layar sempit, lalu berhenti melebar saat
+            mencapai batas.
+          </p>
+
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">style.css</span>
+                <span class="pane__badge">CSS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">.kartu</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">width</span><span class="tok-punct">:</span> <span class="tok-string">100%</span><span class="tok-punct">;</span></span><span class="code__line">  <span class="tok-attr">max-width</span><span class="tok-punct">:</span> <span class="tok-string">32rem</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Lebar mengikuti ruang yang ada, tetapi tidak pernah lebih dari
+              32rem.
+            </p>
+          </div>
+
+          <div class="alert" role="note">
+            <div>
+              <strong class="alert__title">Lebar tetap vs batas lebar</strong>
+              <p class="alert__text">
+                <code>width: 32rem</code> memaksa lebar 32rem di semua layar,
+                sehingga bisa melewati tepi di HP. <code>max-width: 32rem</code>
+                lebih aman karena elemen boleh menyusut.
+              </p>
+            </div>
+          </div>
+
+          <h2>Padding: ruang di dalam</h2>
+          <p>
+            <code>padding</code> memberi jarak di dalam elemen, antara isi dan
+            tepinya. Warna latar ikut mengisi area padding, jadi teks tidak
+            menempel ke pinggir kartu.
+          </p>
+          <p>
+            Satu nilai berlaku untuk keempat sisi. Dua nilai berarti
+            <mark>atas-bawah</mark> lalu <mark>kiri-kanan</mark>.
+          </p>
+
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">style.css</span>
+                <span class="pane__badge">CSS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">.kartu</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">padding</span><span class="tok-punct">:</span> <span class="tok-string">2rem</span><span class="tok-punct">;</span> <span class="tok-komentar">/* semua sisi */</span></span><span class="code__line"><span class="tok-punct">}</span></span><span class="code__line"></span><span class="code__line"><span class="tok-tag">body</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">padding</span><span class="tok-punct">:</span> <span class="tok-string">2rem 1rem</span><span class="tok-punct">;</span> <span class="tok-komentar">/* atas-bawah, kiri-kanan */</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Kartu mendapat ruang 2rem di semua sisi; halaman mendapat 2rem
+              atas-bawah dan 1rem kiri-kanan.
+            </p>
+          </div>
+
+          <h2>Margin: ruang di luar</h2>
+          <p>
+            <code>margin</code> memberi jarak di luar elemen. Area margin
+            transparan, jadi warnanya mengikuti elemen di belakangnya. Margin
+            dipakai untuk memisahkan elemen dari elemen lain.
+          </p>
+          <p>
+            Untuk kartu yang punya <code>max-width</code>, pasang
+            <code>margin: 0 auto</code>. Nilai <code>auto</code> membagi sisa
+            ruang kiri dan kanan, sehingga kartu berada di tengah.
+          </p>
+
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">style.css</span>
+                <span class="pane__badge">CSS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">.kartu</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">margin</span><span class="tok-punct">:</span> <span class="tok-string">0 auto</span><span class="tok-punct">;</span> <span class="tok-komentar">/* tengah */</span></span><span class="code__line"><span class="tok-punct">}</span></span><span class="code__line"></span><span class="code__line"><span class="tok-tag">h1</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">margin-top</span><span class="tok-punct">:</span> <span class="tok-string">0</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              <code>margin: 0 auto</code> membuat kartu di tengah.
+              <code>margin-top: 0</code> menghapus jarak bawaan judul.
+            </p>
+          </div>
+
+          <div class="alert" role="note">
+            <div>
+              <strong class="alert__title">Padding atau margin?</strong>
+              <p class="alert__text">
+                Butuh ruang agar isi tidak menempel tepi? Pakai
+                <code>padding</code>. Butuh jarak antara dua elemen? Pakai
+                <code>margin</code>.
+              </p>
+            </div>
+          </div>
+
+          <section class="lab" data-lab data-lab-warna aria-labelledby="lab-judul">
+            <p class="label">Latihan langsung</p>
+            <h2 id="lab-judul">Atur ukuran kartu profil</h2>
+            <p>
+              Kartu di panel kiri belum punya ruang dalam dan belum di tengah.
+              Tambah dan ubah aturannya, lalu klik <strong>Jalankan</strong>.
+              Jangan ubah isi HTML-nya.
+            </p>
+            <ol>
+              <li>Tambah <code>padding: 2rem;</code> pada <code>.kartu</code>.</li>
+              <li>Tambah <code>margin: 0 auto;</code> pada <code>.kartu</code>.</li>
+              <li>Tambah <code>padding: 2rem 1rem;</code> pada <code>body</code>.</li>
+            </ol>
+
+            <div class="lab__meja">
+              <div class="lab__panel lab__panel--kode">
+                <div class="lab__bar">
+                  <span class="lab__prompt" aria-hidden="true">&gt;_</span>
+                  <span class="lab__nama">kartu-profil.html</span>
+                  <span class="lab__isyarat">bisa diubah</span>
+                </div>
+                <textarea class="lab__editor" data-lab-editor rows="23" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Kode HTML dan CSS latihan" aria-describedby="lab-status">&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Kartu profil&lt;/title&gt;
+  &lt;style&gt;
+    body {
+      margin: 0;
+      background-color:   #ecedfb;
+      font-family: system-ui, sans-serif;
+    }
+
+    .kartu {
+      max-width: 30rem;
+      background-color:   #ffffff;
+      color:   #1a1b33;
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 2rem;
+    }
+
+    p {
+      margin-bottom: 0;
+      color:   #3a3c7e;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class="kartu"&gt;
+    &lt;h1&gt;Profil Rani&lt;/h1&gt;
+    &lt;p&gt;Aku kelas 8 di SMP Harapan. Hobiku menggambar dan bermain basket.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+              </div>
+
+              <div class="lab__panel lab__panel--hasil">
+                <div class="lab__bar">
+                  <span class="pane__dots" aria-hidden="true">
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                  </span>
+                  <span class="lab__nama">Hasil</span>
+                  <span class="lab__isyarat">pratinjau</span>
+                </div>
+                <iframe class="lab__pratinjau" data-lab-pratinjau title="Pratinjau hasil kode HTML dan CSS" sandbox="" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;id&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;title&gt;Kartu profil&lt;/title&gt;&lt;style&gt;body{margin:0;background-color:#ecedfb;font-family:system-ui,sans-serif;}.kartu{max-width:30rem;background-color:#ffffff;color:#1a1b33;}h1{margin-top:0;font-size:2rem;}p{margin-bottom:0;color:#3a3c7e;}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;kartu&quot;&gt;&lt;h1&gt;Profil Rani&lt;/h1&gt;&lt;p&gt;Aku kelas 8 di SMP Harapan. Hobiku menggambar dan bermain basket.&lt;/p&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+              </div>
+            </div>
+
+            <div class="lab__aksi">
+              <button class="btn btn--primary" type="button" data-lab-jalankan hidden>Jalankan</button>
+              <button class="btn btn--ghost" type="button" data-lab-reset hidden>Atur ulang</button>
+              <p class="lab__status" id="lab-status" data-lab-status role="status">Tambah padding dan margin di panel kiri, lalu klik Jalankan.</p>
+            </div>
+
+            <noscript>
+              <p class="lab__catatan">
+                Editor butuh JavaScript. Salin kode di atas ke file .html, lalu
+                buka di browser.
+              </p>
+            </noscript>
+          </section>
+
+          <div class="materi__latihan">
+            <p><strong>Cek hasil:</strong></p>
+            <ul>
+              <li><code>.kartu</code> punya <code>padding: 2rem</code>.</li>
+              <li><code>.kartu</code> punya <code>margin: 0 auto</code>.</li>
+              <li><code>body</code> punya <code>padding: 2rem 1rem</code>.</li>
+              <li>Kartu di tengah dan teksnya tidak menempel tepi.</li>
+            </ul>
+          </div>
+
+          <div class="card materi__latihan">
+            <p class="card__label">Tantangan tambahan</p>
+            <h2 class="card__title">px atau rem?</h2>
+            <p class="card__text">
+              Ganti <code>padding</code> kartu dari <code>2rem</code> menjadi
+              <code>32px</code>. Hasilnya sama saat ukuran huruf akar 16px.
+              Lalu tambahkan <code>html { font-size: 20px; }</code> dan jalankan
+              lagi: padding <code>2rem</code> ikut membesar, sedangkan
+              <code>32px</code> tidak. Itu sebabnya <code>rem</code> lebih ramah
+              saat pengguna memperbesar teks.
+            </p>
+          </div>
+
+          <h2>Rangkuman</h2>
+          <ul>
+            <li>
+              <code>px</code> tetap, <code>rem</code> mengikuti ukuran huruf
+              akar, dan <code>%</code> mengikuti elemen induk.
+            </li>
+            <li>
+              <code>width</code> dan <code>height</code> mengatur ukuran;
+              <code>max-width</code> membatasi lebar tanpa mengunci ukurannya.
+            </li>
+            <li>
+              Jangan beri <code>height</code> tetap pada kotak berisi teks;
+              biarkan tingginya mengikuti isi.
+            </li>
+            <li>
+              <code>padding</code> memberi ruang di dalam elemen;
+              <code>margin</code> memberi jarak di luar elemen.
+            </li>
+            <li>
+              <code>margin: 0 auto</code> menengahkan elemen yang punya
+              <code>max-width</code>.
+            </li>
+          </ul>
+
+          <footer class="materi__kaki">
+            <section class="kaki__sumber" aria-labelledby="sumber-judul">
+              <h2 class="kaki__label" id="sumber-judul">Bacaan asli</h2>
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/Values_and_units">MDN — Values and units</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/length">MDN — length</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/width">MDN — width</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/max-width">MDN — max-width</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/padding">MDN — padding</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/margin">MDN — margin</a></li>
+                <li><a href="https://web.dev/learn/css/sizing">web.dev — Sizing</a></li>
+              </ul>
+            </section>
+
+            <nav class="kaki__pager" aria-label="Bab sebelumnya dan berikutnya">
+              <a class="kaki__bab kaki__bab--kembali" href="warna-dan-latar.html">
+                <span class="kaki__arah">Sebelumnya</span>
+                <span class="kaki__judul">Warna dan latar</span>
+              </a>
+              <span class="kaki__bab kaki__bab--lanjut kaki__bab--mati">
+                <span class="kaki__arah">Bab berikutnya</span>
+                <span class="kaki__judul">Font dan tinggi baris</span>
+                <span class="badge">Segera</span>
+              </span>
+            </nav>
+          </footer>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__row">
+      <div>
+        <p class="footer__wordmark">Webiko</p>
+        <p class="footer__tagline">
+          Belajar bikin website dari nol, dalam bahasa Indonesia.
+          Tanpa install, tanpa framework.
+        </p>
+      </div>
+      <nav class="footer__nav" aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="../../index.html#kurikulum">Kurikulum</a></li>
+          <li><a href="../../index.html#cara-pakai">Cara pakai</a></li>
+          <li><a href="../../index.html#progres">Progres</a></li>
+          <li><a href="../../index.html#daftar">Buat akun</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <p>© 2026 Webiko · Dibuat tanpa framework dan tanpa dependency.</p>
+      <p>Untuk pelajar SMP &amp; SMA</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/latihan-html.js"></script>
+  <script src="../../assets/js/lab-warna.js"></script>
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>
