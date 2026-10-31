@@ -2032,6 +2032,30 @@ b {
   .layout--with-sidebar > .sidebar {
     order: 0;
   }
+
+  /* Daftar bab dipaku di bawah navbar. Kalau tinggi layar tidak cukup,
+     hanya daftarnya yang menggulir; judul tetap terlihat. */
+  .layout--with-sidebar > .sidebar {
+    position: sticky;
+    top: calc(var(--navbar-h) + var(--border-w) + var(--space-4));
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - var(--navbar-h) - var(--border-w) - var(--space-8));
+    overflow: hidden;
+  }
+
+  .sidebar__title {
+    flex: none;
+  }
+
+  .sidebar__list {
+    min-height: 0;
+    overflow-y: auto;
+    /* Ruang untuk cincin fokus dan bayangan keras saat daftar digulir. */
+    padding: var(--space-2);
+    margin: calc(var(--space-2) * -1);
+    scrollbar-gutter: stable;
+  }
 }
 
 /* Kolom baca dipatok supaya baris tidak kepanjangan di layar lebar. */
