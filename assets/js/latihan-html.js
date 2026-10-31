@@ -16,6 +16,16 @@
 
   var kodeAwal = editor.value;
 
+  /* Tinggi editor mengikuti jumlah baris: memanjang saat Enter menambah
+     baris, menyusut saat baris dihapus. Grip tarik dimatikan di CSS, jadi
+     ukurannya hanya berubah karena isinya. */
+  function aturTinggi() {
+    editor.style.height = 'auto';
+    editor.style.height = editor.scrollHeight + 'px';
+  }
+
+  editor.addEventListener('input', aturTinggi);
+
   function tampilkan() {
     pratinjau.srcdoc = editor.value;
   }
@@ -36,6 +46,7 @@
 
   tombolReset.addEventListener('click', function () {
     editor.value = kodeAwal;
+    aturTinggi();
     jalankan('Kode dikembalikan ke contoh awal.');
     editor.focus();
   });
@@ -57,4 +68,5 @@
 
   /* Samakan pratinjau dengan isi editor saat halaman dibuka. */
   tampilkan();
+  aturTinggi();
 })();
