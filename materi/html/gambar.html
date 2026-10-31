@@ -148,7 +148,7 @@
             </li>
             <li>
               Jangan mengulang isi paragraf di sekitar gambar. Alt menjelaskan
-              hal yang tidak sudah dijelaskan teks.
+              hal yang belum dijelaskan teks.
             </li>
             <li>
               Kalau gambar menjadi tautan, alt menjelaskan tujuan tautannya,
@@ -240,9 +240,10 @@
             </li>
           </ul>
           <p>
-            Pastikan ekstensi di <code>src</code> sama dengan format berkas
-            aslinya. Menulis <code>foto.png</code> untuk berkas JPG akan membuat
-            gambar gagal tampil.
+            Samakan ekstensi di <code>src</code> dengan format berkas aslinya.
+            Ekstensi bukan penentu tunggal: browser memeriksa isi berkas,
+            sedangkan server sering menentukan header <code>Content-Type</code>
+            dari ekstensi. Kalau keduanya tidak cocok, gambar bisa gagal tampil.
           </p>
 
           <h2>Menulis alamat gambar</h2>
@@ -264,7 +265,8 @@
             <p class="lab__catatan">
               Pratinjau menampilkan ikon gambar rusak karena
               <code>img/kelas.jpg</code> belum ada di perangkatmu. Ganti dengan
-              nama berkas fotomu sendiri saat mencoba di komputer.
+              nama berkas fotomu sendiri saat mencoba di komputer. Di latihan
+              ini, fokus pada penulisan <code>src</code> dan <code>alt</code>.
             </p>
 
             <div class="lab__meja">
@@ -340,7 +342,7 @@
           <div class="materi__latihan">
             <p><strong>Cek hasil:</strong></p>
             <ul>
-              <li>Foto tampil dan jalur <code>src</code> benar.</li>
+              <li>Jalur <code>src</code> mengarah ke berkas gambar yang ingin ditampilkan.</li>
               <li><code>alt</code> foto menjelaskan isinya, bukan menulis “foto”.</li>
               <li>Gambar hiasan memakai <code>alt=""</code>.</li>
             </ul>
@@ -388,6 +390,7 @@
               <ul>
                 <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/HTML_images">MDN — HTML images</a></li>
                 <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img">MDN — img element</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/Media/Guides/Formats/Image_types">MDN — Image file type and format guide</a></li>
                 <li><a href="https://www.w3.org/WAI/tutorials/images/">W3C WAI — Images tutorial</a></li>
                 <li><a href="https://html.spec.whatwg.org/multipage/images.html">WHATWG — Images</a></li>
               </ul>
