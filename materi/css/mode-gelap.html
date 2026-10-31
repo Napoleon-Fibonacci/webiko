@@ -117,7 +117,7 @@
                 <span class="pane__name">style.css</span>
                 <span class="pane__badge">CSS</span>
               </div>
-              <pre class="code"><code><span class="code__line"><span class="tok-tag">:root</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">--latar</span><span class="tok-punct">:</span> <span class="tok-string">#ffffff;</span></span><span class="code__line">  <span class="tok-attr">--teks</span><span class="tok-punct">:</span> <span class="tok-string">#1a1b33;</span></span><span class="code__line">  <span class="tok-attr">--garis</span><span class="tok-punct">:</span> <span class="tok-string">#1a1b33;</span></span><span class="code__line"><span class="tok-punct">}</span></span><span class="code__line"> </span><span class="code__line"><span class="tok-tag">body</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">background-color</span><span class="tok-punct">:</span> <span class="tok-string">var(--latar);</span></span><span class="code__line">  <span class="tok-attr">color</span><span class="tok-punct">:</span> <span class="tok-string">var(--teks);</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">:root</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">--latar</span><span class="tok-punct">:</span> <span class="tok-string">#ffffff</span><span class="tok-punct">;</span></span><span class="code__line">  <span class="tok-attr">--teks</span><span class="tok-punct">:</span> <span class="tok-string">#1a1b33</span><span class="tok-punct">;</span></span><span class="code__line">  <span class="tok-attr">--garis</span><span class="tok-punct">:</span> <span class="tok-string">#1a1b33</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-punct">}</span></span><span class="code__line"> </span><span class="code__line"><span class="tok-tag">body</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">background-color</span><span class="tok-punct">:</span> <span class="tok-string">var(--latar)</span><span class="tok-punct">;</span></span><span class="code__line">  <span class="tok-attr">color</span><span class="tok-punct">:</span> <span class="tok-string">var(--teks)</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
             </div>
             <p class="materi__keterangan">
               Nama variabel diawali dua tanda minus. Nilainya bisa berupa warna, ukuran, atau teks.
@@ -136,7 +136,7 @@
                 <span class="pane__name">style.css</span>
                 <span class="pane__badge">CSS</span>
               </div>
-              <pre class="code"><code><span class="code__line"><span class="tok-tag">.gelap</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">--latar</span><span class="tok-punct">:</span> <span class="tok-string">#14152b;</span></span><span class="code__line">  <span class="tok-attr">--teks</span><span class="tok-punct">:</span> <span class="tok-string">#f1efff;</span></span><span class="code__line">  <span class="tok-attr">--garis</span><span class="tok-punct">:</span> <span class="tok-string">#8e8bf0;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">.gelap</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">--latar</span><span class="tok-punct">:</span> <span class="tok-string">#14152b</span><span class="tok-punct">;</span></span><span class="code__line">  <span class="tok-attr">--teks</span><span class="tok-punct">:</span> <span class="tok-string">#f1efff</span><span class="tok-punct">;</span></span><span class="code__line">  <span class="tok-attr">--garis</span><span class="tok-punct">:</span> <span class="tok-string">#8e8bf0</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
             </div>
             <p class="materi__keterangan">
               Kelas <code>.gelap</code> menimpa variabel untuk elemen itu dan turunannya.
@@ -153,7 +153,7 @@
           <p>
             Mode gelap bukan sekadar membalik warna. Latar gelap dengan teks putih murni
             bisa menyilaukan, dan abu-abu tua di atas hitam sulit dibaca. Pilih pasangan
-            yang kontrasnya cukup, minimal 4.5:1 untuk teks biasa.
+            yang kontrasnya cukup, minimal 4,5:1 untuk teks biasa.
           </p>
           <p>
             Garis tepi juga perlu variabel sendiri. Border tinta tua yang bagus di latar
@@ -165,8 +165,6 @@
             <li>Aksen <code>#8e8bf0</code> lebih terbaca di latar gelap daripada indigo tua.</li>
           </ul>
 
-          <h2>Latihan: pasang tema gelap</h2>
-          <hr>
           <section class="lab" data-lab data-lab-warna aria-labelledby="lab-judul">
             <p class="label">Latihan langsung</p>
             <h2 id="lab-judul">Ubah profil menjadi mode gelap</h2>
@@ -309,7 +307,7 @@
             <li>Variabel di <code>:root</code> diwarisi semua elemen.</li>
             <li>Tema gelap cukup menimpa nilai variabel, bukan menulis ulang semua aturan.</li>
             <li>Webiko memakai atribut <code>data-tema</code> pada <code>&lt;html&gt;</code>.</li>
-            <li>Jaga kontras teks minimal 4.5:1; jangan pakai hitam dan putih murni tanpa alasan.</li>
+            <li>Jaga kontras teks minimal 4,5:1; jangan pakai hitam dan putih murni tanpa alasan.</li>
           </ul>
 
           <footer class="materi__kaki">

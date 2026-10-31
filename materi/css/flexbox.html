@@ -117,14 +117,14 @@
                 <span class="pane__name">style.css</span>
                 <span class="pane__badge">CSS</span>
               </div>
-              <pre class="code"><code><span class="code__line"><span class="tok-tag">.menu</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">display</span><span class="tok-punct">:</span> <span class="tok-string">flex;</span></span><span class="code__line">  <span class="tok-attr">gap</span><span class="tok-punct">:</span> <span class="tok-string">1rem;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">.menu</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">display</span><span class="tok-punct">:</span> <span class="tok-string">flex</span><span class="tok-punct">;</span></span><span class="code__line">  <span class="tok-attr">gap</span><span class="tok-punct">:</span> <span class="tok-string">1rem</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
             </div>
             <p class="materi__keterangan">
               Tanpa flex, tautan menumpuk ke bawah. Dengan flex, mereka berjajar dalam satu baris.
             </p>
           </div>
           <p>
-            <code>gap</code> memberi jarak antaritam tanpa perlu margin di setiap anak.
+            <code>gap</code> memberi jarak antaritem tanpa perlu margin di setiap anak.
             Ini lebih rapi daripada memberi <code>margin-right</code> pada semua tautan.
           </p>
 
@@ -140,7 +140,7 @@
                 <span class="pane__name">style.css</span>
                 <span class="pane__badge">CSS</span>
               </div>
-              <pre class="code"><code><span class="code__line"><span class="tok-tag">.menu</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">display</span><span class="tok-punct">:</span> <span class="tok-string">flex;</span></span><span class="code__line">  <span class="tok-attr">justify-content</span><span class="tok-punct">:</span> <span class="tok-string">space-between;</span></span><span class="code__line">  <span class="tok-attr">align-items</span><span class="tok-punct">:</span> <span class="tok-string">center;</span></span><span class="code__line">  <span class="tok-attr">gap</span><span class="tok-punct">:</span> <span class="tok-string">1rem;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">.menu</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">display</span><span class="tok-punct">:</span> <span class="tok-string">flex</span><span class="tok-punct">;</span></span><span class="code__line">  <span class="tok-attr">justify-content</span><span class="tok-punct">:</span> <span class="tok-string">space-between</span><span class="tok-punct">;</span></span><span class="code__line">  <span class="tok-attr">align-items</span><span class="tok-punct">:</span> <span class="tok-string">center</span><span class="tok-punct">;</span></span><span class="code__line">  <span class="tok-attr">gap</span><span class="tok-punct">:</span> <span class="tok-string">1rem</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
             </div>
             <p class="materi__keterangan">
               <code>space-between</code> mendorong item ke dua ujung. <code>center</code> menyejajarkan tingginya.
@@ -165,7 +165,7 @@
                 <span class="pane__name">style.css</span>
                 <span class="pane__badge">CSS</span>
               </div>
-              <pre class="code"><code><span class="code__line"><span class="tok-tag">.menu</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">display</span><span class="tok-punct">:</span> <span class="tok-string">flex;</span></span><span class="code__line">  <span class="tok-attr">flex-wrap</span><span class="tok-punct">:</span> <span class="tok-string">wrap;</span></span><span class="code__line">  <span class="tok-attr">gap</span><span class="tok-punct">:</span> <span class="tok-string">1rem;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">.menu</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">display</span><span class="tok-punct">:</span> <span class="tok-string">flex</span><span class="tok-punct">;</span></span><span class="code__line">  <span class="tok-attr">flex-wrap</span><span class="tok-punct">:</span> <span class="tok-string">wrap</span><span class="tok-punct">;</span></span><span class="code__line">  <span class="tok-attr">gap</span><span class="tok-punct">:</span> <span class="tok-string">1rem</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
             </div>
             <p class="materi__keterangan">
               Di layar sempit, item yang tidak muat turun ke baris baru. Tidak ada yang terpotong.
@@ -176,8 +176,6 @@
             memakai media query di bab Tampilan di layar HP.
           </p>
 
-          <h2>Latihan: sejajarkan menu</h2>
-          <hr>
           <section class="lab" data-lab data-lab-warna aria-labelledby="lab-judul">
             <p class="label">Latihan langsung</p>
             <h2 id="lab-judul">Susun menu jadi satu baris</h2>
@@ -317,7 +315,7 @@
           <h2>Rangkuman</h2>
           <ul>
             <li><code>display: flex</code> membuat anak langsungnya berjajar.</li>
-            <li><code>gap</code> memberi jarak antaritam tanpa margin tambahan.</li>
+            <li><code>gap</code> memberi jarak antaritem tanpa margin tambahan.</li>
             <li><code>justify-content</code> mengatur sumbu utama; <code>align-items</code> mengatur sumbu silang.</li>
             <li><code>flex-wrap: wrap</code> mencegah item terpotong di layar sempit.</li>
             <li>Flexbox cocok untuk satu baris; susunan dua dimensi lebih pas memakai grid.</li>

@@ -117,7 +117,7 @@
                 <span class="pane__name">style.css</span>
                 <span class="pane__badge">CSS</span>
               </div>
-              <pre class="code"><code><span class="code__line"><span class="tok-tag">body</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">font-family</span><span class="tok-punct">:</span> <span class="tok-string">system-ui, -apple-system, "Segoe UI", sans-serif;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">body</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">font-family</span><span class="tok-punct">:</span> <span class="tok-string">system-ui, -apple-system, "Segoe UI", sans-serif</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
             </div>
             <p class="materi__keterangan">
               Browser memakai nama pertama yang tersedia. <code>sans-serif</code> menjadi cadangan terakhir.
@@ -147,7 +147,7 @@
                 <span class="pane__name">style.css</span>
                 <span class="pane__badge">CSS</span>
               </div>
-              <pre class="code"><code><span class="code__line"><span class="tok-tag">h1</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">font-size</span><span class="tok-punct">:</span> <span class="tok-string">2rem;</span></span><span class="code__line">  <span class="tok-attr">font-weight</span><span class="tok-punct">:</span> <span class="tok-string">800;</span></span><span class="code__line"><span class="tok-punct">}</span></span><span class="code__line"> </span><span class="code__line"><span class="tok-tag">p</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">font-size</span><span class="tok-punct">:</span> <span class="tok-string">1rem;</span></span><span class="code__line">  <span class="tok-attr">font-weight</span><span class="tok-punct">:</span> <span class="tok-string">400;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">h1</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">font-size</span><span class="tok-punct">:</span> <span class="tok-string">2rem</span><span class="tok-punct">;</span></span><span class="code__line">  <span class="tok-attr">font-weight</span><span class="tok-punct">:</span> <span class="tok-string">800</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-punct">}</span></span><span class="code__line"> </span><span class="code__line"><span class="tok-tag">p</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">font-size</span><span class="tok-punct">:</span> <span class="tok-string">1rem</span><span class="tok-punct">;</span></span><span class="code__line">  <span class="tok-attr">font-weight</span><span class="tok-punct">:</span> <span class="tok-string">400</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
             </div>
             <p class="materi__keterangan">
               Tidak semua font punya ketebalan 800 atau 900. Browser memilih yang paling dekat.
@@ -166,7 +166,7 @@
                 <span class="pane__name">style.css</span>
                 <span class="pane__badge">CSS</span>
               </div>
-              <pre class="code"><code><span class="code__line"><span class="tok-tag">p</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">line-height</span><span class="tok-punct">:</span> <span class="tok-string">1.7;</span></span><span class="code__line"><span class="tok-punct">}</span></span><span class="code__line"> </span><span class="code__line"><span class="tok-tag">h1</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">line-height</span><span class="tok-punct">:</span> <span class="tok-string">1.2;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">p</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">line-height</span><span class="tok-punct">:</span> <span class="tok-string">1.7</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-punct">}</span></span><span class="code__line"> </span><span class="code__line"><span class="tok-tag">h1</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">line-height</span><span class="tok-punct">:</span> <span class="tok-string">1.2</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
             </div>
             <p class="materi__keterangan">
               Angka tanpa satuan dikalikan dengan ukuran huruf elemen. Hasilnya ikut menyesuaikan saat ukuran huruf berubah.
@@ -178,16 +178,14 @@
             bisa terasa sesak.
           </p>
 
-          <h2>Latihan: rapikan teks profil</h2>
-          <hr>
           <section class="lab" data-lab data-lab-warna aria-labelledby="lab-judul">
             <p class="label">Latihan langsung</p>
             <h2 id="lab-judul">Rapikan tipografi profil</h2>
             <p>
-              Teks profil di panel kiri memakai font bawaan dan barisnya rapat. Rapikan font serta jaraknya, lalu klik <strong>Jalankan</strong>. Jangan ubah isi HTML-nya.
+              Teks profil di panel kiri memakai font pratinjau bawaan dan barisnya rapat. Ganti fontnya, rapikan jaraknya, lalu klik <strong>Jalankan</strong>. Jangan ubah isi HTML-nya.
             </p>
             <ol>
-                            <li>Tambah <code>font-family: system-ui, sans-serif;</code> pada <code>body</code>.</li>
+                            <li>Tambah <code>font-family: Georgia, serif;</code> pada <code>body</code>.</li>
                         <li>Ubah <code>line-height: 1.2;</code> pada <code>p</code> menjadi <code>1.7</code>.</li>
                         <li>Tambah <code>font-weight: 800;</code> pada <code>h1</code>.</li>
                         <li>Tambah <code>font-size: 0.875rem;</code> pada <code>.catatan</code>.</li>
@@ -302,7 +300,7 @@
           <div class="materi__latihan">
             <p><strong>Cek hasil:</strong></p>
             <ul>
-                            <li><code>body</code> memakai <code>font-family: system-ui, sans-serif</code>.</li>
+                            <li><code>body</code> memakai <code>Georgia</code> dengan cadangan <code>serif</code>.</li>
                         <li><code>p</code> punya <code>line-height: 1.7</code>.</li>
                         <li><code>h1</code> punya <code>font-weight: 800</code>.</li>
                         <li><code>.catatan</code> lebih kecil dari paragraf biasa.</li>
@@ -326,7 +324,7 @@
                 <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-size">MDN — font-size</a></li>
                 <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight">MDN — font-weight</a></li>
                 <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/line-height">MDN — line-height</a></li>
-                <li><a href="https://web.dev/learn/css/fonts">web.dev — Fonts</a></li>
+                <li><a href="https://web.dev/learn/css/typography">web.dev — Fonts</a></li>
               </ul>
             </section>
 

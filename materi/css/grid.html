@@ -117,7 +117,7 @@
                 <span class="pane__name">style.css</span>
                 <span class="pane__badge">CSS</span>
               </div>
-              <pre class="code"><code><span class="code__line"><span class="tok-tag">.papan</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">display</span><span class="tok-punct">:</span> <span class="tok-string">grid;</span></span><span class="code__line">  <span class="tok-attr">grid-template-columns</span><span class="tok-punct">:</span> <span class="tok-string">repeat(3, 1fr);</span></span><span class="code__line">  <span class="tok-attr">gap</span><span class="tok-punct">:</span> <span class="tok-string">1rem;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">.papan</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">display</span><span class="tok-punct">:</span> <span class="tok-string">grid</span><span class="tok-punct">;</span></span><span class="code__line">  <span class="tok-attr">grid-template-columns</span><span class="tok-punct">:</span> <span class="tok-string">repeat(3, 1fr)</span><span class="tok-punct">;</span></span><span class="code__line">  <span class="tok-attr">gap</span><span class="tok-punct">:</span> <span class="tok-string">1rem</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
             </div>
             <p class="materi__keterangan">
               <code>repeat(3, 1fr)</code> membuat tiga kolom sama lebar. <code>1fr</code> berarti satu bagian dari ruang yang ada.
@@ -140,7 +140,7 @@
                 <span class="pane__name">style.css</span>
                 <span class="pane__badge">CSS</span>
               </div>
-              <pre class="code"><code><span class="code__line"><span class="tok-tag">.papan</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">display</span><span class="tok-punct">:</span> <span class="tok-string">grid;</span></span><span class="code__line">  <span class="tok-attr">grid-template-columns</span><span class="tok-punct">:</span> <span class="tok-string">repeat(auto-fit, minmax(8rem, 1fr));</span></span><span class="code__line">  <span class="tok-attr">gap</span><span class="tok-punct">:</span> <span class="tok-string">1rem;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">.papan</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">display</span><span class="tok-punct">:</span> <span class="tok-string">grid</span><span class="tok-punct">;</span></span><span class="code__line">  <span class="tok-attr">grid-template-columns</span><span class="tok-punct">:</span> <span class="tok-string">repeat(auto-fit, minmax(8rem, 1fr))</span><span class="tok-punct">;</span></span><span class="code__line">  <span class="tok-attr">gap</span><span class="tok-punct">:</span> <span class="tok-string">1rem</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
             </div>
             <p class="materi__keterangan">
               Tiap kolom minimal 8rem dan boleh membesar. Kalau tidak muat, jumlah kolom berkurang sendiri.
@@ -158,8 +158,6 @@
             halaman dengan sidebar dan isi.
           </p>
 
-          <h2>Latihan: susun papan kartu</h2>
-          <hr>
           <section class="lab" data-lab data-lab-warna aria-labelledby="lab-judul">
             <p class="label">Latihan langsung</p>
             <h2 id="lab-judul">Susun papan tiga kolom</h2>
