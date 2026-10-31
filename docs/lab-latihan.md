@@ -20,7 +20,7 @@ Lab latihan harus terasa seperti satu editor kecil yang konsisten:
 | `assets/js/latihan-html.js` | Menyalin editor ke iframe, mewarnai sintaks, mengukur tinggi editor dan pratinjau, tombol Jalankan/Reset, pemeriksaan struktur. |
 | `assets/js/lab-warna.js` | Kotak warna kecil di dalam editor CSS. Tanpa JavaScript tidak ada kotak. |
 | `assets/css/style.css` | Token, panel lab, editor, pratinjau, dan batas tinggi minimum. |
-| `materi/css/*.html` | Lab CSS: `mengenal-css`, `warna-dan-latar`, `ukuran-dan-jarak`. |
+| `materi/css/*.html` | Lab CSS: 11 bab, dari `mengenal-css` sampai `mode-gelap`. |
 | `materi/html/*.html` | Lab HTML: `file-html-pertama`, `judul-dan-paragraf`, `gambar`, `tautan`, `daftar`, `tabel`, `halaman-lengkap`. |
 
 Bab konsep `apa-itu-website` dan `dari-server-ke-layar` memakai kuis pilihan
@@ -30,6 +30,11 @@ yang juga ditutup kuis pilihan ganda.
 Kuis ditangani `assets/js/kuis-pilihan.js`. Tanpa JavaScript semua soal dan
 pilihan tetap terlihat; `<noscript>` menampilkan kunci jawaban. Skor, jawaban
 benar, dan tombol Ulangi baru muncul setelah siswa memeriksa jawaban.
+
+Jalur CSS & tata letak kini punya 11 bab dan semuanya terbit. Bab 4-11 memakai
+kerangka yang sama seperti bab 1-3: satu lab per bab, kode HTML utuh di dalam
+`srcdoc`, `sandbox="allow-same-origin"`, serta `main.js` untuk menu HP dan
+tombol tema.
 
 ## Aturan pratinjau
 
