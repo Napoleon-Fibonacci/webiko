@@ -2291,7 +2291,10 @@ b {
 
 .lab__panel--kode {
   background-color: var(--color-code-bg);
-  box-shadow: var(--shadow-hard-lg);
+  /* Bayangan panel terminal pakai indigo, bukan tinta: panelnya sendiri
+     sudah gelap, jadi bayangan tinta nyaris tak terlihat. Warna ini
+     sama dengan aksen indigo dan tetap terbaca di kedua tema. */
+  box-shadow: 8px 8px 0 0 var(--color-primary-soft);
 }
 
 .lab__panel--hasil {
