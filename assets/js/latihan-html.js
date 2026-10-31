@@ -635,7 +635,7 @@
   /* Pratinjau memanjang mengikuti isinya, bukan bergulir di dalam kotak
      tetap. Tinggi hanya bisa dibaca karena iframe mengizinkan
      same-origin; script di dalam pratinjau tetap dilarang sandbox. */
-  function aturTinggi() {
+  function aturTinggiPratinjau() {
     var isi;
     try {
       isi = pratinjau.contentDocument;
@@ -651,8 +651,8 @@
     if (tinggi > 0) pratinjau.style.height = tinggi + 'px';
   }
 
-  pratinjau.addEventListener('load', aturTinggi);
-  window.addEventListener('resize', aturTinggi);
+  pratinjau.addEventListener('load', aturTinggiPratinjau);
+  window.addEventListener('resize', aturTinggiPratinjau);
 
   var kotakPeringatan = null;
   var teksPeringatan = null;
@@ -742,6 +742,10 @@
   });
 
   editor.addEventListener('scroll', samakanGulir);
+
+  /* Font bisa selesai dimuat setelah halaman digambar; ukur ulang
+     supaya tinggi editor tidak tertinggal dari isinya. */
+  window.addEventListener('load', aturTinggi);
 
   editor.addEventListener('keydown', function (e) {
     /* Tab menyisipkan dua spasi, bukan memindahkan fokus. */
