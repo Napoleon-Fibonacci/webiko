@@ -222,8 +222,137 @@
             <li>Hanya ada satu <code>&lt;h1&gt;</code>, dan urutan judul tidak melompat.</li>
           </ul>
 
+          <section class="lab" data-lab aria-labelledby="lab-judul">
+            <p class="label">Latihan langsung</p>
+            <h2 id="lab-judul">Halaman kelas lengkap</h2>
+            <p>
+              Lengkapi halaman utuh dengan header, navigasi, dua
+              section, dan footer. Ubah kode di panel kiri, lalu klik <strong>Jalankan</strong>.
+              Tidak perlu membuat file.
+            </p>
+
+            <div class="lab__meja">
+              <div class="lab__panel lab__panel--kode">
+                <div class="lab__bar">
+                  <span class="lab__prompt" aria-hidden="true">&gt;_</span>
+                  <span class="lab__nama">halaman-kelas.html</span>
+                  <span class="lab__isyarat">bisa diubah</span>
+                </div>
+                <textarea class="lab__editor" data-lab-editor rows="11" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Kode HTML latihan" aria-describedby="lab-status">&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;&lt;!-- judul halaman --&gt;&lt;/title&gt;
+  &lt;meta name="description" content="ringkasan halaman"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;h1&gt;&lt;!-- judul utama --&gt;&lt;/h1&gt;
+    &lt;nav aria-label="Navigasi halaman"&gt;
+      &lt;a href="#tentang"&gt;Tentang&lt;/a&gt;
+      &lt;a href="#kegiatan"&gt;Kegiatan&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+
+  &lt;main&gt;
+    &lt;section id="tentang"&gt;
+      &lt;h2&gt;Tentang&lt;/h2&gt;
+      &lt;p&gt;&lt;!-- ceritakan dirimu --&gt;&lt;/p&gt;
+    &lt;/section&gt;
+
+    &lt;section id="kegiatan"&gt;
+      &lt;h2&gt;Kegiatan&lt;/h2&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;!-- kegiatan 1 --&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;!-- kegiatan 2 --&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+
+  &lt;footer&gt;
+    &lt;p&gt;&lt;!-- kontak atau hak cipta --&gt;&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+              </div>
+
+              <div class="lab__panel lab__panel--hasil">
+                <div class="lab__bar">
+                  <span class="pane__dots" aria-hidden="true">
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                  </span>
+                  <span class="lab__nama">Hasil</span>
+                  <span class="lab__isyarat">pratinjau</span>
+                </div>
+                <iframe class="lab__pratinjau" data-lab-pratinjau title="Pratinjau hasil kode HTML" sandbox="" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;id&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;&lt;!-- judul halaman --&gt;&lt;/title&gt;
+  &lt;meta name=&quot;description&quot; content=&quot;ringkasan halaman&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;h1&gt;&lt;!-- judul utama --&gt;&lt;/h1&gt;
+    &lt;nav aria-label=&quot;Navigasi halaman&quot;&gt;
+      &lt;a href=&quot;#tentang&quot;&gt;Tentang&lt;/a&gt;
+      &lt;a href=&quot;#kegiatan&quot;&gt;Kegiatan&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+
+  &lt;main&gt;
+    &lt;section id=&quot;tentang&quot;&gt;
+      &lt;h2&gt;Tentang&lt;/h2&gt;
+      &lt;p&gt;&lt;!-- ceritakan dirimu --&gt;&lt;/p&gt;
+    &lt;/section&gt;
+
+    &lt;section id=&quot;kegiatan&quot;&gt;
+      &lt;h2&gt;Kegiatan&lt;/h2&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;!-- kegiatan 1 --&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;!-- kegiatan 2 --&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+
+  &lt;footer&gt;
+    &lt;p&gt;&lt;!-- kontak atau hak cipta --&gt;&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;"></iframe>
+              </div>
+            </div>
+
+            <div class="lab__aksi">
+              <button class="btn btn--primary" type="button" data-lab-jalankan hidden>Jalankan</button>
+              <button class="btn btn--ghost" type="button" data-lab-reset hidden>Atur ulang</button>
+              <p class="lab__status" id="lab-status" data-lab-status role="status">Isi judul, deskripsi, dan komentar, lalu klik Jalankan.</p>
+            </div>
+
+            <noscript>
+              <p class="lab__catatan">
+                Editor butuh JavaScript. Salin kode di atas ke file .html, lalu
+                buka di browser.
+              </p>
+            </noscript>
+          </section>
+
+          <div class="materi__latihan">
+            <p><strong>Cek hasil:</strong></p>
+            <ul>
+              <li>Ada satu <code>&lt;h1&gt;</code> dan dua <code>&lt;h2&gt;</code>.</li>
+              <li>Navigasi menuju <code>#tentang</code> dan <code>#kegiatan</code>.</li>
+              <li>Halaman punya <code>title</code>, <code>description</code>, dan <code>viewport</code>.</li>
+              <li>Semua tag tertutup dengan benar.</li>
+            </ul>
+          </div>
+
           <div class="card materi__latihan">
-            <p class="card__label">Latihan</p>
+            <p class="card__label">Tantangan tambahan</p>
             <h2 class="card__title">Halaman profil lengkap</h2>
             <p class="card__text">
               Buat <code>profil.html</code> lengkap dengan header, navigasi,
@@ -232,38 +361,6 @@
               relatif. Setelah selesai, periksa dengan daftar periksa di atas.
             </p>
           </div>
-
-          <div class="card materi__latihan">
-            <p class="card__label">Latihan tambahan</p>
-            <h2 class="card__title">Halaman kelas lengkap</h2>
-            <p class="card__text">
-              Lengkapi template menjadi halaman utuh dengan header, navigasi,
-              dua section, dan footer.
-            </p>
-          </div>
-
-          <div class="materi__gambar">
-            <div class="code-pane pane">
-              <div class="pane__bar">
-                <span class="pane__name">template.html</span>
-                <span class="pane__badge">HTML</span>
-              </div>
-              <pre class="code"><code><span class="code__line"><span class="tok-tag">&lt;!DOCTYPE html&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;html lang="id"&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;head&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;meta charset="UTF-8"&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;title&gt;</span><span class="tok-komentar">&lt;!-- judul halaman --&gt;</span><span class="tok-tag">&lt;/title&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;meta name="description" content="ringkasan halaman"&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/head&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;body&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;header&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;h1&gt;</span><span class="tok-komentar">&lt;!-- judul utama --&gt;</span><span class="tok-tag">&lt;/h1&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;nav aria-label="Navigasi halaman"&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;a href="#tentang"&gt;</span>Tentang<span class="tok-tag">&lt;/a&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;a href="#kegiatan"&gt;</span>Kegiatan<span class="tok-tag">&lt;/a&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;/nav&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;/header&gt;</span></span><span class="code__line"></span><span class="code__line">  <span class="tok-tag">&lt;main&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;section id="tentang"&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;h2&gt;</span>Tentang<span class="tok-tag">&lt;/h2&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;p&gt;</span><span class="tok-komentar">&lt;!-- ceritakan dirimu --&gt;</span><span class="tok-tag">&lt;/p&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;/section&gt;</span></span><span class="code__line"></span><span class="code__line">    <span class="tok-tag">&lt;section id="kegiatan"&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;h2&gt;</span>Kegiatan<span class="tok-tag">&lt;/h2&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;ul&gt;</span></span><span class="code__line">        <span class="tok-tag">&lt;li&gt;</span><span class="tok-komentar">&lt;!-- kegiatan 1 --&gt;</span><span class="tok-tag">&lt;/li&gt;</span></span><span class="code__line">        <span class="tok-tag">&lt;li&gt;</span><span class="tok-komentar">&lt;!-- kegiatan 2 --&gt;</span><span class="tok-tag">&lt;/li&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;/ul&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;/section&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;/main&gt;</span></span><span class="code__line"></span><span class="code__line">  <span class="tok-tag">&lt;footer&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;p&gt;</span><span class="tok-komentar">&lt;!-- kontak atau hak cipta --&gt;</span><span class="tok-tag">&lt;/p&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;/footer&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/body&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/html&gt;</span></span></code></pre>
-            </div>
-            <p class="materi__keterangan">
-              Template awal. Isi judul, deskripsi, dan setiap komentar. Struktur
-              <code>header</code>, <code>nav</code>, <code>main</code>, dan
-              <code>footer</code> jangan dihapus.
-            </p>
-          </div>
-
-          <p><strong>Cek hasil:</strong></p>
-          <ul>
-            <li>Ada satu <code>&lt;h1&gt;</code> dan dua <code>&lt;h2&gt;</code>.</li>
-            <li>Navigasi menuju <code>#tentang</code> dan <code>#kegiatan</code>.</li>
-            <li>Halaman punya <code>title</code>, <code>description</code>, dan <code>viewport</code>.</li>
-            <li>Semua tag tertutup dengan benar.</li>
-          </ul>
 
           <h2>Rangkuman</h2>
           <ul>
@@ -343,6 +440,7 @@
     </div>
   </footer>
 
+  <script src="../../assets/js/latihan-html.js"></script>
   <script src="../../assets/js/main.js"></script>
 </body>
 </html>

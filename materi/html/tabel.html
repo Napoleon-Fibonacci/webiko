@@ -204,8 +204,122 @@
             </div>
           </div>
 
+          <section class="lab" data-lab aria-labelledby="lab-judul">
+            <p class="label">Latihan langsung</p>
+            <h2 id="lab-judul">Jadwal ekstrakurikuler</h2>
+            <p>
+              Lengkapi tabel dua kolom dengan judul tabel, baris judul,
+              dan dua baris isi. Ubah kode di panel kiri, lalu klik <strong>Jalankan</strong>.
+              Tidak perlu membuat file.
+            </p>
+
+            <div class="lab__meja">
+              <div class="lab__panel lab__panel--kode">
+                <div class="lab__bar">
+                  <span class="lab__prompt" aria-hidden="true">&gt;_</span>
+                  <span class="lab__nama">jadwal.html</span>
+                  <span class="lab__isyarat">bisa diubah</span>
+                </div>
+                <textarea class="lab__editor" data-lab-editor rows="11" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Kode HTML latihan" aria-describedby="lab-status">&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Jadwal ekstrakurikuler&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Jadwal Ekstrakurikuler&lt;/h1&gt;
+
+  &lt;table&gt;
+    &lt;caption&gt;&lt;!-- nama tabel --&gt;&lt;/caption&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th scope="col"&gt;Hari&lt;/th&gt;
+        &lt;th scope="col"&gt;Kegiatan&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;th scope="row"&gt;&lt;!-- hari --&gt;&lt;/th&gt;
+        &lt;td&gt;&lt;!-- kegiatan --&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;th scope="row"&gt;&lt;!-- hari --&gt;&lt;/th&gt;
+        &lt;td&gt;&lt;!-- kegiatan --&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+              </div>
+
+              <div class="lab__panel lab__panel--hasil">
+                <div class="lab__bar">
+                  <span class="pane__dots" aria-hidden="true">
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                  </span>
+                  <span class="lab__nama">Hasil</span>
+                  <span class="lab__isyarat">pratinjau</span>
+                </div>
+                <iframe class="lab__pratinjau" data-lab-pratinjau title="Pratinjau hasil kode HTML" sandbox="" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;id&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;Jadwal ekstrakurikuler&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Jadwal Ekstrakurikuler&lt;/h1&gt;
+
+  &lt;table&gt;
+    &lt;caption&gt;&lt;!-- nama tabel --&gt;&lt;/caption&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th scope=&quot;col&quot;&gt;Hari&lt;/th&gt;
+        &lt;th scope=&quot;col&quot;&gt;Kegiatan&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;th scope=&quot;row&quot;&gt;&lt;!-- hari --&gt;&lt;/th&gt;
+        &lt;td&gt;&lt;!-- kegiatan --&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;th scope=&quot;row&quot;&gt;&lt;!-- hari --&gt;&lt;/th&gt;
+        &lt;td&gt;&lt;!-- kegiatan --&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;"></iframe>
+              </div>
+            </div>
+
+            <div class="lab__aksi">
+              <button class="btn btn--primary" type="button" data-lab-jalankan hidden>Jalankan</button>
+              <button class="btn btn--ghost" type="button" data-lab-reset hidden>Atur ulang</button>
+              <p class="lab__status" id="lab-status" data-lab-status role="status">Isi komentar tabel, lalu klik Jalankan.</p>
+            </div>
+
+            <noscript>
+              <p class="lab__catatan">
+                Editor butuh JavaScript. Salin kode di atas ke file .html, lalu
+                buka di browser.
+              </p>
+            </noscript>
+          </section>
+
+          <div class="materi__latihan">
+            <p><strong>Cek hasil:</strong></p>
+            <ul>
+              <li>Tabel punya <code>&lt;caption&gt;</code>.</li>
+              <li>Judul kolom memakai <code>&lt;th&gt;</code>, bukan <code>&lt;td&gt;</code>.</li>
+              <li>Jumlah sel di setiap baris sama.</li>
+            </ul>
+          </div>
+
           <div class="card materi__latihan">
-            <p class="card__label">Latihan</p>
+            <p class="card__label">Tantangan tambahan</p>
             <h2 class="card__title">Jadwal pelajaran</h2>
             <p class="card__text">
               Buat tabel jadwal tiga hari dengan kolom “Hari”, “Pelajaran
@@ -215,37 +329,6 @@
               kolom dan judul baris, lalu coba satu <code>colspan</code>.
             </p>
           </div>
-
-          <div class="card materi__latihan">
-            <p class="card__label">Latihan tambahan</p>
-            <h2 class="card__title">Jadwal ekstrakurikuler</h2>
-            <p class="card__text">
-              Lengkapi tabel dua kolom dengan judul tabel, baris judul, dan dua
-              baris isi.
-            </p>
-          </div>
-
-          <div class="materi__gambar">
-            <div class="code-pane pane">
-              <div class="pane__bar">
-                <span class="pane__name">template.html</span>
-                <span class="pane__badge">HTML</span>
-              </div>
-              <pre class="code"><code><span class="code__line"><span class="tok-tag">&lt;!DOCTYPE html&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;html lang="id"&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;head&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;meta charset="UTF-8"&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;title&gt;</span>Jadwal ekstrakurikuler<span class="tok-tag">&lt;/title&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/head&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;body&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;h1&gt;</span>Jadwal Ekstrakurikuler<span class="tok-tag">&lt;/h1&gt;</span></span><span class="code__line"></span><span class="code__line">  <span class="tok-tag">&lt;table&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;caption&gt;</span><span class="tok-komentar">&lt;!-- nama tabel --&gt;</span><span class="tok-tag">&lt;/caption&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;thead&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;tr&gt;</span></span><span class="code__line">        <span class="tok-tag">&lt;th scope="col"&gt;</span>Hari<span class="tok-tag">&lt;/th&gt;</span></span><span class="code__line">        <span class="tok-tag">&lt;th scope="col"&gt;</span>Kegiatan<span class="tok-tag">&lt;/th&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;/tr&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;/thead&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;tbody&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;tr&gt;</span></span><span class="code__line">        <span class="tok-tag">&lt;th scope="row"&gt;</span><span class="tok-komentar">&lt;!-- hari --&gt;</span><span class="tok-tag">&lt;/th&gt;</span></span><span class="code__line">        <span class="tok-tag">&lt;td&gt;</span><span class="tok-komentar">&lt;!-- kegiatan --&gt;</span><span class="tok-tag">&lt;/td&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;/tr&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;tr&gt;</span></span><span class="code__line">        <span class="tok-tag">&lt;th scope="row"&gt;</span><span class="tok-komentar">&lt;!-- hari --&gt;</span><span class="tok-tag">&lt;/th&gt;</span></span><span class="code__line">        <span class="tok-tag">&lt;td&gt;</span><span class="tok-komentar">&lt;!-- kegiatan --&gt;</span><span class="tok-tag">&lt;/td&gt;</span></span><span class="code__line">      <span class="tok-tag">&lt;/tr&gt;</span></span><span class="code__line">    <span class="tok-tag">&lt;/tbody&gt;</span></span><span class="code__line">  <span class="tok-tag">&lt;/table&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/body&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;/html&gt;</span></span></code></pre>
-            </div>
-            <p class="materi__keterangan">
-              Template awal. Ganti komentar dengan nama tabel, hari, dan kegiatan.
-              Judul kolom memakai <code>scope="col"</code>, judul baris
-              memakai <code>scope="row"</code>.
-            </p>
-          </div>
-
-          <p><strong>Cek hasil:</strong></p>
-          <ul>
-            <li>Tabel punya <code>&lt;caption&gt;</code>.</li>
-            <li>Judul kolom memakai <code>&lt;th&gt;</code>, bukan <code>&lt;td&gt;</code>.</li>
-            <li>Jumlah sel di setiap baris sama.</li>
-          </ul>
 
           <h2>Rangkuman</h2>
           <ul>
@@ -322,6 +405,7 @@
     </div>
   </footer>
 
+  <script src="../../assets/js/latihan-html.js"></script>
   <script src="../../assets/js/main.js"></script>
 </body>
 </html>
