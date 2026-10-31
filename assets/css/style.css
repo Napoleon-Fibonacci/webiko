@@ -2437,39 +2437,39 @@ b {
   color: transparent;
 }
 
-/* --- Alat warna di padding kiri editor -------------------- */
-/* Kotak kecil sejajar nilai hex. Dibuat assets/js/lab-warna.js;
-   tanpa JavaScript tidak ada padding tambahan atau kotak. */
-.lab--warna .lab__editor,
-.lab--warna .lab__sorot {
-  padding-left: calc(var(--space-4) + var(--space-3));
-}
-
+/* --- Alat warna di dalam editor ---------------------------- */
+/* Kotak kecil duduk di spasi sebelum nilai hex. Dibuat
+   assets/js/lab-warna.js; tanpa JavaScript tidak ada kotak dan contoh
+   kode di lab tetap utuh. */
 .lab__warna-layer {
   position: absolute;
   inset: 0;
+  overflow: hidden;
   pointer-events: none;
 }
 
 .lab__warna {
   position: absolute;
-  left: var(--space-1);
-  width: var(--space-4);
-  height: var(--space-4);
+  width: var(--space-3);
+  height: var(--space-3);
   padding: 0;
-  border: var(--border-w-thin) solid var(--color-code-ink);
+  border: 0;
   border-radius: var(--radius-xs);
+  /* Cincin di dalam kotak: warna gelap tetap terlihat tanpa
+     menambah ukuran yang bisa menabrak kode di sebelahnya. */
+  box-shadow: inset 0 0 0 1px var(--color-code-ink);
   background-color: transparent;
   cursor: pointer;
   pointer-events: auto;
   transition: transform var(--dur-fast) var(--ease-out);
 }
 
-/* Area sentuh lebih besar dari kotak yang terlihat. */
+/* Area sentuh lebih tinggi dari kotak yang terlihat, tanpa melebar ke
+   kode di sampingnya. */
 .lab__warna::before {
   content: "";
   position: absolute;
-  inset: calc(var(--space-1) * -1);
+  inset: calc(var(--space-1) * -1) 0;
 }
 
 .lab__warna:hover {
@@ -2479,6 +2479,25 @@ b {
 .lab__warna:focus-visible {
   outline: var(--border-w) solid var(--color-accent);
   outline-offset: 2px;
+}
+
+/* Alat bantu: nilai warna belum lengkap. Klik untuk memilih warna. */
+.lab__warna--bantu {
+  background-color: var(--color-code-bar);
+  box-shadow: inset 0 0 0 1px var(--color-code-muted);
+  color: var(--color-code-ink);
+}
+
+.lab__warna--bantu::after {
+  content: "+";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: calc(var(--space-3) * 0.75);
+  font-weight: var(--fw-bold);
+  line-height: 1;
 }
 
 /* Input asli tidak terlihat; hanya pemilih warnanya yang dipakai. */

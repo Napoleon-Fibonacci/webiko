@@ -37,6 +37,95 @@
     return '<span class="' + kelas + '">' + esc(teks) + '</span>';
   }
 
+  /* ---------- Warna hex di teks kode ---------- */
+
+  /* Hanya lab yang punya alat warna (data-lab-warna) yang mewarnai
+     nilai hex. Lab HTML lain tetap memakai sorotan lama. */
+  var warnaiHex = lab.hasAttribute('data-lab-warna');
+
+  /* Warna teks hex harus tetap terbaca di atas latar editor yang
+     gelap. Warna yang terlalu gelap dicerahkan secukupnya; kotak
+     warna di sebelahnya tetap memakai warna asli. */
+  var LATAR_KODE = [26, 27, 51];
+
+  function uraiHex(hex) {
+    var isi = hex.slice(1);
+    if (isi.length === 3) {
+      isi = isi[0] + isi[0] + isi[1] + isi[1] + isi[2] + isi[2];
+    }
+    return [
+      parseInt(isi.slice(0, 2), 16),
+      parseInt(isi.slice(2, 4), 16),
+      parseInt(isi.slice(4, 6), 16)
+    ];
+  }
+
+  function kanalLinier(nilai) {
+    nilai /= 255;
+    return nilai <= 0.03928
+      ? nilai / 12.92
+      : Math.pow((nilai + 0.055) / 1.055, 2.4);
+  }
+
+  function luminans(rgb) {
+    return (
+      0.2126 * kanalLinier(rgb[0]) +
+      0.7152 * kanalLinier(rgb[1]) +
+      0.0722 * kanalLinier(rgb[2])
+    );
+  }
+
+  var LUMINANS_LATAR = luminans(LATAR_KODE);
+
+  function rasioKontras(a, b) {
+    var terang = Math.max(a, b);
+    var gelap = Math.min(a, b);
+    return (terang + 0.05) / (gelap + 0.05);
+  }
+
+  function duaDigit(n) {
+    return ('0' + n.toString(16)).slice(-2);
+  }
+
+  function warnaTerbaca(hex) {
+    var rgb = uraiHex(hex);
+    if (rasioKontras(luminans(rgb), LUMINANS_LATAR) >= 4.5) return hex;
+
+    for (var t = 0.05; t <= 1; t += 0.05) {
+      var terang = [
+        Math.round(rgb[0] + (255 - rgb[0]) * t),
+        Math.round(rgb[1] + (255 - rgb[1]) * t),
+        Math.round(rgb[2] + (255 - rgb[2]) * t)
+      ];
+      if (rasioKontras(luminans(terang), LUMINANS_LATAR) >= 4.5) {
+        return '#' + duaDigit(terang[0]) + duaDigit(terang[1]) + duaDigit(terang[2]);
+      }
+    }
+
+    return '#ffffff';
+  }
+
+  function warnaiTeks(teks) {
+    if (!warnaiHex) return esc(teks);
+
+    var hasil = '';
+    var pos = 0;
+    var pola = /#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b/g;
+    var cocok;
+    while ((cocok = pola.exec(teks))) {
+      hasil += esc(teks.slice(pos, cocok.index));
+      hasil +=
+        '<span class="tok-warna" style="color:' +
+        warnaTerbaca(cocok[0]) +
+        '">' +
+        esc(cocok[0]) +
+        '</span>';
+      pos = pola.lastIndex;
+    }
+    hasil += esc(teks.slice(pos));
+    return hasil;
+  }
+
   /* Posisi tepat setelah ">" penutup tag. Tanda kutip dihitung supaya
      ">" di dalam atribut tidak dianggap akhir tag. */
   function akhirTag(kode, mulai) {
@@ -87,10 +176,10 @@
     while (pos < kode.length) {
       var lt = kode.indexOf('<', pos);
       if (lt === -1) {
-        keluar += esc(kode.slice(pos));
+        keluar += warnaiTeks(kode.slice(pos));
         break;
       }
-      keluar += esc(kode.slice(pos, lt));
+      keluar += warnaiTeks(kode.slice(pos, lt));
 
       if (kode.substr(lt, 4) === '<!--') {
         var tutupKomentar = kode.indexOf('-->', lt + 4);
