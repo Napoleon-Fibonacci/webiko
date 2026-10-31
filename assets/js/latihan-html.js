@@ -595,9 +595,26 @@
   var fontPratinjau = getComputedStyle(document.documentElement)
     .getPropertyValue('--font-sans')
     .trim();
+  var warnaKartu = getComputedStyle(document.documentElement)
+    .getPropertyValue('--color-lab-card')
+    .trim() || '#ecedfb';
+  var pakaiKartu = lab.hasAttribute('data-lab-kartu');
 
   function tampilkan() {
-    var gaya = '<style>body{font-family:' + fontPratinjau + ';}</style>';
+    var aturan = 'body{font-family:' + fontPratinjau + ';}';
+
+    /* Lab HTML memakai body sebagai kartu demo. Tidak ada elemen
+       pembungkus tambahan, jadi struktur HTML yang ditulis siswa tetap
+       utuh. Warna dan jarak sama dengan kartu lab CSS. */
+    if (pakaiKartu) {
+      aturan +=
+        'html{background-color:#ffffff;}' +
+        'body{max-width:36rem;margin:1rem auto;padding:2rem;' +
+        'background-color:' + warnaKartu + ';color:#1a1b33;' +
+        'box-sizing:border-box;}';
+    }
+
+    var gaya = '<style>' + aturan + '</style>';
     var kode = editor.value;
 
     if (/<head(\s[^>]*)?>/i.test(kode)) {

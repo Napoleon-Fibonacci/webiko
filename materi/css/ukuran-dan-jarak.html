@@ -246,14 +246,14 @@
             <p class="label">Latihan langsung</p>
             <h2 id="lab-judul">Atur ukuran kartu profil</h2>
             <p>
-              Teks profil sudah punya jarak dari tepi. Sekarang batasi lebar
-              bacaannya dan beri ruang di dalam, lalu klik
+              Kartu sudah di tengah, tetapi isinya masih menempel ke tepi dan
+              ruang halaman terlalu sempit. Ubah ukurannya, lalu klik
               <strong>Jalankan</strong>. Jangan ubah isi HTML-nya.
             </p>
             <ol>
-              <li>Tambah <code>max-width: 30rem;</code> pada <code>.kartu</code>.</li>
+              <li>Ubah <code>padding: 1rem;</code> pada <code>body</code> menjadi <code>2rem 1rem;</code>.</li>
               <li>Tambah <code>padding: 2rem;</code> pada <code>.kartu</code>.</li>
-              <li>Tambah <code>margin: 0 auto;</code> pada <code>.kartu</code>.</li>
+              <li>Ubah <code>max-width: 30rem;</code> pada <code>.kartu</code> menjadi <code>36rem;</code>.</li>
             </ol>
 
             <div class="lab__meja">
@@ -271,12 +271,15 @@
   &lt;style&gt;
     body {
       margin: 0;
-      padding: 2rem 1rem;
+      padding: 1rem;
       background-color:   #ffffff;
       font-family: system-ui, sans-serif;
     }
 
     .kartu {
+      max-width: 30rem;
+      margin: 0 auto;
+      background-color:   #ecedfb;
       color:   #1a1b33;
     }
 
@@ -287,21 +290,15 @@
     }
 
     p {
-      margin-bottom: 1rem;
+      margin-bottom: 0;
       color:   #3a3c7e;
-    }
-
-    strong {
-      background-color:   #ffe14d;
-      color:   #1a1b33;
     }
   &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
   &lt;div class="kartu"&gt;
     &lt;h1&gt;Profil Rani&lt;/h1&gt;
-    &lt;p&gt;Aku kelas 8 di &lt;strong&gt;SMP Harapan&lt;/strong&gt;.&lt;/p&gt;
-    &lt;p&gt;Hobiku menggambar dan bermain basket.&lt;/p&gt;
+    &lt;p&gt;Aku kelas 8 di SMP Harapan.&lt;/p&gt;
   &lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;</textarea>
@@ -317,14 +314,14 @@
                   <span class="lab__nama">Hasil</span>
                   <span class="lab__isyarat">pratinjau</span>
                 </div>
-                <iframe class="lab__pratinjau" data-lab-pratinjau title="Pratinjau hasil kode HTML dan CSS" sandbox="" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;id&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;title&gt;Kartu profil&lt;/title&gt;&lt;style&gt;body{margin:0;padding:2rem 1rem;background-color:#ffffff;font-family:system-ui,sans-serif;}.kartu{color:#1a1b33;}h1{margin-top:0;font-size:2rem;color:#433fd4;}p{margin-bottom:1rem;color:#3a3c7e;}strong{background-color:#ffe14d;color:#1a1b33;}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;kartu&quot;&gt;&lt;h1&gt;Profil Rani&lt;/h1&gt;&lt;p&gt;Aku kelas 8 di &lt;strong&gt;SMP Harapan&lt;/strong&gt;.&lt;/p&gt;&lt;p&gt;Hobiku menggambar dan bermain basket.&lt;/p&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+                <iframe class="lab__pratinjau" data-lab-pratinjau title="Pratinjau hasil kode HTML dan CSS" sandbox="" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;id&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;title&gt;Kartu profil&lt;/title&gt;&lt;style&gt;body{margin:0;padding:1rem;background-color:#ffffff;font-family:system-ui,sans-serif;}.kartu{max-width:30rem;margin:0 auto;background-color:#ecedfb;color:#1a1b33;}h1{margin-top:0;font-size:2rem;color:#433fd4;}p{margin-bottom:0;color:#3a3c7e;}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;kartu&quot;&gt;&lt;h1&gt;Profil Rani&lt;/h1&gt;&lt;p&gt;Aku kelas 8 di SMP Harapan.&lt;/p&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
               </div>
             </div>
 
             <div class="lab__aksi">
               <button class="btn btn--primary" type="button" data-lab-jalankan hidden>Jalankan</button>
               <button class="btn btn--ghost" type="button" data-lab-reset hidden>Atur ulang</button>
-              <p class="lab__status" id="lab-status" data-lab-status role="status">Tambah batas lebar dan ruang dalam di panel kiri, lalu klik Jalankan.</p>
+              <p class="lab__status" id="lab-status" data-lab-status role="status">Ubah padding dan lebar kartu di panel kiri, lalu klik Jalankan.</p>
             </div>
 
             <noscript>
@@ -338,10 +335,10 @@
           <div class="materi__latihan">
             <p><strong>Cek hasil:</strong></p>
             <ul>
-              <li><code>.kartu</code> punya <code>max-width: 30rem</code>.</li>
+              <li><code>body</code> punya <code>padding: 2rem 1rem</code>.</li>
               <li><code>.kartu</code> punya <code>padding: 2rem</code>.</li>
-              <li><code>.kartu</code> punya <code>margin: 0 auto</code>.</li>
-              <li>Teks di tengah dan tidak menempel tepi.</li>
+              <li><code>.kartu</code> punya <code>max-width: 36rem</code>.</li>
+              <li>Kartu di tengah dan teksnya tidak menempel tepi.</li>
             </ul>
           </div>
 
