@@ -136,6 +136,7 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
   /* --- Border & radius ------------------------------------- */
   --border-w: 3px;
   --border-w-thin: 2px;              /* hanya untuk elemen hias kecil */
+  --radius-xs: 4px;                  /* kotak warna kecil di editor */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
@@ -1373,7 +1374,8 @@ b {
   .navbar__btn:active,
   .navbar__link:hover,
   .sidebar__link:hover,
-  .footer__links a:hover {
+  .footer__links a:hover,
+  .lab__warna:hover {
     transform: none;
   }
 
@@ -1409,7 +1411,8 @@ b {
 
   /* Lapisan warna disembunyikan; teks asli editor dikembalikan supaya
      isinya tetap terbaca di mode kontras tinggi. */
-  .lab__sorot {
+  .lab__sorot,
+  .lab__warna-layer {
     display: none;
   }
 
@@ -2432,6 +2435,61 @@ b {
 .lab__editor--sorot::selection {
   background-color: var(--color-code-select);
   color: transparent;
+}
+
+/* --- Alat warna di padding kiri editor -------------------- */
+/* Kotak kecil sejajar nilai hex. Dibuat assets/js/lab-warna.js;
+   tanpa JavaScript tidak ada padding tambahan atau kotak. */
+.lab--warna .lab__editor,
+.lab--warna .lab__sorot {
+  padding-left: calc(var(--space-4) + var(--space-3));
+}
+
+.lab__warna-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.lab__warna {
+  position: absolute;
+  left: var(--space-1);
+  width: var(--space-4);
+  height: var(--space-4);
+  padding: 0;
+  border: var(--border-w-thin) solid var(--color-code-ink);
+  border-radius: var(--radius-xs);
+  background-color: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+/* Area sentuh lebih besar dari kotak yang terlihat. */
+.lab__warna::before {
+  content: "";
+  position: absolute;
+  inset: calc(var(--space-1) * -1);
+}
+
+.lab__warna:hover {
+  transform: scale(1.15);
+}
+
+.lab__warna:focus-visible {
+  outline: var(--border-w) solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Input asli tidak terlihat; hanya pemilih warnanya yang dipakai. */
+.lab__warna-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .lab__pratinjau {
