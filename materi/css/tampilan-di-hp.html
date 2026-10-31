@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bab 10 CSS &amp; tata letak: meta viewport, media query max-width, gambar lentur, dan cara mengubah dua kolom menjadi satu kolom di layar HP. Materi Webiko untuk pelajar SMP dan SMA.">
+  <title>Tampilan di layar HP — CSS &amp; tata letak · Webiko</title>
+
+  <script>
+    (function () {
+      try {
+        var pilihan = localStorage.getItem("tema");
+        var gelap =
+          pilihan === "gelap" ||
+          (pilihan === "sistem" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-tema", gelap ? "gelap" : "terang");
+      } catch (e) {
+        document.documentElement.setAttribute("data-tema", "terang");
+      }
+
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-siap");
+        window.setTimeout(function () {
+          if (!window.__wgReveal) {
+            document.documentElement.classList.remove("reveal-siap");
+          }
+        }, 2000);
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="../../index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        Webiko
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="../../index.html">Beranda</a>
+        <a class="navbar__link" href="../../index.html#kurikulum" aria-current="page">Kurikulum</a>
+        <a class="navbar__link" href="../../index.html#cara-pakai">Cara pakai</a>
+      </nav>
+
+      <div class="navbar__tools">
+        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
+          <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--terang" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--gelap" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
+          </svg>
+          <span class="theme-toggle__label">Terang</span>
+        </button>
+
+        <button class="navbar__btn navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section">
+      <div class="layout--with-sidebar">
+
+        <aside class="sidebar" aria-label="Daftar bab CSS &amp; tata letak">
+          <p class="sidebar__title">CSS &amp; tata letak</p>
+          <ul class="sidebar__list">
+            <li><a class="sidebar__link" href="mengenal-css.html">Mengenal CSS</a></li>
+            <li><a class="sidebar__link" href="warna-dan-latar.html">Warna dan latar</a></li>
+            <li><a class="sidebar__link" href="ukuran-dan-jarak.html">Ukuran dan jarak</a></li>
+            <li><a class="sidebar__link" href="font-dan-baris.html">Font dan tinggi baris</a></li>
+            <li><a class="sidebar__link" href="selector-kelas.html">Selector dan kelas</a></li>
+            <li><a class="sidebar__link" href="kotak.html">Kotak: margin, border, padding</a></li>
+            <li><a class="sidebar__link" href="flexbox.html">Menata dengan flexbox</a></li>
+            <li><a class="sidebar__link" href="grid.html">Menyusun grid</a></li>
+            <li><a class="sidebar__link" href="tombol-dan-kartu.html">Tombol dan kartu</a></li>
+            <li><a class="sidebar__link" href="tampilan-di-hp.html" aria-current="page">Tampilan di layar HP</a></li>
+            <li><a class="sidebar__link" href="mode-gelap.html">Mode gelap</a></li>
+          </ul>
+        </aside>
+
+        <article class="materi">
+          <p class="label materi__eyebrow">CSS &amp; tata letak · Bab 10 dari 11</p>
+          <h1>Tampilan di layar HP</h1>
+          <p class="materi__lead">
+            Halaman yang rapi di laptop bisa berantakan di HP. Lebar layar berubah, jadi tata letak perlu satu aturan tambahan.
+          </p>
+
+          <h2>Viewport: beri tahu browser lebar layar</h2>
+          <p>
+            Semua halaman Webiko sudah punya satu baris ini di dalam
+            <code>&lt;head&gt;</code>:
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">profil.html</span>
+                <span class="pane__badge">HTML</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-punct">&lt;</span><span class="tok-tag">meta</span> <span class="tok-attr">name</span><span class="tok-punct">=</span><span class="tok-string">"viewport"</span> <span class="tok-attr">content</span><span class="tok-punct">=</span><span class="tok-string">"width=device-width, initial-scale=1.0"</span><span class="tok-punct">&gt;</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Tanpa meta viewport, HP menganggap halamannya selebar desktop lalu mengecilkannya. Teks jadi kecil dan tombol sulit disentuh.
+            </p>
+          </div>
+          <p>
+            Dengan <code>width=device-width</code>, lebar halaman mengikuti lebar layar
+            perangkat. Media query baru bisa bekerja seperti yang diharapkan.
+          </p>
+
+          <h2>Media query</h2>
+          <p>
+            Media query menjalankan aturan CSS hanya pada kondisi tertentu. Untuk layar
+            sempit, pakai <code>max-width</code>. Artinya aturan berlaku selama lebar
+            layar tidak lebih besar dari nilai itu.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">style.css</span>
+                <span class="pane__badge">CSS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">@media (max-width: 40rem)</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-tag">.kolom</span> <span class="tok-punct">{</span></span><span class="code__line">    <span class="tok-attr">grid-template-columns</span><span class="tok-punct">:</span> <span class="tok-string">1fr;</span></span><span class="code__line">  <span class="tok-punct">}</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Di bawah 40rem (sekitar 640px), dua kolom berubah menjadi satu kolom.
+            </p>
+          </div>
+          <p>
+            Cara lain adalah mobile-first: tulis tampilan HP sebagai bawaan, lalu
+            tambahkan <code>@media (min-width: 40rem)</code> untuk layar lebar. Keduanya
+            benar; yang penting konsisten.
+          </p>
+
+          <h2>Gambar dan teks yang lentur</h2>
+          <p>
+            Gambar besar bisa membuat halaman melebar. Batasi lebarnya supaya mengikuti
+            wadah:
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">style.css</span>
+                <span class="pane__badge">CSS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">img</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">max-width</span><span class="tok-punct">:</span> <span class="tok-string">100%;</span></span><span class="code__line">  <span class="tok-attr">height</span><span class="tok-punct">:</span> <span class="tok-string">auto;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Gambar tidak akan melebihi lebar wadahnya, dan tingginya menyesuaikan tanpa gepeng.
+            </p>
+          </div>
+          <p>
+            Hindari lebar tetap seperti <code>width: 1200px</code> pada elemen utama.
+            Pakai <code>max-width</code> dan satuan relatif agar halaman ikut menyempit.
+          </p>
+
+          <h2>Latihan: satu kolom di HP</h2>
+          <hr>
+          <section class="lab" data-lab data-lab-warna aria-labelledby="lab-judul">
+            <p class="label">Latihan langsung</p>
+            <h2 id="lab-judul">Susun ulang kartu di layar sempit</h2>
+            <p>
+              Dua kartu di panel kiri berjajar di layar lebar. Tambahkan media query supaya menjadi satu kolom di layar HP, lalu klik <strong>Jalankan</strong>. Jangan ubah isi HTML-nya.
+            </p>
+            <ol>
+                            <li>Tambah <code>@media (max-width: 40rem) { ... }</code> di akhir CSS.</li>
+                        <li>Di dalamnya, ubah <code>.kolom</code> menjadi <code>grid-template-columns: 1fr;</code>.</li>
+                        <li>Di dalamnya juga, ubah <code>h1</code> menjadi <code>font-size: 1.5rem;</code>.</li>
+                        <li>Perkecil jendela browser sampai di bawah <code>40rem</code> untuk melihat hasilnya.</li>
+            </ol>
+
+            <div class="lab__meja">
+              <div class="lab__panel lab__panel--kode">
+                <div class="lab__bar">
+                  <span class="lab__prompt" aria-hidden="true">&gt;_</span>
+                  <span class="lab__nama">kartu-kegiatan.html</span>
+                  <span class="lab__isyarat">bisa diubah</span>
+                </div>
+                <textarea class="lab__editor" data-lab-editor rows="57" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Kode HTML dan CSS latihan" aria-describedby="lab-status">&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Kegiatan sekolah&lt;/title&gt;
+  &lt;style&gt;
+    body {
+      margin: 0;
+      padding: 1rem;
+      background-color: #ffffff;
+      color: #1a1b33;
+      font-family: system-ui, sans-serif;
+    }
+
+    h1 {
+      margin: 0 0 1rem;
+      font-size: 2rem;
+    }
+
+    .kolom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .kartu {
+      padding: 1rem;
+      border: 2px solid #1a1b33;
+      background-color: #ffffff;
+    }
+
+    .kartu h2 {
+      margin: 0 0 0.5rem;
+      font-size: 1.125rem;
+    }
+
+    .kartu p {
+      margin: 0;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Kegiatan Sekolah&lt;/h1&gt;
+  &lt;div class="kolom"&gt;
+    &lt;div class="kartu"&gt;
+      &lt;h2&gt;Kerja Bakti&lt;/h2&gt;
+      &lt;p&gt;Sabtu pukul 7 pagi.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="kartu"&gt;
+      &lt;h2&gt;Latihan Basket&lt;/h2&gt;
+      &lt;p&gt;Sabtu pukul 3 sore.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+              </div>
+
+              <div class="lab__panel lab__panel--hasil">
+                <div class="lab__bar">
+                  <span class="pane__dots" aria-hidden="true">
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                  </span>
+                  <span class="lab__nama">Hasil</span>
+                  <span class="lab__isyarat">pratinjau</span>
+                </div>
+                <iframe class="lab__pratinjau" data-lab-pratinjau title="Pratinjau hasil kode HTML dan CSS" sandbox="allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;id&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;Kegiatan sekolah&lt;/title&gt;
+  &lt;style&gt;
+    body {
+      margin: 0;
+      padding: 1rem;
+      background-color: #ffffff;
+      color: #1a1b33;
+      font-family: system-ui, sans-serif;
+    }
+
+    h1 {
+      margin: 0 0 1rem;
+      font-size: 2rem;
+    }
+
+    .kolom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .kartu {
+      padding: 1rem;
+      border: 2px solid #1a1b33;
+      background-color: #ffffff;
+    }
+
+    .kartu h2 {
+      margin: 0 0 0.5rem;
+      font-size: 1.125rem;
+    }
+
+    .kartu p {
+      margin: 0;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Kegiatan Sekolah&lt;/h1&gt;
+  &lt;div class=&quot;kolom&quot;&gt;
+    &lt;div class=&quot;kartu&quot;&gt;
+      &lt;h2&gt;Kerja Bakti&lt;/h2&gt;
+      &lt;p&gt;Sabtu pukul 7 pagi.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;kartu&quot;&gt;
+      &lt;h2&gt;Latihan Basket&lt;/h2&gt;
+      &lt;p&gt;Sabtu pukul 3 sore.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;"></iframe>
+              </div>
+            </div>
+
+            <div class="lab__aksi">
+              <button class="btn btn--primary" type="button" data-lab-jalankan hidden>Jalankan</button>
+              <button class="btn btn--ghost" type="button" data-lab-reset hidden>Atur ulang</button>
+              <p class="lab__status" id="lab-status" data-lab-status role="status">Tambah media query, lalu perkecil jendela browser.</p>
+            </div>
+
+            <noscript>
+              <p class="lab__catatan">
+                Editor butuh JavaScript. Salin kode di atas ke file .html, lalu
+                buka di browser.
+              </p>
+            </noscript>
+          </section>
+
+          <div class="materi__latihan">
+            <p><strong>Cek hasil:</strong></p>
+            <ul>
+                            <li>Di layar lebar, dua kartu tetap berjajar.</li>
+                        <li>Di bawah <code>40rem</code>, kartu menjadi satu kolom.</li>
+                        <li>Judul ikut mengecil di layar sempit.</li>
+                        <li>Tidak ada isi yang terpotong di lebar 320px.</li>
+            </ul>
+          </div>
+
+          <h2>Rangkuman</h2>
+          <ul>
+            <li>Meta viewport membuat lebar halaman mengikuti lebar layar perangkat.</li>
+            <li>Media query <code>max-width</code> berlaku di layar yang tidak lebih lebar dari nilai itu.</li>
+            <li>Mobile-first memakai <code>min-width</code> untuk menambah gaya di layar lebar.</li>
+            <li><code>max-width: 100%</code> mencegah gambar melebar keluar wadah.</li>
+            <li>Uji halaman di lebar 320px, 390px, dan desktop, bukan hanya di satu ukuran.</li>
+          </ul>
+
+          <footer class="materi__kaki">
+            <section class="kaki__sumber" aria-labelledby="sumber-judul">
+              <h2 class="kaki__label" id="sumber-judul">Bacaan asli</h2>
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Viewport_meta_tag">MDN — Viewport meta tag</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries">MDN — Media queries</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Responsive_Design">MDN — Responsive design</a></li>
+                <li><a href="https://web.dev/learn/design">web.dev — Responsive design</a></li>
+              </ul>
+            </section>
+
+            <nav class="kaki__pager" aria-label="Bab sebelumnya dan berikutnya">
+              <a class="kaki__bab kaki__bab--kembali" href="tombol-dan-kartu.html">
+                <span class="kaki__arah">Sebelumnya</span>
+                <span class="kaki__judul">Tombol dan kartu</span>
+              </a>
+              <a class="kaki__bab kaki__bab--lanjut" href="mode-gelap.html">
+                <span class="kaki__arah">Bab berikutnya</span>
+                <span class="kaki__judul">Mode gelap</span>
+              </a>
+            </nav>
+          </footer>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__row">
+      <div>
+        <p class="footer__wordmark">Webiko</p>
+        <p class="footer__tagline">
+          Belajar bikin website dari nol, dalam bahasa Indonesia.
+          Tanpa install, tanpa framework.
+        </p>
+      </div>
+      <nav class="footer__nav" aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="../../index.html#kurikulum">Kurikulum</a></li>
+          <li><a href="../../index.html#cara-pakai">Cara pakai</a></li>
+          <li><a href="../../index.html#progres">Progres</a></li>
+          <li><a href="../../index.html#daftar">Buat akun</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <p>© 2026 Webiko · Dibuat tanpa framework dan tanpa dependency.</p>
+      <p>Untuk pelajar SMP &amp; SMA</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/latihan-html.js"></script>
+  <script src="../../assets/js/lab-warna.js"></script>
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>

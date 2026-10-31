@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bab 8 CSS &amp; tata letak: display grid, grid-template-columns, repeat, gap, serta auto-fit dan minmax untuk susunan kartu yang menyesuaikan layar. Materi Webiko untuk pelajar SMP dan SMA.">
+  <title>Menyusun grid — CSS &amp; tata letak · Webiko</title>
+
+  <script>
+    (function () {
+      try {
+        var pilihan = localStorage.getItem("tema");
+        var gelap =
+          pilihan === "gelap" ||
+          (pilihan === "sistem" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-tema", gelap ? "gelap" : "terang");
+      } catch (e) {
+        document.documentElement.setAttribute("data-tema", "terang");
+      }
+
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-siap");
+        window.setTimeout(function () {
+          if (!window.__wgReveal) {
+            document.documentElement.classList.remove("reveal-siap");
+          }
+        }, 2000);
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="../../index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        Webiko
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="../../index.html">Beranda</a>
+        <a class="navbar__link" href="../../index.html#kurikulum" aria-current="page">Kurikulum</a>
+        <a class="navbar__link" href="../../index.html#cara-pakai">Cara pakai</a>
+      </nav>
+
+      <div class="navbar__tools">
+        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
+          <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--terang" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--gelap" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
+          </svg>
+          <span class="theme-toggle__label">Terang</span>
+        </button>
+
+        <button class="navbar__btn navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section">
+      <div class="layout--with-sidebar">
+
+        <aside class="sidebar" aria-label="Daftar bab CSS &amp; tata letak">
+          <p class="sidebar__title">CSS &amp; tata letak</p>
+          <ul class="sidebar__list">
+            <li><a class="sidebar__link" href="mengenal-css.html">Mengenal CSS</a></li>
+            <li><a class="sidebar__link" href="warna-dan-latar.html">Warna dan latar</a></li>
+            <li><a class="sidebar__link" href="ukuran-dan-jarak.html">Ukuran dan jarak</a></li>
+            <li><a class="sidebar__link" href="font-dan-baris.html">Font dan tinggi baris</a></li>
+            <li><a class="sidebar__link" href="selector-kelas.html">Selector dan kelas</a></li>
+            <li><a class="sidebar__link" href="kotak.html">Kotak: margin, border, padding</a></li>
+            <li><a class="sidebar__link" href="flexbox.html">Menata dengan flexbox</a></li>
+            <li><a class="sidebar__link" href="grid.html" aria-current="page">Menyusun grid</a></li>
+            <li><a class="sidebar__link" href="tombol-dan-kartu.html">Tombol dan kartu</a></li>
+            <li><a class="sidebar__link" href="tampilan-di-hp.html">Tampilan di layar HP</a></li>
+            <li><a class="sidebar__link" href="mode-gelap.html">Mode gelap</a></li>
+          </ul>
+        </aside>
+
+        <article class="materi">
+          <p class="label materi__eyebrow">CSS &amp; tata letak · Bab 8 dari 11</p>
+          <h1>Menyusun grid</h1>
+          <p class="materi__lead">
+            Flexbox bagus untuk satu baris. Untuk susunan kartu dua dimensi, grid lebih langsung: tentukan jumlah kolom, sisanya diatur browser.
+          </p>
+
+          <h2>display: grid</h2>
+          <p>
+            Grid menyusun elemen dalam baris dan kolom sekaligus. Beri
+            <code>display: grid</code> pada wadah, lalu tentukan kolomnya. Anak langsung
+            wadah otomatis mengisi sel yang tersedia.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">style.css</span>
+                <span class="pane__badge">CSS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">.papan</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">display</span><span class="tok-punct">:</span> <span class="tok-string">grid;</span></span><span class="code__line">  <span class="tok-attr">grid-template-columns</span><span class="tok-punct">:</span> <span class="tok-string">repeat(3, 1fr);</span></span><span class="code__line">  <span class="tok-attr">gap</span><span class="tok-punct">:</span> <span class="tok-string">1rem;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              <code>repeat(3, 1fr)</code> membuat tiga kolom sama lebar. <code>1fr</code> berarti satu bagian dari ruang yang ada.
+            </p>
+          </div>
+          <p>
+            Tanpa <code>grid-template-columns</code>, semua anak menumpuk dalam satu
+            kolom. Jumlah kolom menentukan berapa kartu yang duduk sebaris.
+          </p>
+
+          <h2>Kolom yang menyesuaikan sendiri</h2>
+          <p>
+            Kalau jumlah kartu berubah atau layar mengecil, tiga kolom tetap bisa terlalu
+            sempit. <code>auto-fit</code> dan <code>minmax</code> membiarkan browser
+            menentukan jumlah kolom yang muat.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">style.css</span>
+                <span class="pane__badge">CSS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">.papan</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">display</span><span class="tok-punct">:</span> <span class="tok-string">grid;</span></span><span class="code__line">  <span class="tok-attr">grid-template-columns</span><span class="tok-punct">:</span> <span class="tok-string">repeat(auto-fit, minmax(8rem, 1fr));</span></span><span class="code__line">  <span class="tok-attr">gap</span><span class="tok-punct">:</span> <span class="tok-string">1rem;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Tiap kolom minimal 8rem dan boleh membesar. Kalau tidak muat, jumlah kolom berkurang sendiri.
+            </p>
+          </div>
+          <p>
+            Untuk latihan pertama, pakai tiga kolom tetap dulu supaya hasilnya mudah
+            dilihat. Pola <code>auto-fit</code> bisa dicoba sebagai tantangan.
+          </p>
+
+          <h2>Grid atau flexbox?</h2>
+          <p>
+            Flexbox paling mudah untuk satu baris menu atau tombol. Grid lebih langsung
+            saat kamu sudah tahu bentuk susunannya, misalnya galeri tiga kolom atau
+            halaman dengan sidebar dan isi.
+          </p>
+
+          <h2>Latihan: susun papan kartu</h2>
+          <hr>
+          <section class="lab" data-lab data-lab-warna aria-labelledby="lab-judul">
+            <p class="label">Latihan langsung</p>
+            <h2 id="lab-judul">Susun papan tiga kolom</h2>
+            <p>
+              Kartu di panel kiri masih menumpuk satu per baris. Ubah wadahnya menjadi grid tiga kolom, lalu klik <strong>Jalankan</strong>. Jangan ubah isi HTML-nya.
+            </p>
+            <ol>
+                            <li>Tambah <code>display: grid;</code> pada <code>.papan</code>.</li>
+                        <li>Tambah <code>grid-template-columns: repeat(3, 1fr);</code> pada <code>.papan</code>.</li>
+                        <li>Tambah <code>gap: 1rem;</code> pada <code>.papan</code>.</li>
+                        <li>Hapus <code>margin-bottom: 1rem;</code> pada <code>.kartu</code> supaya jarak diatur oleh <code>gap</code>.</li>
+            </ol>
+
+            <div class="lab__meja">
+              <div class="lab__panel lab__panel--kode">
+                <div class="lab__bar">
+                  <span class="lab__prompt" aria-hidden="true">&gt;_</span>
+                  <span class="lab__nama">papan-kegiatan.html</span>
+                  <span class="lab__isyarat">bisa diubah</span>
+                </div>
+                <textarea class="lab__editor" data-lab-editor rows="51" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Kode HTML dan CSS latihan" aria-describedby="lab-status">&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Papan kegiatan&lt;/title&gt;
+  &lt;style&gt;
+    body {
+      margin: 0;
+      padding: 1rem;
+      background-color: #ffffff;
+      color: #1a1b33;
+      font-family: system-ui, sans-serif;
+    }
+
+    h1 {
+      margin: 0 0 1rem;
+      font-size: 2rem;
+    }
+
+    .papan {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .kartu {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      border: 2px solid #1a1b33;
+      background-color: #ffffff;
+    }
+
+    .kartu h2 {
+      margin: 0;
+      font-size: 1.125rem;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Papan Kegiatan&lt;/h1&gt;
+  &lt;ul class="papan"&gt;
+    &lt;li class="kartu"&gt;&lt;h2&gt;Buku&lt;/h2&gt;&lt;/li&gt;
+    &lt;li class="kartu"&gt;&lt;h2&gt;Pensil&lt;/h2&gt;&lt;/li&gt;
+    &lt;li class="kartu"&gt;&lt;h2&gt;Tas&lt;/h2&gt;&lt;/li&gt;
+    &lt;li class="kartu"&gt;&lt;h2&gt;Sepatu&lt;/h2&gt;&lt;/li&gt;
+    &lt;li class="kartu"&gt;&lt;h2&gt;Topi&lt;/h2&gt;&lt;/li&gt;
+    &lt;li class="kartu"&gt;&lt;h2&gt;Botol&lt;/h2&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+              </div>
+
+              <div class="lab__panel lab__panel--hasil">
+                <div class="lab__bar">
+                  <span class="pane__dots" aria-hidden="true">
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                  </span>
+                  <span class="lab__nama">Hasil</span>
+                  <span class="lab__isyarat">pratinjau</span>
+                </div>
+                <iframe class="lab__pratinjau" data-lab-pratinjau title="Pratinjau hasil kode HTML dan CSS" sandbox="allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;id&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;Papan kegiatan&lt;/title&gt;
+  &lt;style&gt;
+    body {
+      margin: 0;
+      padding: 1rem;
+      background-color: #ffffff;
+      color: #1a1b33;
+      font-family: system-ui, sans-serif;
+    }
+
+    h1 {
+      margin: 0 0 1rem;
+      font-size: 2rem;
+    }
+
+    .papan {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .kartu {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      border: 2px solid #1a1b33;
+      background-color: #ffffff;
+    }
+
+    .kartu h2 {
+      margin: 0;
+      font-size: 1.125rem;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Papan Kegiatan&lt;/h1&gt;
+  &lt;ul class=&quot;papan&quot;&gt;
+    &lt;li class=&quot;kartu&quot;&gt;&lt;h2&gt;Buku&lt;/h2&gt;&lt;/li&gt;
+    &lt;li class=&quot;kartu&quot;&gt;&lt;h2&gt;Pensil&lt;/h2&gt;&lt;/li&gt;
+    &lt;li class=&quot;kartu&quot;&gt;&lt;h2&gt;Tas&lt;/h2&gt;&lt;/li&gt;
+    &lt;li class=&quot;kartu&quot;&gt;&lt;h2&gt;Sepatu&lt;/h2&gt;&lt;/li&gt;
+    &lt;li class=&quot;kartu&quot;&gt;&lt;h2&gt;Topi&lt;/h2&gt;&lt;/li&gt;
+    &lt;li class=&quot;kartu&quot;&gt;&lt;h2&gt;Botol&lt;/h2&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;"></iframe>
+              </div>
+            </div>
+
+            <div class="lab__aksi">
+              <button class="btn btn--primary" type="button" data-lab-jalankan hidden>Jalankan</button>
+              <button class="btn btn--ghost" type="button" data-lab-reset hidden>Atur ulang</button>
+              <p class="lab__status" id="lab-status" data-lab-status role="status">Susun kartu menjadi tiga kolom, lalu klik Jalankan.</p>
+            </div>
+
+            <noscript>
+              <p class="lab__catatan">
+                Editor butuh JavaScript. Salin kode di atas ke file .html, lalu
+                buka di browser.
+              </p>
+            </noscript>
+          </section>
+
+          <div class="materi__latihan">
+            <p><strong>Cek hasil:</strong></p>
+            <ul>
+                            <li><code>.papan</code> memakai <code>display: grid</code>.</li>
+                        <li>Ada tiga kolom sama lebar.</li>
+                        <li>Jarak antarkartu <code>1rem</code> dari <code>gap</code>, bukan margin.</li>
+                        <li>Kartu tidak lagi menumpuk satu per baris.</li>
+            </ul>
+          </div>
+
+          <h2>Rangkuman</h2>
+          <ul>
+            <li>Grid mengatur baris dan kolom sekaligus.</li>
+            <li><code>grid-template-columns</code> menentukan lebar dan jumlah kolom.</li>
+            <li><code>repeat(3, 1fr)</code> membuat tiga kolom sama lebar.</li>
+            <li><code>gap</code> mengatur jarak antarsel.</li>
+            <li><code>repeat(auto-fit, minmax(8rem, 1fr))</code> mengurangi kolom saat ruang tidak cukup.</li>
+          </ul>
+
+          <footer class="materi__kaki">
+            <section class="kaki__sumber" aria-labelledby="sumber-judul">
+              <h2 class="kaki__label" id="sumber-judul">Bacaan asli</h2>
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout">MDN — CSS grid</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-columns">MDN — grid-template-columns</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/repeat">MDN — repeat()</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/minmax">MDN — minmax()</a></li>
+                <li><a href="https://web.dev/learn/css/grid">web.dev — Grid</a></li>
+              </ul>
+            </section>
+
+            <nav class="kaki__pager" aria-label="Bab sebelumnya dan berikutnya">
+              <a class="kaki__bab kaki__bab--kembali" href="flexbox.html">
+                <span class="kaki__arah">Sebelumnya</span>
+                <span class="kaki__judul">Menata dengan flexbox</span>
+              </a>
+              <a class="kaki__bab kaki__bab--lanjut" href="tombol-dan-kartu.html">
+                <span class="kaki__arah">Bab berikutnya</span>
+                <span class="kaki__judul">Tombol dan kartu</span>
+              </a>
+            </nav>
+          </footer>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__row">
+      <div>
+        <p class="footer__wordmark">Webiko</p>
+        <p class="footer__tagline">
+          Belajar bikin website dari nol, dalam bahasa Indonesia.
+          Tanpa install, tanpa framework.
+        </p>
+      </div>
+      <nav class="footer__nav" aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="../../index.html#kurikulum">Kurikulum</a></li>
+          <li><a href="../../index.html#cara-pakai">Cara pakai</a></li>
+          <li><a href="../../index.html#progres">Progres</a></li>
+          <li><a href="../../index.html#daftar">Buat akun</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <p>© 2026 Webiko · Dibuat tanpa framework dan tanpa dependency.</p>
+      <p>Untuk pelajar SMP &amp; SMA</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/latihan-html.js"></script>
+  <script src="../../assets/js/lab-warna.js"></script>
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>
