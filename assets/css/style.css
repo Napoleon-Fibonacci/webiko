@@ -2057,12 +2057,12 @@ b {
     scrollbar-gutter: stable;
   }
 
-  /* Batang gulir tipis: track transparan, thumb lilac bergaris border —
+  /* Batang gulir tipis: track transparan, thumb lilac tanpa garis —
      warnanya mengikuti tombol bab aktif (--color-secondary), bukan violet
      pekat. Jangan pasang scrollbar-width/scrollbar-color di sini karena
      Chrome memakai properti itu dan mengabaikan ::-webkit-scrollbar. */
   .sidebar__list::-webkit-scrollbar {
-    width: 10px;
+    width: 8px;
   }
 
   .sidebar__list::-webkit-scrollbar-track {
@@ -2071,7 +2071,7 @@ b {
 
   .sidebar__list::-webkit-scrollbar-thumb {
     background: var(--color-secondary);
-    border: var(--border-w-thin) solid var(--color-border);
+    border: 0;
     border-radius: var(--radius-pill);
   }
 
