@@ -2298,16 +2298,13 @@ b {
   max-width: var(--measure);
 }
 
+/* Editor dan pratinjau selalu ditumpuk, termasuk di layar lebar.
+   Pratinjau butuh lebar penuh supaya halaman contoh terbaca seperti
+   di browser; kalau dibagi dua kolom, hasilnya terlalu sempit. */
 .lab__meja {
   display: grid;
   gap: var(--space-3);
   margin-top: var(--space-4);
-}
-
-@media (min-width: 768px) {
-  .lab__meja {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  }
 }
 
 .lab__panel {
