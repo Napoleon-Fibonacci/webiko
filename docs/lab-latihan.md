@@ -18,10 +18,12 @@ Lab latihan harus terasa seperti satu editor kecil yang konsisten:
 | Berkas | Peran |
 | --- | --- |
 | `assets/js/latihan-html.js` | Menyalin editor ke iframe, mewarnai sintaks, mengukur tinggi editor dan pratinjau, tombol Jalankan/Reset, pemeriksaan struktur. |
+| `assets/js/latihan-js.js` | Menjalankan kode JavaScript di Web Worker dan menampilkan `console.log`/error di panel Keluaran. |
 | `assets/js/lab-warna.js` | Kotak warna kecil di dalam editor CSS. Tanpa JavaScript tidak ada kotak. |
 | `assets/css/style.css` | Token, panel lab, editor, pratinjau, dan batas tinggi minimum. |
 | `materi/css/*.html` | Lab CSS: 11 bab, dari `mengenal-css` sampai `mode-gelap`. |
 | `materi/html/*.html` | Lab HTML: `file-html-pertama`, `judul-dan-paragraf`, `gambar`, `tautan`, `daftar`, `tabel`, `halaman-lengkap`. |
+| `materi/javascript/*.html` | Lab JavaScript: `variabel`, `fungsi`. Sepuluh bab lain belum dibuat. |
 
 Bab konsep `apa-itu-website` dan `dari-server-ke-layar` memakai kuis pilihan
 ganda, bukan lab kode. `mengenal-tag-html` memakai latihan "Bedah satu tag"
@@ -61,6 +63,26 @@ tombol tema.
   warna dan latar.
 - Bab 3 (`ukuran-dan-jarak`) mengatur jarak yang benar-benar terlihat di atas
   putih: padding `body`, margin bawah `h1`, dan margin bawah `p`.
+
+## Lab JavaScript
+
+Lab JavaScript memakai penanda `data-lab-js`, bukan `data-lab`, supaya
+`latihan-html.js` tidak ikut memasang iframe pratinjau. Satu halaman hanya
+memuat satu lab.
+
+Kode siswa tidak dijalankan di halaman utama. `latihan-js.js` membuat Web
+Worker dari Blob, lalu mengirim isi editor ke worker itu:
+
+- kode tidak bisa menyentuh DOM atau `localStorage` halaman;
+- `console.log`, `console.info`, `console.warn`, dan `console.error`
+  diterjemahkan menjadi baris di panel Keluaran;
+- error yang tidak tertangkap mengakhiri program dan ditandai merah;
+- kode yang berjalan lebih dari 2 detik dihentikan, misalnya `while (true) {}`;
+- `Ctrl+Enter` menjalankan kode, Tab menyisipkan dua spasi.
+
+Karena dijalankan sebagai satu skrip, kode yang selesai lebih dulu tidak
+menunggu `setTimeout` atau Promise. Materi yang membutuhkan penantian perlu
+lab khusus, bukan lab ini.
 
 ## Tinggi otomatis
 
@@ -116,7 +138,9 @@ Jalankan `python -m http.server 8000`, lalu periksa:
 6. Jalankan kode panjang: kotak memanjang. Reset: kotak menyusut.
 7. Panel menu HP saat dibuka tetap benar.
 8. Tanpa JavaScript: editor dan contoh kode tetap tampil.
-9. Semua berkas tetap CRLF.
+9. Lab JavaScript: keluaran benar, error sintaks tampil, `while (true) {}`
+   berhenti setelah 2 detik, dan Atur ulang mengembalikan kode awal.
+10. Semua berkas tetap CRLF.
 
 ## Riwayat perubahan
 

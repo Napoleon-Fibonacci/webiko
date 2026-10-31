@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bab 1 JavaScript dasar: variabel const dan let, tipe data string, number, boolean, typeof, serta console.log. Materi Webiko untuk pelajar SMP dan SMA.">
+  <title>Variabel dan tipe data — JavaScript dasar · Webiko</title>
+
+  <script>
+    (function () {
+      try {
+        var pilihan = localStorage.getItem("tema");
+        var gelap =
+          pilihan === "gelap" ||
+          (pilihan === "sistem" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-tema", gelap ? "gelap" : "terang");
+      } catch (e) {
+        document.documentElement.setAttribute("data-tema", "terang");
+      }
+
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-siap");
+        window.setTimeout(function () {
+          if (!window.__wgReveal) {
+            document.documentElement.classList.remove("reveal-siap");
+          }
+        }, 2000);
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="../../index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        Webiko
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="../../index.html">Beranda</a>
+        <a class="navbar__link" href="../../index.html#kurikulum" aria-current="page">Kurikulum</a>
+        <a class="navbar__link" href="../../index.html#cara-pakai">Cara pakai</a>
+      </nav>
+
+      <div class="navbar__tools">
+        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
+          <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--terang" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--gelap" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
+          </svg>
+          <span class="theme-toggle__label">Terang</span>
+        </button>
+
+        <button class="navbar__btn navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section">
+      <div class="layout--with-sidebar">
+
+        <aside class="sidebar" aria-label="Daftar bab JavaScript dasar">
+          <p class="sidebar__title">JavaScript dasar</p>
+          <ul class="sidebar__list">
+            <li><a class="sidebar__link" href="variabel.html" aria-current="page">Variabel dan tipe data</a></li>
+            <li><a class="sidebar__link" href="fungsi.html">Fungsi</a></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Percabangan if</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Perulangan</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Array dan objek</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Mengubah halaman dari kode</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Klik dan isian formulir</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Menyimpan data di browser</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Mengambil data dari server</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Membuat daftar dari data</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Membaca pesan error</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Latihan: pencatat belajar</span></li>
+          </ul>
+        </aside>
+
+        <article class="materi">
+          <p class="label materi__eyebrow">JavaScript dasar · Bab 1 dari 12</p>
+          <h1>Variabel dan tipe data</h1>
+          <p class="materi__lead">
+            Kode perlu mengingat nilai: nama, angka, dan pilihan benar atau salah.
+            Variabel adalah wadah bernama untuk menyimpannya.
+          </p>
+
+          <h2>Menyimpan nilai di variabel</h2>
+          <p>
+            Bayangkan variabel sebagai kotak berlabel. Kamu memberi nama kotak,
+            lalu mengisi nilainya. Saat nilainya dibutuhkan, panggil namanya.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">profil.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">const</span> nama <span class="tok-punct">=</span> <span class="tok-string">"Rani"</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-kunci">let</span> umur <span class="tok-punct">=</span> <span class="tok-angka">14</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-kunci">const</span> sukaWeb <span class="tok-punct">=</span> <span class="tok-kunci">true</span><span class="tok-punct">;</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              <code>const</code> untuk nilai yang tidak diganti, <code>let</code>
+              untuk nilai yang nanti berubah.
+            </p>
+          </div>
+          <p>
+            Pakai <code>const</code> sebagai pilihan pertama. Ganti ke
+            <code>let</code> hanya kalau nilainya memang perlu diubah. Hindari
+            <code>var</code> di materi baru karena aturan cakupannya lebih
+            membingungkan.
+          </p>
+          <p>
+            Nama variabel ditulis tanpa spasi, biasanya <code>camelCase</code>:
+            <code>namaLengkap</code>, <code>jumlahKartu</code>. JavaScript
+            membedakan huruf besar dan kecil, jadi <code>nama</code> dan
+            <code>Nama</code> adalah dua variabel berbeda.
+          </p>
+
+          <h2>Tiga tipe data dasar</h2>
+          <ul>
+            <li><strong>String</strong>: teks, diapit tanda kutip. Contoh <code>"Rani"</code> atau <code>'SMP Harapan'</code>.</li>
+            <li><strong>Number</strong>: angka, tanpa tanda kutip. Contoh <code>14</code> atau <code>3.5</code>.</li>
+            <li><strong>Boolean</strong>: hanya <code>true</code> atau <code>false</code>.</li>
+          </ul>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">tipe.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">const</span> nama <span class="tok-punct">=</span> <span class="tok-string">"Rani"</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-kunci">const</span> umur <span class="tok-punct">=</span> <span class="tok-angka">14</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-kunci">const</span> sukaWeb <span class="tok-punct">=</span> <span class="tok-kunci">true</span><span class="tok-punct">;</span></span><span class="code__line"></span><span class="code__line">console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span><span class="tok-kunci">typeof</span> nama<span class="tok-punct">);</span> <span class="tok-komentar">// "string"</span></span><span class="code__line">console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span><span class="tok-kunci">typeof</span> umur<span class="tok-punct">);</span> <span class="tok-komentar">// "number"</span></span><span class="code__line">console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span><span class="tok-kunci">typeof</span> sukaWeb<span class="tok-punct">);</span> <span class="tok-komentar">// "boolean"</span></span></code></pre>
+            </div>
+          </div>
+          <p>
+            <code>typeof</code> mengembalikan nama tipe dalam bentuk string. Ini
+            berguna saat nilai datang dari isian formulir: isian formulir
+            menghasilkan string, termasuk saat kamu mengetik angka.
+          </p>
+
+          <h2>Mencetak nilai dengan console.log</h2>
+          <p>
+            <code>console.log()</code> menampilkan nilai ke panel Keluaran. Kamu
+            bisa memberi beberapa nilai sekaligus, dipisah koma.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">profil.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line">console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span><span class="tok-string">"Halo, "</span> <span class="tok-punct">+</span> nama <span class="tok-punct">+</span> <span class="tok-string">"!"</span><span class="tok-punct">);</span></span><span class="code__line">console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span><span class="tok-string">"Umur:"</span><span class="tok-punct">,</span> umur<span class="tok-punct">);</span></span><span class="code__line">console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span><span class="tok-string">"Suka web:"</span><span class="tok-punct">,</span> sukaWeb<span class="tok-punct">);</span></span></code></pre>
+            </div>
+          </div>
+          <p>
+            Tanda <code>+</code> menyambung string. Kalau salah satu sisi berupa
+            string, nilai lain ikut diubah menjadi teks. Koma pada
+            <code>console.log</code> hanya memisahkan nilai di keluaran, bukan
+            menggabungkannya.
+          </p>
+
+          <h2>Mengubah nilai</h2>
+          <p>
+            Variabel <code>let</code> boleh diisi ulang. Variabel
+            <code>const</code> tidak boleh diberi nilai baru setelah dibuat.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">ubah.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">let</span> umur <span class="tok-punct">=</span> <span class="tok-angka">14</span><span class="tok-punct">;</span></span><span class="code__line">umur <span class="tok-punct">=</span> <span class="tok-angka">15</span><span class="tok-punct">;</span></span><span class="code__line">console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span>umur<span class="tok-punct">);</span> <span class="tok-komentar">// 15</span></span><span class="code__line"></span><span class="code__line"><span class="tok-kunci">const</span> nama <span class="tok-punct">=</span> <span class="tok-string">"Rani"</span><span class="tok-punct">;</span></span><span class="code__line">nama <span class="tok-punct">=</span> <span class="tok-string">"Budi"</span><span class="tok-punct">;</span> <span class="tok-komentar">// error</span></span></code></pre>
+            </div>
+          </div>
+          <p>
+            Baris terakhir sengaja salah. Kalau dijalankan, panel Keluaran
+            menampilkan <code>TypeError</code> karena <code>nama</code> dibuat
+            dengan <code>const</code>.
+          </p>
+
+          <section class="lab" data-lab-js aria-labelledby="lab-judul">
+            <p class="label">Latihan langsung</p>
+            <h2 id="lab-judul">Lengkapi kartu profil</h2>
+            <p>
+              Isi data di panel kode, lalu klik <strong>Jalankan</strong> untuk
+              melihat hasilnya di panel Keluaran.
+            </p>
+            <ol>
+              <li>Isi <code>nama</code> dengan <code>"Rani"</code>.</li>
+              <li>Isi <code>umur</code> dengan <code>14</code>.</li>
+              <li>Tambah <code>const sukaWeb = true;</code>.</li>
+              <li>Tambah <code>console.log("Umur:", umur);</code> dan <code>console.log("Suka web:", sukaWeb);</code>.</li>
+            </ol>
+
+            <div class="lab__meja">
+              <div class="lab__panel lab__panel--kode">
+                <div class="lab__bar">
+                  <span class="lab__prompt" aria-hidden="true">&gt;_</span>
+                  <span class="lab__nama">profil.js</span>
+                  <span class="lab__isyarat">bisa diubah</span>
+                </div>
+                <textarea class="lab__editor" data-lab-editor rows="12" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Kode JavaScript latihan" aria-describedby="lab-status">// Lengkapi data di bawah.
+const nama = "";
+let umur = 0;
+
+console.log("Halo, " + nama + "!");</textarea>
+              </div>
+
+              <div class="lab__panel lab__panel--hasil">
+                <div class="lab__bar">
+                  <span class="pane__dots" aria-hidden="true">
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                  </span>
+                  <span class="lab__nama">Keluaran</span>
+                  <span class="lab__isyarat">console</span>
+                </div>
+                <div class="lab__keluaran" data-lab-keluaran role="log" aria-live="polite" aria-label="Keluaran kode"></div>
+              </div>
+            </div>
+
+            <div class="lab__aksi">
+              <button class="btn btn--primary" type="button" data-lab-jalankan hidden>Jalankan</button>
+              <button class="btn btn--ghost" type="button" data-lab-reset hidden>Atur ulang</button>
+              <p class="lab__status" id="lab-status" data-lab-status role="status">Klik Jalankan untuk melihat hasil.</p>
+            </div>
+
+            <div class="materi__latihan">
+              <p><strong>Cek hasil:</strong></p>
+              <ul>
+                <li>Panel Keluaran menampilkan <code>Halo, Rani!</code>.</li>
+                <li>Baris kedua berisi <code>Umur: 14</code>.</li>
+                <li>Baris ketiga berisi <code>Suka web: true</code>.</li>
+              </ul>
+            </div>
+
+            <noscript>
+              <p class="lab__catatan">
+                Editor butuh JavaScript. Salin kode di atas ke file .js, lalu
+                jalankan di browser atau Node.js.
+              </p>
+            </noscript>
+          </section>
+
+          <h2>Kesalahan umum</h2>
+          <ul>
+            <li>Teks ditulis tanpa tanda kutip, sehingga dianggap nama variabel.</li>
+            <li>Salah huruf besar/kecil pada nama variabel.</li>
+            <li>Mengisi ulang variabel <code>const</code>.</li>
+            <li>Lupa menutup tanda kutip atau kurung.</li>
+          </ul>
+
+          <h2>Rangkuman</h2>
+          <ul>
+            <li><code>const</code> untuk nilai tetap, <code>let</code> untuk nilai yang berubah.</li>
+            <li>Tipe data dasar: string, number, dan boolean.</li>
+            <li><code>console.log()</code> membantu memeriksa nilai di panel Keluaran.</li>
+            <li>Nama variabel peka huruf besar/kecil dan biasanya ditulis <code>camelCase</code>.</li>
+          </ul>
+
+          <footer class="materi__kaki">
+            <section class="kaki__sumber" aria-labelledby="sumber-judul">
+              <h2 class="kaki__label" id="sumber-judul">Bacaan asli</h2>
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/What_is_JavaScript">MDN — What is JavaScript?</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types">MDN — Grammar and types</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const">MDN — const</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let">MDN — let</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof">MDN — typeof</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/console/log_static">MDN — console.log()</a></li>
+              </ul>
+            </section>
+
+            <nav class="kaki__pager" aria-label="Bab sebelumnya dan berikutnya">
+              <a class="kaki__bab kaki__bab--kembali" href="../../index.html#kurikulum">
+                <span class="kaki__arah">Sebelumnya</span>
+                <span class="kaki__judul">Kurikulum</span>
+              </a>
+              <a class="kaki__bab kaki__bab--lanjut" href="fungsi.html">
+                <span class="kaki__arah">Bab berikutnya</span>
+                <span class="kaki__judul">Fungsi</span>
+              </a>
+            </nav>
+          </footer>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__row">
+      <div>
+        <p class="footer__wordmark">Webiko</p>
+        <p class="footer__tagline">
+          Belajar bikin website dari nol, dalam bahasa Indonesia.
+          Tanpa install, tanpa framework.
+        </p>
+      </div>
+      <nav class="footer__nav" aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="../../index.html#kurikulum">Kurikulum</a></li>
+          <li><a href="../../index.html#cara-pakai">Cara pakai</a></li>
+          <li><a href="../../index.html#progres">Progres</a></li>
+          <li><a href="../../index.html#daftar">Buat akun</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <p>© 2026 Webiko · Dibuat tanpa framework dan tanpa dependency.</p>
+      <p>Untuk pelajar SMP &amp; SMA</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/latihan-js.js"></script>
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>

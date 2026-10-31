@@ -1643,6 +1643,19 @@ b {
   font-style: italic;
 }
 
+/* Token khusus JavaScript. */
+.tok-kunci {
+  color: var(--color-code-tag);
+}
+
+.tok-angka {
+  color: var(--color-code-attr);
+}
+
+.tok-fungsi {
+  color: var(--color-code-attr);
+}
+
 /* Hasil: halaman kecil yang benar-benar dirender browser. */
 .demo-page {
   padding: var(--space-6) var(--space-4);
@@ -2720,6 +2733,50 @@ b {
   min-height: 240px;
   border: 0;
   background-color: var(--color-preview-bg);
+}
+
+/* Panel keluaran lab JavaScript. Setiap baris console.log menjadi
+   satu baris; teks panjang membungkus, bukan menggulir mendatar. */
+.lab__keluaran {
+  min-height: 240px;
+  padding: var(--space-4);
+  background-color: var(--color-surface);
+  color: var(--color-ink);
+  font-family: var(--font-mono);
+  font-size: var(--fs-code);
+  line-height: var(--lh-code);
+}
+
+.lab__keluaran-baris {
+  display: block;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.lab__keluaran-baris::before {
+  content: "› ";
+  color: var(--color-muted);
+}
+
+.lab__keluaran-baris--galat {
+  color: var(--color-error);
+}
+
+.lab__keluaran-baris--galat::before {
+  content: "! ";
+  color: var(--color-error);
+}
+
+.lab__keluaran-baris--peringatan {
+  color: var(--color-warning);
+}
+
+.lab__keluaran-kosong {
+  color: var(--color-muted);
+}
+
+.lab__keluaran-kosong::before {
+  content: "";
 }
 
 .lab__aksi {

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bab 2 JavaScript dasar: membuat dan memanggil fungsi, parameter dan argumen, return, serta menyimpan hasil fungsi. Materi Webiko untuk pelajar SMP dan SMA.">
+  <title>Fungsi — JavaScript dasar · Webiko</title>
+
+  <script>
+    (function () {
+      try {
+        var pilihan = localStorage.getItem("tema");
+        var gelap =
+          pilihan === "gelap" ||
+          (pilihan === "sistem" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-tema", gelap ? "gelap" : "terang");
+      } catch (e) {
+        document.documentElement.setAttribute("data-tema", "terang");
+      }
+
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-siap");
+        window.setTimeout(function () {
+          if (!window.__wgReveal) {
+            document.documentElement.classList.remove("reveal-siap");
+          }
+        }, 2000);
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="../../index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        Webiko
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="../../index.html">Beranda</a>
+        <a class="navbar__link" href="../../index.html#kurikulum" aria-current="page">Kurikulum</a>
+        <a class="navbar__link" href="../../index.html#cara-pakai">Cara pakai</a>
+      </nav>
+
+      <div class="navbar__tools">
+        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
+          <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--terang" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--gelap" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
+          </svg>
+          <span class="theme-toggle__label">Terang</span>
+        </button>
+
+        <button class="navbar__btn navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section">
+      <div class="layout--with-sidebar">
+
+        <aside class="sidebar" aria-label="Daftar bab JavaScript dasar">
+          <p class="sidebar__title">JavaScript dasar</p>
+          <ul class="sidebar__list">
+            <li><a class="sidebar__link" href="variabel.html">Variabel dan tipe data</a></li>
+            <li><a class="sidebar__link" href="fungsi.html" aria-current="page">Fungsi</a></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Percabangan if</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Perulangan</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Array dan objek</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Mengubah halaman dari kode</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Klik dan isian formulir</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Menyimpan data di browser</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Mengambil data dari server</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Membuat daftar dari data</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Membaca pesan error</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Latihan: pencatat belajar</span></li>
+          </ul>
+        </aside>
+
+        <article class="materi">
+          <p class="label materi__eyebrow">JavaScript dasar · Bab 2 dari 12</p>
+          <h1>Fungsi</h1>
+          <p class="materi__lead">
+            Kode yang dipakai berulang lebih rapi kalau dibungkus menjadi fungsi.
+            Beri nama, kirim nilai, lalu ambil hasilnya.
+          </p>
+
+          <h2>Membuat dan memanggil fungsi</h2>
+          <p>
+            Fungsi adalah blok kode bernama. Kamu menulisnya sekali, lalu
+            memanggilnya berkali-kali dengan nilai yang berbeda.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">sapa.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">function</span> <span class="tok-fungsi">sapa</span><span class="tok-punct">(</span>nama<span class="tok-punct">)</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-kunci">return</span> <span class="tok-string">"Halo, "</span> <span class="tok-punct">+</span> nama <span class="tok-punct">+</span> <span class="tok-string">"!"</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-punct">}</span></span><span class="code__line"></span><span class="code__line">console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span><span class="tok-fungsi">sapa</span><span class="tok-punct">(</span><span class="tok-string">"Rani"</span><span class="tok-punct">));</span> <span class="tok-komentar">// "Halo, Rani!"</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              <code>nama</code> adalah parameter. Nilai <code>"Rani"</code> yang
+              dikirim saat memanggil disebut argumen.
+            </p>
+          </div>
+          <p>
+            <code>return</code> mengirim hasil keluar dari fungsi. Tanpa
+            <code>return</code>, fungsi tetap berjalan tetapi hasilnya
+            <code>undefined</code>.
+          </p>
+
+          <h2>Parameter lebih dari satu</h2>
+          <p>
+            Fungsi bisa menerima beberapa parameter, dipisah koma. Urutan
+            argumen harus sama dengan urutan parameter.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">luas.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">function</span> <span class="tok-fungsi">luas</span><span class="tok-punct">(</span>panjang<span class="tok-punct">,</span> lebar<span class="tok-punct">)</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-kunci">return</span> panjang <span class="tok-punct">*</span> lebar<span class="tok-punct">;</span></span><span class="code__line"><span class="tok-punct">}</span></span><span class="code__line"></span><span class="code__line">console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span><span class="tok-fungsi">luas</span><span class="tok-punct">(</span><span class="tok-angka">5</span><span class="tok-punct">,</span> <span class="tok-angka">3</span><span class="tok-punct">));</span> <span class="tok-komentar">// 15</span></span></code></pre>
+            </div>
+          </div>
+          <p>
+            <code>luas(5, 3)</code> mengirim <code>5</code> sebagai
+            <code>panjang</code> dan <code>3</code> sebagai <code>lebar</code>.
+            Hasilnya <code>15</code>.
+          </p>
+
+          <h2>Hasil bisa disimpan</h2>
+          <p>
+            Nilai yang dikembalikan fungsi bisa langsung dicetak atau disimpan
+            di variabel.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">simpan.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">const</span> hasil <span class="tok-punct">=</span> <span class="tok-fungsi">luas</span><span class="tok-punct">(</span><span class="tok-angka">6</span><span class="tok-punct">,</span> <span class="tok-angka">4</span><span class="tok-punct">);</span></span><span class="code__line">console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span><span class="tok-string">"Luas 6 x 4:"</span><span class="tok-punct">,</span> hasil<span class="tok-punct">);</span> <span class="tok-komentar">// 24</span></span></code></pre>
+            </div>
+          </div>
+          <p>
+            Variabel yang dibuat di dalam fungsi hanya hidup di dalam fungsi itu.
+            Di luar fungsi, nama tersebut tidak bisa dipakai.
+          </p>
+
+          <section class="lab" data-lab-js aria-labelledby="lab-judul">
+            <p class="label">Latihan langsung</p>
+            <h2 id="lab-judul">Buat fungsi luas</h2>
+            <p>
+              Lengkapi fungsi di panel kode, lalu klik <strong>Jalankan</strong>
+              dan cocokkan hasilnya di panel Keluaran.
+            </p>
+            <ol>
+              <li>Ganti <code>return 0;</code> dengan <code>return panjang * lebar;</code>.</li>
+              <li>Tambah <code>console.log(luas(8, 2));</code> setelah penutup fungsi.</li>
+              <li>Tambah <code>const hasil = luas(6, 4);</code> dan <code>console.log("Luas 6 x 4:", hasil);</code>.</li>
+            </ol>
+
+            <div class="lab__meja">
+              <div class="lab__panel lab__panel--kode">
+                <div class="lab__bar">
+                  <span class="lab__prompt" aria-hidden="true">&gt;_</span>
+                  <span class="lab__nama">luas.js</span>
+                  <span class="lab__isyarat">bisa diubah</span>
+                </div>
+                <textarea class="lab__editor" data-lab-editor rows="12" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Kode JavaScript latihan" aria-describedby="lab-status">function luas(panjang, lebar) {
+  return 0;
+}
+
+console.log(luas(5, 3));</textarea>
+              </div>
+
+              <div class="lab__panel lab__panel--hasil">
+                <div class="lab__bar">
+                  <span class="pane__dots" aria-hidden="true">
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                  </span>
+                  <span class="lab__nama">Keluaran</span>
+                  <span class="lab__isyarat">console</span>
+                </div>
+                <div class="lab__keluaran" data-lab-keluaran role="log" aria-live="polite" aria-label="Keluaran kode"></div>
+              </div>
+            </div>
+
+            <div class="lab__aksi">
+              <button class="btn btn--primary" type="button" data-lab-jalankan hidden>Jalankan</button>
+              <button class="btn btn--ghost" type="button" data-lab-reset hidden>Atur ulang</button>
+              <p class="lab__status" id="lab-status" data-lab-status role="status">Klik Jalankan untuk melihat hasil.</p>
+            </div>
+
+            <div class="materi__latihan">
+              <p><strong>Cek hasil:</strong></p>
+              <ul>
+                <li>Baris pertama berisi <code>15</code>.</li>
+                <li>Baris kedua berisi <code>16</code>.</li>
+                <li>Baris ketiga berisi <code>Luas 6 x 4: 24</code>.</li>
+              </ul>
+            </div>
+
+            <noscript>
+              <p class="lab__catatan">
+                Editor butuh JavaScript. Salin kode di atas ke file .js, lalu
+                jalankan di browser atau Node.js.
+              </p>
+            </noscript>
+          </section>
+
+          <h2>Kesalahan umum</h2>
+          <ul>
+            <li>Lupa menulis <code>return</code>, sehingga hasilnya <code>undefined</code>.</li>
+            <li>Menulis nama fungsi tanpa kurung saat memanggil, misalnya <code>luas</code>, bukan <code>luas(5, 3)</code>.</li>
+            <li>Tertukar urutan argumen.</li>
+            <li>Menulis nama fungsi berbeda antara saat dibuat dan dipanggil.</li>
+          </ul>
+
+          <h2>Rangkuman</h2>
+          <ul>
+            <li>Fungsi membungkus kode yang dipakai berulang.</li>
+            <li>Parameter adalah nama nilai di dalam fungsi; argumen adalah nilai yang dikirim.</li>
+            <li><code>return</code> mengirim hasil keluar dari fungsi.</li>
+            <li>Fungsi dipanggil dengan menulis namanya diikuti tanda kurung.</li>
+          </ul>
+
+          <footer class="materi__kaki">
+            <section class="kaki__sumber" aria-labelledby="sumber-judul">
+              <h2 class="kaki__label" id="sumber-judul">Bacaan asli</h2>
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions">MDN — Functions</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">MDN — function declaration</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/return">MDN — return</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Glossary/Scope">MDN — Scope</a></li>
+              </ul>
+            </section>
+
+            <nav class="kaki__pager" aria-label="Bab sebelumnya dan berikutnya">
+              <a class="kaki__bab kaki__bab--kembali" href="variabel.html">
+                <span class="kaki__arah">Sebelumnya</span>
+                <span class="kaki__judul">Variabel dan tipe data</span>
+              </a>
+              <a class="kaki__bab kaki__bab--lanjut" href="../../index.html#kurikulum">
+                <span class="kaki__arah">Kembali</span>
+                <span class="kaki__judul">Kurikulum</span>
+              </a>
+            </nav>
+          </footer>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__row">
+      <div>
+        <p class="footer__wordmark">Webiko</p>
+        <p class="footer__tagline">
+          Belajar bikin website dari nol, dalam bahasa Indonesia.
+          Tanpa install, tanpa framework.
+        </p>
+      </div>
+      <nav class="footer__nav" aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="../../index.html#kurikulum">Kurikulum</a></li>
+          <li><a href="../../index.html#cara-pakai">Cara pakai</a></li>
+          <li><a href="../../index.html#progres">Progres</a></li>
+          <li><a href="../../index.html#daftar">Buat akun</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <p>© 2026 Webiko · Dibuat tanpa framework dan tanpa dependency.</p>
+      <p>Untuk pelajar SMP &amp; SMA</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/latihan-js.js"></script>
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>
