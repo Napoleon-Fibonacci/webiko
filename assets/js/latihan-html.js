@@ -392,6 +392,112 @@
     return true;
   }
 
+  /* ---------- Inden otomatis ---------- */
+
+  var INDEN = '  ';
+
+  /* Daftar tag yang masih terbuka tepat sebelum posisi tertentu. Tag
+     penutup yang tidak berpasangan diabaikan supaya inden tidak
+     melompat jauh saat kode belum lengkap. */
+  function tumpukanTerbuka(kode) {
+    var daftar = tokenHtml(kode);
+    var tumpukan = [];
+
+    for (var i = 0; i < daftar.length; i += 1) {
+      var t = daftar[i];
+      if (t.jenis === 'buka') {
+        if (!TAG_KOSONG[t.nama] && !/\/\s*>$/.test(t.teks)) tumpukan.push(t);
+      } else if (t.jenis === 'tutup') {
+        for (var j = tumpukan.length - 1; j >= 0; j -= 1) {
+          if (tumpukan[j].nama === t.nama) {
+            tumpukan.length = j;
+            break;
+          }
+        }
+      }
+    }
+
+    return tumpukan;
+  }
+
+  /* Isi <html> dan <head>/<body> ditulis rata kiri pada contoh materi,
+     jadi <html> tidak dihitung sebagai satu tingkat inden. */
+  function kedalamanInden(kode) {
+    var tumpukan = tumpukanTerbuka(kode);
+    var jumlah = 0;
+    for (var i = 0; i < tumpukan.length; i += 1) {
+      if (tumpukan[i].nama !== 'html') jumlah += 1;
+    }
+    return jumlah;
+  }
+
+  /* Enter menambah baris dengan inden sesuai sarang tag. Kalau caret
+     tepat sebelum tag penutup, tag itu didorong ke baris sendiri dan
+     diletakkan satu tingkat lebih luar. */
+  function sisipkanInden() {
+    var caret = editor.selectionStart;
+    if (caret !== editor.selectionEnd) return false;
+
+    var kode = editor.value;
+    var sebelum = kode.slice(0, caret);
+    var lt = sebelum.lastIndexOf('<');
+    var gt = sebelum.lastIndexOf('>');
+
+    /* Jangan ganggu Enter yang ditekan di tengah tag. */
+    if (lt > gt) return false;
+
+    var sesudah = kode.slice(caret);
+    var barisSesudah = sesudah.split('\n')[0];
+    var barisSebelum = sebelum.slice(sebelum.lastIndexOf('\n') + 1);
+    var diAkhirBaris = !/\S/.test(barisSesudah);
+    var sebelumPenutup = /^\s*<\//.test(barisSesudah);
+    var indentBaris = /^\s*/.exec(barisSebelum)[0];
+
+    var indent;
+    var tambahan;
+    var posisiKursor = caret + 1;
+
+    var diAwalBaris = caret === sebelum.lastIndexOf('\n') + 1;
+
+    if (diAwalBaris && /^<\//.test(sesudah)) {
+      /* Caret sudah di awal baris yang hanya berisi tag penutup:
+         baris baru cukup disisipkan sebelum tag itu. */
+      indent = INDEN.repeat(kedalamanInden(sebelum));
+      tambahan = indent + '\n';
+      posisiKursor = caret + indent.length;
+    } else if (/^<\//.test(sesudah) && /\S/.test(barisSebelum)) {
+      /* Tag penutup menempel tepat setelah isi baris (hasil tutup tag
+         otomatis): isi masuk satu tingkat, penutup kembali sejajar
+         dengan baris pembukanya. */
+      indent = indentBaris + INDEN;
+      tambahan = '\n' + indent + '\n' + indentBaris;
+      posisiKursor = caret + 1 + indent.length;
+    } else {
+      if (!diAkhirBaris && !sebelumPenutup) {
+        /* Memecah teks di tengah baris: pertahankan inden baris itu. */
+        indent = indentBaris;
+      } else {
+        indent = INDEN.repeat(kedalamanInden(sebelum));
+      }
+      tambahan = '\n' + indent;
+      posisiKursor = caret + 1 + indent.length;
+    }
+
+    var terpasang = false;
+    try {
+      terpasang = document.execCommand('insertText', false, tambahan);
+    } catch (err) {
+      terpasang = false;
+    }
+    if (!terpasang) {
+      editor.setRangeText(tambahan, caret, caret, 'end');
+    }
+
+    editor.selectionStart = editor.selectionEnd = posisiKursor;
+    perbarui();
+    return true;
+  }
+
   /* ---------- Tombol & status ---------- */
 
   /* Pratinjau memakai font sans dari token halaman, bukan serif bawaan
@@ -515,6 +621,13 @@
       e.preventDefault();
       editor.setRangeText('  ', editor.selectionStart, editor.selectionEnd, 'end');
       perbarui();
+      return;
+    }
+
+    /* Enter biasa menambah baris dengan inden otomatis. Shift+Enter
+       dibiarkan apa adanya. */
+    if (e.key === 'Enter' && !e.shiftKey && !e.ctrlKey && !e.metaKey && !e.altKey) {
+      if (sisipkanInden()) e.preventDefault();
       return;
     }
 
