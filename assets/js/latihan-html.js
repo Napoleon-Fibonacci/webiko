@@ -597,7 +597,7 @@
     .trim();
   var warnaKartu = getComputedStyle(document.documentElement)
     .getPropertyValue('--color-lab-card')
-    .trim() || '#ecedfb';
+    .trim() || '#ffffff';
   var pakaiKartu = lab.hasAttribute('data-lab-kartu');
 
   function tampilkan() {

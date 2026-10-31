@@ -244,62 +244,55 @@
 
           <section class="lab" data-lab data-lab-warna aria-labelledby="lab-judul">
             <p class="label">Latihan langsung</p>
-            <h2 id="lab-judul">Atur ukuran kartu profil</h2>
+            <h2 id="lab-judul">Atur jarak teks profil</h2>
             <p>
-              Kartu sudah di tengah, tetapi isinya masih menempel ke tepi dan
-              ruang halaman terlalu sempit. Ubah ukurannya, lalu klik
-              <strong>Jalankan</strong>. Jangan ubah isi HTML-nya.
+              Teks profil di panel kiri masih menempel ke tepi dan antarbagian
+              terlalu rapat. Atur jaraknya, lalu klik <strong>Jalankan</strong>.
+              Jangan ubah isi HTML-nya.
             </p>
             <ol>
               <li>Ubah <code>padding: 1rem;</code> pada <code>body</code> menjadi <code>2rem 1rem;</code>.</li>
-              <li>Tambah <code>padding: 2rem;</code> pada <code>.kartu</code>.</li>
-              <li>Ubah <code>max-width: 30rem;</code> pada <code>.kartu</code> menjadi <code>36rem;</code>.</li>
+              <li>Tambah <code>margin-bottom: 1.5rem;</code> pada <code>h1</code>.</li>
+              <li>Tambah <code>margin-bottom: 1rem;</code> pada <code>p</code>.</li>
             </ol>
 
             <div class="lab__meja">
               <div class="lab__panel lab__panel--kode">
                 <div class="lab__bar">
                   <span class="lab__prompt" aria-hidden="true">&gt;_</span>
-                  <span class="lab__nama">kartu-profil.html</span>
+                  <span class="lab__nama">profil-rapi.html</span>
                   <span class="lab__isyarat">bisa diubah</span>
                 </div>
                 <textarea class="lab__editor" data-lab-editor rows="23" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Kode HTML dan CSS latihan" aria-describedby="lab-status">&lt;!DOCTYPE html&gt;
 &lt;html lang="id"&gt;
 &lt;head&gt;
   &lt;meta charset="UTF-8"&gt;
-  &lt;title&gt;Kartu profil&lt;/title&gt;
+  &lt;title&gt;Profil Rani&lt;/title&gt;
   &lt;style&gt;
     body {
       margin: 0;
       padding: 1rem;
       background-color:   #ffffff;
+      color:   #1a1b33;
       font-family: system-ui, sans-serif;
     }
 
-    .kartu {
-      max-width: 30rem;
-      margin: 0 auto;
-      background-color:   #ecedfb;
-      color:   #1a1b33;
-    }
-
     h1 {
-      margin-top: 0;
+      margin: 0;
       font-size: 2rem;
       color:   #433fd4;
     }
 
     p {
-      margin-bottom: 0;
+      margin: 0;
       color:   #3a3c7e;
     }
   &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
-  &lt;div class="kartu"&gt;
-    &lt;h1&gt;Profil Rani&lt;/h1&gt;
-    &lt;p&gt;Aku kelas 8 di SMP Harapan.&lt;/p&gt;
-  &lt;/div&gt;
+  &lt;h1&gt;Profil Rani&lt;/h1&gt;
+  &lt;p&gt;Aku kelas 8 di SMP Harapan.&lt;/p&gt;
+  &lt;p&gt;Hobiku menggambar dan bermain basket.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</textarea>
               </div>
@@ -314,14 +307,14 @@
                   <span class="lab__nama">Hasil</span>
                   <span class="lab__isyarat">pratinjau</span>
                 </div>
-                <iframe class="lab__pratinjau" data-lab-pratinjau title="Pratinjau hasil kode HTML dan CSS" sandbox="" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;id&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;title&gt;Kartu profil&lt;/title&gt;&lt;style&gt;body{margin:0;padding:1rem;background-color:#ffffff;font-family:system-ui,sans-serif;}.kartu{max-width:30rem;margin:0 auto;background-color:#ecedfb;color:#1a1b33;}h1{margin-top:0;font-size:2rem;color:#433fd4;}p{margin-bottom:0;color:#3a3c7e;}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;kartu&quot;&gt;&lt;h1&gt;Profil Rani&lt;/h1&gt;&lt;p&gt;Aku kelas 8 di SMP Harapan.&lt;/p&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+                <iframe class="lab__pratinjau" data-lab-pratinjau title="Pratinjau hasil kode HTML dan CSS" sandbox="" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;id&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;title&gt;Profil Rani&lt;/title&gt;&lt;style&gt;body{margin:0;padding:1rem;background-color:#ffffff;color:#1a1b33;font-family:system-ui,sans-serif;}h1{margin:0;font-size:2rem;color:#433fd4;}p{margin:0;color:#3a3c7e;}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;Profil Rani&lt;/h1&gt;&lt;p&gt;Aku kelas 8 di SMP Harapan.&lt;/p&gt;&lt;p&gt;Hobiku menggambar dan bermain basket.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
               </div>
             </div>
 
             <div class="lab__aksi">
               <button class="btn btn--primary" type="button" data-lab-jalankan hidden>Jalankan</button>
               <button class="btn btn--ghost" type="button" data-lab-reset hidden>Atur ulang</button>
-              <p class="lab__status" id="lab-status" data-lab-status role="status">Ubah padding dan lebar kartu di panel kiri, lalu klik Jalankan.</p>
+              <p class="lab__status" id="lab-status" data-lab-status role="status">Tambah jarak di panel kiri, lalu klik Jalankan.</p>
             </div>
 
             <noscript>
@@ -336,9 +329,9 @@
             <p><strong>Cek hasil:</strong></p>
             <ul>
               <li><code>body</code> punya <code>padding: 2rem 1rem</code>.</li>
-              <li><code>.kartu</code> punya <code>padding: 2rem</code>.</li>
-              <li><code>.kartu</code> punya <code>max-width: 36rem</code>.</li>
-              <li>Kartu di tengah dan teksnya tidak menempel tepi.</li>
+              <li><code>h1</code> punya <code>margin-bottom: 1.5rem</code>.</li>
+              <li><code>p</code> punya <code>margin-bottom: 1rem</code>.</li>
+              <li>Teks tidak menempel tepi dan antarbagian punya jarak.</li>
             </ul>
           </div>
 
@@ -346,11 +339,11 @@
             <p class="card__label">Tantangan tambahan</p>
             <h2 class="card__title">px atau rem?</h2>
             <p class="card__text">
-              Ganti <code>padding</code> kartu dari <code>2rem</code> menjadi
-              <code>32px</code>. Hasilnya sama saat ukuran huruf akar 16px.
-              Lalu tambahkan <code>html { font-size: 20px; }</code> dan jalankan
-              lagi: padding <code>2rem</code> ikut membesar, sedangkan
-              <code>32px</code> tidak. Itu sebabnya <code>rem</code> lebih ramah
+              Ganti <code>margin-bottom</code> judul dari <code>1.5rem</code>
+              menjadi <code>24px</code>. Hasilnya sama saat ukuran huruf akar
+              16px. Lalu tambahkan <code>html { font-size: 20px; }</code> dan
+              jalankan lagi: jarak <code>1.5rem</code> ikut membesar, sedangkan
+              <code>24px</code> tidak. Itu sebabnya <code>rem</code> lebih ramah
               saat pengguna memperbesar teks.
             </p>
           </div>

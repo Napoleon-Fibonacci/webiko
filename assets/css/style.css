@@ -176,9 +176,9 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
   /* Pratinjau latihan sengaja tetap putih di kedua tema: panel itu
      meniru halaman browser, bukan permukaan aplikasi. */
   --color-preview-bg: #ffffff;
-  /* Kartu demo di dalam pratinjau. Tidak ditimpa di tema gelap supaya
-     isi latihan tetap terbaca seperti halaman terang. */
-  --color-lab-card: #ecedfb;
+  /* Kartu demo di dalam pratinjau. Putih, sama dengan kanvas, supaya
+     tidak ada blok warna yang terlihat berbeda di dalam latihan. */
+  --color-lab-card: #ffffff;
 
   /* --- Motion ---------------------------------------------- */
   --dur-fast: 120ms;
