@@ -168,6 +168,9 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
   --color-code-tag: #8e8bf0;         /* 5.69:1 di --color-code-bg */
   --color-code-attr: #ffe14d;
   --color-code-string: #a8f0d0;
+  /* Sorotan pilihan di editor latihan; teks asli transparan, jadi
+     warna ini yang terlihat saat blok teks dipilih. */
+  --color-code-select: rgba(142, 139, 240, 0.35);
 
   /* Pratinjau latihan sengaja tetap putih di kedua tema: panel itu
      meniru halaman browser, bukan permukaan aplikasi. */
@@ -1403,6 +1406,16 @@ b {
   :focus-visible {
     outline: var(--border-w) solid Highlight;
   }
+
+  /* Lapisan warna disembunyikan; teks asli editor dikembalikan supaya
+     isinya tetap terbaca di mode kontras tinggi. */
+  .lab__sorot {
+    display: none;
+  }
+
+  .lab__editor--sorot {
+    color: CanvasText;
+  }
 }
 
 /* ============================================================
@@ -1617,6 +1630,11 @@ b {
 
 .tok-punct {
   color: var(--color-code-muted);
+}
+
+.tok-komentar {
+  color: var(--color-code-muted);
+  font-style: italic;
 }
 
 /* Hasil: halaman kecil yang benar-benar dirender browser. */
@@ -2367,6 +2385,46 @@ b {
 .lab__editor:focus-visible {
   outline: var(--border-w) solid var(--color-code-attr);
   outline-offset: calc(var(--border-w) * -1);
+}
+
+/* --- Sorot sintaks di editor latihan ---------------------- */
+/* Lapisan <pre> duduk di belakang textarea dengan metrik font dan
+   padding yang sama persis; teks textarea dibuat transparan, jadi
+   yang terlihat adalah warna dari lapisan ini. */
+.lab__editor-wrap {
+  position: relative;
+}
+
+.lab__sorot {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: var(--space-4);
+  overflow: hidden;
+  border: 0;
+  background-color: transparent;
+  color: var(--color-code-ink);
+  font-family: var(--font-mono);
+  font-size: var(--fs-code);
+  line-height: var(--lh-code);
+  tab-size: 2;
+  white-space: pre;
+  pointer-events: none;
+}
+
+.lab__sorot code {
+  font: inherit;
+  white-space: inherit;
+}
+
+.lab__editor--sorot {
+  position: relative;
+  color: transparent;
+}
+
+.lab__editor--sorot::selection {
+  background-color: var(--color-code-select);
+  color: transparent;
 }
 
 .lab__pratinjau {
