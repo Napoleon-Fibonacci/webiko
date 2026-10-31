@@ -122,6 +122,204 @@
     return keluar;
   }
 
+  /* ---------- Pemeriksaan struktur ---------- */
+
+  var TAG_KOSONG = {
+    area: true, base: true, br: true, col: true, embed: true, hr: true,
+    img: true, input: true, link: true, meta: true, param: true,
+    source: true, track: true, wbr: true,
+  };
+
+  /* Pecah kode jadi tag, komentar, deklarasi, dan teks biasa. Posisi
+     ">" di dalam tanda kutip tidak dianggap akhir tag. */
+  function tokenHtml(kode) {
+    var daftar = [];
+    var pos = 0;
+
+    function tambahTeks(teks, mulai) {
+      if (teks) daftar.push({ jenis: 'teks', teks: teks, mulai: mulai });
+    }
+
+    while (pos < kode.length) {
+      var lt = kode.indexOf('<', pos);
+      if (lt === -1) {
+        tambahTeks(kode.slice(pos), pos);
+        break;
+      }
+      if (lt > pos) tambahTeks(kode.slice(pos, lt), pos);
+
+      if (kode.substr(lt, 4) === '<!--') {
+        var akhirKomentar = kode.indexOf('-->', lt + 4);
+        var batasKomentar = akhirKomentar === -1 ? kode.length : akhirKomentar + 3;
+        daftar.push({ jenis: 'komentar', teks: kode.slice(lt, batasKomentar), mulai: lt });
+        pos = batasKomentar;
+        continue;
+      }
+
+      if (kode.substr(lt, 2) === '<!') {
+        var batasDeklarasi = akhirTag(kode, lt);
+        daftar.push({ jenis: 'deklarasi', teks: kode.slice(lt, batasDeklarasi), mulai: lt });
+        pos = batasDeklarasi;
+        continue;
+      }
+
+      var batasTag = akhirTag(kode, lt);
+      var potong = kode.slice(lt, batasTag);
+      var cocok = /^<\s*(\/?)\s*([A-Za-z][A-Za-z0-9:-]*)/.exec(potong);
+      if (!cocok) {
+        tambahTeks('<', lt);
+        pos = lt + 1;
+        continue;
+      }
+
+      daftar.push({
+        jenis: cocok[1] ? 'tutup' : 'buka',
+        nama: cocok[2].toLowerCase(),
+        teks: potong,
+        mulai: lt,
+      });
+      pos = batasTag;
+    }
+    return daftar;
+  }
+
+  function nomorBaris(kode, posisi) {
+    return kode.slice(0, posisi).split('\n').length;
+  }
+
+  function ringkasTeks(teks) {
+    var rapi = teks.replace(/\s+/g, ' ').trim();
+    return rapi.length > 32 ? rapi.slice(0, 32) + '...' : rapi;
+  }
+
+  function sebutToken(t) {
+    if (t.jenis === 'teks') return 'Teks "' + ringkasTeks(t.teks) + '"';
+    return '<' + t.nama + '>';
+  }
+
+  /* Token pertama yang bukan spasi/komentar di antara dua penanda. */
+  function isiAntara(daftar, awal, akhir) {
+    var dari = daftar.indexOf(awal);
+    var sampai = daftar.indexOf(akhir);
+    if (dari === -1 || sampai === -1 || dari >= sampai) return null;
+    for (var i = dari + 1; i < sampai; i += 1) {
+      var t = daftar[i];
+      if (t.jenis === 'komentar') continue;
+      if (t.jenis === 'teks' && !/\S/.test(t.teks)) continue;
+      return t;
+    }
+    return null;
+  }
+
+  /* Kembalikan { pesan } bila kode belum layak dijalankan, atau null. */
+  function periksaStruktur(kode) {
+    var daftar = tokenHtml(kode);
+    var tumpukan = [];
+    var htmlBuka = null;
+    var htmlTutup = null;
+    var headBuka = null;
+    var headTutup = null;
+    var bodyBuka = null;
+    var bodyTutup = null;
+    var adaDoctype = false;
+    var i;
+    var t;
+
+    for (i = 0; i < daftar.length; i += 1) {
+      t = daftar[i];
+      if (t.jenis === 'deklarasi' && /^<!doctype\s+html/i.test(t.teks)) {
+        adaDoctype = true;
+      }
+
+      if (t.jenis === 'buka') {
+        if (t.nama === 'html' && !htmlBuka) htmlBuka = t;
+        if (t.nama === 'head' && !headBuka) headBuka = t;
+        if (t.nama === 'body' && !bodyBuka) bodyBuka = t;
+        if (TAG_KOSONG[t.nama] || /\/\s*>$/.test(t.teks)) continue;
+        tumpukan.push(t);
+      } else if (t.jenis === 'tutup') {
+        if (t.nama === 'html' && !htmlTutup) htmlTutup = t;
+        if (t.nama === 'head' && !headTutup) headTutup = t;
+        if (t.nama === 'body' && !bodyTutup) bodyTutup = t;
+
+        if (TAG_KOSONG[t.nama]) {
+          return { pesan: 'Baris ' + nomorBaris(kode, t.mulai) + ': <' + t.nama + '> adalah tag kosong, jadi tidak perlu ditutup dengan </' + t.nama + '>.' };
+        }
+
+        var cocok = -1;
+        for (var j = tumpukan.length - 1; j >= 0; j -= 1) {
+          if (tumpukan[j].nama === t.nama) {
+            cocok = j;
+            break;
+          }
+        }
+
+        if (cocok === -1) {
+          return { pesan: 'Baris ' + nomorBaris(kode, t.mulai) + ': ada </' + t.nama + '> tanpa <' + t.nama + '> pembuka. Hapus tag penutup itu atau tambahkan pembukanya.' };
+        }
+
+        if (cocok < tumpukan.length - 1) {
+          var belum = tumpukan[cocok + 1];
+          return { pesan: 'Baris ' + nomorBaris(kode, t.mulai) + ': </' + t.nama + '> muncul sebelum <' + belum.nama + '> ditutup. Tambahkan </' + belum.nama + '> lebih dulu.' };
+        }
+
+        tumpukan.pop();
+      }
+    }
+
+    if (tumpukan.length) {
+      var terbuka = tumpukan[tumpukan.length - 1];
+      return { pesan: 'Baris ' + nomorBaris(kode, terbuka.mulai) + ': <' + terbuka.nama + '> belum ditutup. Tambahkan </' + terbuka.nama + '> sebelum tag penutup berikutnya.' };
+    }
+
+    if (!adaDoctype) {
+      return { pesan: 'Tambahkan <!DOCTYPE html> di baris paling atas supaya browser membuka halaman dalam mode standar.' };
+    }
+
+    if (!htmlBuka) {
+      return { pesan: 'Halaman belum punya <html>. Bungkus seluruh kode dengan <html> ... </html>.' };
+    }
+
+    if (!headBuka) {
+      return { pesan: 'Halaman belum punya <head>. Tambahkan <head> ... </head> di dalam <html>, sebelum <body>.' };
+    }
+
+    if (!bodyBuka) {
+      return { pesan: 'Halaman belum punya <body>. Tambahkan <body> sesudah </head>, lalu taruh isi halaman di dalamnya.' };
+    }
+
+    var sebelumHead = isiAntara(daftar, htmlBuka, headBuka);
+    if (sebelumHead) {
+      return { pesan: 'Baris ' + nomorBaris(kode, sebelumHead.mulai) + ': ' + sebutToken(sebelumHead) + ' berada sebelum <head>. Urutannya: <html>, lalu <head>, lalu <body>.' };
+    }
+
+    var antaraHeadBody = isiAntara(daftar, headTutup, bodyBuka);
+    if (antaraHeadBody) {
+      return { pesan: 'Baris ' + nomorBaris(kode, antaraHeadBody.mulai) + ': ' + sebutToken(antaraHeadBody) + ' berada di antara </head> dan <body>, jadi belum masuk ke halaman. Pindahkan isinya ke dalam <body>, sesudah <body> dan sebelum </body>.' };
+    }
+
+    var sesudahBody = isiAntara(daftar, bodyTutup, htmlTutup);
+    if (sesudahBody) {
+      return { pesan: 'Baris ' + nomorBaris(kode, sesudahBody.mulai) + ': ' + sebutToken(sesudahBody) + ' berada setelah </body>. Pindahkan isinya ke dalam <body>, sebelum </body>.' };
+    }
+
+    if (htmlTutup) {
+      var sesudahHtml = null;
+      for (i = daftar.indexOf(htmlTutup) + 1; i < daftar.length; i += 1) {
+        t = daftar[i];
+        if (t.jenis === 'komentar') continue;
+        if (t.jenis === 'teks' && !/\S/.test(t.teks)) continue;
+        sesudahHtml = t;
+        break;
+      }
+      if (sesudahHtml) {
+        return { pesan: 'Baris ' + nomorBaris(kode, sesudahHtml.mulai) + ': ' + sebutToken(sesudahHtml) + ' berada setelah </html>. Pindahkan isinya ke dalam <body>.' };
+      }
+    }
+
+    return null;
+  }
+
   /* Lapisan berwarna di belakang textarea. Dibuat lewat DOM supaya
      halaman tanpa JavaScript tetap menampilkan textarea biasa. */
   var lapisan = document.createElement('pre');
@@ -161,12 +359,6 @@
 
   /* ---------- Tutup tag otomatis ---------- */
 
-  var TAG_KOSONG = {
-    area: true, base: true, br: true, col: true, embed: true, hr: true,
-    img: true, input: true, link: true, meta: true, param: true,
-    source: true, track: true, wbr: true,
-  };
-
   var sedangMenutup = false;
 
   /* Setelah ">" diketik, lengkapi penutupnya kalau tag-nya berisi.
@@ -202,11 +394,79 @@
 
   /* ---------- Tombol & status ---------- */
 
+  /* Pratinjau memakai font sans dari token halaman, bukan serif bawaan
+     browser. Gaya disisipkan ke dalam srcdoc karena iframe tidak
+     mewarisi stylesheet induknya. */
+  var fontPratinjau = getComputedStyle(document.documentElement)
+    .getPropertyValue('--font-sans')
+    .trim();
+
   function tampilkan() {
-    pratinjau.srcdoc = editor.value;
+    var gaya = '<style>body{font-family:' + fontPratinjau + ';}</style>';
+    var kode = editor.value;
+
+    if (/<head(\s[^>]*)?>/i.test(kode)) {
+      kode = kode.replace(/<head(\s[^>]*)?>/i, function (cocok) {
+        return cocok + gaya;
+      });
+    } else if (/<body(\s[^>]*)?>/i.test(kode)) {
+      kode = kode.replace(/<body(\s[^>]*)?>/i, function (cocok) {
+        return cocok + gaya;
+      });
+    } else {
+      kode = gaya + kode;
+    }
+
+    pratinjau.srcdoc = kode;
+  }
+
+  var kotakPeringatan = null;
+  var teksPeringatan = null;
+
+  function siapkanPeringatan() {
+    if (kotakPeringatan) return;
+
+    kotakPeringatan = document.createElement('div');
+    kotakPeringatan.className = 'alert alert--warning lab__peringatan';
+    kotakPeringatan.setAttribute('role', 'alert');
+    kotakPeringatan.hidden = true;
+
+    var isi = document.createElement('div');
+    var judul = document.createElement('span');
+    judul.className = 'alert__title';
+    judul.textContent = 'Kode belum bisa dijalankan';
+    teksPeringatan = document.createElement('p');
+    teksPeringatan.className = 'alert__text';
+
+    isi.append(judul, teksPeringatan);
+    kotakPeringatan.append(isi);
+
+    var meja = lab.querySelector('.lab__meja');
+    meja.parentNode.insertBefore(kotakPeringatan, meja.nextSibling);
+  }
+
+  function tampilkanPeringatan(pesan) {
+    siapkanPeringatan();
+    if (teksPeringatan.textContent !== pesan) teksPeringatan.textContent = pesan;
+    kotakPeringatan.hidden = false;
+    tombolJalan.disabled = true;
+    status.textContent = 'Perbaiki kode dulu, lalu klik Jalankan.';
+    status.classList.add('lab__status--galat');
+  }
+
+  function sembunyikanPeringatan() {
+    if (kotakPeringatan) kotakPeringatan.hidden = true;
+    tombolJalan.disabled = false;
+    status.classList.remove('lab__status--galat');
   }
 
   function jalankan(pesan) {
+    var galat = periksaStruktur(editor.value);
+    if (galat) {
+      tampilkanPeringatan(galat.pesan);
+      return;
+    }
+    sembunyikanPeringatan();
     tampilkan();
     status.textContent = pesan;
   }
@@ -233,6 +493,18 @@
     tutupTag(e);
     sedangMenutup = false;
     perbarui();
+
+    /* Kalau peringatan sedang tampil, periksa ulang supaya hilang
+       sendiri begitu kodenya diperbaiki. */
+    if (kotakPeringatan && !kotakPeringatan.hidden) {
+      var galat = periksaStruktur(editor.value);
+      if (galat) {
+        tampilkanPeringatan(galat.pesan);
+      } else {
+        sembunyikanPeringatan();
+        status.textContent = 'Kode sudah benar. Klik Jalankan untuk melihat hasilnya.';
+      }
+    }
   });
 
   editor.addEventListener('scroll', samakanGulir);

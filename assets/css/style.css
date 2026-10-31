@@ -2452,6 +2452,17 @@ b {
   line-height: var(--lh-small);
 }
 
+.lab__status--galat {
+  color: var(--color-error);
+  font-weight: var(--fw-bold);
+}
+
+/* Kartu petunjuk saat kode belum bisa dijalankan; jaraknya sama dengan
+   jarak antar-panel di .lab__meja. */
+.lab__peringatan {
+  margin-top: var(--space-3);
+}
+
 .lab__catatan {
   margin-top: var(--space-3);
   color: var(--color-muted);
