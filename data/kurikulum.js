@@ -47,7 +47,8 @@ const KURIKULUM = [
     ringkas:
       "Warna, jarak, dan grid. Sepuluh bab untuk membuat tampilan rapi di HP maupun laptop.",
     tingkat: "Pemula+",
-    status: "segera",
+    status: "terbit",
+    tautan: "materi/css/warna-dan-latar.html",
     bab: [
       { slug: "warna-dan-latar", judul: "Warna dan latar" },
       { slug: "ukuran-dan-jarak", judul: "Ukuran dan jarak" },

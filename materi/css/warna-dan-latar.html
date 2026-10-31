@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bab 1 CSS & tata letak: memisahkan tampilan dari isi, menulis aturan CSS, memakai color dan background-color, serta memasang CSS lewat link, style, atau atribut style. Materi Webiko untuk pelajar SMP dan SMA.">
+  <title>Warna dan latar — CSS &amp; tata letak · Webiko</title>
+
+  <script>
+    (function () {
+      try {
+        var pilihan = localStorage.getItem("tema");
+        var gelap =
+          pilihan === "gelap" ||
+          (pilihan === "sistem" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-tema", gelap ? "gelap" : "terang");
+      } catch (e) {
+        document.documentElement.setAttribute("data-tema", "terang");
+      }
+
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-siap");
+        window.setTimeout(function () {
+          if (!window.__wgReveal) {
+            document.documentElement.classList.remove("reveal-siap");
+          }
+        }, 2000);
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="../../index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        Webiko
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="../../index.html">Beranda</a>
+        <a class="navbar__link" href="../../index.html#kurikulum" aria-current="page">Kurikulum</a>
+        <a class="navbar__link" href="../../index.html#cara-pakai">Cara pakai</a>
+      </nav>
+
+      <div class="navbar__tools">
+        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
+          <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--terang" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--gelap" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
+          </svg>
+          <span class="theme-toggle__label">Terang</span>
+        </button>
+
+        <button class="navbar__btn navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section">
+      <div class="layout--with-sidebar">
+
+        <aside class="sidebar" aria-label="Daftar bab CSS &amp; tata letak">
+          <p class="sidebar__title">CSS &amp; tata letak</p>
+          <ul class="sidebar__list">
+            <li><a class="sidebar__link" href="warna-dan-latar.html" aria-current="page">Warna dan latar</a></li>
+            <li><span class="sidebar__link" aria-disabled="true">Ukuran dan jarak <span class="badge">Segera</span></span></li>
+          </ul>
+        </aside>
+
+        <article class="materi">
+          <p class="label materi__eyebrow">CSS &amp; tata letak · Bab 1 dari 10</p>
+          <h1>Warna dan latar</h1>
+          <p class="materi__lead">
+            HTML menyusun isi halaman. CSS yang menentukan bagaimana isi itu
+            terlihat. Mulailah dari yang paling terlihat: warna teks dan warna
+            latar.
+          </p>
+
+          <h2>HTML untuk isi, CSS untuk tampilan</h2>
+          <p>
+            HTML memberi tahu browser bahwa sebuah teks adalah judul, paragraf,
+            atau tautan. Ia tidak mengatur warna dan ukuran tampilan. Tugas itu
+            dipegang <mark>CSS</mark>, singkatan dari <em>Cascading Style
+            Sheets</em>.
+          </p>
+          <p>
+            Pemisahan ini berguna: satu halaman HTML bisa diberi tampilan yang
+            berbeda tanpa mengubah isinya. Kamu juga tidak perlu menyalin warna
+            yang sama ke setiap tag.
+          </p>
+
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">profil.html</span>
+                <span class="pane__badge">HTML</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">&lt;h1&gt;</span>Profil Rani<span class="tok-tag">&lt;/h1&gt;</span></span><span class="code__line"><span class="tok-tag">&lt;p&gt;</span>Aku kelas 8 di SMP Harapan.<span class="tok-tag">&lt;/p&gt;</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              HTML hanya menyebut jenis isinya. Tampilannya diatur aturan CSS.
+            </p>
+          </div>
+
+          <h2>Satu aturan CSS, tiga bagian</h2>
+          <p>
+            Aturan CSS terdiri dari <strong>selector</strong>, <strong>blok
+            deklarasi</strong>, dan <strong>deklarasi</strong>. Selector memilih
+            elemen yang ingin diatur. Di dalam kurung kurawal, tulis properti dan
+            nilainya, lalu akhiri dengan titik koma.
+          </p>
+
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">style.css</span>
+                <span class="pane__badge">CSS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">h1</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">color</span><span class="tok-punct">:</span> <span class="tok-string">#433fd4</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              <code>h1</code> adalah selector, <code>color</code> adalah properti,
+              dan <code>#433fd4</code> adalah nilai. Titik koma menutup deklarasi.
+            </p>
+          </div>
+
+          <p>
+            Satu selector boleh punya beberapa deklarasi. Tulis setiap deklarasi
+            di baris sendiri supaya mudah dibaca.
+          </p>
+
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">style.css</span>
+                <span class="pane__badge">CSS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">body</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">background-color</span><span class="tok-punct">:</span> <span class="tok-string">#ecedfb</span><span class="tok-punct">;</span></span><span class="code__line">  <span class="tok-attr">color</span><span class="tok-punct">:</span> <span class="tok-string">#1a1b33</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              <code>background-color</code> mengatur warna latar elemen;
+              <code>color</code> mengatur warna teksnya.
+            </p>
+          </div>
+
+          <h2>Tiga cara memasang CSS</h2>
+          <p>
+            CSS bisa dipasang dengan tiga cara. Ketiganya sah, tetapi tidak
+            sama nyamannya saat halaman bertambah besar.
+          </p>
+
+          <h3>1. Berkas terpisah</h3>
+          <p>
+            Simpan aturan di <code>style.css</code>, lalu hubungkan dari dalam
+            <code>&lt;head&gt;</code> memakai <code>&lt;link&gt;</code>. Cara ini
+            paling rapi karena satu berkas bisa dipakai banyak halaman.
+          </p>
+
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">index.html</span>
+                <span class="pane__badge">HTML</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">&lt;link rel="stylesheet" href="style.css"&gt;</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              <code>rel="stylesheet"</code> memberi tahu browser bahwa berkas
+              tujuan berisi CSS.
+            </p>
+          </div>
+
+          <h3>2. Blok style di halaman</h3>
+          <p>
+            Untuk satu halaman atau saat sedang belajar, aturan boleh ditulis di
+            dalam <code>&lt;style&gt;</code>. Letakkan di dalam
+            <code>&lt;head&gt;</code>.
+          </p>
+
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">index.html</span>
+                <span class="pane__badge">HTML</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">&lt;style&gt;</span></span><span class="code__line">  <span class="tok-tag">h1</span> <span class="tok-punct">{</span> <span class="tok-attr">color</span><span class="tok-punct">:</span> <span class="tok-string">#433fd4</span><span class="tok-punct">;</span> <span class="tok-punct">}</span></span><span class="code__line"><span class="tok-tag">&lt;/style&gt;</span></span></code></pre>
+            </div>
+          </div>
+
+          <h3>3. Atribut style</h3>
+          <p>
+            Cara terakhir menempel langsung di tag. Ini cepat untuk satu elemen,
+            tetapi paling sulit dirawat kalau dipakai banyak tempat.
+          </p>
+
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">index.html</span>
+                <span class="pane__badge">HTML</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">&lt;h1 style="color: #433fd4;"&gt;</span>Profil Rani<span class="tok-tag">&lt;/h1&gt;</span></span></code></pre>
+            </div>
+          </div>
+
+          <div class="alert" role="note">
+            <div>
+              <strong class="alert__title">Utamakan berkas terpisah</strong>
+              <p class="alert__text">
+                Untuk proyek yang tumbuh, satu <code>style.css</code> lebih mudah
+                diubah daripada atribut <code>style</code> yang tersebar di banyak
+                tag.
+              </p>
+            </div>
+          </div>
+
+          <h2>Menulis warna</h2>
+          <p>
+            Nilai warna bisa ditulis dengan nama, kode hex, atau angka RGB.
+            Pilih satu cara dan pakai dengan konsisten.
+          </p>
+          <ul>
+            <li>
+              <strong>Nama warna:</strong> <code>navy</code>, <code>gold</code>,
+              <code>tomato</code>. Mudah dibaca, tetapi pilihannya terbatas.
+            </li>
+            <li>
+              <strong>Hex:</strong> <code>#1a1b33</code>. Tanda <code>#</code>
+              diikuti enam digit pasangan merah, hijau, dan biru.
+            </li>
+            <li>
+              <strong>RGB:</strong> <code>rgb(26, 27, 51)</code>. Tiga angka dari
+              0 sampai 255 untuk merah, hijau, dan biru.
+            </li>
+          </ul>
+
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">style.css</span>
+                <span class="pane__badge">CSS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">body</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">background-color</span><span class="tok-punct">:</span> <span class="tok-string">#ecedfb</span><span class="tok-punct">;</span> <span class="tok-komentar">/* hex */</span></span><span class="code__line">  <span class="tok-attr">color</span><span class="tok-punct">:</span> <span class="tok-string">rgb(26, 27, 51)</span><span class="tok-punct">;</span> <span class="tok-komentar">/* rgb */</span></span><span class="code__line"><span class="tok-punct">}</span></span><span class="code__line"></span><span class="code__line"><span class="tok-tag">strong</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">background-color</span><span class="tok-punct">:</span> <span class="tok-string">gold</span><span class="tok-punct">;</span> <span class="tok-komentar">/* nama warna */</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+          </div>
+
+          <h2>Kontras: teks harus tetap terbaca</h2>
+          <p>
+            Warna yang bagus bukan hanya soal selera. Teks harus cukup kontras
+            dengan latarnya. Teks kecil minimal punya rasio kontras
+            <mark>4,5:1</mark> menurut WCAG AA. Teks besar minimal 3:1.
+          </p>
+          <p>
+            Kuning pucat di atas putih, atau abu-abu muda di atas krem, sulit
+            dibaca. Jangan juga memakai warna saja untuk menyampaikan arti:
+            tambahkan teks atau ikon.
+          </p>
+
+          <div class="alert" role="note">
+            <div>
+              <strong class="alert__title">Cek dengan mata, lalu dengan alat</strong>
+              <p class="alert__text">
+                Lihat hasilnya di layar kecil dan besar. Kalau ragu, ukur rasio
+                kontras memakai pemeriksa kontras di browser atau situs W3C WAI.
+              </p>
+            </div>
+          </div>
+
+          <section class="lab" data-lab aria-labelledby="lab-judul">
+            <p class="label">Latihan langsung</p>
+            <h2 id="lab-judul">Beri warna halaman profil</h2>
+            <p>
+              Halaman profil di panel kiri sudah punya aturan CSS. Ganti warna
+              latar dan warna teksnya, lalu klik <strong>Jalankan</strong>.
+              Jangan ubah isi HTML-nya.
+            </p>
+            <ol>
+              <li>Ganti <code>background-color</code> pada <code>body</code>.</li>
+              <li>Ganti <code>color</code> pada <code>h1</code> dan <code>p</code>.</li>
+              <li>Beri <code>background-color</code> pada <code>strong</code>.</li>
+            </ol>
+
+            <div class="lab__meja">
+              <div class="lab__panel lab__panel--kode">
+                <div class="lab__bar">
+                  <span class="lab__prompt" aria-hidden="true">&gt;_</span>
+                  <span class="lab__nama">profil-berwarna.html</span>
+                  <span class="lab__isyarat">bisa diubah</span>
+                </div>
+                <textarea class="lab__editor" data-lab-editor rows="11" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Kode HTML dan CSS latihan" aria-describedby="lab-status">&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Profil berwarna&lt;/title&gt;
+  &lt;style&gt;
+    body {
+      background-color: #ecedfb;
+      color: #1a1b33;
+    }
+
+    h1 {
+      color: #433fd4;
+    }
+
+    p {
+      color: #3a3c7e;
+    }
+
+    strong {
+      background-color: #ffe14d;
+      color: #1a1b33;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Profil Rani&lt;/h1&gt;
+  &lt;p&gt;Aku kelas 8 di &lt;strong&gt;SMP Harapan&lt;/strong&gt;.&lt;/p&gt;
+  &lt;p&gt;Hobiku menggambar dan bermain basket.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+              </div>
+
+              <div class="lab__panel lab__panel--hasil">
+                <div class="lab__bar">
+                  <span class="pane__dots" aria-hidden="true">
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                  </span>
+                  <span class="lab__nama">Hasil</span>
+                  <span class="lab__isyarat">pratinjau</span>
+                </div>
+                <iframe class="lab__pratinjau" data-lab-pratinjau title="Pratinjau hasil kode HTML dan CSS" sandbox="" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;id&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;title&gt;Profil berwarna&lt;/title&gt;&lt;style&gt;body{background-color:#ecedfb;color:#1a1b33;}h1{color:#433fd4;}p{color:#3a3c7e;}strong{background-color:#ffe14d;color:#1a1b33;}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;Profil Rani&lt;/h1&gt;&lt;p&gt;Aku kelas 8 di &lt;strong&gt;SMP Harapan&lt;/strong&gt;.&lt;/p&gt;&lt;p&gt;Hobiku menggambar dan bermain basket.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+              </div>
+            </div>
+
+            <div class="lab__aksi">
+              <button class="btn btn--primary" type="button" data-lab-jalankan hidden>Jalankan</button>
+              <button class="btn btn--ghost" type="button" data-lab-reset hidden>Atur ulang</button>
+              <p class="lab__status" id="lab-status" data-lab-status role="status">Ubah warna di panel kiri, lalu klik Jalankan.</p>
+            </div>
+
+            <noscript>
+              <p class="lab__catatan">
+                Editor butuh JavaScript. Salin kode di atas ke file .html, lalu
+                buka di browser.
+              </p>
+            </noscript>
+          </section>
+
+          <div class="materi__latihan">
+            <p><strong>Cek hasil:</strong></p>
+            <ul>
+              <li><code>body</code> punya <code>background-color</code>.</li>
+              <li><code>h1</code> dan <code>p</code> punya <code>color</code>.</li>
+              <li><code>strong</code> punya <code>background-color</code> dan teksnya tetap terbaca.</li>
+              <li>Warna teks dan latar cukup kontras.</li>
+            </ul>
+          </div>
+
+          <div class="card materi__latihan">
+            <p class="card__label">Tantangan tambahan</p>
+            <h2 class="card__title">Warna kelasmu</h2>
+            <p class="card__text">
+              Buat halaman profil baru dengan warna khas kelasmu. Pakai satu
+              warna latar halaman, satu warna teks utama, dan satu warna sorotan
+              untuk <code>&lt;strong&gt;</code>. Tulis aturannya di dalam
+              <code>&lt;style&gt;</code>, lalu cek kontras teksnya.
+            </p>
+          </div>
+
+          <h2>Rangkuman</h2>
+          <ul>
+            <li>HTML menyusun isi; CSS mengatur tampilan.</li>
+            <li>
+              Aturan CSS berisi selector, lalu blok
+              <code>{ properti: nilai; }</code>.
+            </li>
+            <li>
+              <code>color</code> mengatur warna teks;
+              <code>background-color</code> mengatur warna latar.
+            </li>
+            <li>
+              CSS bisa dipasang lewat berkas <code>.css</code>,
+              <code>&lt;style&gt;</code>, atau atribut <code>style</code>.
+            </li>
+            <li>Pastikan teks dan latar punya kontras yang cukup.</li>
+          </ul>
+
+          <footer class="materi__kaki">
+            <section class="kaki__sumber" aria-labelledby="sumber-judul">
+              <h2 class="kaki__label" id="sumber-judul">Bacaan asli</h2>
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/Getting_started">MDN — CSS first steps</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Syntax">MDN — CSS syntax</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color">MDN — color</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/background-color">MDN — background-color</a></li>
+                <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html">W3C WAI — Contrast minimum</a></li>
+              </ul>
+            </section>
+
+            <nav class="kaki__pager" aria-label="Bab sebelumnya dan berikutnya">
+              <a class="kaki__bab kaki__bab--kembali" href="../../index.html#kurikulum">
+                <span class="kaki__arah">Sebelumnya</span>
+                <span class="kaki__judul">Kurikulum</span>
+              </a>
+              <span class="kaki__bab kaki__bab--lanjut kaki__bab--mati">
+                <span class="kaki__arah">Bab berikutnya</span>
+                <span class="kaki__judul">Ukuran dan jarak</span>
+                <span class="badge">Segera</span>
+              </span>
+            </nav>
+          </footer>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__row">
+      <div>
+        <p class="footer__wordmark">Webiko</p>
+        <p class="footer__tagline">
+          Belajar bikin website dari nol, dalam bahasa Indonesia.
+          Tanpa install, tanpa framework.
+        </p>
+      </div>
+      <nav class="footer__nav" aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="../../index.html#kurikulum">Kurikulum</a></li>
+          <li><a href="../../index.html#cara-pakai">Cara pakai</a></li>
+          <li><a href="../../index.html#progres">Progres</a></li>
+          <li><a href="../../index.html#daftar">Buat akun</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <p>© 2026 Webiko · Dibuat tanpa framework dan tanpa dependency.</p>
+      <p>Untuk pelajar SMP &amp; SMA</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/latihan-html.js"></script>
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>
