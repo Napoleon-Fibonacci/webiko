@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bab 5 CSS &amp; tata letak: selector elemen, kelas, dan id, cara memasang beberapa kelas, serta urutan kekuatan selector. Materi Webiko untuk pelajar SMP dan SMA.">
+  <title>Selector dan kelas — CSS &amp; tata letak · Webiko</title>
+
+  <script>
+    (function () {
+      try {
+        var pilihan = localStorage.getItem("tema");
+        var gelap =
+          pilihan === "gelap" ||
+          (pilihan === "sistem" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-tema", gelap ? "gelap" : "terang");
+      } catch (e) {
+        document.documentElement.setAttribute("data-tema", "terang");
+      }
+
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-siap");
+        window.setTimeout(function () {
+          if (!window.__wgReveal) {
+            document.documentElement.classList.remove("reveal-siap");
+          }
+        }, 2000);
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="../../index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        Webiko
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="../../index.html">Beranda</a>
+        <a class="navbar__link" href="../../index.html#kurikulum" aria-current="page">Kurikulum</a>
+        <a class="navbar__link" href="../../index.html#cara-pakai">Cara pakai</a>
+      </nav>
+
+      <div class="navbar__tools">
+        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
+          <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--terang" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--gelap" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
+          </svg>
+          <span class="theme-toggle__label">Terang</span>
+        </button>
+
+        <button class="navbar__btn navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section">
+      <div class="layout--with-sidebar">
+
+        <aside class="sidebar" aria-label="Daftar bab CSS &amp; tata letak">
+          <p class="sidebar__title">CSS &amp; tata letak</p>
+          <ul class="sidebar__list">
+            <li><a class="sidebar__link" href="mengenal-css.html">Mengenal CSS</a></li>
+            <li><a class="sidebar__link" href="warna-dan-latar.html">Warna dan latar</a></li>
+            <li><a class="sidebar__link" href="ukuran-dan-jarak.html">Ukuran dan jarak</a></li>
+            <li><a class="sidebar__link" href="font-dan-baris.html">Font dan tinggi baris</a></li>
+            <li><a class="sidebar__link" href="selector-kelas.html" aria-current="page">Selector dan kelas</a></li>
+            <li><a class="sidebar__link" href="kotak.html">Kotak: margin, border, padding</a></li>
+            <li><a class="sidebar__link" href="flexbox.html">Menata dengan flexbox</a></li>
+            <li><a class="sidebar__link" href="grid.html">Menyusun grid</a></li>
+            <li><a class="sidebar__link" href="tombol-dan-kartu.html">Tombol dan kartu</a></li>
+            <li><a class="sidebar__link" href="tampilan-di-hp.html">Tampilan di layar HP</a></li>
+            <li><a class="sidebar__link" href="mode-gelap.html">Mode gelap</a></li>
+          </ul>
+        </aside>
+
+        <article class="materi">
+          <p class="label materi__eyebrow">CSS &amp; tata letak · Bab 5 dari 11</p>
+          <h1>Selector dan kelas</h1>
+          <p class="materi__lead">
+            Satu halaman punya banyak elemen. Selector menentukan elemen mana yang kena aturan, dari semua paragraf sampai satu kartu tertentu.
+          </p>
+
+          <h2>Tiga selector dasar</h2>
+          <p>
+            Selector menentukan elemen mana yang kena aturan. Tiga yang paling sering
+            dipakai adalah selector elemen, kelas, dan id.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">style.css</span>
+                <span class="pane__badge">CSS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">p</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">color</span><span class="tok-punct">:</span> <span class="tok-string">#1a1b33;</span></span><span class="code__line"><span class="tok-punct">}</span></span><span class="code__line"> </span><span class="code__line"><span class="tok-tag">.catatan</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">color</span><span class="tok-punct">:</span> <span class="tok-string">#3a3c7e;</span></span><span class="code__line"><span class="tok-punct">}</span></span><span class="code__line"> </span><span class="code__line"><span class="tok-tag">#judul</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">color</span><span class="tok-punct">:</span> <span class="tok-string">#433fd4;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Selector elemen memakai nama tag. Kelas diawali titik. Id diawali pagar.
+            </p>
+          </div>
+          <ul>
+            <li>
+              <strong>Elemen</strong> <code>p</code>: mengenai semua elemen
+              <code>&lt;p&gt;</code> di halaman.
+            </li>
+            <li>
+              <strong>Kelas</strong> <code>.catatan</code>: mengenai elemen yang punya
+              <code>class="catatan"</code>.
+            </li>
+            <li>
+              <strong>Id</strong> <code>#judul</code>: mengenai satu elemen yang punya
+              <code>id="judul"</code>.
+            </li>
+          </ul>
+
+          <h2>Kelas dipakai berulang, id hanya sekali</h2>
+          <p>
+            Satu kelas boleh dipasang di banyak elemen. Itu sebabnya kelas cocok untuk
+            gaya yang dipakai berulang, seperti kartu atau tombol. Id harus unik dalam
+            satu halaman dan biasanya dipakai untuk satu bagian khusus atau tujuan tautan.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">profil.html</span>
+                <span class="pane__badge">HTML</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-punct">&lt;</span><span class="tok-tag">h1</span> <span class="tok-attr">id</span><span class="tok-punct">=</span><span class="tok-string">"judul"</span><span class="tok-punct">&gt;</span>Daftar Belanja<span class="tok-punct">&lt;</span><span class="tok-punct">/</span><span class="tok-tag">h1</span><span class="tok-punct">&gt;</span></span><span class="code__line"><span class="tok-punct">&lt;</span><span class="tok-tag">p</span> <span class="tok-attr">class</span><span class="tok-punct">=</span><span class="tok-string">"catatan"</span><span class="tok-punct">&gt;</span>Bawa tas sendiri.<span class="tok-punct">&lt;</span><span class="tok-punct">/</span><span class="tok-tag">p</span><span class="tok-punct">&gt;</span></span><span class="code__line"><span class="tok-punct">&lt;</span><span class="tok-tag">p</span> <span class="tok-attr">class</span><span class="tok-punct">=</span><span class="tok-string">"catatan"</span><span class="tok-punct">&gt;</span>Uang kembalian disimpan.<span class="tok-punct">&lt;</span><span class="tok-punct">/</span><span class="tok-tag">p</span><span class="tok-punct">&gt;</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Dua paragraf memakai kelas yang sama. Judul memakai id karena hanya ada satu.
+            </p>
+          </div>
+          <p>
+            Satu elemen boleh punya beberapa kelas. Tulis dipisah spasi:
+            <code>class="kartu penting"</code>. Kedua kelas itu berlaku sekaligus.
+          </p>
+
+          <h2>Mana yang menang?</h2>
+          <p>
+            Kalau beberapa aturan mengenai elemen yang sama, selector yang lebih
+            spesifik menang: id mengalahkan kelas, kelas mengalahkan elemen. Kalau
+            kekuatannya sama, aturan yang ditulis paling akhir yang dipakai.
+          </p>
+          <p>
+            Urutan ini disebut <em>specificity</em>. Untuk pemula, cukup ingat id lebih
+            kuat dari kelas, dan kelas lebih kuat dari elemen. Hindari
+            <code>!important</code> karena membuat aturan sulit ditimpa.
+          </p>
+
+          <h2>Latihan: tandai satu kartu</h2>
+          <hr>
+          <section class="lab" data-lab data-lab-warna aria-labelledby="lab-judul">
+            <p class="label">Latihan langsung</p>
+            <h2 id="lab-judul">Pilih kartu yang penting</h2>
+            <p>
+              Semua kartu di panel kiri masih sama. Beri satu kartu kelas tambahan dan atur gayanya, lalu klik <strong>Jalankan</strong>.
+            </p>
+            <ol>
+                            <li>Tambah kelas <code>penting</code> pada kartu <strong>Pensil warna</strong>, sehingga atributnya menjadi <code>class="kartu penting"</code>.</li>
+                        <li>Isi aturan <code>.penting</code> dengan <code>background-color: #ffe14d;</code> dan <code>border-bottom-color: #1a1b33;</code>.</li>
+                        <li>Tambah <code>padding-left: 0.5rem;</code> pada <code>.penting</code>.</li>
+                        <li>Tambah aturan <code>#judul { color: #433fd4; }</code>.</li>
+            </ol>
+
+            <div class="lab__meja">
+              <div class="lab__panel lab__panel--kode">
+                <div class="lab__bar">
+                  <span class="lab__prompt" aria-hidden="true">&gt;_</span>
+                  <span class="lab__nama">daftar-belanja.html</span>
+                  <span class="lab__isyarat">bisa diubah</span>
+                </div>
+                <textarea class="lab__editor" data-lab-editor rows="39" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Kode HTML dan CSS latihan" aria-describedby="lab-status">&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Daftar belanja&lt;/title&gt;
+  &lt;style&gt;
+    body {
+      margin: 0;
+      padding: 1rem;
+      background-color: #ffffff;
+      color: #1a1b33;
+      font-family: system-ui, sans-serif;
+    }
+
+    h1 {
+      margin: 0 0 1rem;
+      font-size: 2rem;
+    }
+
+    .kartu {
+      margin: 0 0 0.5rem;
+      padding: 0.5rem 0;
+      border-bottom: 2px solid #d6d9fc;
+    }
+
+    .penting {
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1 id="judul"&gt;Daftar Belanja&lt;/h1&gt;
+  &lt;ul class="daftar"&gt;
+    &lt;li class="kartu"&gt;Buku tulis&lt;/li&gt;
+    &lt;li class="kartu"&gt;Pensil warna&lt;/li&gt;
+    &lt;li class="kartu"&gt;Tas kain&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+              </div>
+
+              <div class="lab__panel lab__panel--hasil">
+                <div class="lab__bar">
+                  <span class="pane__dots" aria-hidden="true">
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                  </span>
+                  <span class="lab__nama">Hasil</span>
+                  <span class="lab__isyarat">pratinjau</span>
+                </div>
+                <iframe class="lab__pratinjau" data-lab-pratinjau title="Pratinjau hasil kode HTML dan CSS" sandbox="allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;id&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;Daftar belanja&lt;/title&gt;
+  &lt;style&gt;
+    body {
+      margin: 0;
+      padding: 1rem;
+      background-color: #ffffff;
+      color: #1a1b33;
+      font-family: system-ui, sans-serif;
+    }
+
+    h1 {
+      margin: 0 0 1rem;
+      font-size: 2rem;
+    }
+
+    .kartu {
+      margin: 0 0 0.5rem;
+      padding: 0.5rem 0;
+      border-bottom: 2px solid #d6d9fc;
+    }
+
+    .penting {
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1 id=&quot;judul&quot;&gt;Daftar Belanja&lt;/h1&gt;
+  &lt;ul class=&quot;daftar&quot;&gt;
+    &lt;li class=&quot;kartu&quot;&gt;Buku tulis&lt;/li&gt;
+    &lt;li class=&quot;kartu&quot;&gt;Pensil warna&lt;/li&gt;
+    &lt;li class=&quot;kartu&quot;&gt;Tas kain&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;"></iframe>
+              </div>
+            </div>
+
+            <div class="lab__aksi">
+              <button class="btn btn--primary" type="button" data-lab-jalankan hidden>Jalankan</button>
+              <button class="btn btn--ghost" type="button" data-lab-reset hidden>Atur ulang</button>
+              <p class="lab__status" id="lab-status" data-lab-status role="status">Tandai satu kartu dengan kelas penting, lalu klik Jalankan.</p>
+            </div>
+
+            <noscript>
+              <p class="lab__catatan">
+                Editor butuh JavaScript. Salin kode di atas ke file .html, lalu
+                buka di browser.
+              </p>
+            </noscript>
+          </section>
+
+          <div class="materi__latihan">
+            <p><strong>Cek hasil:</strong></p>
+            <ul>
+                            <li>Kartu Pensil warna punya dua kelas: <code>kartu</code> dan <code>penting</code>.</li>
+                        <li>Hanya kartu itu yang berlatar kuning.</li>
+                        <li>Judul memakai warna <code>#433fd4</code> lewat selector id.</li>
+            </ul>
+          </div>
+
+          <h2>Rangkuman</h2>
+          <ul>
+            <li>Selector elemen memakai nama tag, kelas memakai titik, id memakai pagar.</li>
+            <li>Kelas boleh dipakai di banyak elemen; id unik dalam satu halaman.</li>
+            <li>Satu elemen boleh punya beberapa kelas, dipisah spasi.</li>
+            <li>Id mengalahkan kelas, kelas mengalahkan elemen.</li>
+            <li>Kalau kekuatannya sama, aturan yang terakhir menang.</li>
+          </ul>
+
+          <footer class="materi__kaki">
+            <section class="kaki__sumber" aria-labelledby="sumber-judul">
+              <h2 class="kaki__label" id="sumber-judul">Bacaan asli</h2>
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors">MDN — CSS selectors</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors">MDN — Class selectors</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/ID_selectors">MDN — ID selectors</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity">MDN — Specificity</a></li>
+                <li><a href="https://web.dev/learn/css/selectors">web.dev — Selectors</a></li>
+              </ul>
+            </section>
+
+            <nav class="kaki__pager" aria-label="Bab sebelumnya dan berikutnya">
+              <a class="kaki__bab kaki__bab--kembali" href="font-dan-baris.html">
+                <span class="kaki__arah">Sebelumnya</span>
+                <span class="kaki__judul">Font dan tinggi baris</span>
+              </a>
+              <a class="kaki__bab kaki__bab--lanjut" href="kotak.html">
+                <span class="kaki__arah">Bab berikutnya</span>
+                <span class="kaki__judul">Kotak: margin, border, padding</span>
+              </a>
+            </nav>
+          </footer>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__row">
+      <div>
+        <p class="footer__wordmark">Webiko</p>
+        <p class="footer__tagline">
+          Belajar bikin website dari nol, dalam bahasa Indonesia.
+          Tanpa install, tanpa framework.
+        </p>
+      </div>
+      <nav class="footer__nav" aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="../../index.html#kurikulum">Kurikulum</a></li>
+          <li><a href="../../index.html#cara-pakai">Cara pakai</a></li>
+          <li><a href="../../index.html#progres">Progres</a></li>
+          <li><a href="../../index.html#daftar">Buat akun</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <p>© 2026 Webiko · Dibuat tanpa framework dan tanpa dependency.</p>
+      <p>Untuk pelajar SMP &amp; SMA</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/latihan-html.js"></script>
+  <script src="../../assets/js/lab-warna.js"></script>
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>

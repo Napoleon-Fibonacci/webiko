@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bab 6 CSS &amp; tata letak: model kotak CSS, perbedaan padding dan margin, border, serta box-sizing agar lebar elemen mudah diatur. Materi Webiko untuk pelajar SMP dan SMA.">
+  <title>Kotak: margin, border, padding — CSS &amp; tata letak · Webiko</title>
+
+  <script>
+    (function () {
+      try {
+        var pilihan = localStorage.getItem("tema");
+        var gelap =
+          pilihan === "gelap" ||
+          (pilihan === "sistem" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-tema", gelap ? "gelap" : "terang");
+      } catch (e) {
+        document.documentElement.setAttribute("data-tema", "terang");
+      }
+
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-siap");
+        window.setTimeout(function () {
+          if (!window.__wgReveal) {
+            document.documentElement.classList.remove("reveal-siap");
+          }
+        }, 2000);
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="../../index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        Webiko
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="../../index.html">Beranda</a>
+        <a class="navbar__link" href="../../index.html#kurikulum" aria-current="page">Kurikulum</a>
+        <a class="navbar__link" href="../../index.html#cara-pakai">Cara pakai</a>
+      </nav>
+
+      <div class="navbar__tools">
+        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
+          <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--terang" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--gelap" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
+          </svg>
+          <span class="theme-toggle__label">Terang</span>
+        </button>
+
+        <button class="navbar__btn navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section">
+      <div class="layout--with-sidebar">
+
+        <aside class="sidebar" aria-label="Daftar bab CSS &amp; tata letak">
+          <p class="sidebar__title">CSS &amp; tata letak</p>
+          <ul class="sidebar__list">
+            <li><a class="sidebar__link" href="mengenal-css.html">Mengenal CSS</a></li>
+            <li><a class="sidebar__link" href="warna-dan-latar.html">Warna dan latar</a></li>
+            <li><a class="sidebar__link" href="ukuran-dan-jarak.html">Ukuran dan jarak</a></li>
+            <li><a class="sidebar__link" href="font-dan-baris.html">Font dan tinggi baris</a></li>
+            <li><a class="sidebar__link" href="selector-kelas.html">Selector dan kelas</a></li>
+            <li><a class="sidebar__link" href="kotak.html" aria-current="page">Kotak: margin, border, padding</a></li>
+            <li><a class="sidebar__link" href="flexbox.html">Menata dengan flexbox</a></li>
+            <li><a class="sidebar__link" href="grid.html">Menyusun grid</a></li>
+            <li><a class="sidebar__link" href="tombol-dan-kartu.html">Tombol dan kartu</a></li>
+            <li><a class="sidebar__link" href="tampilan-di-hp.html">Tampilan di layar HP</a></li>
+            <li><a class="sidebar__link" href="mode-gelap.html">Mode gelap</a></li>
+          </ul>
+        </aside>
+
+        <article class="materi">
+          <p class="label materi__eyebrow">CSS &amp; tata letak · Bab 6 dari 11</p>
+          <h1>Kotak: margin, border, padding</h1>
+          <p class="materi__lead">
+            Setiap elemen adalah kotak. Jarak di dalam, garis tepi, dan jarak di luar menentukan apakah isi terasa sesak atau lega.
+          </p>
+
+          <h2>Isi, padding, border, margin</h2>
+          <p>
+            Setiap elemen diperlakukan browser sebagai kotak. Dari dalam ke luar ada
+            empat bagian:
+          </p>
+          <ul>
+            <li><strong>Content</strong>: isi elemen, seperti teks atau gambar.</li>
+            <li><strong>Padding</strong>: ruang kosong di dalam, antara isi dan garis tepi.</li>
+            <li><strong>Border</strong>: garis tepi yang mengelilingi padding dan isi.</li>
+            <li><strong>Margin</strong>: ruang kosong di luar, pemisah dengan elemen lain.</li>
+          </ul>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">style.css</span>
+                <span class="pane__badge">CSS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">.kartu</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">padding</span><span class="tok-punct">:</span> <span class="tok-string">1.5rem;</span></span><span class="code__line">  <span class="tok-attr">border</span><span class="tok-punct">:</span> <span class="tok-string">3px solid #1a1b33;</span></span><span class="code__line">  <span class="tok-attr">margin-bottom</span><span class="tok-punct">:</span> <span class="tok-string">1rem;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Padding membuat isi tidak menempel garis. Margin memberi jarak dengan kotak berikutnya.
+            </p>
+          </div>
+
+          <h2>Padding dan margin tidak sama</h2>
+          <p>
+            <code>padding</code> berada di dalam kotak dan ikut terkena warna latar.
+            <code>margin</code> berada di luar kotak dan selalu transparan. Jika kartu
+            terlihat sesak, tambah padding. Jika kartu terlalu rapat dengan kartu lain,
+            tambah margin.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">style.css</span>
+                <span class="pane__badge">CSS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">.kartu</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">padding</span><span class="tok-punct">:</span> <span class="tok-string">1rem 1.5rem;</span></span><span class="code__line">  <span class="tok-attr">margin</span><span class="tok-punct">:</span> <span class="tok-string">0 0 1rem;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Dua nilai berarti atas-bawah lalu kiri-kanan. Empat nilai berarti atas, kanan, bawah, kiri.
+            </p>
+          </div>
+          <p>
+            Margin vertikal dua elemen bersebelahan bisa saling menimpa. Yang dipakai
+            adalah nilai yang lebih besar, bukan jumlah keduanya. Ini disebut
+            <em>margin collapse</em>.
+          </p>
+
+          <h2>box-sizing: hitung dari luar</h2>
+          <p>
+            Bawaan browser memakai <code>content-box</code>. Artinya <code>width</code>
+            hanya menghitung isi; padding dan border menambah lebar total. Kalau kartu
+            diberi <code>width: 100%</code> lalu padding, hasilnya bisa meluber.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">style.css</span>
+                <span class="pane__badge">CSS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">.kartu</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">width</span><span class="tok-punct">:</span> <span class="tok-string">100%;</span></span><span class="code__line">  <span class="tok-attr">padding</span><span class="tok-punct">:</span> <span class="tok-string">1.5rem;</span></span><span class="code__line">  <span class="tok-attr">border</span><span class="tok-punct">:</span> <span class="tok-string">3px solid #1a1b33;</span></span><span class="code__line">  <span class="tok-attr">box-sizing</span><span class="tok-punct">:</span> <span class="tok-string">border-box;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Dengan border-box, width sudah termasuk padding dan border. Kartu tetap muat di dalam induknya.
+            </p>
+          </div>
+          <p>
+            Banyak proyek memasang <code>box-sizing: border-box</code> untuk semua elemen
+            lewat selector <code>*</code>. Untuk pemula, cukup pasang pada komponen yang
+            punya lebar dan padding sekaligus.
+          </p>
+
+          <h2>Latihan: beri ruang pada kartu</h2>
+          <hr>
+          <section class="lab" data-lab data-lab-warna aria-labelledby="lab-judul">
+            <p class="label">Latihan langsung</p>
+            <h2 id="lab-judul">Bentuk kotak kegiatan</h2>
+            <p>
+              Kartu di panel kiri masih polos: isinya menempel ke tepi dan tidak punya garis. Atur kotaknya, lalu klik <strong>Jalankan</strong>. Jangan ubah isi HTML-nya.
+            </p>
+            <ol>
+                            <li>Tambah <code>padding: 1.5rem;</code> pada <code>.kartu</code>.</li>
+                        <li>Ubah <code>border: 0 solid #1a1b33;</code> menjadi <code>border: 3px solid #1a1b33;</code>.</li>
+                        <li>Tambah <code>border-radius: 12px;</code> pada <code>.kartu</code>.</li>
+                        <li>Tambah <code>box-sizing: border-box;</code> dan <code>max-width: 30rem;</code> pada <code>.kartu</code>.</li>
+            </ol>
+
+            <div class="lab__meja">
+              <div class="lab__panel lab__panel--kode">
+                <div class="lab__bar">
+                  <span class="lab__prompt" aria-hidden="true">&gt;_</span>
+                  <span class="lab__nama">kegiatan.html</span>
+                  <span class="lab__isyarat">bisa diubah</span>
+                </div>
+                <textarea class="lab__editor" data-lab-editor rows="38" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Kode HTML dan CSS latihan" aria-describedby="lab-status">&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Kegiatan Sabtu&lt;/title&gt;
+  &lt;style&gt;
+    body {
+      margin: 0;
+      padding: 1rem;
+      background-color: #ffffff;
+      color: #1a1b33;
+      font-family: system-ui, sans-serif;
+    }
+
+    .kartu {
+      width: 100%;
+      background-color: #ffffff;
+      border: 0 solid #1a1b33;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 1.25rem;
+    }
+
+    p {
+      margin: 0;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class="kartu"&gt;
+    &lt;h2&gt;Kegiatan Sabtu&lt;/h2&gt;
+    &lt;p&gt;Kerja bakti pukul 7 pagi di halaman sekolah.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+              </div>
+
+              <div class="lab__panel lab__panel--hasil">
+                <div class="lab__bar">
+                  <span class="pane__dots" aria-hidden="true">
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                  </span>
+                  <span class="lab__nama">Hasil</span>
+                  <span class="lab__isyarat">pratinjau</span>
+                </div>
+                <iframe class="lab__pratinjau" data-lab-pratinjau title="Pratinjau hasil kode HTML dan CSS" sandbox="allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;id&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;Kegiatan Sabtu&lt;/title&gt;
+  &lt;style&gt;
+    body {
+      margin: 0;
+      padding: 1rem;
+      background-color: #ffffff;
+      color: #1a1b33;
+      font-family: system-ui, sans-serif;
+    }
+
+    .kartu {
+      width: 100%;
+      background-color: #ffffff;
+      border: 0 solid #1a1b33;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 1.25rem;
+    }
+
+    p {
+      margin: 0;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class=&quot;kartu&quot;&gt;
+    &lt;h2&gt;Kegiatan Sabtu&lt;/h2&gt;
+    &lt;p&gt;Kerja bakti pukul 7 pagi di halaman sekolah.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;"></iframe>
+              </div>
+            </div>
+
+            <div class="lab__aksi">
+              <button class="btn btn--primary" type="button" data-lab-jalankan hidden>Jalankan</button>
+              <button class="btn btn--ghost" type="button" data-lab-reset hidden>Atur ulang</button>
+              <p class="lab__status" id="lab-status" data-lab-status role="status">Beri padding, border, dan batas lebar, lalu klik Jalankan.</p>
+            </div>
+
+            <noscript>
+              <p class="lab__catatan">
+                Editor butuh JavaScript. Salin kode di atas ke file .html, lalu
+                buka di browser.
+              </p>
+            </noscript>
+          </section>
+
+          <div class="materi__latihan">
+            <p><strong>Cek hasil:</strong></p>
+            <ul>
+                            <li><code>.kartu</code> punya <code>padding: 1.5rem</code>.</li>
+                        <li><code>.kartu</code> punya border <code>3px solid #1a1b33</code>.</li>
+                        <li>Sudut kartu membulat dan lebarnya tidak melebihi <code>30rem</code>.</li>
+                        <li>Isi tidak menempel garis tepi.</li>
+            </ul>
+          </div>
+
+          <h2>Rangkuman</h2>
+          <ul>
+            <li>Model kotak terdiri dari content, padding, border, dan margin.</li>
+            <li>Padding ada di dalam dan ikut berwarna; margin ada di luar dan transparan.</li>
+            <li>Margin vertikal bersebelahan bisa saling menimpa.</li>
+            <li><code>box-sizing: border-box</code> membuat width sudah termasuk padding dan border.</li>
+            <li>Pasang <code>width: 100%</code> bersama padding hanya kalau memakai border-box.</li>
+          </ul>
+
+          <footer class="materi__kaki">
+            <section class="kaki__sumber" aria-labelledby="sumber-judul">
+              <h2 class="kaki__label" id="sumber-judul">Bacaan asli</h2>
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_box_model">MDN — Box model</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing">MDN — box-sizing</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/padding">MDN — padding</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/margin">MDN — margin</a></li>
+                <li><a href="https://web.dev/learn/css/box-model">web.dev — The box model</a></li>
+              </ul>
+            </section>
+
+            <nav class="kaki__pager" aria-label="Bab sebelumnya dan berikutnya">
+              <a class="kaki__bab kaki__bab--kembali" href="selector-kelas.html">
+                <span class="kaki__arah">Sebelumnya</span>
+                <span class="kaki__judul">Selector dan kelas</span>
+              </a>
+              <a class="kaki__bab kaki__bab--lanjut" href="flexbox.html">
+                <span class="kaki__arah">Bab berikutnya</span>
+                <span class="kaki__judul">Menata dengan flexbox</span>
+              </a>
+            </nav>
+          </footer>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__row">
+      <div>
+        <p class="footer__wordmark">Webiko</p>
+        <p class="footer__tagline">
+          Belajar bikin website dari nol, dalam bahasa Indonesia.
+          Tanpa install, tanpa framework.
+        </p>
+      </div>
+      <nav class="footer__nav" aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="../../index.html#kurikulum">Kurikulum</a></li>
+          <li><a href="../../index.html#cara-pakai">Cara pakai</a></li>
+          <li><a href="../../index.html#progres">Progres</a></li>
+          <li><a href="../../index.html#daftar">Buat akun</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <p>© 2026 Webiko · Dibuat tanpa framework dan tanpa dependency.</p>
+      <p>Untuk pelajar SMP &amp; SMA</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/latihan-html.js"></script>
+  <script src="../../assets/js/lab-warna.js"></script>
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bab 7 CSS &amp; tata letak: display flex, gap, justify-content, align-items, dan flex-wrap untuk menyusun menu yang rapi di berbagai lebar layar. Materi Webiko untuk pelajar SMP dan SMA.">
+  <title>Menata dengan flexbox — CSS &amp; tata letak · Webiko</title>
+
+  <script>
+    (function () {
+      try {
+        var pilihan = localStorage.getItem("tema");
+        var gelap =
+          pilihan === "gelap" ||
+          (pilihan === "sistem" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-tema", gelap ? "gelap" : "terang");
+      } catch (e) {
+        document.documentElement.setAttribute("data-tema", "terang");
+      }
+
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-siap");
+        window.setTimeout(function () {
+          if (!window.__wgReveal) {
+            document.documentElement.classList.remove("reveal-siap");
+          }
+        }, 2000);
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="../../index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        Webiko
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="../../index.html">Beranda</a>
+        <a class="navbar__link" href="../../index.html#kurikulum" aria-current="page">Kurikulum</a>
+        <a class="navbar__link" href="../../index.html#cara-pakai">Cara pakai</a>
+      </nav>
+
+      <div class="navbar__tools">
+        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
+          <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--terang" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--gelap" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
+          </svg>
+          <span class="theme-toggle__label">Terang</span>
+        </button>
+
+        <button class="navbar__btn navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section">
+      <div class="layout--with-sidebar">
+
+        <aside class="sidebar" aria-label="Daftar bab CSS &amp; tata letak">
+          <p class="sidebar__title">CSS &amp; tata letak</p>
+          <ul class="sidebar__list">
+            <li><a class="sidebar__link" href="mengenal-css.html">Mengenal CSS</a></li>
+            <li><a class="sidebar__link" href="warna-dan-latar.html">Warna dan latar</a></li>
+            <li><a class="sidebar__link" href="ukuran-dan-jarak.html">Ukuran dan jarak</a></li>
+            <li><a class="sidebar__link" href="font-dan-baris.html">Font dan tinggi baris</a></li>
+            <li><a class="sidebar__link" href="selector-kelas.html">Selector dan kelas</a></li>
+            <li><a class="sidebar__link" href="kotak.html">Kotak: margin, border, padding</a></li>
+            <li><a class="sidebar__link" href="flexbox.html" aria-current="page">Menata dengan flexbox</a></li>
+            <li><a class="sidebar__link" href="grid.html">Menyusun grid</a></li>
+            <li><a class="sidebar__link" href="tombol-dan-kartu.html">Tombol dan kartu</a></li>
+            <li><a class="sidebar__link" href="tampilan-di-hp.html">Tampilan di layar HP</a></li>
+            <li><a class="sidebar__link" href="mode-gelap.html">Mode gelap</a></li>
+          </ul>
+        </aside>
+
+        <article class="materi">
+          <p class="label materi__eyebrow">CSS &amp; tata letak · Bab 7 dari 11</p>
+          <h1>Menata dengan flexbox</h1>
+          <p class="materi__lead">
+            Menu yang menumpuk ke bawah mudah dibuat, tetapi belum rapi. Flexbox menyusun elemen dalam satu baris dan mengatur jaraknya.
+          </p>
+
+          <h2>display: flex</h2>
+          <p>
+            Flexbox mengatur anak-anak sebuah elemen dalam satu baris atau satu kolom.
+            Elemen yang diberi <code>display: flex</code> menjadi wadah, dan anak
+            langsungnya menjadi item fleksibel.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">style.css</span>
+                <span class="pane__badge">CSS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">.menu</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">display</span><span class="tok-punct">:</span> <span class="tok-string">flex;</span></span><span class="code__line">  <span class="tok-attr">gap</span><span class="tok-punct">:</span> <span class="tok-string">1rem;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Tanpa flex, tautan menumpuk ke bawah. Dengan flex, mereka berjajar dalam satu baris.
+            </p>
+          </div>
+          <p>
+            <code>gap</code> memberi jarak antaritam tanpa perlu margin di setiap anak.
+            Ini lebih rapi daripada memberi <code>margin-right</code> pada semua tautan.
+          </p>
+
+          <h2>Sumbu utama dan sumbu silang</h2>
+          <p>
+            Pada baris flex, sumbu utama berjalan mendatar dan sumbu silang berjalan
+            menurun. <code>justify-content</code> mengatur posisi di sumbu utama;
+            <code>align-items</code> mengatur posisi di sumbu silang.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">style.css</span>
+                <span class="pane__badge">CSS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">.menu</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">display</span><span class="tok-punct">:</span> <span class="tok-string">flex;</span></span><span class="code__line">  <span class="tok-attr">justify-content</span><span class="tok-punct">:</span> <span class="tok-string">space-between;</span></span><span class="code__line">  <span class="tok-attr">align-items</span><span class="tok-punct">:</span> <span class="tok-string">center;</span></span><span class="code__line">  <span class="tok-attr">gap</span><span class="tok-punct">:</span> <span class="tok-string">1rem;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              <code>space-between</code> mendorong item ke dua ujung. <code>center</code> menyejajarkan tingginya.
+            </p>
+          </div>
+          <ul>
+            <li><code>flex-start</code>: menempel di awal.</li>
+            <li><code>center</code>: di tengah.</li>
+            <li><code>space-between</code>: rata kiri dan kanan, sisa ruang di tengah.</li>
+            <li><code>space-around</code>: jarak merata dengan ruang di tepi.</li>
+          </ul>
+
+          <h2>Biar tidak meluber</h2>
+          <p>
+            Kalau total lebar item melebihi wadah, flexbox akan mengecilkan item. Kalau
+            isinya tidak boleh mengecil, tambahkan <code>flex-wrap: wrap</code> supaya
+            item pindah ke baris berikutnya.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">style.css</span>
+                <span class="pane__badge">CSS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-tag">.menu</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-attr">display</span><span class="tok-punct">:</span> <span class="tok-string">flex;</span></span><span class="code__line">  <span class="tok-attr">flex-wrap</span><span class="tok-punct">:</span> <span class="tok-string">wrap;</span></span><span class="code__line">  <span class="tok-attr">gap</span><span class="tok-punct">:</span> <span class="tok-string">1rem;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Di layar sempit, item yang tidak muat turun ke baris baru. Tidak ada yang terpotong.
+            </p>
+          </div>
+          <p>
+            Untuk menu, <code>flex-wrap: wrap</code> adalah pengaman sederhana sebelum
+            memakai media query di bab Tampilan di layar HP.
+          </p>
+
+          <h2>Latihan: sejajarkan menu</h2>
+          <hr>
+          <section class="lab" data-lab data-lab-warna aria-labelledby="lab-judul">
+            <p class="label">Latihan langsung</p>
+            <h2 id="lab-judul">Susun menu jadi satu baris</h2>
+            <p>
+              Menu di panel kiri masih menumpuk ke bawah. Ubah wadahnya menjadi flexbox dan rapikan tautannya, lalu klik <strong>Jalankan</strong>. Jangan ubah isi HTML-nya.
+            </p>
+            <ol>
+                            <li>Tambah <code>display: flex;</code>, <code>gap: 1rem;</code>, dan <code>flex-wrap: wrap;</code> pada <code>.menu</code>.</li>
+                        <li>Tambah <code>justify-content: space-between;</code> dan <code>align-items: center;</code> pada <code>.menu</code>.</li>
+                        <li>Ubah <code>.menu a</code> agar punya <code>padding: 0.5rem 1rem;</code>, <code>background-color: #d6d9fc;</code>, <code>border-radius: 8px;</code>, dan <code>text-decoration: none;</code>.</li>
+            </ol>
+
+            <div class="lab__meja">
+              <div class="lab__panel lab__panel--kode">
+                <div class="lab__bar">
+                  <span class="lab__prompt" aria-hidden="true">&gt;_</span>
+                  <span class="lab__nama">menu-sekolah.html</span>
+                  <span class="lab__isyarat">bisa diubah</span>
+                </div>
+                <textarea class="lab__editor" data-lab-editor rows="40" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Kode HTML dan CSS latihan" aria-describedby="lab-status">&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Menu sekolah&lt;/title&gt;
+  &lt;style&gt;
+    body {
+      margin: 0;
+      padding: 1rem;
+      background-color: #ffffff;
+      color: #1a1b33;
+      font-family: system-ui, sans-serif;
+    }
+
+    h1 {
+      margin: 0 0 1rem;
+      font-size: 2rem;
+    }
+
+    .menu {
+      margin: 0;
+    }
+
+    .menu a {
+      display: block;
+      padding: 0.5rem 0;
+      color: #433fd4;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Menu Sekolah&lt;/h1&gt;
+  &lt;nav class="menu"&gt;
+    &lt;a href="#"&gt;Beranda&lt;/a&gt;
+    &lt;a href="#"&gt;Profil&lt;/a&gt;
+    &lt;a href="#"&gt;Kegiatan&lt;/a&gt;
+  &lt;/nav&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+              </div>
+
+              <div class="lab__panel lab__panel--hasil">
+                <div class="lab__bar">
+                  <span class="pane__dots" aria-hidden="true">
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                  </span>
+                  <span class="lab__nama">Hasil</span>
+                  <span class="lab__isyarat">pratinjau</span>
+                </div>
+                <iframe class="lab__pratinjau" data-lab-pratinjau title="Pratinjau hasil kode HTML dan CSS" sandbox="allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;id&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;Menu sekolah&lt;/title&gt;
+  &lt;style&gt;
+    body {
+      margin: 0;
+      padding: 1rem;
+      background-color: #ffffff;
+      color: #1a1b33;
+      font-family: system-ui, sans-serif;
+    }
+
+    h1 {
+      margin: 0 0 1rem;
+      font-size: 2rem;
+    }
+
+    .menu {
+      margin: 0;
+    }
+
+    .menu a {
+      display: block;
+      padding: 0.5rem 0;
+      color: #433fd4;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Menu Sekolah&lt;/h1&gt;
+  &lt;nav class=&quot;menu&quot;&gt;
+    &lt;a href=&quot;#&quot;&gt;Beranda&lt;/a&gt;
+    &lt;a href=&quot;#&quot;&gt;Profil&lt;/a&gt;
+    &lt;a href=&quot;#&quot;&gt;Kegiatan&lt;/a&gt;
+  &lt;/nav&gt;
+&lt;/body&gt;
+&lt;/html&gt;"></iframe>
+              </div>
+            </div>
+
+            <div class="lab__aksi">
+              <button class="btn btn--primary" type="button" data-lab-jalankan hidden>Jalankan</button>
+              <button class="btn btn--ghost" type="button" data-lab-reset hidden>Atur ulang</button>
+              <p class="lab__status" id="lab-status" data-lab-status role="status">Sejajarkan menu dengan flexbox, lalu klik Jalankan.</p>
+            </div>
+
+            <noscript>
+              <p class="lab__catatan">
+                Editor butuh JavaScript. Salin kode di atas ke file .html, lalu
+                buka di browser.
+              </p>
+            </noscript>
+          </section>
+
+          <div class="materi__latihan">
+            <p><strong>Cek hasil:</strong></p>
+            <ul>
+                            <li><code>.menu</code> memakai <code>display: flex</code>.</li>
+                        <li>Tautan berjajar mendatar dengan jarak <code>1rem</code>.</li>
+                        <li>Di layar sempit, tautan turun ke baris baru, tidak terpotong.</li>
+                        <li>Tautan tidak lagi bergaris bawah.</li>
+            </ul>
+          </div>
+
+          <h2>Rangkuman</h2>
+          <ul>
+            <li><code>display: flex</code> membuat anak langsungnya berjajar.</li>
+            <li><code>gap</code> memberi jarak antaritam tanpa margin tambahan.</li>
+            <li><code>justify-content</code> mengatur sumbu utama; <code>align-items</code> mengatur sumbu silang.</li>
+            <li><code>flex-wrap: wrap</code> mencegah item terpotong di layar sempit.</li>
+            <li>Flexbox cocok untuk satu baris; susunan dua dimensi lebih pas memakai grid.</li>
+          </ul>
+
+          <footer class="materi__kaki">
+            <section class="kaki__sumber" aria-labelledby="sumber-judul">
+              <h2 class="kaki__label" id="sumber-judul">Bacaan asli</h2>
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout">MDN — Flexbox</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content">MDN — justify-content</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/align-items">MDN — align-items</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/gap">MDN — gap</a></li>
+                <li><a href="https://web.dev/learn/css/flexbox">web.dev — Flexbox</a></li>
+              </ul>
+            </section>
+
+            <nav class="kaki__pager" aria-label="Bab sebelumnya dan berikutnya">
+              <a class="kaki__bab kaki__bab--kembali" href="kotak.html">
+                <span class="kaki__arah">Sebelumnya</span>
+                <span class="kaki__judul">Kotak: margin, border, padding</span>
+              </a>
+              <a class="kaki__bab kaki__bab--lanjut" href="grid.html">
+                <span class="kaki__arah">Bab berikutnya</span>
+                <span class="kaki__judul">Menyusun grid</span>
+              </a>
+            </nav>
+          </footer>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__row">
+      <div>
+        <p class="footer__wordmark">Webiko</p>
+        <p class="footer__tagline">
+          Belajar bikin website dari nol, dalam bahasa Indonesia.
+          Tanpa install, tanpa framework.
+        </p>
+      </div>
+      <nav class="footer__nav" aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="../../index.html#kurikulum">Kurikulum</a></li>
+          <li><a href="../../index.html#cara-pakai">Cara pakai</a></li>
+          <li><a href="../../index.html#progres">Progres</a></li>
+          <li><a href="../../index.html#daftar">Buat akun</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <p>© 2026 Webiko · Dibuat tanpa framework dan tanpa dependency.</p>
+      <p>Untuk pelajar SMP &amp; SMA</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/latihan-html.js"></script>
+  <script src="../../assets/js/lab-warna.js"></script>
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>
