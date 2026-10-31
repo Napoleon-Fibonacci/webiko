@@ -231,6 +231,33 @@
     editor.dispatchEvent(new Event('input', { bubbles: true }));
   }
 
+  /* Lab boleh menulis satu spasi sebelum hex. Saat lab dibuka dan
+     sesudah Atur ulang, rapikan semua nilai hex di deklarasi supaya
+     kotak warna selalu punya ruang di kedua sisi. */
+  function rapikanSemua() {
+    var kode = editor.value;
+    var pola = /#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b/g;
+    var sasaranRapi = [];
+    var cocok;
+    while ((cocok = pola.exec(kode))) {
+      var mulai = cocok.index;
+      var i = mulai;
+      while (i > 0) {
+        var c = kode.charAt(i - 1);
+        if (c !== ' ' && c !== '\t') break;
+        i -= 1;
+      }
+      if (mulai - i >= SPASI_WARNA) continue;
+      if (!dalamDeklarasi(kode, i)) continue;
+      sasaranRapi.push([i, mulai]);
+    }
+    if (!sasaranRapi.length) return;
+    for (var n = sasaranRapi.length - 1; n >= 0; n--) {
+      editor.setRangeText('   ', sasaranRapi[n][0], sasaranRapi[n][1], 'preserve');
+    }
+    editor.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+
   input.addEventListener('input', function () {
     if (!sasaran) return;
     var teks = editor.value;
@@ -260,12 +287,16 @@
   window.addEventListener('resize', jadwalkan);
   if (reset) {
     reset.addEventListener('click', function () {
-      setTimeout(jadwalkan, 0);
+      setTimeout(function () {
+        rapikanSemua();
+        jadwalkan();
+      }, 0);
     });
   }
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(jadwalkan);
   }
 
+  rapikanSemua();
   jadwalkan();
 })();
