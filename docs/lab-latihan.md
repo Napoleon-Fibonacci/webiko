@@ -24,7 +24,7 @@ Lab latihan harus terasa seperti satu editor kecil yang konsisten:
 | `assets/css/style.css` | Token, panel lab, editor, pratinjau, dan batas tinggi minimum. |
 | `materi/css/*.html` | Lab CSS: 11 bab, dari `mengenal-css` sampai `mode-gelap`. |
 | `materi/html/*.html` | Lab HTML: `file-html-pertama`, `judul-dan-paragraf`, `gambar`, `tautan`, `daftar`, `tabel`, `halaman-lengkap`. |
-| `materi/javascript/*.html` | Materi JavaScript: `apa-itu-javascript` (lab + kuis), `variabel`, `fungsi`, `percabangan`, `perulangan`, `array-objek`, `dom`, `klik-dan-form`, `penyimpanan`, `ambil-data`. Tiga bab lain belum dibuat. |
+| `materi/javascript/*.html` | Materi JavaScript: `apa-itu-javascript` (lab + kuis), `variabel`, `fungsi`, `percabangan`, `perulangan`, `array-objek`, `dom`, `klik-dan-form`, `penyimpanan`, `ambil-data`, `daftar-dari-data`. Dua bab lain belum dibuat. |
 | `data/contoh-kelas.json` | Data contoh untuk lab `ambil-data`: nama kelas dan tiga murid. |
 
 Bab konsep `apa-itu-website` dan `dari-server-ke-layar` memakai kuis pilihan
@@ -88,10 +88,11 @@ lab khusus, bukan lab ini.
 
 ## Lab DOM
 
-Bab `dom`, `klik-dan-form`, `penyimpanan`, dan `ambil-data` memakai penanda
-`data-lab-dom` dan `assets/js/latihan-dom.js`. Kode siswa butuh `document`,
-sedangkan Web Worker tidak punya DOM. Karena itu kode dijalankan di iframe
-pratinjau, bukan di halaman materi:
+Bab `dom`, `klik-dan-form`, `penyimpanan`, `ambil-data`, dan
+`daftar-dari-data` memakai penanda `data-lab-dom` dan
+`assets/js/latihan-dom.js`. Kode siswa butuh `document`, sedangkan Web Worker
+tidak punya DOM. Karena itu kode dijalankan di iframe pratinjau, bukan di
+halaman materi:
 
 - iframe memakai `sandbox="allow-scripts"` tanpa `allow-same-origin`, jadi
   halaman materi tidak bisa menyentuh isinya dan sebaliknya;
@@ -147,6 +148,10 @@ Karena itu `latihan-dom.js` meneruskan permintaan ke halaman materi:
   halaman materi sendiri, bukan oleh iframe.
 - Lab memakai `data/contoh-kelas.json`. Status 404 tetap sampai ke kode siswa
   sebagai `ok: false` dan `status: 404`, bukan error otomatis.
+
+Bab `daftar-dari-data` tidak menambah shim baru. Latihan memakai array lokal
+dan `document`, jadi cukup mekanisme iframe biasa. Contoh `fetch` di artikel
+hanya untuk membaca, bukan bagian lab.
 
 Iframe yang terkunci `while (true)` tidak bisa dipulihkan dari luar: mengganti
 `srcdoc` atau membuat iframe baru tetap menunggu proses yang sama. Karena itu
@@ -225,7 +230,10 @@ Jalankan `python -m http.server 8000`, lalu periksa:
     `res.text()` dan `res.json()` bekerja; alamat di luar `/data/` ditolak;
     404 menghasilkan `ok: false`; permintaan yang macet berhenti setelah
     5 detik; lab DOM lain tidak mendapat shim `fetch`.
-14. Semua berkas tetap CRLF.
+14. Lab daftar: Jalankan menampilkan tiga `li`; menambah objek menambah baris;
+    mengganti `orang.nama` menjadi `orang.kota` mengganti isi; tanpa
+    `append` daftar tetap kosong.
+15. Semua berkas tetap CRLF.
 
 ## Riwayat perubahan
 
