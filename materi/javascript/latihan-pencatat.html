@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bab 13 JavaScript dasar: latihan membuat pencatat belajar dengan formulir, array, localStorage, JSON, render daftar, hapus catatan, dan try/catch. Materi Webiko untuk pelajar SMP dan SMA.">
+  <title>Latihan: pencatat belajar — JavaScript dasar · Webiko</title>
+
+  <script>
+    (function () {
+      try {
+        var pilihan = localStorage.getItem("tema");
+        var gelap =
+          pilihan === "gelap" ||
+          (pilihan === "sistem" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-tema", gelap ? "gelap" : "terang");
+      } catch (e) {
+        document.documentElement.setAttribute("data-tema", "terang");
+      }
+
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-siap");
+        window.setTimeout(function () {
+          if (!window.__wgReveal) {
+            document.documentElement.classList.remove("reveal-siap");
+          }
+        }, 2000);
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="../../index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        Webiko
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="../../index.html">Beranda</a>
+        <a class="navbar__link" href="../../index.html#kurikulum" aria-current="page">Kurikulum</a>
+        <a class="navbar__link" href="../../index.html#cara-pakai">Cara pakai</a>
+      </nav>
+
+      <div class="navbar__tools">
+        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
+          <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--terang" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--gelap" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
+          </svg>
+          <span class="theme-toggle__label">Terang</span>
+        </button>
+
+        <button class="navbar__btn navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section">
+      <div class="layout--with-sidebar">
+
+                                                                                <aside class="sidebar" aria-label="Daftar bab JavaScript dasar">
+          <p class="sidebar__title">JavaScript dasar</p>
+          <ul class="sidebar__list">
+            <li><a class="sidebar__link" href="apa-itu-javascript.html">Apa itu JavaScript</a></li>
+            <li><a class="sidebar__link" href="variabel.html">Variabel dan tipe data</a></li>
+            <li><a class="sidebar__link" href="fungsi.html">Fungsi</a></li>
+            <li><a class="sidebar__link" href="percabangan.html">Percabangan if</a></li>
+            <li><a class="sidebar__link" href="perulangan.html">Perulangan</a></li>
+            <li><a class="sidebar__link" href="array-objek.html">Array dan objek</a></li>
+            <li><a class="sidebar__link" href="dom.html">Mengubah halaman dari kode</a></li>
+            <li><a class="sidebar__link" href="klik-dan-form.html">Klik dan isian formulir</a></li>
+            <li><a class="sidebar__link" href="penyimpanan.html">Menyimpan data di browser</a></li>
+            <li><a class="sidebar__link" href="ambil-data.html">Mengambil data dari server</a></li>
+            <li><a class="sidebar__link" href="daftar-dari-data.html">Membuat daftar dari data</a></li>
+            <li><a class="sidebar__link" href="pesan-error.html">Membaca pesan error</a></li>
+            <li><a class="sidebar__link" href="latihan-pencatat.html" aria-current="page">Latihan: pencatat belajar</a></li>
+          </ul>
+        </aside>
+
+                                                                                <article class="materi">
+          <p class="label materi__eyebrow">JavaScript dasar · Bab 13 dari 13</p>
+          <h1>Latihan: pencatat belajar</h1>
+          <p class="materi__lead">
+            Semua yang sudah dipelajari bertemu di sini: variabel, array,
+            fungsi, DOM, formulir, penyimpanan, dan penanganan error. Tidak ada
+            sintaks baru. Yang dilatih adalah menyusun potongan-potongan itu
+            menjadi satu aplikasi kecil.
+          </p>
+
+          <h2>Yang akan dibuat</h2>
+          <p>
+            Pencatat belajar punya isian untuk catatan baru, tombol Tambah,
+            daftar catatan yang bisa dihapus, dan penyimpanan agar catatan
+            tetap ada setelah halaman ditutup. Pratinjau memakai id supaya kode
+            mudah mencari elemennya.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">pencatat.html</span>
+                <span class="pane__badge">HTML</span>
+              </div>
+              <pre class="code"><code><span class="code__line">&lt;<span class="tok-kunci">form</span> id=<span class="tok-string">"form"</span>&gt;</span><span class="code__line">  &lt;<span class="tok-kunci">label</span> for=<span class="tok-string">"teks"</span>&gt;Catatan baru&lt;/<span class="tok-kunci">label</span>&gt;</span><span class="code__line">  &lt;<span class="tok-kunci">input</span> id=<span class="tok-string">"teks"</span> type=<span class="tok-string">"text"</span>&gt;</span><span class="code__line">  &lt;<span class="tok-kunci">button</span> type=<span class="tok-string">"submit"</span>&gt;Tambah&lt;/<span class="tok-kunci">button</span>&gt;</span><span class="code__line">&lt;/<span class="tok-kunci">form</span>&gt;</span><span class="code__line">&lt;<span class="tok-kunci">p</span> id=<span class="tok-string">"kosong"</span>&gt;Belum ada catatan.&lt;/<span class="tok-kunci">p</span>&gt;</span><span class="code__line">&lt;<span class="tok-kunci">ul</span> id=<span class="tok-string">"daftar"</span>&gt;&lt;/<span class="tok-kunci">ul</span>&gt;</span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Isian, tombol, pesan kosong, dan daftar. Kode JavaScript tinggal
+              mengisi bagian-bagian ini.
+            </p>
+          </div>
+
+          <h2>Menyiapkan data</h2>
+          <p>
+            Catatan disimpan sebagai array teks. Sebelum dipakai, isi
+            <code>localStorage</code> dibaca. Tempat penyimpanan hanya bisa
+            menyimpan teks, jadi array diubah dengan
+            <code>JSON.stringify</code> saat menulis dan
+            <code>JSON.parse</code> saat membaca.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">mulai.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">const</span> KUNCI <span class="tok-punct">=</span> <span class="tok-string">"catatan-belajar"</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-kunci">let</span> catatan <span class="tok-punct">=</span> <span class="tok-punct">[]</span><span class="tok-punct">;</span></span><span class="code__line"></span><span class="code__line"><span class="tok-kunci">try</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-kunci">const</span> teks <span class="tok-punct">=</span> localStorage<span class="tok-punct">.</span><span class="tok-fungsi">getItem</span><span class="tok-punct">(</span>KUNCI<span class="tok-punct">);</span></span><span class="code__line">  catatan <span class="tok-punct">=</span> JSON<span class="tok-punct">.</span><span class="tok-fungsi">parse</span><span class="tok-punct">(</span>teks<span class="tok-punct">)</span> <span class="tok-punct">||</span> <span class="tok-punct">[]</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-punct">}</span> <span class="tok-kunci">catch</span> <span class="tok-punct">(</span>galat<span class="tok-punct">)</span> <span class="tok-punct">{</span></span><span class="code__line">  catatan <span class="tok-punct">=</span> <span class="tok-punct">[]</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Kalau belum ada simpanan, <code>getItem</code> memberi
+              <code>null</code>, lalu <code>|| []</code> menyiapkan array
+              kosong. Kalau isinya rusak, <code>catch</code> mencegah halaman
+              berhenti.
+            </p>
+          </div>
+
+          <h2>Menampilkan daftar</h2>
+          <p>
+            Setiap perubahan diakhiri dengan <code>tampil()</code>. Fungsi ini
+            mengosongkan daftar lalu membuat ulang isinya dari array. Cara ini
+            sederhana dan tidak meninggalkan baris lama.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">tampil.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">function</span> <span class="tok-fungsi">tampil</span><span class="tok-punct">()</span> <span class="tok-punct">{</span></span><span class="code__line">  list<span class="tok-punct">.</span><span class="tok-fungsi">replaceChildren</span><span class="tok-punct">();</span></span><span class="code__line">  catatan<span class="tok-punct">.</span><span class="tok-fungsi">forEach</span><span class="tok-punct">(</span><span class="tok-kunci">function</span> <span class="tok-punct">(</span>teks<span class="tok-punct">,</span> i<span class="tok-punct">)</span> <span class="tok-punct">{</span></span><span class="code__line">    <span class="tok-kunci">const</span> item <span class="tok-punct">=</span> document<span class="tok-punct">.</span><span class="tok-fungsi">createElement</span><span class="tok-punct">(</span><span class="tok-string">"li"</span><span class="tok-punct">);</span></span><span class="code__line">    item<span class="tok-punct">.</span>textContent <span class="tok-punct">=</span> teks <span class="tok-punct">+</span> <span class="tok-string">" "</span><span class="tok-punct">;</span></span><span class="code__line">    <span class="tok-kunci">const</span> btn <span class="tok-punct">=</span></span><span class="code__line">      document<span class="tok-punct">.</span><span class="tok-fungsi">createElement</span><span class="tok-punct">(</span><span class="tok-string">"button"</span><span class="tok-punct">);</span></span><span class="code__line">    btn<span class="tok-punct">.</span>textContent <span class="tok-punct">=</span> <span class="tok-string">"Hapus"</span><span class="tok-punct">;</span></span><span class="code__line">    btn<span class="tok-punct">.</span><span class="tok-fungsi">addEventListener</span><span class="tok-punct">(</span><span class="tok-string">"click"</span><span class="tok-punct">,</span> <span class="tok-kunci">function</span> <span class="tok-punct">()</span> <span class="tok-punct">{</span></span><span class="code__line">      catatan<span class="tok-punct">.</span><span class="tok-fungsi">splice</span><span class="tok-punct">(</span>i<span class="tok-punct">,</span> <span class="tok-angka">1</span><span class="tok-punct">);</span></span><span class="code__line">      <span class="tok-fungsi">simpan</span><span class="tok-punct">();</span></span><span class="code__line">      <span class="tok-fungsi">tampil</span><span class="tok-punct">();</span></span><span class="code__line">    <span class="tok-punct">});</span></span><span class="code__line">    item<span class="tok-punct">.</span><span class="tok-fungsi">append</span><span class="tok-punct">(</span>btn<span class="tok-punct">);</span></span><span class="code__line">    list<span class="tok-punct">.</span><span class="tok-fungsi">append</span><span class="tok-punct">(</span>item<span class="tok-punct">);</span></span><span class="code__line">  <span class="tok-punct">});</span></span><span class="code__line">  info<span class="tok-punct">.</span>hidden <span class="tok-punct">=</span> catatan<span class="tok-punct">.</span>length <span class="tok-punct">&gt;</span> <span class="tok-angka">0</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              <code>textContent</code> menampilkan catatan sebagai teks biasa,
+              bukan HTML. Angka <code>i</code> dipakai tombol Hapus untuk tahu
+              baris mana yang dibuang.
+            </p>
+          </div>
+
+          <h2>Menambah catatan</h2>
+          <p>
+            Formulir mengirim event <code>submit</code>. Panggil
+            <code>preventDefault</code> agar halaman tidak dimuat ulang.
+            <code>trim</code> membuang spasi di ujung; kalau hasilnya kosong,
+            hentikan proses.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">tambah.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line">form<span class="tok-punct">.</span><span class="tok-fungsi">addEventListener</span><span class="tok-punct">(</span><span class="tok-string">"submit"</span><span class="tok-punct">,</span> <span class="tok-kunci">function</span> <span class="tok-punct">(</span>e<span class="tok-punct">)</span> <span class="tok-punct">{</span></span><span class="code__line">  e<span class="tok-punct">.</span><span class="tok-fungsi">preventDefault</span><span class="tok-punct">();</span></span><span class="code__line">  <span class="tok-kunci">const</span> teks <span class="tok-punct">=</span> isian<span class="tok-punct">.</span>value<span class="tok-punct">.</span><span class="tok-fungsi">trim</span><span class="tok-punct">();</span></span><span class="code__line">  <span class="tok-kunci">if</span> <span class="tok-punct">(</span><span class="tok-punct">!</span>teks<span class="tok-punct">)</span> <span class="tok-kunci">return</span><span class="tok-punct">;</span></span><span class="code__line">  catatan<span class="tok-punct">.</span><span class="tok-fungsi">push</span><span class="tok-punct">(</span>teks<span class="tok-punct">);</span></span><span class="code__line">  isian<span class="tok-punct">.</span>value <span class="tok-punct">=</span> <span class="tok-string">""</span><span class="tok-punct">;</span></span><span class="code__line">  <span class="tok-fungsi">simpan</span><span class="tok-punct">();</span></span><span class="code__line">  <span class="tok-fungsi">tampil</span><span class="tok-punct">();</span></span><span class="code__line"><span class="tok-punct">});</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Sesudah <code>push</code>, catatan disimpan lalu daftar digambar
+              ulang. Isian dikosongkan supaya siap menerima catatan berikutnya.
+            </p>
+          </div>
+
+          <h2>Menyimpan dan menghapus</h2>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">simpan.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">function</span> <span class="tok-fungsi">simpan</span><span class="tok-punct">()</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-kunci">const</span> teks <span class="tok-punct">=</span> JSON<span class="tok-punct">.</span><span class="tok-fungsi">stringify</span><span class="tok-punct">(</span>catatan<span class="tok-punct">);</span></span><span class="code__line">  localStorage<span class="tok-punct">.</span><span class="tok-fungsi">setItem</span><span class="tok-punct">(</span>KUNCI<span class="tok-punct">,</span> teks<span class="tok-punct">);</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Menghapus satu catatan memakai <code>splice(i, 1)</code>: mulai
+              dari indeks <code>i</code>, buang satu elemen. Sesudah itu
+              <code>simpan()</code> dan <code>tampil()</code> dipanggil lagi.
+            </p>
+          </div>
+
+          <h2>Coba sendiri</h2>
+          <ul>
+            <li>Tambah dua catatan, lalu klik Jalankan lagi. Catatan tetap ada karena tersimpan.</li>
+            <li>Kosongkan isian lalu klik Tambah. Tidak ada baris kosong yang masuk.</li>
+            <li>Hapus semua catatan. Tulisan "Belum ada catatan." muncul kembali.</li>
+            <li>Ganti nilai <code>KUNCI</code> menjadi <code>"catatan-uji"</code>. Daftar mulai kosong karena kuncinya berbeda.</li>
+            <li>Tambahkan <code>localStorage.setItem(KUNCI, "bukan json");</code> di baris pertama, lalu jalankan. <code>try/catch</code> menjaga halaman tetap hidup.</li>
+          </ul>
+
+          <section class="lab" data-lab-dom data-lab-simpanan aria-labelledby="lab-judul">
+            <p class="label">Latihan langsung</p>
+            <h2 id="lab-judul">Bangun pencatat belajar</h2>
+            <p>
+              Kode di bawah adalah aplikasi lengkapnya. Kode berjalan di
+              pratinjau, dan <code>localStorage</code> di sana disambungkan ke
+              halaman materi supaya data bertahan saat kode dijalankan ulang.
+            </p>
+            <ol>
+              <li>Klik <strong>Jalankan</strong>. Tulis <code>Belajar loop</code>, lalu klik <strong>Tambah</strong>. Catatan muncul di daftar.</li>
+              <li>Tambah <code>Latihan array</code>. Sekarang ada dua baris.</li>
+              <li>Klik <strong>Jalankan</strong> lagi. Dua catatan tetap ada karena dibaca dari penyimpanan.</li>
+              <li>Klik <strong>Hapus</strong> pada satu baris. Baris hilang dan tetap hilang setelah dijalankan ulang.</li>
+              <li>Kosongkan isian, lalu klik <strong>Tambah</strong>. Tidak ada baris kosong.</li>
+              <li>Klik <strong>Atur ulang</strong> untuk mengembalikan kode contoh. Catatan yang tersimpan tidak ikut terhapus.</li>
+            </ol>
+
+            <div class="lab__meja">
+              <div class="lab__panel lab__panel--kode">
+                <div class="lab__bar">
+                  <span class="lab__prompt" aria-hidden="true">&gt;_</span>
+                  <span class="lab__nama">pencatat.js</span>
+                  <span class="lab__isyarat">bisa diubah</span>
+                </div>
+                <textarea class="lab__editor" data-lab-editor rows="24" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Kode JavaScript latihan" aria-describedby="lab-status">const KUNCI = "catatan-belajar";
+const form = document.querySelector("#form");
+const isian = document.querySelector("#teks");
+const list = document.querySelector("#daftar");
+const info = document.querySelector("#kosong");
+
+let catatan = [];
+try {
+  const teks = localStorage.getItem(KUNCI);
+  catatan = JSON.parse(teks) || [];
+} catch (galat) {
+  catatan = [];
+}
+
+function simpan() {
+  const teks = JSON.stringify(catatan);
+  localStorage.setItem(KUNCI, teks);
+}
+
+function tampil() {
+  list.replaceChildren();
+  catatan.forEach(function (teks, i) {
+    const item = document.createElement("li");
+    item.textContent = teks + " ";
+    const btn =
+      document.createElement("button");
+    btn.textContent = "Hapus";
+    btn.addEventListener("click", function () {
+      catatan.splice(i, 1);
+      simpan();
+      tampil();
+    });
+    item.append(btn);
+    list.append(item);
+  });
+  info.hidden = catatan.length > 0;
+}
+
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  const teks = isian.value.trim();
+  if (!teks) return;
+  catatan.push(teks);
+  isian.value = "";
+  simpan();
+  tampil();
+});
+
+tampil();</textarea>
+              </div>
+
+              <div class="lab__panel lab__panel--hasil">
+                <div class="lab__bar">
+                  <span class="pane__dots" aria-hidden="true">
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                  </span>
+                  <span class="lab__nama">Pratinjau</span>
+                  <span class="lab__isyarat">halaman</span>
+                </div>
+                <iframe class="lab__pratinjau" data-lab-pratinjau title="Pratinjau halaman hasil kode" sandbox="allow-scripts allow-forms" srcdoc="<!DOCTYPE html><html lang='id'><head><meta charset='utf-8'><style>body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;margin:0;padding:16px;background:#ffffff;color:#1a1b33;}h1{margin-top:0;font-size:1.6rem;margin-bottom:12px;}form{margin-bottom:12px;}label{display:block;font-weight:600;margin-bottom:4px;}input{font:inherit;padding:6px 8px;border:2px solid #1a1b33;border-radius:6px;width:170px;max-width:100%;}button{font:inherit;font-weight:700;padding:4px 10px;border:2px solid #1a1b33;border-radius:6px;background:#ffe14d;color:#1a1b33;cursor:pointer;}ul{padding-left:20px;margin:0;}li{margin-bottom:6px;}li button{padding:2px 8px;font-size:0.8rem;margin-left:6px;}#kosong{margin:0;color:#555;}</style></head><body><h1>Pencatat belajar</h1><form id='form'><label for='teks'>Catatan baru</label><input id='teks' type='text' placeholder='Misal: belajar loop'><button id='tambah' type='submit'>Tambah</button></form><p id='kosong'>Belum ada catatan.</p><ul id='daftar'></ul></body></html>"></iframe>
+              </div>
+            </div>
+
+            <div class="lab__aksi">
+              <button class="btn btn--primary" type="button" data-lab-jalankan hidden>Jalankan</button>
+              <button class="btn btn--ghost" type="button" data-lab-reset hidden>Atur ulang</button>
+              <p class="lab__status" id="lab-status" data-lab-status role="status">Klik Jalankan untuk melihat hasil.</p>
+            </div>
+
+            <div class="materi__latihan">
+              <p><strong>Cek hasil:</strong></p>
+              <ul>
+                <li>Dua catatan muncul berurutan di daftar.</li>
+                <li>Jalankan ulang → catatan tetap ada.</li>
+                <li>Hapus satu baris → baris itu hilang dan tidak kembali.</li>
+                <li>Isian kosong → tidak menambah baris.</li>
+                <li>"Belum ada catatan." hilang saat ada isi, muncul lagi saat daftar kosong.</li>
+              </ul>
+            </div>
+
+            <noscript>
+              <p class="lab__catatan">
+                Editor butuh JavaScript. Salin kode di atas ke file .js yang
+                dimuat setelah HTML, lalu jalankan di browser.
+              </p>
+            </noscript>
+          </section>
+
+          <h2>Kesalahan umum</h2>
+          <ul>
+            <li>Lupa <code>e.preventDefault()</code>, sehingga formulir memuat ulang pratinjau dan catatan di layar hilang.</li>
+            <li>Menyimpan array tanpa <code>JSON.stringify</code>, sehingga bacaan berikutnya bukan array lagi.</li>
+            <li>Lupa <code>JSON.parse</code> saat membaca, lalu memanggil <code>forEach</code> pada teks.</li>
+            <li>Lupa <code>simpan()</code> setelah <code>push</code> atau <code>splice</code>; data hilang saat halaman dimuat ulang.</li>
+            <li>Memakai <code>innerHTML</code> untuk isi catatan; teks seperti <code>&lt;b&gt;</code> berubah menjadi HTML. Pakai <code>textContent</code>.</li>
+            <li>Menghapus dengan indeks yang salah karena daftar tidak digambar ulang sesudah perubahan.</li>
+          </ul>
+
+          <h2>Rangkuman</h2>
+          <ul>
+            <li>Aplikasi kecil tersusun dari potongan yang sudah dikenal: array, fungsi, event, DOM, dan penyimpanan.</li>
+            <li>Formulir memakai event <code>submit</code> dan <code>preventDefault</code>.</li>
+            <li>Setiap perubahan data diikuti <code>simpan()</code> dan <code>tampil()</code>.</li>
+            <li><code>JSON.stringify</code> dan <code>JSON.parse</code> menjembatani array dengan <code>localStorage</code>.</li>
+            <li><code>try/catch</code> menjaga aplikasi saat isi penyimpanan rusak.</li>
+            <li>Hapus memakai <code>splice</code>, lalu daftar digambar ulang dari array.</li>
+          </ul>
+
+          <footer class="materi__kaki">
+            <section class="kaki__sumber" aria-labelledby="sumber-judul">
+              <h2 class="kaki__label" id="sumber-judul">Bacaan asli</h2>
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage">MDN — localStorage</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse">MDN — JSON.parse</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">MDN — JSON.stringify</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/replaceChildren">MDN — replaceChildren</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault">MDN — preventDefault</a></li>
+              </ul>
+            </section>
+
+            <nav class="kaki__pager" aria-label="Bab sebelumnya dan berikutnya">
+              <a class="kaki__bab kaki__bab--kembali" href="pesan-error.html">
+                <span class="kaki__arah">Sebelumnya</span>
+                <span class="kaki__judul">Membaca pesan error</span>
+              </a>
+              <a class="kaki__bab kaki__bab--lanjut" href="../../index.html#kurikulum">
+                <span class="kaki__arah">Kembali</span>
+                <span class="kaki__judul">Kurikulum</span>
+              </a>
+            </nav>
+          </footer>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__row">
+      <div>
+        <p class="footer__wordmark">Webiko</p>
+        <p class="footer__tagline">
+          Belajar bikin website dari nol, dalam bahasa Indonesia.
+          Tanpa install, tanpa framework.
+        </p>
+      </div>
+      <nav class="footer__nav" aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="../../index.html#kurikulum">Kurikulum</a></li>
+          <li><a href="../../index.html#cara-pakai">Cara pakai</a></li>
+          <li><a href="../../index.html#progres">Progres</a></li>
+          <li><a href="../../index.html#daftar">Buat akun</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <p>© 2026 Webiko · Dibuat tanpa framework dan tanpa dependency.</p>
+      <p>Untuk pelajar SMP &amp; SMA</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/latihan-dom.js"></script>
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>
