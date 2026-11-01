@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bab 6 JavaScript dasar: array berindeks nol, length, push, mengubah isi, objek berproperti, dan array berisi objek. Materi Webiko untuk pelajar SMP dan SMA.">
+  <title>Array dan objek — JavaScript dasar · Webiko</title>
+
+  <script>
+    (function () {
+      try {
+        var pilihan = localStorage.getItem("tema");
+        var gelap =
+          pilihan === "gelap" ||
+          (pilihan === "sistem" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-tema", gelap ? "gelap" : "terang");
+      } catch (e) {
+        document.documentElement.setAttribute("data-tema", "terang");
+      }
+
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-siap");
+        window.setTimeout(function () {
+          if (!window.__wgReveal) {
+            document.documentElement.classList.remove("reveal-siap");
+          }
+        }, 2000);
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="../../index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        Webiko
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="../../index.html">Beranda</a>
+        <a class="navbar__link" href="../../index.html#kurikulum" aria-current="page">Kurikulum</a>
+        <a class="navbar__link" href="../../index.html#cara-pakai">Cara pakai</a>
+      </nav>
+
+      <div class="navbar__tools">
+        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
+          <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--terang" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--gelap" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
+          </svg>
+          <span class="theme-toggle__label">Terang</span>
+        </button>
+
+        <button class="navbar__btn navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section">
+      <div class="layout--with-sidebar">
+
+                        <aside class="sidebar" aria-label="Daftar bab JavaScript dasar">
+          <p class="sidebar__title">JavaScript dasar</p>
+          <ul class="sidebar__list">
+            <li><a class="sidebar__link" href="apa-itu-javascript.html">Apa itu JavaScript</a></li>
+            <li><a class="sidebar__link" href="variabel.html">Variabel dan tipe data</a></li>
+            <li><a class="sidebar__link" href="fungsi.html">Fungsi</a></li>
+            <li><a class="sidebar__link" href="percabangan.html">Percabangan if</a></li>
+            <li><a class="sidebar__link" href="perulangan.html">Perulangan</a></li>
+            <li><a class="sidebar__link" href="array-objek.html" aria-current="page">Array dan objek</a></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Mengubah halaman dari kode</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Klik dan isian formulir</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Menyimpan data di browser</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Mengambil data dari server</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Membuat daftar dari data</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Membaca pesan error</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Latihan: pencatat belajar</span></li>
+          </ul>
+        </aside>
+
+                        <article class="materi">
+          <p class="label materi__eyebrow">JavaScript dasar · Bab 6 dari 13</p>
+          <h1>Array dan objek</h1>
+          <p class="materi__lead">
+            Satu variabel bisa menyimpan satu nilai. Untuk menyimpan banyak
+            data sekaligus, pakai array untuk daftar berurutan dan objek untuk
+            data berlabel.
+          </p>
+
+          <h2>Array: daftar berurutan</h2>
+          <p>
+            Array ditulis dengan tanda kurung siku. Isinya dipisah koma, dan
+            setiap posisi punya nomor yang disebut indeks. Indeks dimulai dari
+            <code>0</code>, bukan <code>1</code>.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">buah.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">const</span> buah <span class="tok-punct">=</span> <span class="tok-punct">[</span><span class="tok-string">"apel"</span><span class="tok-punct">,</span> <span class="tok-string">"jeruk"</span><span class="tok-punct">,</span> <span class="tok-string">"mangga"</span><span class="tok-punct">];</span></span><span class="code__line"></span><span class="code__line">console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span>buah<span class="tok-punct">[</span><span class="tok-angka">0</span><span class="tok-punct">]);</span> <span class="tok-komentar">// apel</span></span><span class="code__line">console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span>buah<span class="tok-punct">[</span><span class="tok-angka">2</span><span class="tok-punct">]);</span> <span class="tok-komentar">// mangga</span></span><span class="code__line">console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span>buah<span class="tok-punct">.</span>length<span class="tok-punct">);</span> <span class="tok-komentar">// 3</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              <code>buah.length</code> berisi jumlah isi array. Di sini ada tiga
+              buah, jadi indeks terakhirnya <code>2</code>.
+            </p>
+          </div>
+
+          <h2>Mengubah dan menambah isi</h2>
+          <p>
+            Isi array bisa diganti lewat indeksnya. <code>push</code>
+            menambahkan nilai baru di paling belakang.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">ubah.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">const</span> buah <span class="tok-punct">=</span> <span class="tok-punct">[</span><span class="tok-string">"apel"</span><span class="tok-punct">,</span> <span class="tok-string">"jeruk"</span><span class="tok-punct">];</span></span><span class="code__line"></span><span class="code__line">buah<span class="tok-punct">[</span><span class="tok-angka">1</span><span class="tok-punct">]</span> <span class="tok-punct">=</span> <span class="tok-string">"pisang"</span><span class="tok-punct">;</span></span><span class="code__line">buah<span class="tok-punct">.</span><span class="tok-fungsi">push</span><span class="tok-punct">(</span><span class="tok-string">"mangga"</span><span class="tok-punct">);</span></span><span class="code__line"></span><span class="code__line">console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span>buah<span class="tok-punct">);</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Hasilnya <code>["apel", "pisang", "mangga"]</code>. Urutannya
+              tetap, hanya isinya yang berubah.
+            </p>
+          </div>
+
+          <h2>Mengulang isi array</h2>
+          <p>
+            Gabungkan array dengan <code>for</code> dari bab sebelumnya. Pakai
+            <code>i &lt; nilai.length</code>, bukan <code>&lt;=</code>, supaya
+            tidak mengambil indeks di luar isi.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">ulang-array.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">const</span> nilai <span class="tok-punct">=</span> <span class="tok-punct">[</span><span class="tok-angka">80</span><span class="tok-punct">,</span> <span class="tok-angka">92</span><span class="tok-punct">,</span> <span class="tok-angka">75</span><span class="tok-punct">];</span></span><span class="code__line"></span><span class="code__line"><span class="tok-kunci">for</span> <span class="tok-punct">(</span><span class="tok-kunci">let</span> i <span class="tok-punct">=</span> <span class="tok-angka">0</span><span class="tok-punct">;</span> i <span class="tok-punct">&lt;</span> nilai<span class="tok-punct">.</span>length<span class="tok-punct">;</span> i<span class="tok-punct">++</span><span class="tok-punct">)</span> <span class="tok-punct">{</span></span><span class="code__line">  console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span>nilai<span class="tok-punct">[</span>i<span class="tok-punct">]);</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Mencetak <code>80</code>, <code>92</code>, lalu
+              <code>75</code>.
+            </p>
+          </div>
+
+          <h2>Objek: data berlabel</h2>
+          <p>
+            Objek ditulis dengan kurung kurawal. Isinya pasangan nama dan
+            nilai, dipisah koma. Nama itu disebut properti, dan dibaca dengan
+            tanda titik.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">siswa.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">const</span> siswa <span class="tok-punct">=</span> <span class="tok-punct">{</span></span><span class="code__line">  nama<span class="tok-punct">:</span> <span class="tok-string">"Ayu"</span><span class="tok-punct">,</span></span><span class="code__line">  umur<span class="tok-punct">:</span> <span class="tok-angka">14</span><span class="tok-punct">,</span></span><span class="code__line">  kelas<span class="tok-punct">:</span> <span class="tok-string">"8A"</span><span class="tok-punct">,</span></span><span class="code__line"><span class="tok-punct">};</span></span><span class="code__line"></span><span class="code__line">console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span>siswa<span class="tok-punct">.</span>nama<span class="tok-punct">);</span> <span class="tok-komentar">// Ayu</span></span><span class="code__line">console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span>siswa<span class="tok-punct">.</span>kelas<span class="tok-punct">);</span> <span class="tok-komentar">// 8A</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Properti bisa diganti: <code>siswa.umur = 15;</code>.
+              <code>const</code> mengunci variabelnya, bukan isi objeknya.
+            </p>
+          </div>
+
+          <h2>Array berisi objek</h2>
+          <p>
+            Pola inilah yang nanti dipakai untuk menampilkan daftar dari data:
+            array sebagai wadah, objek sebagai satu baris data.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">daftar.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">const</span> siswa <span class="tok-punct">=</span> <span class="tok-punct">[</span></span><span class="code__line">  <span class="tok-punct">{</span> nama<span class="tok-punct">:</span> <span class="tok-string">"Ayu"</span><span class="tok-punct">,</span> nilai<span class="tok-punct">:</span> <span class="tok-angka">90</span> <span class="tok-punct">},</span></span><span class="code__line">  <span class="tok-punct">{</span> nama<span class="tok-punct">:</span> <span class="tok-string">"Bima"</span><span class="tok-punct">,</span> nilai<span class="tok-punct">:</span> <span class="tok-angka">80</span> <span class="tok-punct">},</span></span><span class="code__line"><span class="tok-punct">];</span></span><span class="code__line"></span><span class="code__line"><span class="tok-kunci">for</span> <span class="tok-punct">(</span><span class="tok-kunci">let</span> i <span class="tok-punct">=</span> <span class="tok-angka">0</span><span class="tok-punct">;</span> i <span class="tok-punct">&lt;</span> siswa<span class="tok-punct">.</span>length<span class="tok-punct">;</span> i<span class="tok-punct">++</span><span class="tok-punct">)</span> <span class="tok-punct">{</span></span><span class="code__line">  console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span>siswa<span class="tok-punct">[</span>i<span class="tok-punct">].</span>nama<span class="tok-punct">);</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              <code>siswa[i]</code> mengambil satu objek, lalu
+              <code>.nama</code> mengambil propertinya.
+            </p>
+          </div>
+
+          <section class="lab" data-lab-js aria-labelledby="lab-judul">
+            <p class="label">Latihan langsung</p>
+            <h2 id="lab-judul">Baca daftar siswa</h2>
+            <p>
+              Array berisi dua objek siswa. Loop mencetak nama dan nilainya.
+              Jalankan, lalu ubah datanya.
+            </p>
+            <p>
+              <code>jumlah</code> menyimpan <code>siswa.length</code> supaya
+              baris <code>for</code> tetap pendek.
+            </p>
+            <ol>
+              <li>Klik <strong>Jalankan</strong>. Keluarannya <code>Ayu</code>, <code>90</code>, <code>Bima</code>, <code>80</code>.</li>
+              <li>Ganti nilai Bima dari <code>80</code> menjadi <code>100</code>, lalu jalankan. Angka terakhir menjadi <code>100</code>.</li>
+              <li>Tambah satu baris <code>{ nama: "Citra", nilai: 85 },</code> sebelum <code>];</code>, lalu jalankan. Muncul dua baris baru.</li>
+            </ol>
+
+            <div class="lab__meja">
+              <div class="lab__panel lab__panel--kode">
+                <div class="lab__bar">
+                  <span class="lab__prompt" aria-hidden="true">&gt;_</span>
+                  <span class="lab__nama">daftar-siswa.js</span>
+                  <span class="lab__isyarat">bisa diubah</span>
+                </div>
+                <textarea class="lab__editor" data-lab-editor rows="14" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Kode JavaScript latihan" aria-describedby="lab-status">const siswa = [
+  { nama: "Ayu", nilai: 90 },
+  { nama: "Bima", nilai: 80 },
+];
+const jumlah = siswa.length;
+
+for (let i = 0; i < jumlah; i++) {
+  console.log(siswa[i].nama);
+  console.log(siswa[i].nilai);
+}</textarea>
+              </div>
+
+              <div class="lab__panel lab__panel--hasil">
+                <div class="lab__bar">
+                  <span class="pane__dots" aria-hidden="true">
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                  </span>
+                  <span class="lab__nama">Keluaran</span>
+                  <span class="lab__isyarat">console</span>
+                </div>
+                <div class="lab__keluaran" data-lab-keluaran role="log" aria-live="polite" aria-label="Keluaran kode"></div>
+              </div>
+            </div>
+
+            <div class="lab__aksi">
+              <button class="btn btn--primary" type="button" data-lab-jalankan hidden>Jalankan</button>
+              <button class="btn btn--ghost" type="button" data-lab-reset hidden>Atur ulang</button>
+              <p class="lab__status" id="lab-status" data-lab-status role="status">Klik Jalankan untuk melihat hasil.</p>
+            </div>
+
+            <div class="materi__latihan">
+              <p><strong>Cek hasil:</strong></p>
+              <ul>
+                <li>Data awal: <code>Ayu</code>, <code>90</code>, <code>Bima</code>, <code>80</code>.</li>
+                <li>Nilai Bima 100: angka terakhir <code>100</code>.</li>
+                <li>Dengan Citra: <code>Citra</code>, lalu <code>85</code> di paling bawah.</li>
+              </ul>
+            </div>
+
+            <noscript>
+              <p class="lab__catatan">
+                Editor butuh JavaScript. Salin kode di atas ke file .js, lalu
+                jalankan di browser atau Node.js.
+              </p>
+            </noscript>
+          </section>
+
+          <h2>Kesalahan umum</h2>
+          <ul>
+            <li>Mengira indeks mulai dari 1. <code>buah[0]</code> adalah isi pertama.</li>
+            <li>Menulis <code>buah.length()</code>; <code>length</code> itu properti, bukan fungsi.</li>
+            <li>Memakai <code>i &lt;= buah.length</code> sehingga putaran terakhir menghasilkan <code>undefined</code>.</li>
+            <li>Tertukar tanda: array pakai <code>[ ]</code>, objek pakai <code>{ }</code>.</li>
+            <li>Salah ketik nama properti, misalnya <code>siswa.nma</code>, sehingga hasilnya <code>undefined</code>.</li>
+            <li>Mengira <code>const</code> membuat isi array atau objek tidak bisa diubah.</li>
+          </ul>
+
+          <h2>Rangkuman</h2>
+          <ul>
+            <li>Array menyimpan banyak nilai berurutan; indeksnya mulai dari <code>0</code>.</li>
+            <li><code>length</code> memberi jumlah isi; <code>push</code> menambah di belakang.</li>
+            <li>Objek menyimpan data berlabel; properti dibaca dengan titik.</li>
+            <li>Array bisa berisi objek, lalu dibaca dengan <code>siswa[i].nama</code>.</li>
+            <li>Saat mengulang array, pakai <code>i &lt; panjang</code>.</li>
+          </ul>
+
+          <footer class="materi__kaki">
+            <section class="kaki__sumber" aria-labelledby="sumber-judul">
+              <h2 class="kaki__label" id="sumber-judul">Bacaan asli</h2>
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">MDN — Array</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push">MDN — Array.prototype.push()</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_objects">MDN — Working with objects</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">MDN — Object</a></li>
+              </ul>
+            </section>
+
+            <nav class="kaki__pager" aria-label="Bab sebelumnya dan berikutnya">
+              <a class="kaki__bab kaki__bab--kembali" href="perulangan.html">
+                <span class="kaki__arah">Sebelumnya</span>
+                <span class="kaki__judul">Perulangan</span>
+              </a>
+              <a class="kaki__bab kaki__bab--lanjut" href="../../index.html#kurikulum">
+                <span class="kaki__arah">Kembali</span>
+                <span class="kaki__judul">Kurikulum</span>
+              </a>
+            </nav>
+          </footer>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__row">
+      <div>
+        <p class="footer__wordmark">Webiko</p>
+        <p class="footer__tagline">
+          Belajar bikin website dari nol, dalam bahasa Indonesia.
+          Tanpa install, tanpa framework.
+        </p>
+      </div>
+      <nav class="footer__nav" aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="../../index.html#kurikulum">Kurikulum</a></li>
+          <li><a href="../../index.html#cara-pakai">Cara pakai</a></li>
+          <li><a href="../../index.html#progres">Progres</a></li>
+          <li><a href="../../index.html#daftar">Buat akun</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <p>© 2026 Webiko · Dibuat tanpa framework dan tanpa dependency.</p>
+      <p>Untuk pelajar SMP &amp; SMA</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/latihan-js.js"></script>
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>
