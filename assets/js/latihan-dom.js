@@ -28,6 +28,8 @@
   var adaGalat = false;
   var kunci = 'lab-dom-' + Math.random().toString(36).slice(2);
   var sudahSelesai = false;
+  var simpanan = lab.hasAttribute('data-lab-simpanan');
+  var KUNCI_SIMPANAN = 'webiko-lab-penyimpanan';
 
   /* ---------- Sorot sintaks ---------- */
 
@@ -270,14 +272,50 @@
     status.textContent = 'Pratinjau diperbarui.';
   }
 
+  function bacaSimpanan() {
+    if (!simpanan) return null;
+    try {
+      var teks = localStorage.getItem(KUNCI_SIMPANAN);
+      var data = teks ? JSON.parse(teks) : {};
+      return data && typeof data === 'object' ? data : {};
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function tulisSimpanan(aksi, k, v) {
+    if (!simpanan) return;
+    try {
+      var data = bacaSimpanan() || {};
+      if (aksi === 'set') data[k] = v;
+      else if (aksi === 'hapus') delete data[k];
+      else if (aksi === 'bersih') data = {};
+      localStorage.setItem(KUNCI_SIMPANAN, JSON.stringify(data));
+    } catch (e) {}
+  }
+
   function buatDokumen(kode) {
     var kodeAman = JSON.stringify(beriPenjaga(kode)).replace(/<\/script/gi, '<\\/script');
+    var skripSimpanan = simpanan ? [
+      '  var dataSimpanan = ' + JSON.stringify(bacaSimpanan() || {}) + ';',
+      '  var shimSimpanan = {',
+      '    getItem: function (k) { return Object.prototype.hasOwnProperty.call(dataSimpanan, k) ? dataSimpanan[k] : null; },',
+      '    setItem: function (k, v) { dataSimpanan[k] = String(v); kirim("simpanan", ["set", k, dataSimpanan[k]]); },',
+      '    removeItem: function (k) { delete dataSimpanan[k]; kirim("simpanan", ["hapus", k]); },',
+      '    clear: function () { dataSimpanan = {}; kirim("simpanan", ["bersih"]); },',
+      '    key: function (i) { var k = Object.keys(dataSimpanan); return i >= 0 && i < k.length ? k[i] : null; }',
+      '  };',
+      '  Object.defineProperty(shimSimpanan, "length", { get: function () { return Object.keys(dataSimpanan).length; } });',
+      '  Object.defineProperty(window, "localStorage", { value: shimSimpanan, configurable: true });'
+    ] : [];
+
     var skrip = [
       '<script>',
       '(function () {',
       '  var kunci = ' + JSON.stringify(kunci) + ';',
       '  var kode = ' + kodeAman + ';',
-      '  var hitung = 0;',
+      '  var hitung = 0;'
+    ].concat(skripSimpanan, [
       '  window.__lanjut = function () {',
       '    hitung++;',
       '    if (hitung > 1000000) {',
@@ -315,7 +353,7 @@
       '  setTimeout(ukur, 100);',
       '})();',
       '<\/script>'
-    ].join('\n');
+    ]).join('\n');
 
     return awalSrcdoc.replace(/<\/body>/i, skrip + '</body>');
   }
@@ -326,6 +364,11 @@
 
     if (d.tipe === 'tinggi') {
       aturTinggiPratinjau((d.args || [])[0]);
+      return;
+    }
+    if (d.tipe === 'simpanan') {
+      var aksi = d.args || [];
+      tulisSimpanan(aksi[0], aksi[1], aksi[2]);
       return;
     }
     if (d.tipe === 'macet') {

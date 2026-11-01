@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bab 9 JavaScript dasar: menyimpan data dengan localStorage, setItem, getItem, removeItem, dan mengubah teks menjadi angka. Materi Webiko untuk pelajar SMP dan SMA.">
+  <title>Menyimpan data di browser — JavaScript dasar · Webiko</title>
+
+  <script>
+    (function () {
+      try {
+        var pilihan = localStorage.getItem("tema");
+        var gelap =
+          pilihan === "gelap" ||
+          (pilihan === "sistem" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-tema", gelap ? "gelap" : "terang");
+      } catch (e) {
+        document.documentElement.setAttribute("data-tema", "terang");
+      }
+
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-siap");
+        window.setTimeout(function () {
+          if (!window.__wgReveal) {
+            document.documentElement.classList.remove("reveal-siap");
+          }
+        }, 2000);
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="../../index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        Webiko
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="../../index.html">Beranda</a>
+        <a class="navbar__link" href="../../index.html#kurikulum" aria-current="page">Kurikulum</a>
+        <a class="navbar__link" href="../../index.html#cara-pakai">Cara pakai</a>
+      </nav>
+
+      <div class="navbar__tools">
+        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
+          <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--terang" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--gelap" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
+          </svg>
+          <span class="theme-toggle__label">Terang</span>
+        </button>
+
+        <button class="navbar__btn navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section">
+      <div class="layout--with-sidebar">
+
+                                <aside class="sidebar" aria-label="Daftar bab JavaScript dasar">
+          <p class="sidebar__title">JavaScript dasar</p>
+          <ul class="sidebar__list">
+            <li><a class="sidebar__link" href="apa-itu-javascript.html">Apa itu JavaScript</a></li>
+            <li><a class="sidebar__link" href="variabel.html">Variabel dan tipe data</a></li>
+            <li><a class="sidebar__link" href="fungsi.html">Fungsi</a></li>
+            <li><a class="sidebar__link" href="percabangan.html">Percabangan if</a></li>
+            <li><a class="sidebar__link" href="perulangan.html">Perulangan</a></li>
+            <li><a class="sidebar__link" href="array-objek.html">Array dan objek</a></li>
+            <li><a class="sidebar__link" href="dom.html">Mengubah halaman dari kode</a></li>
+            <li><a class="sidebar__link" href="klik-dan-form.html">Klik dan isian formulir</a></li>
+            <li><a class="sidebar__link" href="penyimpanan.html" aria-current="page">Menyimpan data di browser</a></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Mengambil data dari server</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Membuat daftar dari data</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Membaca pesan error</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Latihan: pencatat belajar</span></li>
+          </ul>
+        </aside>
+
+                                <article class="materi">
+          <p class="label materi__eyebrow">JavaScript dasar · Bab 9 dari 13</p>
+          <h1>Menyimpan data di browser</h1>
+          <p class="materi__lead">
+            Variabel hilang begitu halaman dimuat ulang. <code>localStorage</code>
+            menyimpan teks di browser, jadi isinya masih ada saat pengunjung
+            membuka halaman lagi.
+          </p>
+
+          <h2>Variabel hilang, penyimpanan tetap</h2>
+          <p>
+            Variabel hanya hidup selama halaman terbuka. Tekan muat ulang, isinya
+            kembali seperti awal. <code>localStorage</code> menyimpan data per
+            situs di browser, bukan di server, sehingga tidak ikut terkirim ke
+            mana-mana.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">simpan.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line">localStorage<span class="tok-punct">.</span><span class="tok-fungsi">setItem</span><span class="tok-punct">(</span><span class="tok-string">"tema"</span><span class="tok-punct">,</span> <span class="tok-string">"gelap"</span><span class="tok-punct">);</span></span><span class="code__line"><span class="tok-kunci">const</span> tema <span class="tok-punct">=</span> localStorage<span class="tok-punct">.</span><span class="tok-fungsi">getItem</span><span class="tok-punct">(</span><span class="tok-string">"tema"</span><span class="tok-punct">);</span></span><span class="code__line"></span><span class="code__line">console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span>tema<span class="tok-punct">);</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              <code>setItem</code> menulis, <code>getItem</code> membaca. Isinya
+              tetap ada setelah halaman dimuat ulang, bahkan setelah browser
+              ditutup.
+            </p>
+          </div>
+
+          <h2>Isinya selalu teks</h2>
+          <p>
+            localStorage hanya menyimpan teks. Angka ikut berubah menjadi teks,
+            jadi ubah balik dengan <code>Number()</code> sebelum dihitung. Objek
+            dan array perlu diubah dulu dengan <code>JSON.stringify</code>, lalu
+            dibaca lagi dengan <code>JSON.parse</code>.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">angka.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line">localStorage<span class="tok-punct">.</span><span class="tok-fungsi">setItem</span><span class="tok-punct">(</span><span class="tok-string">"skor"</span><span class="tok-punct">,</span> <span class="tok-angka">87</span><span class="tok-punct">);</span></span><span class="code__line"><span class="tok-kunci">const</span> skor <span class="tok-punct">=</span> <span class="tok-fungsi">Number</span><span class="tok-punct">(</span>localStorage<span class="tok-punct">.</span><span class="tok-fungsi">getItem</span><span class="tok-punct">(</span><span class="tok-string">"skor"</span><span class="tok-punct">));</span></span><span class="code__line"></span><span class="code__line">console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span>skor <span class="tok-punct">+</span> <span class="tok-angka">1</span><span class="tok-punct">);</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Tanpa <code>Number()</code>, hasilnya <code>"871"</code> karena
+              teks disambung, bukan dijumlahkan.
+            </p>
+          </div>
+
+          <h2>Membaca saat halaman dibuka</h2>
+          <p>
+            Kalau kuncinya belum pernah disimpan, <code>getItem</code> memberi
+            <code>null</code>. Periksa dulu sebelum dipakai, lalu tentukan
+            tampilan awal.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">nama.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">const</span> nama <span class="tok-punct">=</span> localStorage<span class="tok-punct">.</span><span class="tok-fungsi">getItem</span><span class="tok-punct">(</span><span class="tok-string">"nama"</span><span class="tok-punct">);</span></span><span class="code__line"></span><span class="code__line"><span class="tok-kunci">if</span> <span class="tok-punct">(</span>nama<span class="tok-punct">)</span> <span class="tok-punct">{</span></span><span class="code__line">  console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span><span class="tok-string">"Halo, "</span> <span class="tok-punct">+</span> nama <span class="tok-punct">+</span> <span class="tok-string">"!"</span><span class="tok-punct">);</span></span><span class="code__line"><span class="tok-punct">}</span> <span class="tok-kunci">else</span> <span class="tok-punct">{</span></span><span class="code__line">  console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span><span class="tok-string">"Belum ada nama."</span><span class="tok-punct">);</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              <code>null</code> berarti belum ada, bukan error. Teks kosong
+              <code>""</code> juga dianggap tidak ada oleh <code>if</code>.
+            </p>
+          </div>
+
+          <h2>Menghapus simpanan</h2>
+          <p>
+            <code>removeItem</code> menghapus satu kunci. <code>clear</code>
+            menghapus semua data milik situs ini. Jangan simpan password atau
+            data rahasia di localStorage karena isinya bisa dibaca script lain
+            di situs yang sama.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">hapus.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line">localStorage<span class="tok-punct">.</span><span class="tok-fungsi">removeItem</span><span class="tok-punct">(</span><span class="tok-string">"nama"</span><span class="tok-punct">);</span></span><span class="code__line"></span><span class="code__line">console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span>localStorage<span class="tok-punct">.</span><span class="tok-fungsi">getItem</span><span class="tok-punct">(</span><span class="tok-string">"nama"</span><span class="tok-punct">));</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Hasilnya <code>null</code>. Kunci yang tidak pernah ada juga
+              menghasilkan <code>null</code>, bukan error.
+            </p>
+          </div>
+
+          <section class="lab" data-lab-dom data-lab-simpanan aria-labelledby="lab-judul">
+            <p class="label">Latihan langsung</p>
+            <h2 id="lab-judul">Simpan nama di browser</h2>
+            <p>
+              Kode berjalan di pratinjau. Setelah menekan Jalankan, ketik nama
+              lalu klik <strong>Simpan</strong>. Pratinjau memakai penyimpanan
+              tiruan di dalam sandbox supaya halaman materi tetap aman; di
+              browser asli <code>localStorage</code> menyimpan sungguhan.
+            </p>
+            <ol>
+              <li>Klik <strong>Jalankan</strong>, ketik <code>Ayu</code>, lalu klik <strong>Simpan</strong>. Muncul <code>Halo, Ayu!</code>.</li>
+              <li>Klik <strong>Jalankan</strong> lagi. Nama Ayu masih muncul karena dibaca saat pratinjau dibuka.</li>
+              <li>Muat ulang halaman ini, lalu <strong>Jalankan</strong>. Pilihan tadi masih tersimpan.</li>
+              <li>Klik <strong>Hapus</strong>, jalankan lagi. Pesan kembali <code>Belum ada nama.</code></li>
+            </ol>
+
+            <div class="lab__meja">
+              <div class="lab__panel lab__panel--kode">
+                <div class="lab__bar">
+                  <span class="lab__prompt" aria-hidden="true">&gt;_</span>
+                  <span class="lab__nama">simpan.js</span>
+                  <span class="lab__isyarat">bisa diubah</span>
+                </div>
+                <textarea class="lab__editor" data-lab-editor rows="17" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Kode JavaScript latihan" aria-describedby="lab-status">const nama = document.querySelector("#nama");
+const hasil = document.querySelector("#hasil");
+const klik = document.querySelector("#simpan");
+const hapus = document.querySelector("#hapus");
+
+const lama = localStorage.getItem("nama");
+if (lama) {
+  hasil.textContent = "Halo, " + lama + "!";
+}
+
+klik.addEventListener("click", function () {
+  const teks = nama.value;
+  localStorage.setItem("nama", teks);
+  hasil.textContent = "Halo, " + teks + "!";
+});
+
+hapus.addEventListener("click", function () {
+  localStorage.removeItem("nama");
+  hasil.textContent = "Belum ada nama.";
+});</textarea>
+              </div>
+
+              <div class="lab__panel lab__panel--hasil">
+                <div class="lab__bar">
+                  <span class="pane__dots" aria-hidden="true">
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                  </span>
+                  <span class="lab__nama">Pratinjau</span>
+                  <span class="lab__isyarat">halaman</span>
+                </div>
+                <iframe class="lab__pratinjau" data-lab-pratinjau title="Pratinjau halaman hasil kode" sandbox="allow-scripts allow-forms" srcdoc="<!DOCTYPE html><html lang='id'><head><meta charset='utf-8'><style>body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;margin:0;padding:16px;background:#ffffff;color:#1a1b33;}h1{margin-top:0;font-size:1.6rem;margin-bottom:12px;}p{margin:0 0 12px;}label{font-weight:600;}input{font:inherit;padding:6px 8px;border:2px solid #1a1b33;border-radius:6px;width:150px;}button{font:inherit;font-weight:700;padding:6px 12px;border:2px solid #1a1b33;border-radius:6px;background:#ffe14d;color:#1a1b33;cursor:pointer;}#hasil{margin-bottom:0;}</style></head><body><h1 id='judul'>Nama tersimpan</h1><p><label for='nama'>Nama</label> <input id='nama' type='text' placeholder='Tulis namamu'></p><p><button id='simpan' type='button'>Simpan</button> <button id='hapus' type='button'>Hapus</button></p><p id='hasil'>Belum ada nama.</p></body></html>"></iframe>
+              </div>
+            </div>
+
+            <div class="lab__aksi">
+              <button class="btn btn--primary" type="button" data-lab-jalankan hidden>Jalankan</button>
+              <button class="btn btn--ghost" type="button" data-lab-reset hidden>Atur ulang</button>
+              <p class="lab__status" id="lab-status" data-lab-status role="status">Klik Jalankan untuk melihat hasil.</p>
+            </div>
+
+            <div class="materi__latihan">
+              <p><strong>Cek hasil:</strong></p>
+              <ul>
+                <li>Setelah <strong>Simpan</strong>, pesan menjadi <code>Halo, Ayu!</code>.</li>
+                <li>Setelah <strong>Jalankan</strong> lagi atau halaman dimuat ulang, nama yang sama muncul sendiri.</li>
+                <li>Setelah <strong>Hapus</strong>, pesan kembali <code>Belum ada nama.</code></li>
+              </ul>
+            </div>
+
+            <noscript>
+              <p class="lab__catatan">
+                Editor butuh JavaScript. Salin kode di atas ke file .js yang
+                dimuat setelah HTML, lalu jalankan di browser.
+              </p>
+            </noscript>
+          </section>
+
+          <h2>Kesalahan umum</h2>
+          <ul>
+            <li>Memakai hasil <code>getItem</code> langsung tanpa memeriksa <code>null</code>, lalu muncul <code>Halo, null!</code>.</li>
+            <li>Menjumlahkan angka tanpa <code>Number()</code>, sehingga <code>"87" + 1</code> menjadi <code>"871"</code>.</li>
+            <li>Nama kunci tidak sama saat menyimpan dan membaca. Kunci peka huruf besar-kecil.</li>
+            <li>Menyimpan password atau token di localStorage. Script lain di situs yang sama bisa membacanya.</li>
+            <li>Mengira data ikut pindah ke komputer atau browser lain. Isinya hanya ada di browser itu.</li>
+            <li>Menjalankan <code>JSON.parse</code> pada <code>null</code>; periksa dulu, baru ubah.</li>
+          </ul>
+
+          <h2>Rangkuman</h2>
+          <ul>
+            <li><code>setItem(kunci, nilai)</code> menyimpan, <code>getItem(kunci)</code> membaca.</li>
+            <li><code>getItem</code> memberi <code>null</code> kalau kuncinya belum ada.</li>
+            <li>Semua nilai disimpan sebagai teks; angka perlu <code>Number()</code>.</li>
+            <li>Isi tetap ada setelah muat ulang, tetapi hanya di browser dan situs itu.</li>
+            <li><code>removeItem</code> menghapus satu kunci; <code>clear</code> menghapus semua.</li>
+          </ul>
+
+          <footer class="materi__kaki">
+            <section class="kaki__sumber" aria-labelledby="sumber-judul">
+              <h2 class="kaki__label" id="sumber-judul">Bacaan asli</h2>
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage">MDN — Window.localStorage</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem">MDN — Storage.setItem()</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Storage/getItem">MDN — Storage.getItem()</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Storage/removeItem">MDN — Storage.removeItem()</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Storage/clear">MDN — Storage.clear()</a></li>
+              </ul>
+            </section>
+
+            <nav class="kaki__pager" aria-label="Bab sebelumnya dan berikutnya">
+              <a class="kaki__bab kaki__bab--kembali" href="klik-dan-form.html">
+                <span class="kaki__arah">Sebelumnya</span>
+                <span class="kaki__judul">Klik dan isian formulir</span>
+              </a>
+              <a class="kaki__bab kaki__bab--lanjut" href="../../index.html#kurikulum">
+                <span class="kaki__arah">Kembali</span>
+                <span class="kaki__judul">Kurikulum</span>
+              </a>
+            </nav>
+          </footer>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__row">
+      <div>
+        <p class="footer__wordmark">Webiko</p>
+        <p class="footer__tagline">
+          Belajar bikin website dari nol, dalam bahasa Indonesia.
+          Tanpa install, tanpa framework.
+        </p>
+      </div>
+      <nav class="footer__nav" aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="../../index.html#kurikulum">Kurikulum</a></li>
+          <li><a href="../../index.html#cara-pakai">Cara pakai</a></li>
+          <li><a href="../../index.html#progres">Progres</a></li>
+          <li><a href="../../index.html#daftar">Buat akun</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <p>© 2026 Webiko · Dibuat tanpa framework dan tanpa dependency.</p>
+      <p>Untuk pelajar SMP &amp; SMA</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/latihan-dom.js"></script>
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>

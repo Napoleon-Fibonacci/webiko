@@ -19,12 +19,12 @@ Lab latihan harus terasa seperti satu editor kecil yang konsisten:
 | --- | --- |
 | `assets/js/latihan-html.js` | Menyalin editor ke iframe, mewarnai sintaks, mengukur tinggi editor dan pratinjau, tombol Jalankan/Reset, pemeriksaan struktur. |
 | `assets/js/latihan-js.js` | Menjalankan kode JavaScript di Web Worker dan menampilkan `console.log`/error di panel Keluaran. |
-| `assets/js/latihan-dom.js` | Menjalankan kode DOM di iframe ber-sandbox; `document` menunjuk dokumen pratinjau, perulangan dijaga penghitung. |
+| `assets/js/latihan-dom.js` | Menjalankan kode DOM di iframe ber-sandbox; `document` menunjuk dokumen pratinjau, perulangan dijaga penghitung, dan `localStorage` dapat diganti shim untuk lab penyimpanan. |
 | `assets/js/lab-warna.js` | Kotak warna kecil di dalam editor CSS. Tanpa JavaScript tidak ada kotak. |
 | `assets/css/style.css` | Token, panel lab, editor, pratinjau, dan batas tinggi minimum. |
 | `materi/css/*.html` | Lab CSS: 11 bab, dari `mengenal-css` sampai `mode-gelap`. |
 | `materi/html/*.html` | Lab HTML: `file-html-pertama`, `judul-dan-paragraf`, `gambar`, `tautan`, `daftar`, `tabel`, `halaman-lengkap`. |
-| `materi/javascript/*.html` | Materi JavaScript: `apa-itu-javascript` (lab + kuis), `variabel`, `fungsi`, `percabangan`, `perulangan`, `array-objek`, `dom`, `klik-dan-form`. Lima bab lain belum dibuat. |
+| `materi/javascript/*.html` | Materi JavaScript: `apa-itu-javascript` (lab + kuis), `variabel`, `fungsi`, `percabangan`, `perulangan`, `array-objek`, `dom`, `klik-dan-form`, `penyimpanan`. Empat bab lain belum dibuat. |
 
 Bab konsep `apa-itu-website` dan `dari-server-ke-layar` memakai kuis pilihan
 ganda, bukan lab kode. `mengenal-tag-html` memakai latihan "Bedah satu tag"
@@ -102,6 +102,28 @@ halaman materi:
   `postMessage` dengan kunci acak per percobaan;
 - tinggi iframe mengikuti isi, sama seperti lab HTML.
 
+### Penyimpanan tiruan
+
+Bab `penyimpanan` menambahkan atribut `data-lab-simpanan`. Iframe sandbox
+tanpa `allow-same-origin` tidak boleh menyentuh `localStorage` sungguhan:
+aksesnya melempar `SecurityError`. Karena itu `latihan-dom.js` memasang shim
+`localStorage` di dalam iframe sebelum kode siswa berjalan.
+
+- Shim menyimpan data di memori iframe, lalu mengirim setiap perubahan ke
+  halaman materi lewat `postMessage`.
+- Halaman materi menyimpan salinannya di `localStorage` dengan kunci
+  `webiko-lab-penyimpanan`, lalu menyisipkan salinan itu ke setiap dokumen
+  pratinjau baru.
+- Hasilnya data terasa bertahan saat Jalankan ditekan lagi, halaman dimuat
+  ulang, atau browser dibuka lagi, tanpa membuka origin halaman untuk kode
+  siswa.
+- Shim hanya dipasang kalau `data-lab-simpanan` ada. Lab DOM lain tidak
+  mendapat `localStorage` tiruan.
+- `Atur ulang` mengembalikan kode dan pratinjau, bukan menghapus data
+  tersimpan. Penghapusan dilakukan lewat kode siswa (`removeItem`/`clear`).
+- Teks lab memberi tahu siswa bahwa pratinjau memakai penyimpanan tiruan,
+  sedangkan browser asli menyimpan sungguhan.
+
 Iframe yang terkunci `while (true)` tidak bisa dipulihkan dari luar: mengganti
 `srcdoc` atau membuat iframe baru tetap menunggu proses yang sama. Karena itu
 `beriPenjaga()` menyisipkan `__lanjut()` ke syarat `for` dan `while` sebelum
@@ -172,7 +194,10 @@ Jalankan `python -m http.server 8000`, lalu periksa:
     sendiri, dan Jalankan lagi tetap bekerja setelahnya.
 11. Lab DOM formulir: klik tombol dan tombol Enter mengubah pesan; tanpa
     `preventDefault` pratinjau dimuat ulang, lalu Jalankan lagi memulihkannya.
-12. Semua berkas tetap CRLF.
+12. Lab penyimpanan: Simpan menulis ke `webiko-lab-penyimpanan`; data muncul
+    lagi setelah Jalankan dan setelah halaman dimuat ulang; Hapus
+    mengosongkannya; lab DOM lain tetap tanpa `localStorage`.
+13. Semua berkas tetap CRLF.
 
 ## Riwayat perubahan
 
