@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bab 12 JavaScript dasar: membaca pesan error, mengenali TypeError, ReferenceError, SyntaxError, memakai try/catch, throw, dan catch pada Promise. Materi Webiko untuk pelajar SMP dan SMA.">
+  <title>Membaca pesan error — JavaScript dasar · Webiko</title>
+
+  <script>
+    (function () {
+      try {
+        var pilihan = localStorage.getItem("tema");
+        var gelap =
+          pilihan === "gelap" ||
+          (pilihan === "sistem" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-tema", gelap ? "gelap" : "terang");
+      } catch (e) {
+        document.documentElement.setAttribute("data-tema", "terang");
+      }
+
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-siap");
+        window.setTimeout(function () {
+          if (!window.__wgReveal) {
+            document.documentElement.classList.remove("reveal-siap");
+          }
+        }, 2000);
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="../../index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        Webiko
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="../../index.html">Beranda</a>
+        <a class="navbar__link" href="../../index.html#kurikulum" aria-current="page">Kurikulum</a>
+        <a class="navbar__link" href="../../index.html#cara-pakai">Cara pakai</a>
+      </nav>
+
+      <div class="navbar__tools">
+        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
+          <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--terang" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--gelap" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
+          </svg>
+          <span class="theme-toggle__label">Terang</span>
+        </button>
+
+        <button class="navbar__btn navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section">
+      <div class="layout--with-sidebar">
+
+                                                                        <aside class="sidebar" aria-label="Daftar bab JavaScript dasar">
+          <p class="sidebar__title">JavaScript dasar</p>
+          <ul class="sidebar__list">
+            <li><a class="sidebar__link" href="apa-itu-javascript.html">Apa itu JavaScript</a></li>
+            <li><a class="sidebar__link" href="variabel.html">Variabel dan tipe data</a></li>
+            <li><a class="sidebar__link" href="fungsi.html">Fungsi</a></li>
+            <li><a class="sidebar__link" href="percabangan.html">Percabangan if</a></li>
+            <li><a class="sidebar__link" href="perulangan.html">Perulangan</a></li>
+            <li><a class="sidebar__link" href="array-objek.html">Array dan objek</a></li>
+            <li><a class="sidebar__link" href="dom.html">Mengubah halaman dari kode</a></li>
+            <li><a class="sidebar__link" href="klik-dan-form.html">Klik dan isian formulir</a></li>
+            <li><a class="sidebar__link" href="penyimpanan.html">Menyimpan data di browser</a></li>
+            <li><a class="sidebar__link" href="ambil-data.html">Mengambil data dari server</a></li>
+            <li><a class="sidebar__link" href="daftar-dari-data.html">Membuat daftar dari data</a></li>
+            <li><a class="sidebar__link" href="pesan-error.html" aria-current="page">Membaca pesan error</a></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Latihan: pencatat belajar</span></li>
+          </ul>
+        </aside>
+
+                                                                        <article class="materi">
+          <p class="label materi__eyebrow">JavaScript dasar · Bab 12 dari 13</p>
+          <h1>Membaca pesan error</h1>
+          <p class="materi__lead">
+            Error bukan tanda kodemu buruk. Error adalah petunjuk: JavaScript
+            memberi tahu apa yang salah dan di baris mana. Semakin tenang
+            membacanya, semakin cepat masalahnya ketemu.
+          </p>
+
+          <h2>Tiga bagian pesan error</h2>
+          <p>
+            Pesan di konsol biasanya punya nama, keterangan, dan lokasi. Nama
+            menunjukkan jenis masalah, keterangan menjelaskan penyebabnya, dan
+            baris terakhir menunjuk berkas serta nomor baris.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">Konsol</span>
+                <span class="pane__badge">error</span>
+              </div>
+              <pre class="code"><code><span class="code__line">Uncaught TypeError: Cannot read properties of null</span><span class="code__line">    at tampil.js:4</span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              <code>TypeError</code> adalah namanya,
+              <code>Cannot read properties of null</code> adalah keterangannya,
+              dan <code>tampil.js:4</code> menunjukkan lokasi. Teks aslinya
+              bisa berbeda menurut browser.
+            </p>
+          </div>
+
+          <h2>Jenis yang sering muncul</h2>
+          <ul>
+            <li><code>ReferenceError</code> — nama variabel salah ketik atau belum dibuat. Contoh: <code>tidakAda is not defined</code>.</li>
+            <li><code>TypeError</code> — nilai tidak seperti yang dibayangkan. Contoh: memakai <code>null</code> seolah objek, atau memanggil sesuatu yang bukan fungsi.</li>
+            <li><code>SyntaxError</code> — kode tidak bisa dibaca sejak awal, misalnya kurung kurawal kurang atau tanda kutip tidak ditutup.</li>
+            <li><code>404</code> atau <code>Failed to fetch</code> — bukan error JavaScript, melainkan alamat atau jaringan. Biasanya ditangani <code>.catch</code>.</li>
+          </ul>
+
+          <h2>try dan catch</h2>
+          <p>
+            <code>try</code> berisi kode yang mungkin gagal.
+            <code>catch</code> menerima error itu sebagai objek, lalu
+            memutuskan apa yang ditampilkan. Tanpa <code>catch</code>, error
+            menghentikan sisa kode.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">tangkap.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">try</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-kunci">const</span> data <span class="tok-punct">=</span> JSON<span class="tok-punct">.</span><span class="tok-fungsi">parse</span><span class="tok-punct">(</span><span class="tok-string">"bukan json"</span><span class="tok-punct">);</span></span><span class="code__line">  console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span>data<span class="tok-punct">);</span></span><span class="code__line"><span class="tok-punct">}</span> <span class="tok-kunci">catch</span> <span class="tok-punct">(</span>galat<span class="tok-punct">)</span> <span class="tok-punct">{</span></span><span class="code__line">  console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span>galat<span class="tok-punct">.</span>name<span class="tok-punct">);</span></span><span class="code__line">  console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span>galat<span class="tok-punct">.</span>message<span class="tok-punct">);</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              <code>galat.name</code> berisi nama jenisnya,
+              <code>galat.message</code> berisi keterangannya. Jangan
+              menampilkan <code>galat</code> langsung; hasilnya sering hanya
+              <code>[object Object]</code>.
+            </p>
+          </div>
+
+          <h2>Melempar error sendiri</h2>
+          <p>
+            Kadang data tidak salah secara JavaScript, tetapi tidak masuk akal
+            untuk program: nilai kosong, angka negatif, atau isian yang belum
+            lengkap. <code>throw new Error(...)</code> menghentikan alur normal
+            dan melempar masalah ke <code>catch</code> terdekat.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">bagi.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">function</span> <span class="tok-fungsi">bagi</span><span class="tok-punct">(</span>a<span class="tok-punct">,</span> b<span class="tok-punct">)</span> <span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-kunci">if</span> <span class="tok-punct">(</span>b <span class="tok-punct">===</span> <span class="tok-angka">0</span><span class="tok-punct">)</span> <span class="tok-punct">{</span></span><span class="code__line">    <span class="tok-kunci">throw</span> <span class="tok-kunci">new</span> <span class="tok-fungsi">Error</span><span class="tok-punct">(</span><span class="tok-string">"Tidak bisa dibagi nol"</span><span class="tok-punct">);</span></span><span class="code__line">  <span class="tok-punct">}</span></span><span class="code__line">  <span class="tok-kunci">return</span> a <span class="tok-punct">/</span> b<span class="tok-punct">;</span></span><span class="code__line"><span class="tok-punct">}</span></span><span class="code__line"></span><span class="code__line"><span class="tok-kunci">try</span> <span class="tok-punct">{</span></span><span class="code__line">  console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span><span class="tok-fungsi">bagi</span><span class="tok-punct">(</span><span class="tok-angka">10</span><span class="tok-punct">,</span> <span class="tok-angka">0</span><span class="tok-punct">));</span></span><span class="code__line"><span class="tok-punct">}</span> <span class="tok-kunci">catch</span> <span class="tok-punct">(</span>galat<span class="tok-punct">)</span> <span class="tok-punct">{</span></span><span class="code__line">  console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span>galat<span class="tok-punct">.</span>message<span class="tok-punct">);</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Pesannya buatan sendiri, jadi bisa ditulis dalam bahasa yang
+              dimengerti pengguna.
+            </p>
+          </div>
+
+          <h2>Error yang datang belakangan</h2>
+          <p>
+            <code>try/catch</code> hanya menangkap error di alur yang sama.
+            Kode di dalam <code>.then</code> berjalan nanti, setelah
+            <code>try</code> selesai. Untuk permintaan server, tangkap
+            kegagalannya dengan <code>.catch</code>.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">ambil.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-fungsi">fetch</span><span class="tok-punct">(</span><span class="tok-string">"/data/contoh-kelas.json"</span><span class="tok-punct">)</span></span><span class="code__line">  <span class="tok-punct">.</span><span class="tok-fungsi">then</span><span class="tok-punct">(</span><span class="tok-kunci">function</span> <span class="tok-punct">(</span>res<span class="tok-punct">)</span> <span class="tok-punct">{</span></span><span class="code__line">    <span class="tok-kunci">return</span> res<span class="tok-punct">.</span><span class="tok-fungsi">json</span><span class="tok-punct">();</span></span><span class="code__line">  <span class="tok-punct">})</span></span><span class="code__line">  <span class="tok-punct">.</span><span class="tok-fungsi">catch</span><span class="tok-punct">(</span><span class="tok-kunci">function</span> <span class="tok-punct">(</span>galat<span class="tok-punct">)</span> <span class="tok-punct">{</span></span><span class="code__line">    console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span>galat<span class="tok-punct">.</span>message<span class="tok-punct">);</span></span><span class="code__line">  <span class="tok-punct">})</span>;</span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              <code>try/catch</code> di sekitar <code>fetch</code> tidak
+              menangkap kegagalan di dalam <code>.then</code>. Rantai Promise
+              punya <code>.catch</code> sendiri.
+            </p>
+          </div>
+
+          <h2>Jangan menelan error</h2>
+          <p>
+            <code>catch (galat) {}</code> yang kosong membuat error hilang
+            tanpa jejak. Halaman tetap diam, padahal ada yang salah. Tampilkan
+            pesannya, catat dengan <code>console.error</code>, atau beri tahu
+            pengguna dengan kalimat yang jelas.
+          </p>
+
+          <section class="lab" data-lab-dom aria-labelledby="lab-judul">
+            <p class="label">Latihan langsung</p>
+            <h2 id="lab-judul">Tangkap dan baca error</h2>
+            <p>
+              Kode berjalan di pratinjau. Kesalahan di dalam
+              <code>try</code> ditangkap <code>catch</code>, lalu nama dan
+              pesannya ditulis ke halaman.
+            </p>
+            <ol>
+              <li>Klik <strong>Jalankan</strong>. Pratinjau menampilkan <code>TypeError: Cannot read properties of null (reading 'nama')</code>.</li>
+              <li>Ganti <code>null</code> dengan <code>{ nama: "Ayu" }</code>, lalu jalankan. Pratinjau menampilkan <code>Ayu</code>.</li>
+              <li>Ganti dua baris di dalam <code>try</code> dengan <code>throw new Error("Data kosong");</code>, lalu jalankan. Muncul <code>Error: Data kosong</code>.</li>
+              <li>Ganti <code>galat.name</code> menjadi <code>galat.message</code>, lalu jalankan. Hanya keterangannya yang tampil.</li>
+              <li>Kembalikan kode awal.</li>
+            </ol>
+
+            <div class="lab__meja">
+              <div class="lab__panel lab__panel--kode">
+                <div class="lab__bar">
+                  <span class="lab__prompt" aria-hidden="true">&gt;_</span>
+                  <span class="lab__nama">tangkap-error.js</span>
+                  <span class="lab__isyarat">bisa diubah</span>
+                </div>
+                <textarea class="lab__editor" data-lab-editor rows="11" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Kode JavaScript latihan" aria-describedby="lab-status">const pesan = document.querySelector("#pesan");
+
+try {
+  const data = null;
+  pesan.textContent = data.nama;
+} catch (galat) {
+  pesan.textContent =
+    galat.name + ": " + galat.message;
+}</textarea>
+              </div>
+
+              <div class="lab__panel lab__panel--hasil">
+                <div class="lab__bar">
+                  <span class="pane__dots" aria-hidden="true">
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                  </span>
+                  <span class="lab__nama">Pratinjau</span>
+                  <span class="lab__isyarat">halaman</span>
+                </div>
+                <iframe class="lab__pratinjau" data-lab-pratinjau title="Pratinjau halaman hasil kode" sandbox="allow-scripts" srcdoc="<!DOCTYPE html><html lang='id'><head><meta charset='utf-8'><style>body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;margin:0;padding:16px;background:#ffffff;color:#1a1b33;}h1{margin-top:0;font-size:1.6rem;margin-bottom:12px;}p{margin:0;}</style></head><body><h1>Pesan error</h1><p id='pesan'>Belum dijalankan.</p></body></html>"></iframe>
+              </div>
+            </div>
+
+            <div class="lab__aksi">
+              <button class="btn btn--primary" type="button" data-lab-jalankan hidden>Jalankan</button>
+              <button class="btn btn--ghost" type="button" data-lab-reset hidden>Atur ulang</button>
+              <p class="lab__status" id="lab-status" data-lab-status role="status">Klik Jalankan untuk melihat hasil.</p>
+            </div>
+
+            <div class="materi__latihan">
+              <p><strong>Cek hasil:</strong></p>
+              <ul>
+                <li>Data <code>null</code> → <code>TypeError: Cannot read properties of null (reading 'nama')</code>.</li>
+                <li>Data Ayu → teks <code>Ayu</code>, tanpa error.</li>
+                <li>Error buatan sendiri → <code>Error: Data kosong</code>.</li>
+                <li>Hanya <code>galat.message</code> → keterangan tanpa nama jenisnya.</li>
+              </ul>
+            </div>
+
+            <noscript>
+              <p class="lab__catatan">
+                Editor butuh JavaScript. Salin kode di atas ke file .js yang
+                dimuat setelah HTML, lalu jalankan di browser.
+              </p>
+            </noscript>
+          </section>
+
+          <h2>Kesalahan umum</h2>
+          <ul>
+            <li>Menulis <code>catch (galat) {}</code> kosong, sehingga error hilang dan masalah tidak pernah ketahuan.</li>
+            <li>Menampilkan <code>galat</code> langsung, bukan <code>galat.message</code>.</li>
+            <li>Mengira <code>try/catch</code> menangkap error di dalam <code>.then</code>. Pakai <code>.catch</code> pada rantai Promise.</li>
+            <li>Menangkap semua error tanpa memeriksa jenisnya, lalu memberi pesan yang menyesatkan.</li>
+            <li>Berharap <code>try/catch</code> menolong <code>SyntaxError</code>. Kode yang tidak bisa dibaca tidak pernah berjalan.</li>
+            <li>Mengabaikan lokasi berkas dan nomor baris di akhir pesan error.</li>
+          </ul>
+
+          <h2>Rangkuman</h2>
+          <ul>
+            <li>Error memberi nama, keterangan, dan lokasi masalah.</li>
+            <li><code>ReferenceError</code>, <code>TypeError</code>, dan <code>SyntaxError</code> sering muncul saat belajar.</li>
+            <li><code>try/catch</code> menangkap error di alur yang sama; <code>galat.message</code> berisi keterangannya.</li>
+            <li><code>throw new Error("...")</code> dipakai untuk menandai data yang tidak masuk akal.</li>
+            <li>Error di dalam <code>.then</code> ditangani <code>.catch</code>.</li>
+            <li>Jangan menelan error; tampilkan atau catat pesannya.</li>
+          </ul>
+
+          <footer class="materi__kaki">
+            <section class="kaki__sumber" aria-labelledby="sumber-judul">
+              <h2 class="kaki__label" id="sumber-judul">Bacaan asli</h2>
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch">MDN — try...catch</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">MDN — Error</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError">MDN — TypeError</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError">MDN — ReferenceError</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError">MDN — SyntaxError</a></li>
+              </ul>
+            </section>
+
+            <nav class="kaki__pager" aria-label="Bab sebelumnya dan berikutnya">
+              <a class="kaki__bab kaki__bab--kembali" href="daftar-dari-data.html">
+                <span class="kaki__arah">Sebelumnya</span>
+                <span class="kaki__judul">Membuat daftar dari data</span>
+              </a>
+              <a class="kaki__bab kaki__bab--lanjut" href="../../index.html#kurikulum">
+                <span class="kaki__arah">Kembali</span>
+                <span class="kaki__judul">Kurikulum</span>
+              </a>
+            </nav>
+          </footer>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__row">
+      <div>
+        <p class="footer__wordmark">Webiko</p>
+        <p class="footer__tagline">
+          Belajar bikin website dari nol, dalam bahasa Indonesia.
+          Tanpa install, tanpa framework.
+        </p>
+      </div>
+      <nav class="footer__nav" aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="../../index.html#kurikulum">Kurikulum</a></li>
+          <li><a href="../../index.html#cara-pakai">Cara pakai</a></li>
+          <li><a href="../../index.html#progres">Progres</a></li>
+          <li><a href="../../index.html#daftar">Buat akun</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <p>© 2026 Webiko · Dibuat tanpa framework dan tanpa dependency.</p>
+      <p>Untuk pelajar SMP &amp; SMA</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/latihan-dom.js"></script>
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>

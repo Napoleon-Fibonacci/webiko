@@ -24,7 +24,7 @@ Lab latihan harus terasa seperti satu editor kecil yang konsisten:
 | `assets/css/style.css` | Token, panel lab, editor, pratinjau, dan batas tinggi minimum. |
 | `materi/css/*.html` | Lab CSS: 11 bab, dari `mengenal-css` sampai `mode-gelap`. |
 | `materi/html/*.html` | Lab HTML: `file-html-pertama`, `judul-dan-paragraf`, `gambar`, `tautan`, `daftar`, `tabel`, `halaman-lengkap`. |
-| `materi/javascript/*.html` | Materi JavaScript: `apa-itu-javascript` (lab + kuis), `variabel`, `fungsi`, `percabangan`, `perulangan`, `array-objek`, `dom`, `klik-dan-form`, `penyimpanan`, `ambil-data`, `daftar-dari-data`. Dua bab lain belum dibuat. |
+| `materi/javascript/*.html` | Materi JavaScript: `apa-itu-javascript` (lab + kuis), `variabel`, `fungsi`, `percabangan`, `perulangan`, `array-objek`, `dom`, `klik-dan-form`, `penyimpanan`, `ambil-data`, `daftar-dari-data`, `pesan-error`. Satu bab lain belum dibuat. |
 | `data/contoh-kelas.json` | Data contoh untuk lab `ambil-data`: nama kelas dan tiga murid. |
 
 Bab konsep `apa-itu-website` dan `dari-server-ke-layar` memakai kuis pilihan
@@ -88,8 +88,8 @@ lab khusus, bukan lab ini.
 
 ## Lab DOM
 
-Bab `dom`, `klik-dan-form`, `penyimpanan`, `ambil-data`, dan
-`daftar-dari-data` memakai penanda `data-lab-dom` dan
+Bab `dom`, `klik-dan-form`, `penyimpanan`, `ambil-data`,
+`daftar-dari-data`, dan `pesan-error` memakai penanda `data-lab-dom` dan
 `assets/js/latihan-dom.js`. Kode siswa butuh `document`, sedangkan Web Worker
 tidak punya DOM. Karena itu kode dijalankan di iframe pratinjau, bukan di
 halaman materi:
@@ -152,6 +152,11 @@ Karena itu `latihan-dom.js` meneruskan permintaan ke halaman materi:
 Bab `daftar-dari-data` tidak menambah shim baru. Latihan memakai array lokal
 dan `document`, jadi cukup mekanisme iframe biasa. Contoh `fetch` di artikel
 hanya untuk membaca, bukan bagian lab.
+
+Bab `pesan-error` juga tanpa shim baru. Latihan menangkap error di dalam
+`try/catch` lalu menulis `galat.name` dan `galat.message` ke pratinjau. Error
+yang lolos ke luar `try` tetap ditangani pelari sebagai
+`Ada error. <nama>: <pesan>`, sama seperti lab DOM lain.
 
 Iframe yang terkunci `while (true)` tidak bisa dipulihkan dari luar: mengganti
 `srcdoc` atau membuat iframe baru tetap menunggu proses yang sama. Karena itu
@@ -233,7 +238,12 @@ Jalankan `python -m http.server 8000`, lalu periksa:
 14. Lab daftar: Jalankan menampilkan tiga `li`; menambah objek menambah baris;
     mengganti `orang.nama` menjadi `orang.kota` mengganti isi; tanpa
     `append` daftar tetap kosong.
-15. Semua berkas tetap CRLF.
+15. Lab pesan error: Jalankan menampilkan
+    `TypeError: Cannot read properties of null (reading 'nama')`; data Ayu
+    menampilkan `Ayu`; `throw new Error("Data kosong")` menampilkan
+    `Error: Data kosong`; hanya `galat.message` menampilkan keterangan tanpa
+    nama jenis; error di luar `try` menjadi `Ada error.`.
+16. Semua berkas tetap CRLF.
 
 ## Riwayat perubahan
 
