@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bab 4 JavaScript dasar: kondisi boolean, operator perbandingan, if, else, else if, serta penggabungan kondisi dengan &amp;&amp; dan ||. Materi Webiko untuk pelajar SMP dan SMA.">
+  <title>Percabangan if — JavaScript dasar · Webiko</title>
+
+  <script>
+    (function () {
+      try {
+        var pilihan = localStorage.getItem("tema");
+        var gelap =
+          pilihan === "gelap" ||
+          (pilihan === "sistem" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-tema", gelap ? "gelap" : "terang");
+      } catch (e) {
+        document.documentElement.setAttribute("data-tema", "terang");
+      }
+
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-siap");
+        window.setTimeout(function () {
+          if (!window.__wgReveal) {
+            document.documentElement.classList.remove("reveal-siap");
+          }
+        }, 2000);
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="../../index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        Webiko
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="../../index.html">Beranda</a>
+        <a class="navbar__link" href="../../index.html#kurikulum" aria-current="page">Kurikulum</a>
+        <a class="navbar__link" href="../../index.html#cara-pakai">Cara pakai</a>
+      </nav>
+
+      <div class="navbar__tools">
+        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
+          <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--terang" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--gelap" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
+          </svg>
+          <span class="theme-toggle__label">Terang</span>
+        </button>
+
+        <button class="navbar__btn navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section">
+      <div class="layout--with-sidebar">
+
+        <aside class="sidebar" aria-label="Daftar bab JavaScript dasar">
+          <p class="sidebar__title">JavaScript dasar</p>
+          <ul class="sidebar__list">
+            <li><a class="sidebar__link" href="apa-itu-javascript.html">Apa itu JavaScript</a></li>
+            <li><a class="sidebar__link" href="variabel.html">Variabel dan tipe data</a></li>
+            <li><a class="sidebar__link" href="fungsi.html">Fungsi</a></li>
+            <li><a class="sidebar__link" href="percabangan.html" aria-current="page">Percabangan if</a></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Perulangan</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Array dan objek</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Mengubah halaman dari kode</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Klik dan isian formulir</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Menyimpan data di browser</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Mengambil data dari server</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Membuat daftar dari data</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Membaca pesan error</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Latihan: pencatat belajar</span></li>
+          </ul>
+        </aside>
+
+        <article class="materi">
+          <p class="label materi__eyebrow">JavaScript dasar · Bab 4 dari 13</p>
+          <h1>Percabangan if</h1>
+          <p class="materi__lead">
+            Kode tidak selalu berjalan lurus. Dengan <code>if</code>, program
+            memilih langkah berdasarkan kondisi yang benar atau salah.
+          </p>
+
+          <h2>Kondisi bernilai benar atau salah</h2>
+          <p>
+            Perbandingan menghasilkan boolean: <code>true</code> kalau benar,
+            <code>false</code> kalau salah. Hasil inilah yang diperiksa
+            <code>if</code>.
+          </p>
+          <ul>
+            <li><code>===</code> sama persis, termasuk tipe datanya.</li>
+            <li><code>!==</code> tidak sama.</li>
+            <li><code>&gt;</code> lebih besar, <code>&lt;</code> lebih kecil.</li>
+            <li><code>&gt;=</code> lebih besar atau sama dengan, <code>&lt;=</code> lebih kecil atau sama dengan.</li>
+          </ul>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">banding.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">const</span> umur <span class="tok-punct">=</span> <span class="tok-angka">14</span><span class="tok-punct">;</span></span><span class="code__line">console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span>umur <span class="tok-punct">&gt;=</span> <span class="tok-angka">13</span><span class="tok-punct">);</span> <span class="tok-komentar">// true</span></span><span class="code__line">console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span>umur <span class="tok-punct">===</span> <span class="tok-angka">15</span><span class="tok-punct">);</span> <span class="tok-komentar">// false</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              <code>=</code> mengisi nilai. <code>===</code> membandingkan nilai.
+              Jangan tertukar.
+            </p>
+          </div>
+
+          <h2>If dan else</h2>
+          <p>
+            Blok di dalam <code>if</code> dijalankan hanya kalau kondisinya
+            <code>true</code>. Kalau <code>false</code>, blok
+            <code>else</code> yang dijalankan.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">umur.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">const</span> umur <span class="tok-punct">=</span> <span class="tok-angka">14</span><span class="tok-punct">;</span></span><span class="code__line"></span><span class="code__line"><span class="tok-kunci">if</span> <span class="tok-punct">(</span>umur <span class="tok-punct">&gt;=</span> <span class="tok-angka">13</span><span class="tok-punct">)</span> <span class="tok-punct">{</span></span><span class="code__line">  console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span><span class="tok-string">"Boleh masuk SMP"</span><span class="tok-punct">);</span></span><span class="code__line"><span class="tok-punct">}</span> <span class="tok-kunci">else</span> <span class="tok-punct">{</span></span><span class="code__line">  console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span><span class="tok-string">"Belum cukup umur"</span><span class="tok-punct">);</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Hasilnya <code>Boleh masuk SMP</code> karena <code>14 &gt;= 13</code>
+              bernilai <code>true</code>.
+            </p>
+          </div>
+
+          <h2>Beberapa pilihan dengan else if</h2>
+          <p>
+            <code>else if</code> dipakai saat ada lebih dari dua kemungkinan.
+            Kondisi diperiksa dari atas ke bawah. Begitu ada yang
+            <code>true</code>, blok itu dijalankan dan sisanya dilewati.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">nilai.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">const</span> nilai <span class="tok-punct">=</span> <span class="tok-angka">82</span><span class="tok-punct">;</span></span><span class="code__line"></span><span class="code__line"><span class="tok-kunci">if</span> <span class="tok-punct">(</span>nilai <span class="tok-punct">&gt;=</span> <span class="tok-angka">90</span><span class="tok-punct">)</span> <span class="tok-punct">{</span></span><span class="code__line">  console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span><span class="tok-string">"Sangat baik"</span><span class="tok-punct">);</span></span><span class="code__line"><span class="tok-punct">}</span> <span class="tok-kunci">else</span> <span class="tok-kunci">if</span> <span class="tok-punct">(</span>nilai <span class="tok-punct">&gt;=</span> <span class="tok-angka">75</span><span class="tok-punct">)</span> <span class="tok-punct">{</span></span><span class="code__line">  console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span><span class="tok-string">"Lulus"</span><span class="tok-punct">);</span></span><span class="code__line"><span class="tok-punct">}</span> <span class="tok-kunci">else</span> <span class="tok-punct">{</span></span><span class="code__line">  console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span><span class="tok-string">"Belum lulus"</span><span class="tok-punct">);</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Urutan penting. Kalau <code>nilai &gt;= 75</code> diperiksa lebih
+              dulu, nilai 92 akan berhenti di <code>Lulus</code> dan tidak
+              pernah mencapai <code>Sangat baik</code>.
+            </p>
+          </div>
+
+          <h2>Menggabungkan dua kondisi</h2>
+          <p>
+            <code>&amp;&amp;</code> berarti kedua kondisi harus benar.
+            <code>||</code> berarti cukup salah satu yang benar.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">remaja.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">const</span> umur <span class="tok-punct">=</span> <span class="tok-angka">14</span><span class="tok-punct">;</span></span><span class="code__line"></span><span class="code__line"><span class="tok-kunci">if</span> <span class="tok-punct">(</span>umur <span class="tok-punct">&gt;=</span> <span class="tok-angka">13</span> <span class="tok-punct">&amp;&amp;</span> umur <span class="tok-punct">&lt;=</span> <span class="tok-angka">18</span><span class="tok-punct">)</span> <span class="tok-punct">{</span></span><span class="code__line">  console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span><span class="tok-string">"Remaja"</span><span class="tok-punct">);</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+          </div>
+
+          <section class="lab" data-lab-js aria-labelledby="lab-judul">
+            <p class="label">Latihan langsung</p>
+            <h2 id="lab-judul">Uji tiga nilai</h2>
+            <p>
+              Kode sudah berisi percabangan tiga tingkat. Jalankan, lalu ubah
+              nilai dan jalankan lagi.
+            </p>
+            <ol>
+              <li>Klik <strong>Jalankan</strong>. Nilai 82 menghasilkan <code>Lulus</code>.</li>
+              <li>Ganti <code>82</code> menjadi <code>92</code>, lalu jalankan. Hasilnya <code>Sangat baik</code>.</li>
+              <li>Ganti menjadi <code>60</code>, lalu jalankan. Hasilnya <code>Belum lulus</code>.</li>
+            </ol>
+
+            <div class="lab__meja">
+              <div class="lab__panel lab__panel--kode">
+                <div class="lab__bar">
+                  <span class="lab__prompt" aria-hidden="true">&gt;_</span>
+                  <span class="lab__nama">nilai.js</span>
+                  <span class="lab__isyarat">bisa diubah</span>
+                </div>
+                <textarea class="lab__editor" data-lab-editor rows="12" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Kode JavaScript latihan" aria-describedby="lab-status">const nilai = 82;
+
+if (nilai >= 90) {
+  console.log("Sangat baik");
+} else if (nilai >= 75) {
+  console.log("Lulus");
+} else {
+  console.log("Belum lulus");
+}</textarea>
+              </div>
+
+              <div class="lab__panel lab__panel--hasil">
+                <div class="lab__bar">
+                  <span class="pane__dots" aria-hidden="true">
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                  </span>
+                  <span class="lab__nama">Keluaran</span>
+                  <span class="lab__isyarat">console</span>
+                </div>
+                <div class="lab__keluaran" data-lab-keluaran role="log" aria-live="polite" aria-label="Keluaran kode"></div>
+              </div>
+            </div>
+
+            <div class="lab__aksi">
+              <button class="btn btn--primary" type="button" data-lab-jalankan hidden>Jalankan</button>
+              <button class="btn btn--ghost" type="button" data-lab-reset hidden>Atur ulang</button>
+              <p class="lab__status" id="lab-status" data-lab-status role="status">Klik Jalankan untuk melihat hasil.</p>
+            </div>
+
+            <div class="materi__latihan">
+              <p><strong>Cek hasil:</strong></p>
+              <ul>
+                <li>Dengan nilai 82, panel Keluaran berisi <code>Lulus</code>.</li>
+                <li>Dengan nilai 92, panel Keluaran berisi <code>Sangat baik</code>.</li>
+                <li>Dengan nilai 60, panel Keluaran berisi <code>Belum lulus</code>.</li>
+              </ul>
+            </div>
+
+            <noscript>
+              <p class="lab__catatan">
+                Editor butuh JavaScript. Salin kode di atas ke file .js, lalu
+                jalankan di browser atau Node.js.
+              </p>
+            </noscript>
+          </section>
+
+          <h2>Kesalahan umum</h2>
+          <ul>
+            <li>Menulis <code>=</code> saat harus membandingkan dengan <code>===</code>.</li>
+            <li>Menaruh titik koma setelah kondisi, misalnya <code>if (nilai &gt;= 75);</code>, sehingga blok berikutnya selalu dijalankan.</li>
+            <li>Menyusun <code>else if</code> dari yang paling longgar, sehingga kondisi yang lebih khusus tidak pernah tercapai.</li>
+            <li>Lupa menutup kurung kurawal.</li>
+            <li>Membandingkan isian formulir tanpa mengubahnya menjadi angka: <code>"14" === 14</code> bernilai <code>false</code>.</li>
+          </ul>
+
+          <h2>Rangkuman</h2>
+          <ul>
+            <li><code>if</code> menjalankan blok hanya kalau kondisinya <code>true</code>.</li>
+            <li><code>else</code> menjadi jalan lain saat kondisi <code>false</code>.</li>
+            <li><code>else if</code> dipakai untuk beberapa pilihan; urutkan dari kondisi paling khusus.</li>
+            <li>Pakai <code>===</code> untuk membandingkan, bukan <code>=</code>.</li>
+            <li><code>&amp;&amp;</code> butuh dua kondisi benar; <code>||</code> cukup salah satu.</li>
+          </ul>
+
+          <footer class="materi__kaki">
+            <section class="kaki__sumber" aria-labelledby="sumber-judul">
+              <h2 class="kaki__label" id="sumber-judul">Bacaan asli</h2>
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else">MDN — if...else</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Strict_equality">MDN — Strict equality</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Comparison_Operators">MDN — Comparison operators</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_Operators">MDN — Logical operators</a></li>
+              </ul>
+            </section>
+
+            <nav class="kaki__pager" aria-label="Bab sebelumnya dan berikutnya">
+              <a class="kaki__bab kaki__bab--kembali" href="fungsi.html">
+                <span class="kaki__arah">Sebelumnya</span>
+                <span class="kaki__judul">Fungsi</span>
+              </a>
+              <a class="kaki__bab kaki__bab--lanjut" href="../../index.html#kurikulum">
+                <span class="kaki__arah">Kembali</span>
+                <span class="kaki__judul">Kurikulum</span>
+              </a>
+            </nav>
+          </footer>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__row">
+      <div>
+        <p class="footer__wordmark">Webiko</p>
+        <p class="footer__tagline">
+          Belajar bikin website dari nol, dalam bahasa Indonesia.
+          Tanpa install, tanpa framework.
+        </p>
+      </div>
+      <nav class="footer__nav" aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="../../index.html#kurikulum">Kurikulum</a></li>
+          <li><a href="../../index.html#cara-pakai">Cara pakai</a></li>
+          <li><a href="../../index.html#progres">Progres</a></li>
+          <li><a href="../../index.html#daftar">Buat akun</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <p>© 2026 Webiko · Dibuat tanpa framework dan tanpa dependency.</p>
+      <p>Untuk pelajar SMP &amp; SMA</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/latihan-js.js"></script>
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>
