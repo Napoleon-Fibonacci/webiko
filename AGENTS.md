@@ -62,6 +62,10 @@ nilai `sistem`/`terang`/`gelap`; **bawaan terang**. Atribut `data-tema` di
    - panel menu HP (dibuka) tetap benar;
    - CRLF utuh.
 4. Commit kecil per perubahan, lalu `git push` **hanya kalau diminta**.
+5. **Matikan semua proses uji begitu selesai** — server pratinjau, server mock,
+   dan Chrome headless. Jangan biarkan menunggu putaran berikutnya; proses
+   menganggur menguras baterai. Cek sebelum lanjut:
+   `netstat -ano | grep -E ":8000|:8001|:9222" | grep LISTENING` harus kosong.
 
 Pratinjau lokal: `python -m http.server 8000` lalu buka `http://localhost:8000`.
 
