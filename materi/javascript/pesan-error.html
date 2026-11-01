@@ -113,7 +113,8 @@
           <p>
             Pesan di konsol biasanya punya nama, keterangan, dan lokasi. Nama
             menunjukkan jenis masalah, keterangan menjelaskan penyebabnya, dan
-            baris terakhir menunjuk berkas serta nomor baris.
+            baris <code>at</code> pertama menunjuk berkas serta nomor baris
+            kesalahan.
           </p>
           <div class="materi__gambar">
             <div class="code-pane pane">
@@ -131,12 +132,13 @@
             </p>
           </div>
 
-          <h2>Jenis yang sering muncul</h2>
+          <h2>Yang sering muncul di konsol</h2>
           <ul>
             <li><code>ReferenceError</code> — nama variabel salah ketik atau belum dibuat. Contoh: <code>tidakAda is not defined</code>.</li>
             <li><code>TypeError</code> — nilai tidak seperti yang dibayangkan. Contoh: memakai <code>null</code> seolah objek, atau memanggil sesuatu yang bukan fungsi.</li>
             <li><code>SyntaxError</code> — kode tidak bisa dibaca sejak awal, misalnya kurung kurawal kurang atau tanda kutip tidak ditutup.</li>
-            <li><code>404</code> atau <code>Failed to fetch</code> — bukan error JavaScript, melainkan alamat atau jaringan. Biasanya ditangani <code>.catch</code>.</li>
+            <li><code>404</code> — status dari server, bukan error JavaScript. <code>fetch</code> tidak melempar error; periksa <code>res.ok</code>.</li>
+            <li><code>Failed to fetch</code> — jaringan putus atau alamat tidak bisa dihubungi. Ini <code>TypeError</code> dan ditangani <code>.catch</code>.</li>
           </ul>
 
           <h2>try dan catch</h2>
@@ -156,8 +158,10 @@
             </div>
             <p class="materi__keterangan">
               <code>galat.name</code> berisi nama jenisnya,
-              <code>galat.message</code> berisi keterangannya. Jangan
-              menampilkan <code>galat</code> langsung; hasilnya sering hanya
+              <code>galat.message</code> berisi keterangannya. Menulis
+              <code>galat</code> langsung ke halaman menghasilkan
+              <code>&lt;nama&gt;: &lt;pesan&gt;</code>, misalnya
+              <code>TypeError: ...</code>; objek biasa bisa menjadi
               <code>[object Object]</code>.
             </p>
           </div>
@@ -225,7 +229,7 @@
               <li>Klik <strong>Jalankan</strong>. Pratinjau menampilkan <code>TypeError: Cannot read properties of null (reading 'nama')</code>.</li>
               <li>Ganti <code>null</code> dengan <code>{ nama: "Ayu" }</code>, lalu jalankan. Pratinjau menampilkan <code>Ayu</code>.</li>
               <li>Ganti dua baris di dalam <code>try</code> dengan <code>throw new Error("Data kosong");</code>, lalu jalankan. Muncul <code>Error: Data kosong</code>.</li>
-              <li>Ganti <code>galat.name</code> menjadi <code>galat.message</code>, lalu jalankan. Hanya keterangannya yang tampil.</li>
+              <li>Ganti <code>galat.name + ": " + galat.message</code> menjadi <code>galat.message</code>, lalu jalankan. Hanya keterangannya yang tampil.</li>
               <li>Kembalikan kode awal.</li>
             </ol>
 
@@ -288,11 +292,11 @@ try {
           <h2>Kesalahan umum</h2>
           <ul>
             <li>Menulis <code>catch (galat) {}</code> kosong, sehingga error hilang dan masalah tidak pernah ketahuan.</li>
-            <li>Menampilkan <code>galat</code> langsung, bukan <code>galat.message</code>.</li>
+            <li>Membaca <code>galat.name</code> saja tanpa <code>galat.message</code>, sehingga keterangan penyebabnya hilang.</li>
             <li>Mengira <code>try/catch</code> menangkap error di dalam <code>.then</code>. Pakai <code>.catch</code> pada rantai Promise.</li>
             <li>Menangkap semua error tanpa memeriksa jenisnya, lalu memberi pesan yang menyesatkan.</li>
             <li>Berharap <code>try/catch</code> menolong <code>SyntaxError</code>. Kode yang tidak bisa dibaca tidak pernah berjalan.</li>
-            <li>Mengabaikan lokasi berkas dan nomor baris di akhir pesan error.</li>
+            <li>Mengabaikan lokasi berkas dan nomor baris di baris <code>at</code>.</li>
           </ul>
 
           <h2>Rangkuman</h2>

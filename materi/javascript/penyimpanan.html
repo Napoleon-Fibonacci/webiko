@@ -113,8 +113,8 @@
           <p>
             Variabel hanya hidup selama halaman terbuka. Tekan muat ulang, isinya
             kembali seperti awal. <code>localStorage</code> menyimpan data per
-            situs di browser, bukan di server, sehingga tidak ikut terkirim ke
-            mana-mana.
+            situs di browser, bukan di server, sehingga tidak ikut terkirim
+            otomatis ke server.
           </p>
           <div class="materi__gambar">
             <div class="code-pane pane">
@@ -282,7 +282,7 @@ hapus.addEventListener("click", function () {
             <li>Nama kunci tidak sama saat menyimpan dan membaca. Kunci peka huruf besar-kecil.</li>
             <li>Menyimpan password atau token di localStorage. Script lain di situs yang sama bisa membacanya.</li>
             <li>Mengira data ikut pindah ke komputer atau browser lain. Isinya hanya ada di browser itu.</li>
-            <li>Menjalankan <code>JSON.parse</code> pada <code>null</code>; periksa dulu, baru ubah.</li>
+            <li>Menjalankan <code>JSON.parse</code> pada teks kosong atau rusak tanpa <code>try/catch</code>, sehingga muncul <code>SyntaxError</code>.</li>
           </ul>
 
           <h2>Rangkuman</h2>

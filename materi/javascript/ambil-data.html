@@ -218,6 +218,9 @@ const info = document.querySelector("#jumlah");
 
 fetch("/data/contoh-kelas.json")
   .then(function (res) {
+    if (!res.ok) {
+      throw new Error("Status " + res.status);
+    }
     return res.json();
   })
   .then(function (data) {

@@ -146,8 +146,9 @@ Karena itu `latihan-dom.js` meneruskan permintaan ke halaman materi:
   asli iframe.
 - Halaman tidak perlu aturan CORS tambahan karena permintaan dilakukan oleh
   halaman materi sendiri, bukan oleh iframe.
-- Lab memakai `data/contoh-kelas.json`. Status 404 tetap sampai ke kode siswa
-  sebagai `ok: false` dan `status: 404`, bukan error otomatis.
+- Lab memakai `data/contoh-kelas.json` dan memeriksa `res.ok`. Status 404
+  tetap sampai ke kode siswa sebagai `ok: false` dan `status: 404`, bukan error
+  otomatis.
 
 Bab `daftar-dari-data` tidak menambah shim baru. Latihan memakai array lokal
 dan `document`, jadi cukup mekanisme iframe biasa. Contoh `fetch` di artikel
