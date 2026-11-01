@@ -46,6 +46,19 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
      kedua tema, dan di tema gelap ikut aksen versi redup. */
   --color-marker-bg: var(--color-accent);
 
+  /* Warna jalur kurikulum: kotak nomor memakai warna brand, kartunya
+     memakai tint muda agar teks tetap terbaca. Oranye HTML, biru CSS,
+     kuning JavaScript. */
+  --color-jalur-html: #b8371a;
+  --color-jalur-html-teks: #ffffff;
+  --color-jalur-html-bg: #ffe4d9;
+  --color-jalur-css: #264de4;
+  --color-jalur-css-teks: #ffffff;
+  --color-jalur-css-bg: #e0e7ff;
+  --color-jalur-js: #f7df1e;
+  --color-jalur-js-teks: #1a1b33;
+  --color-jalur-js-bg: #fff7cc;
+
   /* Alias untuk layout.css. Bukan warna baru: cukup menamai ulang
      token yang sudah ada agar konsumen lama tidak putus. */
   --color-lilac: var(--color-secondary);
@@ -255,6 +268,11 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
      warnanya yang terang justru membantu, dan penampangnya sama dengan
      tema terang. Kontras dengan --color-on-accent 12.86:1. */
   --color-marker-bg: #ffe14d;
+
+  /* Tint kartu jalur versi gelap; warna kotak nomornya tetap brand. */
+  --color-jalur-html-bg: #3a1d16;
+  --color-jalur-css-bg: #1b2363;
+  --color-jalur-js-bg: #3b3512;
 
   --color-error: #ff9aae;          /* 7.44:1 di --color-error-bg */
   --color-error-bg: #47152a;
@@ -728,6 +746,35 @@ b {
   font-size: var(--fs-small);
   font-weight: var(--fw-black);
   box-shadow: var(--shadow-hard-sm);
+}
+
+/* Tiap jalur memakai warna ikonnya sendiri: kartu bertint sesuai brand,
+   kotak nomor memakai warna brand penuh. Teks dan border tetap tinta. */
+.card--lesson[data-jalur="html"] {
+  background-color: var(--color-jalur-html-bg);
+}
+
+.card--lesson[data-jalur="html"] .card__index {
+  background-color: var(--color-jalur-html);
+  color: var(--color-jalur-html-teks);
+}
+
+.card--lesson[data-jalur="css"] {
+  background-color: var(--color-jalur-css-bg);
+}
+
+.card--lesson[data-jalur="css"] .card__index {
+  background-color: var(--color-jalur-css);
+  color: var(--color-jalur-css-teks);
+}
+
+.card--lesson[data-jalur="javascript"] {
+  background-color: var(--color-jalur-js-bg);
+}
+
+.card--lesson[data-jalur="javascript"] .card__index {
+  background-color: var(--color-jalur-js);
+  color: var(--color-jalur-js-teks);
 }
 
 /* --- Navbar ----------------------------------------------- */

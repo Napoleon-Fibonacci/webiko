@@ -92,6 +92,8 @@ document.querySelectorAll('[data-kurikulum]').forEach(function (host) {
       kartu = document.createElement('article');
       kartu.className = 'card card--lesson';
     }
+    /* Warna kartu per jalur diatur lewat atribut ini, bukan urutan. */
+    kartu.setAttribute('data-jalur', jalur.slug);
     kartu.append(nomor, judul, ringkas, meta);
 
     var item = document.createElement('li');
