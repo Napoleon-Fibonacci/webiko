@@ -1,0 +1,17 @@
+{
+  "kelas": "JavaScript dasar",
+  "murid": [
+    {
+      "nama": "Ayu",
+      "kota": "Bandung"
+    },
+    {
+      "nama": "Bima",
+      "kota": "Surabaya"
+    },
+    {
+      "nama": "Citra",
+      "kota": "Makassar"
+    }
+  ]
+}

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bab 10 JavaScript dasar: mengambil data JSON dari server dengan fetch, Promise, res.json, res.ok, dan catch. Materi Webiko untuk pelajar SMP dan SMA.">
+  <title>Mengambil data dari server — JavaScript dasar · Webiko</title>
+
+  <script>
+    (function () {
+      try {
+        var pilihan = localStorage.getItem("tema");
+        var gelap =
+          pilihan === "gelap" ||
+          (pilihan === "sistem" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-tema", gelap ? "gelap" : "terang");
+      } catch (e) {
+        document.documentElement.setAttribute("data-tema", "terang");
+      }
+
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-siap");
+        window.setTimeout(function () {
+          if (!window.__wgReveal) {
+            document.documentElement.classList.remove("reveal-siap");
+          }
+        }, 2000);
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="../../index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        Webiko
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="../../index.html">Beranda</a>
+        <a class="navbar__link" href="../../index.html#kurikulum" aria-current="page">Kurikulum</a>
+        <a class="navbar__link" href="../../index.html#cara-pakai">Cara pakai</a>
+      </nav>
+
+      <div class="navbar__tools">
+        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
+          <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--terang" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--gelap" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
+          </svg>
+          <span class="theme-toggle__label">Terang</span>
+        </button>
+
+        <button class="navbar__btn navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section">
+      <div class="layout--with-sidebar">
+
+                                                        <aside class="sidebar" aria-label="Daftar bab JavaScript dasar">
+          <p class="sidebar__title">JavaScript dasar</p>
+          <ul class="sidebar__list">
+            <li><a class="sidebar__link" href="apa-itu-javascript.html">Apa itu JavaScript</a></li>
+            <li><a class="sidebar__link" href="variabel.html">Variabel dan tipe data</a></li>
+            <li><a class="sidebar__link" href="fungsi.html">Fungsi</a></li>
+            <li><a class="sidebar__link" href="percabangan.html">Percabangan if</a></li>
+            <li><a class="sidebar__link" href="perulangan.html">Perulangan</a></li>
+            <li><a class="sidebar__link" href="array-objek.html">Array dan objek</a></li>
+            <li><a class="sidebar__link" href="dom.html">Mengubah halaman dari kode</a></li>
+            <li><a class="sidebar__link" href="klik-dan-form.html">Klik dan isian formulir</a></li>
+            <li><a class="sidebar__link" href="penyimpanan.html">Menyimpan data di browser</a></li>
+            <li><a class="sidebar__link" href="ambil-data.html" aria-current="page">Mengambil data dari server</a></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Membuat daftar dari data</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Membaca pesan error</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Latihan: pencatat belajar</span></li>
+          </ul>
+        </aside>
+
+                                                        <article class="materi">
+          <p class="label materi__eyebrow">JavaScript dasar · Bab 10 dari 13</p>
+          <h1>Mengambil data dari server</h1>
+          <p class="materi__lead">
+            Data seperti daftar siswa atau nilai biasanya tidak ditulis di
+            halaman. Halaman memintanya ke server memakai <code>fetch</code>,
+            lalu server membalas dalam bentuk JSON.
+          </p>
+
+          <h2>Data dari server</h2>
+          <p>
+            Browser mengirim permintaan, server menjawab dengan teks. Untuk
+            data terstruktur, jawabannya sering berupa JSON: teks yang bentuknya
+            mirip objek dan array JavaScript.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">contoh-kelas.json</span>
+                <span class="pane__badge">JSON</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-punct">{</span></span><span class="code__line">  <span class="tok-string">"kelas"</span><span class="tok-punct">:</span> <span class="tok-string">"JavaScript dasar"</span><span class="tok-punct">,</span></span><span class="code__line">  <span class="tok-string">"murid"</span><span class="tok-punct">:</span> <span class="tok-punct">[</span></span><span class="code__line">    <span class="tok-punct">{</span> <span class="tok-string">"nama"</span><span class="tok-punct">:</span> <span class="tok-string">"Ayu"</span><span class="tok-punct">,</span> <span class="tok-string">"kota"</span><span class="tok-punct">:</span> <span class="tok-string">"Bandung"</span> <span class="tok-punct">},</span></span><span class="code__line">    <span class="tok-punct">{</span> <span class="tok-string">"nama"</span><span class="tok-punct">:</span> <span class="tok-string">"Bima"</span><span class="tok-punct">,</span> <span class="tok-string">"kota"</span><span class="tok-punct">:</span> <span class="tok-string">"Surabaya"</span> <span class="tok-punct">},</span></span><span class="code__line">    <span class="tok-punct">{</span> <span class="tok-string">"nama"</span><span class="tok-punct">:</span> <span class="tok-string">"Citra"</span><span class="tok-punct">,</span> <span class="tok-string">"kota"</span><span class="tok-punct">:</span> <span class="tok-string">"Makassar"</span> <span class="tok-punct">}</span></span><span class="code__line">  <span class="tok-punct">]</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Nama kunci memakai tanda kutip karena JSON itu teks, bukan kode
+              JavaScript yang dijalankan.
+            </p>
+          </div>
+
+          <h2>fetch dan Promise</h2>
+          <p>
+            <code>fetch(alamat)</code> mengirim permintaan. Hasilnya bukan data,
+            melainkan <code>Promise</code>: janji bahwa jawaban akan datang.
+            Fungsi di dalam <code>.then</code> baru berjalan setelah jawaban
+            tiba.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">ambil.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-fungsi">fetch</span><span class="tok-punct">(</span><span class="tok-string">"/data/contoh-kelas.json"</span><span class="tok-punct">)</span></span><span class="code__line">  <span class="tok-punct">.</span><span class="tok-fungsi">then</span><span class="tok-punct">(</span><span class="tok-kunci">function</span> <span class="tok-punct">(</span>res<span class="tok-punct">)</span> <span class="tok-punct">{</span></span><span class="code__line">    <span class="tok-kunci">return</span> res<span class="tok-punct">.</span><span class="tok-fungsi">json</span><span class="tok-punct">();</span></span><span class="code__line">  <span class="tok-punct">})</span></span><span class="code__line">  <span class="tok-punct">.</span><span class="tok-fungsi">then</span><span class="tok-punct">(</span><span class="tok-kunci">function</span> <span class="tok-punct">(</span>data<span class="tok-punct">)</span> <span class="tok-punct">{</span></span><span class="code__line">    console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span>data<span class="tok-punct">.</span>kelas<span class="tok-punct">);</span></span><span class="code__line">  <span class="tok-punct">})</span>;</span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              <code>res.json()</code> juga mengembalikan Promise, jadi perlu
+              <code>.then</code> kedua. <code>return</code> wajib ada supaya
+              hasilnya diteruskan.
+            </p>
+          </div>
+
+          <h2>Menampilkan data di halaman</h2>
+          <p>
+            Setelah data tiba, ubah halaman seperti biasa: pilih elemen, lalu
+            isi <code>textContent</code>. Karena jawaban datang belakangan,
+            perubahan harus dilakukan di dalam <code>.then</code>.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">tampil.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">const</span> kelas <span class="tok-punct">=</span> document<span class="tok-punct">.</span><span class="tok-fungsi">querySelector</span><span class="tok-punct">(</span><span class="tok-string">"#kelas"</span><span class="tok-punct">);</span></span><span class="code__line"><span class="tok-kunci">const</span> info <span class="tok-punct">=</span> document<span class="tok-punct">.</span><span class="tok-fungsi">querySelector</span><span class="tok-punct">(</span><span class="tok-string">"#jumlah"</span><span class="tok-punct">);</span></span><span class="code__line"></span><span class="code__line"><span class="tok-fungsi">fetch</span><span class="tok-punct">(</span><span class="tok-string">"/data/contoh-kelas.json"</span><span class="tok-punct">)</span></span><span class="code__line">  <span class="tok-punct">.</span><span class="tok-fungsi">then</span><span class="tok-punct">(</span><span class="tok-kunci">function</span> <span class="tok-punct">(</span>res<span class="tok-punct">)</span> <span class="tok-punct">{</span></span><span class="code__line">    <span class="tok-kunci">return</span> res<span class="tok-punct">.</span><span class="tok-fungsi">json</span><span class="tok-punct">();</span></span><span class="code__line">  <span class="tok-punct">})</span></span><span class="code__line">  <span class="tok-punct">.</span><span class="tok-fungsi">then</span><span class="tok-punct">(</span><span class="tok-kunci">function</span> <span class="tok-punct">(</span>data<span class="tok-punct">)</span> <span class="tok-punct">{</span></span><span class="code__line">    kelas<span class="tok-punct">.</span>textContent <span class="tok-punct">=</span> data<span class="tok-punct">.</span>kelas<span class="tok-punct">;</span></span><span class="code__line">    <span class="tok-kunci">const</span> banyak <span class="tok-punct">=</span> data<span class="tok-punct">.</span>murid<span class="tok-punct">.</span>length<span class="tok-punct">;</span></span><span class="code__line">    info<span class="tok-punct">.</span>textContent <span class="tok-punct">=</span> banyak <span class="tok-punct">+</span> <span class="tok-string">" murid"</span><span class="tok-punct">;</span></span><span class="code__line">  <span class="tok-punct">})</span>;</span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              <code>data.murid</code> berupa array, jadi jumlahnya dibaca lewat
+              <code>.length</code>.
+            </p>
+          </div>
+
+          <h2>Kalau permintaan gagal</h2>
+          <p>
+            Jaringan bisa putus atau alamatnya salah. Status 404 tidak otomatis
+            melempar error, jadi periksa <code>res.ok</code>. Tambahkan
+            <code>.catch</code> di ujung untuk menangani kegagalan.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">gagal.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-fungsi">fetch</span><span class="tok-punct">(</span><span class="tok-string">"/data/contoh-kelas.json"</span><span class="tok-punct">)</span></span><span class="code__line">  <span class="tok-punct">.</span><span class="tok-fungsi">then</span><span class="tok-punct">(</span><span class="tok-kunci">function</span> <span class="tok-punct">(</span>res<span class="tok-punct">)</span> <span class="tok-punct">{</span></span><span class="code__line">    <span class="tok-kunci">if</span> <span class="tok-punct">(!</span>res<span class="tok-punct">.</span>ok<span class="tok-punct">)</span> <span class="tok-punct">{</span></span><span class="code__line">      <span class="tok-kunci">throw</span> <span class="tok-kunci">new</span> <span class="tok-fungsi">Error</span><span class="tok-punct">(</span><span class="tok-string">"Status "</span> <span class="tok-punct">+</span> res<span class="tok-punct">.</span>status<span class="tok-punct">);</span></span><span class="code__line">    <span class="tok-punct">}</span></span><span class="code__line">    <span class="tok-kunci">return</span> res<span class="tok-punct">.</span><span class="tok-fungsi">json</span><span class="tok-punct">();</span></span><span class="code__line">  <span class="tok-punct">})</span></span><span class="code__line">  <span class="tok-punct">.</span><span class="tok-fungsi">catch</span><span class="tok-punct">(</span><span class="tok-kunci">function</span> <span class="tok-punct">(</span>galat<span class="tok-punct">)</span> <span class="tok-punct">{</span></span><span class="code__line">    console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span>galat<span class="tok-punct">.</span>message<span class="tok-punct">);</span></span><span class="code__line">  <span class="tok-punct">})</span>;</span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              <code>throw</code> di dalam <code>.then</code> langsung ditangkap
+              <code>.catch</code> di bawahnya.
+            </p>
+          </div>
+
+          <section class="lab" data-lab-dom data-lab-fetch aria-labelledby="lab-judul">
+            <p class="label">Latihan langsung</p>
+            <h2 id="lab-judul">Ambil kelas dari server</h2>
+            <p>
+              Kode berjalan di pratinjau. Pratinjau meminta data lewat halaman
+              materi karena iframe sandbox; di browser asli <code>fetch</code>
+              memanggil server langsung.
+            </p>
+            <ol>
+              <li>Klik <strong>Jalankan</strong>. <code>Memuat data...</code> berganti menjadi <code>JavaScript dasar</code> dan <code>3 murid</code>.</li>
+              <li>Ganti <code>data.kelas</code> menjadi <code>data.murid[0].nama</code>, lalu jalankan lagi. Muncul <code>Ayu</code>.</li>
+              <li>Ganti alamatnya menjadi <code>/data/tidak-ada.json</code>, lalu jalankan. Muncul <code>Data gagal dimuat.</code></li>
+              <li>Kembalikan alamat semula.</li>
+            </ol>
+
+            <div class="lab__meja">
+              <div class="lab__panel lab__panel--kode">
+                <div class="lab__bar">
+                  <span class="lab__prompt" aria-hidden="true">&gt;_</span>
+                  <span class="lab__nama">kelas.js</span>
+                  <span class="lab__isyarat">bisa diubah</span>
+                </div>
+                <textarea class="lab__editor" data-lab-editor rows="16" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Kode JavaScript latihan" aria-describedby="lab-status">const kelas = document.querySelector("#kelas");
+const info = document.querySelector("#jumlah");
+
+fetch("/data/contoh-kelas.json")
+  .then(function (res) {
+    return res.json();
+  })
+  .then(function (data) {
+    kelas.textContent = data.kelas;
+    const banyak = data.murid.length;
+    info.textContent = banyak + " murid";
+  })
+  .catch(function () {
+    kelas.textContent = "Data gagal dimuat.";
+  });</textarea>
+              </div>
+
+              <div class="lab__panel lab__panel--hasil">
+                <div class="lab__bar">
+                  <span class="pane__dots" aria-hidden="true">
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                  </span>
+                  <span class="lab__nama">Pratinjau</span>
+                  <span class="lab__isyarat">halaman</span>
+                </div>
+                <iframe class="lab__pratinjau" data-lab-pratinjau title="Pratinjau halaman hasil kode" sandbox="allow-scripts" srcdoc="<!DOCTYPE html><html lang='id'><head><meta charset='utf-8'><style>body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;margin:0;padding:16px;background:#ffffff;color:#1a1b33;}h1{margin-top:0;font-size:1.6rem;margin-bottom:12px;}p{margin:0 0 8px;}p:last-child{margin-bottom:0;}</style></head><body><h1 id='judul'>Kelas hari ini</h1><p id='kelas'>Memuat data...</p><p id='jumlah'></p></body></html>"></iframe>
+              </div>
+            </div>
+
+            <div class="lab__aksi">
+              <button class="btn btn--primary" type="button" data-lab-jalankan hidden>Jalankan</button>
+              <button class="btn btn--ghost" type="button" data-lab-reset hidden>Atur ulang</button>
+              <p class="lab__status" id="lab-status" data-lab-status role="status">Klik Jalankan untuk melihat hasil.</p>
+            </div>
+
+            <div class="materi__latihan">
+              <p><strong>Cek hasil:</strong></p>
+              <ul>
+                <li>Setelah Jalankan, pratinjau menampilkan <code>JavaScript dasar</code> dan <code>3 murid</code>.</li>
+                <li>Dengan <code>data.murid[0].nama</code>, teksnya menjadi <code>Ayu</code>.</li>
+                <li>Alamat yang salah memunculkan <code>Data gagal dimuat.</code> dari <code>.catch</code>.</li>
+              </ul>
+            </div>
+
+            <noscript>
+              <p class="lab__catatan">
+                Editor butuh JavaScript. Salin kode di atas ke file .js yang
+                dimuat setelah HTML, lalu jalankan di browser.
+              </p>
+            </noscript>
+          </section>
+
+          <h2>Kesalahan umum</h2>
+          <ul>
+            <li>Lupa <code>return res.json()</code>, sehingga <code>data</code> masih berupa <code>Response</code>, bukan isi JSON.</li>
+            <li>Memakai data di luar <code>.then</code>. Kode setelah <code>fetch</code> berjalan lebih dulu, sebelum jawaban tiba.</li>
+            <li>Mengira status 404 otomatis masuk <code>.catch</code>. Periksa <code>res.ok</code> sendiri.</li>
+            <li>Alamat salah atau tanpa garis miring awal, misalnya <code>data/contoh-kelas.json</code>, sehingga dicari di folder halaman.</li>
+            <li>Membuka halaman lewat <code>file://</code>. <code>fetch</code> butuh server, bukan berkas ganda-klik.</li>
+            <li>Tanpa <code>.catch</code>, kegagalan tidak terlihat dan halaman tetap menampilkan teks awal.</li>
+          </ul>
+
+          <h2>Rangkuman</h2>
+          <ul>
+            <li><code>fetch(alamat)</code> mengirim permintaan dan mengembalikan <code>Promise</code>.</li>
+            <li><code>.then</code> pertama menerima <code>Response</code>; <code>res.json()</code> membaca isinya.</li>
+            <li><code>res.json()</code> juga Promise, jadi butuh <code>.then</code> kedua.</li>
+            <li><code>res.ok</code> menandai status 200–299; 404 bukan error otomatis.</li>
+            <li><code>.catch</code> menangani jaringan putus atau isi yang gagal dibaca.</li>
+          </ul>
+
+          <footer class="materi__kaki">
+            <section class="kaki__sumber" aria-labelledby="sumber-judul">
+              <h2 class="kaki__label" id="sumber-judul">Bacaan asli</h2>
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API">MDN — Fetch API</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch">MDN — Using Fetch</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Response/json">MDN — Response.json()</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Response/ok">MDN — Response.ok</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">MDN — Promise</a></li>
+              </ul>
+            </section>
+
+            <nav class="kaki__pager" aria-label="Bab sebelumnya dan berikutnya">
+              <a class="kaki__bab kaki__bab--kembali" href="penyimpanan.html">
+                <span class="kaki__arah">Sebelumnya</span>
+                <span class="kaki__judul">Menyimpan data di browser</span>
+              </a>
+              <a class="kaki__bab kaki__bab--lanjut" href="../../index.html#kurikulum">
+                <span class="kaki__arah">Kembali</span>
+                <span class="kaki__judul">Kurikulum</span>
+              </a>
+            </nav>
+          </footer>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__row">
+      <div>
+        <p class="footer__wordmark">Webiko</p>
+        <p class="footer__tagline">
+          Belajar bikin website dari nol, dalam bahasa Indonesia.
+          Tanpa install, tanpa framework.
+        </p>
+      </div>
+      <nav class="footer__nav" aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="../../index.html#kurikulum">Kurikulum</a></li>
+          <li><a href="../../index.html#cara-pakai">Cara pakai</a></li>
+          <li><a href="../../index.html#progres">Progres</a></li>
+          <li><a href="../../index.html#daftar">Buat akun</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <p>© 2026 Webiko · Dibuat tanpa framework dan tanpa dependency.</p>
+      <p>Untuk pelajar SMP &amp; SMA</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/latihan-dom.js"></script>
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>

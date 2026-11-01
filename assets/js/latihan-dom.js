@@ -30,6 +30,7 @@
   var sudahSelesai = false;
   var simpanan = lab.hasAttribute('data-lab-simpanan');
   var KUNCI_SIMPANAN = 'webiko-lab-penyimpanan';
+  var ambil = lab.hasAttribute('data-lab-fetch');
 
   /* ---------- Sorot sintaks ---------- */
 
@@ -294,8 +295,74 @@
     } catch (e) {}
   }
 
+  function kirimKePratinjau(pesan) {
+    try {
+      pratinjau.contentWindow.postMessage(pesan, '*');
+    } catch (e) {}
+  }
+
+  function jawabAmbil(id, url) {
+    var alamat;
+    try {
+      alamat = new URL(String(url), location.href);
+    } catch (e) {
+      kirimKePratinjau({ kunci: kunci, tipe: 'ambil-galat', id: id, pesan: 'Alamat tidak sah.' });
+      return;
+    }
+    if (alamat.origin !== location.origin || alamat.pathname.indexOf('/data/') !== 0) {
+      kirimKePratinjau({ kunci: kunci, tipe: 'ambil-galat', id: id, pesan: 'Lab hanya boleh mengambil berkas di /data/.' });
+      return;
+    }
+    fetch(alamat.href)
+      .then(function (res) {
+        return res.text().then(function (teks) {
+          kirimKePratinjau({ kunci: kunci, tipe: 'ambil-hasil', id: id, ok: res.ok, status: res.status, teks: teks });
+        });
+      })
+      .catch(function () {
+        kirimKePratinjau({ kunci: kunci, tipe: 'ambil-galat', id: id, pesan: 'Data gagal diambil.' });
+      });
+  }
+
   function buatDokumen(kode) {
     var kodeAman = JSON.stringify(beriPenjaga(kode)).replace(/<\/script/gi, '<\\/script');
+    var skripAmbil = ambil ? [
+      '  var __idAmbil = 0;',
+      '  var __tungguAmbil = {};',
+      '  function __fetch(url) {',
+      '    return new Promise(function (resolve, reject) {',
+      '      var id = String(++__idAmbil);',
+      '      __tungguAmbil[id] = { resolve: resolve, reject: reject };',
+      '      kirim("ambil", [id, String(url)]);',
+      '      setTimeout(function () {',
+      '        if (!__tungguAmbil[id]) return;',
+      '        delete __tungguAmbil[id];',
+      '        reject(new Error("Server tidak menjawab."));',
+      '      }, 5000);',
+      '    });',
+      '  }',
+      '  window.addEventListener("message", function (e) {',
+      '    var d = e.data;',
+      '    if (!d || d.kunci !== kunci) return;',
+      '    if (d.tipe !== "ambil-hasil" && d.tipe !== "ambil-galat") return;',
+      '    var t = __tungguAmbil[d.id];',
+      '    if (!t) return;',
+      '    delete __tungguAmbil[d.id];',
+      '    if (d.tipe === "ambil-galat") {',
+      '      t.reject(new Error(d.pesan));',
+      '    } else {',
+      '      t.resolve({',
+      '        ok: d.ok,',
+      '        status: d.status,',
+      '        json: function () { return Promise.resolve().then(function () { return JSON.parse(d.teks); }); },',
+      '        text: function () { return Promise.resolve(d.teks); }',
+      '      });',
+      '    }',
+      '    setTimeout(function () { ukur(); }, 50);',
+      '  });',
+      '  window.fetch = __fetch;'
+    ] : [];
+
     var skripSimpanan = simpanan ? [
       '  var dataSimpanan = ' + JSON.stringify(bacaSimpanan() || {}) + ';',
       '  var shimSimpanan = {',
@@ -315,7 +382,7 @@
       '  var kunci = ' + JSON.stringify(kunci) + ';',
       '  var kode = ' + kodeAman + ';',
       '  var hitung = 0;'
-    ].concat(skripSimpanan, [
+    ].concat(skripSimpanan, skripAmbil, [
       '  window.__lanjut = function () {',
       '    hitung++;',
       '    if (hitung > 1000000) {',
@@ -364,6 +431,11 @@
 
     if (d.tipe === 'tinggi') {
       aturTinggiPratinjau((d.args || [])[0]);
+      return;
+    }
+    if (d.tipe === 'ambil') {
+      var dataAmbil = d.args || [];
+      jawabAmbil(dataAmbil[0], dataAmbil[1]);
       return;
     }
     if (d.tipe === 'simpanan') {

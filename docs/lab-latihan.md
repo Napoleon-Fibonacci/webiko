@@ -19,12 +19,13 @@ Lab latihan harus terasa seperti satu editor kecil yang konsisten:
 | --- | --- |
 | `assets/js/latihan-html.js` | Menyalin editor ke iframe, mewarnai sintaks, mengukur tinggi editor dan pratinjau, tombol Jalankan/Reset, pemeriksaan struktur. |
 | `assets/js/latihan-js.js` | Menjalankan kode JavaScript di Web Worker dan menampilkan `console.log`/error di panel Keluaran. |
-| `assets/js/latihan-dom.js` | Menjalankan kode DOM di iframe ber-sandbox; `document` menunjuk dokumen pratinjau, perulangan dijaga penghitung, dan `localStorage` dapat diganti shim untuk lab penyimpanan. |
+| `assets/js/latihan-dom.js` | Menjalankan kode DOM di iframe ber-sandbox; `document` menunjuk dokumen pratinjau, perulangan dijaga penghitung, `localStorage` dapat diganti shim untuk lab penyimpanan, dan `fetch` diteruskan ke halaman materi untuk lab pengambilan data. |
 | `assets/js/lab-warna.js` | Kotak warna kecil di dalam editor CSS. Tanpa JavaScript tidak ada kotak. |
 | `assets/css/style.css` | Token, panel lab, editor, pratinjau, dan batas tinggi minimum. |
 | `materi/css/*.html` | Lab CSS: 11 bab, dari `mengenal-css` sampai `mode-gelap`. |
 | `materi/html/*.html` | Lab HTML: `file-html-pertama`, `judul-dan-paragraf`, `gambar`, `tautan`, `daftar`, `tabel`, `halaman-lengkap`. |
-| `materi/javascript/*.html` | Materi JavaScript: `apa-itu-javascript` (lab + kuis), `variabel`, `fungsi`, `percabangan`, `perulangan`, `array-objek`, `dom`, `klik-dan-form`, `penyimpanan`. Empat bab lain belum dibuat. |
+| `materi/javascript/*.html` | Materi JavaScript: `apa-itu-javascript` (lab + kuis), `variabel`, `fungsi`, `percabangan`, `perulangan`, `array-objek`, `dom`, `klik-dan-form`, `penyimpanan`, `ambil-data`. Tiga bab lain belum dibuat. |
+| `data/contoh-kelas.json` | Data contoh untuk lab `ambil-data`: nama kelas dan tiga murid. |
 
 Bab konsep `apa-itu-website` dan `dari-server-ke-layar` memakai kuis pilihan
 ganda, bukan lab kode. `mengenal-tag-html` memakai latihan "Bedah satu tag"
@@ -87,10 +88,10 @@ lab khusus, bukan lab ini.
 
 ## Lab DOM
 
-Bab `dom` dan `klik-dan-form` memakai penanda `data-lab-dom` dan
-`assets/js/latihan-dom.js`. Kode siswa butuh `document`, sedangkan Web Worker
-tidak punya DOM. Karena itu kode dijalankan di iframe pratinjau, bukan di
-halaman materi:
+Bab `dom`, `klik-dan-form`, `penyimpanan`, dan `ambil-data` memakai penanda
+`data-lab-dom` dan `assets/js/latihan-dom.js`. Kode siswa butuh `document`,
+sedangkan Web Worker tidak punya DOM. Karena itu kode dijalankan di iframe
+pratinjau, bukan di halaman materi:
 
 - iframe memakai `sandbox="allow-scripts"` tanpa `allow-same-origin`, jadi
   halaman materi tidak bisa menyentuh isinya dan sebaliknya;
@@ -123,6 +124,29 @@ aksesnya melempar `SecurityError`. Karena itu `latihan-dom.js` memasang shim
   tersimpan. Penghapusan dilakukan lewat kode siswa (`removeItem`/`clear`).
 - Teks lab memberi tahu siswa bahwa pratinjau memakai penyimpanan tiruan,
   sedangkan browser asli menyimpan sungguhan.
+
+### Pengambilan data tiruan
+
+Bab `ambil-data` menambahkan atribut `data-lab-fetch`. Iframe sandbox tanpa
+`allow-same-origin` punya origin buram, jadi `fetch` ke berkas situs tidak
+bisa diandalkan dan aturan CORS tidak bisa dibuat untuk origin semacam itu.
+Karena itu `latihan-dom.js` meneruskan permintaan ke halaman materi:
+
+- Iframe mengirim pesan `ambil` berisi id dan alamat; halaman materi melakukan
+  `fetch` sungguhan, lalu membalas `{ ok, status, teks }`.
+- Alamat wajib same-origin dan pathname-nya diawali `/data/`. Alamat lain
+  ditolak dengan `Lab hanya boleh mengambil berkas di /data/.`; alamat yang
+  tidak bisa dibaca menjadi `Alamat tidak sah.`.
+- Shim menyediakan `res.ok`, `res.status`, `res.json()`, dan `res.text()`.
+  `json()` memakai `JSON.parse` seperti `Response.json()`.
+- Tidak ada jawaban dalam 5 detik: `Server tidak menjawab.`. Jaringan gagal:
+  `Data gagal diambil.`.
+- Hanya dipasang kalau `data-lab-fetch` ada. Lab DOM lain memakai `fetch`
+  asli iframe.
+- Halaman tidak perlu aturan CORS tambahan karena permintaan dilakukan oleh
+  halaman materi sendiri, bukan oleh iframe.
+- Lab memakai `data/contoh-kelas.json`. Status 404 tetap sampai ke kode siswa
+  sebagai `ok: false` dan `status: 404`, bukan error otomatis.
 
 Iframe yang terkunci `while (true)` tidak bisa dipulihkan dari luar: mengganti
 `srcdoc` atau membuat iframe baru tetap menunggu proses yang sama. Karena itu
@@ -197,7 +221,11 @@ Jalankan `python -m http.server 8000`, lalu periksa:
 12. Lab penyimpanan: Simpan menulis ke `webiko-lab-penyimpanan`; data muncul
     lagi setelah Jalankan dan setelah halaman dimuat ulang; Hapus
     mengosongkannya; lab DOM lain tetap tanpa `localStorage`.
-13. Semua berkas tetap CRLF.
+13. Lab pengambilan data: Jalankan menampilkan nama kelas dan jumlah murid;
+    `res.text()` dan `res.json()` bekerja; alamat di luar `/data/` ditolak;
+    404 menghasilkan `ok: false`; permintaan yang macet berhenti setelah
+    5 detik; lab DOM lain tidak mendapat shim `fetch`.
+14. Semua berkas tetap CRLF.
 
 ## Riwayat perubahan
 
