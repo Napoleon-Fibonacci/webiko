@@ -13,11 +13,13 @@ Website pembelajaran untuk anak sekolah yang ingin belajar membuat website dari 
 ```
 .
 ├── index.html              # Halaman utama
+├── akun.html               # Masuk & daftar username + password
 ├── styleguide.html         # Design system (acuan komponen & token)
 ├── vercel.json             # Konfigurasi deploy Vercel
 ├── assets/
 │   ├── css/style.css       # Stylesheet utama (token + komponen)
 │   ├── js/main.js          # Script utama (menu navbar, render kurikulum)
+│   ├── js/akun.js          # Logika halaman akun (sesi, masuk, daftar, keluar)
 │   ├── js/supabase.js      # Klien Supabase (ESM)
 │   ├── js/supabase-config.example.js  # Contoh config (salin jadi supabase-config.js)
 │   └── img/                # Gambar
@@ -123,12 +125,13 @@ plus uji `set local role anon`): lihat `supabase/README.md`.
 `assets/js/supabase.js` adalah ESM module yang memuat
 `@supabase/supabase-js` v2 dari CDN (`https://esm.sh/@supabase/supabase-js@2`) —
 tidak ada npm atau build step. Muat `supabase-config.js` (script biasa)
-**dulu**, baru modul yang memakainya. Halaman akun belum ada, jadi urutan ini
-belum dipasang di halaman mana pun; tambahkan saat halaman akun dibuat:
+**dulu**, baru `main.js`, lalu modul yang memakainya. Halaman `akun.html`
+sudah memakai urutan ini:
 
 ```html
 <script src="assets/js/supabase-config.js"></script>
-<script type="module" src="assets/js/main.js"></script>
+<script src="assets/js/main.js"></script>
+<script type="module" src="assets/js/akun.js"></script>
 ```
 
 `supabase-config.js` mengisi `window.__ENV__ = { SUPABASE_URL, SUPABASE_ANON_KEY }`

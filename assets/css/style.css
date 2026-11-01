@@ -1307,6 +1307,116 @@ b {
   color: var(--color-muted);
 }
 
+/* --- Halaman akun ----------------------------------------- */
+.akun__grid {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.akun__intro {
+  padding: var(--space-6);
+  border: var(--border-w) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-secondary);
+  color: var(--color-ink);
+  box-shadow: var(--shadow-hard-lg);
+}
+
+.akun__judul-besar {
+  margin-bottom: var(--space-3);
+  max-width: 16ch;
+}
+
+.akun__intro > p {
+  margin-bottom: var(--space-4);
+}
+
+.akun__poin {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-6);
+  padding: 0;
+  list-style: none;
+}
+
+.akun__poin li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  font-size: var(--fs-small);
+}
+
+.akun__poin span {
+  font-weight: var(--fw-black);
+}
+
+.akun__panel {
+  width: 100%;
+  max-width: 34rem;
+  margin-inline: auto;
+  padding: var(--space-6);
+}
+
+/* Tab disembunyikan tanpa JavaScript: kedua formulir tampil bertumpuk,
+   dan <noscript> menjelaskan bahwa pengiriman butuh JavaScript. */
+.akun__tab {
+  display: none;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+}
+
+html[data-akun-siap] .akun__tab {
+  display: flex;
+}
+
+.akun__tab-btn {
+  flex: 1;
+  min-height: var(--tap-target);
+  padding: var(--space-2) var(--space-4);
+  border: var(--border-w) solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background-color: var(--color-surface-soft);
+  color: var(--color-ink);
+  font: inherit;
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+  transition:
+    background-color var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out);
+}
+
+.akun__tab-btn[aria-selected="true"] {
+  background-color: var(--color-marker-bg);
+  color: var(--color-on-accent);
+  box-shadow: var(--shadow-hard-sm);
+}
+
+.akun__form {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.akun__form .field {
+  max-width: none;
+}
+
+.akun__form .btn {
+  width: 100%;
+}
+
+.akun__judul {
+  font-size: var(--fs-h3);
+}
+
+.akun__panel .alert + [data-akun-tamu],
+.akun__panel .alert + [data-akun-masuk] {
+  margin-top: var(--space-6);
+}
+
+.akun__panel [data-akun-masuk] .actions {
+  margin-top: var(--space-4);
+}
+
 /* ============================================================
    5. BREAKPOINT (mobile-first)
    ============================================================ */
@@ -1395,6 +1505,21 @@ b {
   .sidebar {
     position: sticky;
     top: calc(64px + var(--space-6));
+  }
+
+  /* Halaman akun: panel pengantar dan formulir berdampingan. */
+  .akun__grid {
+    grid-template-columns: 5fr 6fr;
+    align-items: start;
+  }
+
+  .akun__intro {
+    padding: var(--space-8);
+  }
+
+  .akun__panel {
+    max-width: none;
+    margin-inline: 0;
   }
 }
 

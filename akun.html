@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Masuk atau buat akun Webiko dengan username dan password. Tanpa email, tanpa data pribadi. Progres bab, skor kuis, dan badge tersimpan di akunmu.">
+  <title>Akun — Webiko</title>
+
+  <!-- Pasang tema sebelum halaman digambar, supaya tidak berkedip. -->
+  <script>
+    (function () {
+      try {
+        var pilihan = localStorage.getItem("tema");
+        var gelap =
+          pilihan === "gelap" ||
+          (pilihan === "sistem" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-tema", gelap ? "gelap" : "terang");
+      } catch (e) {
+        document.documentElement.setAttribute("data-tema", "terang");
+      }
+
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-siap");
+        window.setTimeout(function () {
+          if (!window.__wgReveal) {
+            document.documentElement.classList.remove("reveal-siap");
+          }
+        }, 2000);
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- ============ NAVBAR ============ -->
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        Webiko
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="index.html">Beranda</a>
+        <a class="navbar__link" href="index.html#kurikulum">Kurikulum</a>
+        <a class="navbar__link" href="index.html#cara-pakai">Cara pakai</a>
+        <a class="navbar__link" href="akun.html" aria-current="page">Akun</a>
+      </nav>
+
+      <div class="navbar__tools">
+        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
+          <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--terang" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--gelap" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
+          </svg>
+          <span class="theme-toggle__label">Terang</span>
+        </button>
+
+        <button class="navbar__btn navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <div class="akun__grid">
+
+          <aside class="akun__intro" data-reveal>
+            <p class="card__label">Akun Webiko</p>
+            <h1 class="akun__judul-besar">Progres belajarmu tersimpan di sini</h1>
+            <p>
+              Tanpa email. Cukup username dan password, jadi tidak ada data
+              pribadi yang diminta.
+            </p>
+            <ul class="akun__poin">
+              <li><span aria-hidden="true">1</span> Bab yang selesai ditandai otomatis.</li>
+              <li><span aria-hidden="true">2</span> Skor kuis tersimpan per bab.</li>
+              <li><span aria-hidden="true">3</span> Badge terbuka saat target tercapai.</li>
+            </ul>
+            <p class="text-small">
+              Password tidak bisa dipulihkan lewat email. Catat baik-baik.
+            </p>
+          </aside>
+
+          <div class="card akun__panel" data-reveal>
+            <noscript>
+              <div class="alert alert--warning">
+                <div>
+                  <span class="alert__title">JavaScript mati</span>
+                  <p class="alert__text">
+                    Formulir tidak bisa dikirim tanpa JavaScript. Aktifkan
+                    JavaScript di browser, lalu muat ulang halaman ini.
+                  </p>
+                </div>
+              </div>
+            </noscript>
+
+            <div class="alert alert--warning" data-akun-config hidden>
+              <div>
+                <span class="alert__title">Backend belum dikonfigurasi</span>
+                <p class="alert__text">
+                  Buat <code>assets/js/supabase-config.js</code> dari
+                  <code>supabase-config.example.js</code>, lalu isi
+                  <code>SUPABASE_URL</code> dan anon key. Lihat README.
+                </p>
+              </div>
+            </div>
+
+            <div class="alert" data-akun-pesan role="status" hidden></div>
+
+            <div data-akun-tamu>
+              <div class="akun__tab" role="tablist" aria-label="Pilih masuk atau daftar">
+                <button class="akun__tab-btn" type="button" role="tab" id="tab-masuk"
+                  aria-controls="panel-masuk" aria-selected="true" data-akun-tab="masuk">Masuk</button>
+                <button class="akun__tab-btn" type="button" role="tab" id="tab-daftar"
+                  aria-controls="panel-daftar" aria-selected="false" tabindex="-1" data-akun-tab="daftar">Daftar</button>
+              </div>
+
+              <div id="panel-masuk" role="tabpanel" aria-labelledby="tab-masuk" data-akun-panel="masuk">
+                <form class="akun__form" data-form="masuk" method="post" novalidate>
+                  <p class="card__label">Sudah punya akun</p>
+                  <h2 class="akun__judul">Masuk</h2>
+                  <p class="text-small text-muted">
+                    Masukkan username dan password akunmu.
+                  </p>
+
+                  <div class="field">
+                    <label class="field__label" for="masuk-username">Username</label>
+                    <input class="input" id="masuk-username" name="username" type="text"
+                      autocomplete="username" autocapitalize="none" spellcheck="false"
+                      minlength="3" maxlength="20" pattern="[A-Za-z0-9_]{3,20}"
+                      placeholder="misalnya budi_01" required>
+                    <p class="field__hint">3-20 karakter: huruf, angka, atau garis bawah.</p>
+                  </div>
+
+                  <div class="field">
+                    <label class="field__label" for="masuk-password">Password</label>
+                    <input class="input" id="masuk-password" name="password" type="password"
+                      autocomplete="current-password" minlength="6" placeholder="password akunmu" required>
+                  </div>
+
+                  <button class="btn btn--primary" type="submit">Masuk</button>
+                </form>
+              </div>
+
+              <div id="panel-daftar" role="tabpanel" aria-labelledby="tab-daftar" data-akun-panel="daftar">
+                <form class="akun__form" data-form="daftar" method="post" novalidate>
+                  <p class="card__label">Baru di Webiko</p>
+                  <h2 class="akun__judul">Buat akun</h2>
+                  <p class="text-small text-muted">
+                    Pilih username dan password. Tanpa email.
+                  </p>
+
+                  <div class="field">
+                    <label class="field__label" for="daftar-username">Username</label>
+                    <input class="input" id="daftar-username" name="username" type="text"
+                      autocomplete="username" autocapitalize="none" spellcheck="false"
+                      minlength="3" maxlength="20" pattern="[A-Za-z0-9_]{3,20}"
+                      placeholder="misalnya budi_01" required>
+                    <p class="field__hint">3-20 karakter: huruf, angka, atau garis bawah.</p>
+                  </div>
+
+                  <div class="field">
+                    <label class="field__label" for="daftar-password">Password</label>
+                    <input class="input" id="daftar-password" name="password" type="password"
+                      autocomplete="new-password" minlength="6" placeholder="minimal 6 karakter" required>
+                    <p class="field__hint">Minimal 6 karakter. Jangan pakai password akun lain.</p>
+                  </div>
+
+                  <div class="field">
+                    <label class="field__label" for="daftar-password2">Ulangi password</label>
+                    <input class="input" id="daftar-password2" name="password2" type="password"
+                      autocomplete="new-password" minlength="6" placeholder="ketik ulang password" required>
+                  </div>
+
+                  <button class="btn btn--primary" type="submit">Buat akun</button>
+                </form>
+              </div>
+            </div>
+
+            <div data-akun-masuk hidden>
+              <p class="card__label">Sudah masuk</p>
+              <h2 class="akun__judul">Halo, <span data-akun-nama>pelajar</span></h2>
+              <p class="card__text">
+                Progres bab, skor kuis, dan badge sekarang tersimpan di akun ini.
+              </p>
+              <div class="actions actions--spaced">
+                <a class="btn btn--primary" href="index.html#kurikulum">Lanjut belajar</a>
+                <button class="btn btn--ghost" type="button" data-akun-keluar>Keluar</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer__row">
+      <div>
+        <p class="footer__wordmark">Webiko</p>
+        <p class="footer__tagline">
+          Belajar bikin website dari nol, dalam bahasa Indonesia.
+          Tanpa install, tanpa framework.
+        </p>
+      </div>
+      <nav class="footer__nav" aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="index.html#kurikulum">Kurikulum</a></li>
+          <li><a href="index.html#cara-pakai">Cara pakai</a></li>
+          <li><a href="index.html#progres">Progres</a></li>
+          <li><a href="akun.html">Akun</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <p>© 2026 Webiko · Dibuat tanpa framework dan tanpa dependency.</p>
+      <p>Untuk pelajar SMP &amp; SMA</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/supabase-config.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script type="module" src="assets/js/akun.js"></script>
+</body>
+</html>
