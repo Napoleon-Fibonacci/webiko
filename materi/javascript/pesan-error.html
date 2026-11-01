@@ -299,6 +299,87 @@ try {
             <li>Mengabaikan lokasi berkas dan nomor baris di baris <code>at</code>.</li>
           </ul>
 
+          <section class="card cek-paham kuis" aria-labelledby="cek-judul">
+            <p class="card__label">Cek pemahaman</p>
+            <h2 class="card__title" id="cek-judul">Kuis pilihan ganda</h2>
+            <p>
+              Pilih satu jawaban untuk setiap soal, lalu klik <strong>Periksa jawaban</strong>.
+            </p>
+            <form class="kuis__form" data-kuis>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="b"
+                data-penjelasan="Contoh: TypeError sebagai nama, keterangan penyebab, lalu baris at.">
+                <legend class="kuis__tanya">Pesan error biasanya memberi tiga hal, yaitu?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-pesan-error-1" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Warna, ukuran, dan font.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-pesan-error-1" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Nama, keterangan, dan lokasi.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-pesan-error-1" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Nama berkas saja.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="c"
+                data-penjelasan="Kode di .then berjalan belakangan, di luar alur try.">
+                <legend class="kuis__tanya">Apakah <code>try/catch</code> menangkap error di dalam <code>.then</code>?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-pesan-error-2" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Ya, selalu.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-pesan-error-2" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Hanya kalau error berupa <code>SyntaxError</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-pesan-error-2" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Tidak; pakai <code>.catch</code> pada rantai Promise.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="a"
+                data-penjelasan="try/catch menangkap error saat kode berjalan, bukan kode yang gagal diurai.">
+                <legend class="kuis__tanya">Apakah <code>try/catch</code> bisa menolong <code>SyntaxError</code>?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-pesan-error-3" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Tidak; kode yang tidak bisa dibaca tidak pernah berjalan.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-pesan-error-3" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Ya, semua <code>SyntaxError</code> tertangkap.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-pesan-error-3" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Hanya <code>SyntaxError</code> dari <code>JSON.parse</code>.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <div class="kuis__aksi">
+                <button class="btn btn--primary" type="button" data-kuis-periksa hidden>Periksa jawaban</button>
+                <button class="btn btn--ghost" type="button" data-kuis-ulangi hidden>Ulangi</button>
+              </div>
+              <p class="kuis__skor" data-kuis-skor role="status" aria-live="polite"></p>
+              <noscript>
+                <p class="kuis__catatan">
+                  JavaScript mati, jadi jawaban tidak bisa diperiksa otomatis.
+                  Kunci jawaban: 1B, 2C, 3A.
+                </p>
+              </noscript>
+            </form>
+          </section>
+
           <h2>Rangkuman</h2>
           <ul>
             <li>Error memberi nama, keterangan, dan lokasi masalah.</li>
@@ -363,6 +444,7 @@ try {
   </footer>
 
   <script src="../../assets/js/latihan-dom.js"></script>
+  <script src="../../assets/js/kuis-pilihan.js"></script>
   <script src="../../assets/js/main.js"></script>
 </body>
 </html>

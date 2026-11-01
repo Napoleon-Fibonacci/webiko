@@ -307,6 +307,87 @@
             </ul>
           </div>
 
+          <section class="card cek-paham kuis" aria-labelledby="cek-judul">
+            <p class="card__label">Cek pemahaman</p>
+            <h2 class="card__title" id="cek-judul">Kuis pilihan ganda</h2>
+            <p>
+              Pilih satu jawaban untuk setiap soal, lalu klik <strong>Periksa jawaban</strong>.
+            </p>
+            <form class="kuis__form" data-kuis>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="b"
+                data-penjelasan="Browser membaca daftar dari kiri ke kanan dan memakai nama pertama yang ada.">
+                <legend class="kuis__tanya">Kalau <code>font-family</code> berisi beberapa nama, font mana yang dipakai browser?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-font-dan-baris-1" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Nama terakhir yang tersedia.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-font-dan-baris-1" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Nama pertama yang tersedia di perangkat.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-font-dan-baris-1" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Nama yang paling pendek.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="c"
+                data-penjelasan="Angka tanpa satuan pada line-height dikalikan dengan ukuran huruf elemen.">
+                <legend class="kuis__tanya">Apa arti <code>line-height: 1.6;</code>?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-font-dan-baris-2" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>1,6 piksel.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-font-dan-baris-2" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Tinggi huruf 160 piksel.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-font-dan-baris-2" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>1,6 kali ukuran huruf elemen.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="a"
+                data-penjelasan="Paragraf nyaman di 1,5–1,7; judul cukup 1,1–1,2 karena barisnya pendek.">
+                <legend class="kuis__tanya">Rentang <code>line-height</code> yang nyaman untuk paragraf adalah?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-font-dan-baris-3" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>1,5 sampai 1,7.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-font-dan-baris-3" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>0,8 sampai 1,0.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-font-dan-baris-3" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>3 sampai 5.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <div class="kuis__aksi">
+                <button class="btn btn--primary" type="button" data-kuis-periksa hidden>Periksa jawaban</button>
+                <button class="btn btn--ghost" type="button" data-kuis-ulangi hidden>Ulangi</button>
+              </div>
+              <p class="kuis__skor" data-kuis-skor role="status" aria-live="polite"></p>
+              <noscript>
+                <p class="kuis__catatan">
+                  JavaScript mati, jadi jawaban tidak bisa diperiksa otomatis.
+                  Kunci jawaban: 1B, 2C, 3A.
+                </p>
+              </noscript>
+            </form>
+          </section>
+
           <h2>Rangkuman</h2>
           <ul>
             <li><code>font-family</code> berisi daftar font; browser memakai yang pertama tersedia.</li>
@@ -371,6 +452,7 @@
 
   <script src="../../assets/js/latihan-html.js"></script>
   <script src="../../assets/js/lab-warna.js"></script>
+  <script src="../../assets/js/kuis-pilihan.js"></script>
   <script src="../../assets/js/main.js"></script>
 </body>
 </html>

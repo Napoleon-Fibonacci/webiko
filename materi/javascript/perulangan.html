@@ -272,6 +272,87 @@ console.log("Total", total);</textarea>
             <li>Mengubah variabel hitungan di dalam blok sehingga langkahnya melompat.</li>
           </ul>
 
+          <section class="card cek-paham kuis" aria-labelledby="cek-judul">
+            <p class="card__label">Cek pemahaman</p>
+            <h2 class="card__title" id="cek-judul">Kuis pilihan ganda</h2>
+            <p>
+              Pilih satu jawaban untuk setiap soal, lalu klik <strong>Periksa jawaban</strong>.
+            </p>
+            <form class="kuis__form" data-kuis>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="a"
+                data-penjelasan="Contoh: for (let i = 1; i <= 5; i++).">
+                <legend class="kuis__tanya">Tiga bagian di dalam <code>for</code> adalah?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-perulangan-1" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Nilai awal, syarat, dan langkah.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-perulangan-1" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Syarat, isi blok, dan hasil.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-perulangan-1" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Nilai awal, isi blok, dan <code>return</code>.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="b"
+                data-penjelasan="Syarat i < 5 berhenti saat i bernilai 5, jadi putaran terakhir memakai 4.">
+                <legend class="kuis__tanya">Loop <code>for (let i = 0; i &lt; 5; i++)</code> berhenti setelah nilai berapa?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-perulangan-2" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span><code>5</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-perulangan-2" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span><code>4</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-perulangan-2" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span><code>6</code>.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="c"
+                data-penjelasan="Syarat tidak pernah berubah menjadi false, sehingga loop tidak berhenti.">
+                <legend class="kuis__tanya">Apa yang terjadi kalau langkah <code>i++</code> lupa ditulis?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-perulangan-3" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Loop otomatis berhenti.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-perulangan-3" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Muncul <code>SyntaxError</code> sebelum kode berjalan.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-perulangan-3" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Loop berjalan terus dan halaman bisa membeku.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <div class="kuis__aksi">
+                <button class="btn btn--primary" type="button" data-kuis-periksa hidden>Periksa jawaban</button>
+                <button class="btn btn--ghost" type="button" data-kuis-ulangi hidden>Ulangi</button>
+              </div>
+              <p class="kuis__skor" data-kuis-skor role="status" aria-live="polite"></p>
+              <noscript>
+                <p class="kuis__catatan">
+                  JavaScript mati, jadi jawaban tidak bisa diperiksa otomatis.
+                  Kunci jawaban: 1A, 2B, 3C.
+                </p>
+              </noscript>
+            </form>
+          </section>
+
           <h2>Rangkuman</h2>
           <ul>
             <li><code>for</code> dipakai saat jumlah putaran sudah diketahui.</li>
@@ -334,6 +415,7 @@ console.log("Total", total);</textarea>
   </footer>
 
   <script src="../../assets/js/latihan-js.js"></script>
+  <script src="../../assets/js/kuis-pilihan.js"></script>
   <script src="../../assets/js/main.js"></script>
 </body>
 </html>

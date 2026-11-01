@@ -265,6 +265,87 @@
             </p>
           </div>
 
+          <section class="card cek-paham kuis" aria-labelledby="cek-judul">
+            <p class="card__label">Cek pemahaman</p>
+            <h2 class="card__title" id="cek-judul">Kuis pilihan ganda</h2>
+            <p>
+              Pilih satu jawaban untuk setiap soal, lalu klik <strong>Periksa jawaban</strong>.
+            </p>
+            <form class="kuis__form" data-kuis>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="c"
+                data-penjelasan="color mengatur warna teks; background-color mengatur warna latar.">
+                <legend class="kuis__tanya">Properti apa yang mengatur warna teks?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-warna-dan-latar-1" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span><code>background-color</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-warna-dan-latar-1" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span><code>font-color</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-warna-dan-latar-1" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span><code>color</code>.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="a"
+                data-penjelasan="Tanda # diikuti enam digit menunjukkan hex. RGB ditulis seperti rgb(26, 27, 51).">
+                <legend class="kuis__tanya"><code>#1a1b33</code> adalah penulisan warna dengan cara apa?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-warna-dan-latar-2" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Hex.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-warna-dan-latar-2" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Nama warna.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-warna-dan-latar-2" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>RGB.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="b"
+                data-penjelasan="Teks kecil minimal 4,5:1; teks besar minimal 3:1.">
+                <legend class="kuis__tanya">Menurut WCAG AA, rasio kontras minimal untuk teks kecil adalah?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-warna-dan-latar-3" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>3:1.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-warna-dan-latar-3" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>4,5:1.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-warna-dan-latar-3" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>1:1.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <div class="kuis__aksi">
+                <button class="btn btn--primary" type="button" data-kuis-periksa hidden>Periksa jawaban</button>
+                <button class="btn btn--ghost" type="button" data-kuis-ulangi hidden>Ulangi</button>
+              </div>
+              <p class="kuis__skor" data-kuis-skor role="status" aria-live="polite"></p>
+              <noscript>
+                <p class="kuis__catatan">
+                  JavaScript mati, jadi jawaban tidak bisa diperiksa otomatis.
+                  Kunci jawaban: 1C, 2A, 3B.
+                </p>
+              </noscript>
+            </form>
+          </section>
+
           <h2>Rangkuman</h2>
           <ul>
             <li>
@@ -336,6 +417,7 @@
 
   <script src="../../assets/js/latihan-html.js"></script>
   <script src="../../assets/js/lab-warna.js"></script>
+  <script src="../../assets/js/kuis-pilihan.js"></script>
   <script src="../../assets/js/main.js"></script>
 </body>
 </html>

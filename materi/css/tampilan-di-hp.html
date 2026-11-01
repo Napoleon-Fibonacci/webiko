@@ -344,6 +344,87 @@
             </ul>
           </div>
 
+          <section class="card cek-paham kuis" aria-labelledby="cek-judul">
+            <p class="card__label">Cek pemahaman</p>
+            <h2 class="card__title" id="cek-judul">Kuis pilihan ganda</h2>
+            <p>
+              Pilih satu jawaban untuk setiap soal, lalu klik <strong>Periksa jawaban</strong>.
+            </p>
+            <form class="kuis__form" data-kuis>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="b"
+                data-penjelasan="Dengan width=device-width, halaman tidak dianggap selebar desktop.">
+                <legend class="kuis__tanya">Apa fungsi meta viewport?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-tampilan-di-hp-1" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Memblokir pengguna memperbesar halaman.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-tampilan-di-hp-1" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Membuat lebar halaman mengikuti lebar layar perangkat.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-tampilan-di-hp-1" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Memuat berkas CSS khusus HP.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="c"
+                data-penjelasan="max-width berarti aturan berlaku sampai batas itu, termasuk layar yang lebih sempit.">
+                <legend class="kuis__tanya"><code>@media (max-width: 40rem)</code> berlaku saat?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-tampilan-di-hp-2" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Lebar layar minimal 40rem.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-tampilan-di-hp-2" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Layar tepat 40rem.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-tampilan-di-hp-2" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Lebar layar tidak lebih besar dari 40rem.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="a"
+                data-penjelasan="Gambar mengikuti lebar wadah dan tingginya menyesuaikan tanpa gepeng.">
+                <legend class="kuis__tanya">Gambar besar tidak boleh melebar keluar wadah. Aturan mana yang dipakai?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-tampilan-di-hp-3" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span><code>max-width: 100%; height: auto;</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-tampilan-di-hp-3" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span><code>width: 1200px;</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-tampilan-di-hp-3" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span><code>height: 100%;</code>.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <div class="kuis__aksi">
+                <button class="btn btn--primary" type="button" data-kuis-periksa hidden>Periksa jawaban</button>
+                <button class="btn btn--ghost" type="button" data-kuis-ulangi hidden>Ulangi</button>
+              </div>
+              <p class="kuis__skor" data-kuis-skor role="status" aria-live="polite"></p>
+              <noscript>
+                <p class="kuis__catatan">
+                  JavaScript mati, jadi jawaban tidak bisa diperiksa otomatis.
+                  Kunci jawaban: 1B, 2C, 3A.
+                </p>
+              </noscript>
+            </form>
+          </section>
+
           <h2>Rangkuman</h2>
           <ul>
             <li>Meta viewport membuat lebar halaman mengikuti lebar layar perangkat.</li>
@@ -407,6 +488,7 @@
 
   <script src="../../assets/js/latihan-html.js"></script>
   <script src="../../assets/js/lab-warna.js"></script>
+  <script src="../../assets/js/kuis-pilihan.js"></script>
   <script src="../../assets/js/main.js"></script>
 </body>
 </html>

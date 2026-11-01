@@ -243,6 +243,87 @@ console.log(luas(5, 3));</textarea>
             <li>Menulis nama fungsi berbeda antara saat dibuat dan dipanggil.</li>
           </ul>
 
+          <section class="card cek-paham kuis" aria-labelledby="cek-judul">
+            <p class="card__label">Cek pemahaman</p>
+            <h2 class="card__title" id="cek-judul">Kuis pilihan ganda</h2>
+            <p>
+              Pilih satu jawaban untuk setiap soal, lalu klik <strong>Periksa jawaban</strong>.
+            </p>
+            <form class="kuis__form" data-kuis>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="b"
+                data-penjelasan="Tanpa return, fungsi tetap berjalan tetapi tidak mengembalikan nilai.">
+                <legend class="kuis__tanya">Fungsi tidak menulis <code>return</code>. Apa nilai hasilnya?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-fungsi-1" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span><code>null</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-fungsi-1" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span><code>undefined</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-fungsi-1" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span><code>0</code>.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="c"
+                data-penjelasan="Argumen diberikan sesuai urutan parameter: 5 menjadi panjang, 3 menjadi lebar.">
+                <legend class="kuis__tanya">Fungsi <code>luas(panjang, lebar)</code> dipanggil <code>luas(5, 3)</code>. Nilai apa yang diterima <code>panjang</code>?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-fungsi-2" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span><code>3</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-fungsi-2" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Keduanya <code>5</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-fungsi-2" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span><code>5</code>.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="a"
+                data-penjelasan="Fungsi dipanggil dengan namanya diikuti tanda kurung dan argumen.">
+                <legend class="kuis__tanya">Bagaimana cara memanggil fungsi <code>luas</code>?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-fungsi-3" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span><code>luas(5, 3)</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-fungsi-3" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span><code>luas</code> tanpa tanda kurung.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-fungsi-3" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span><code>return luas</code>.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <div class="kuis__aksi">
+                <button class="btn btn--primary" type="button" data-kuis-periksa hidden>Periksa jawaban</button>
+                <button class="btn btn--ghost" type="button" data-kuis-ulangi hidden>Ulangi</button>
+              </div>
+              <p class="kuis__skor" data-kuis-skor role="status" aria-live="polite"></p>
+              <noscript>
+                <p class="kuis__catatan">
+                  JavaScript mati, jadi jawaban tidak bisa diperiksa otomatis.
+                  Kunci jawaban: 1B, 2C, 3A.
+                </p>
+              </noscript>
+            </form>
+          </section>
+
           <h2>Rangkuman</h2>
           <ul>
             <li>Fungsi membungkus kode yang dipakai berulang.</li>
@@ -304,6 +385,7 @@ console.log(luas(5, 3));</textarea>
   </footer>
 
   <script src="../../assets/js/latihan-js.js"></script>
+  <script src="../../assets/js/kuis-pilihan.js"></script>
   <script src="../../assets/js/main.js"></script>
 </body>
 </html>

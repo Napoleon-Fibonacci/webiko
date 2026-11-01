@@ -264,6 +264,87 @@ pesan.classList.add("sorot");</textarea>
             <li>Memakai <code>innerHTML</code> dengan isian dari pengguna; teks biasa lebih aman memakai <code>textContent</code>.</li>
           </ul>
 
+          <section class="card cek-paham kuis" aria-labelledby="cek-judul">
+            <p class="card__label">Cek pemahaman</p>
+            <h2 class="card__title" id="cek-judul">Kuis pilihan ganda</h2>
+            <p>
+              Pilih satu jawaban untuk setiap soal, lalu klik <strong>Periksa jawaban</strong>.
+            </p>
+            <form class="kuis__form" data-kuis>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="c"
+                data-penjelasan="Kalau tidak ada elemen yang cocok, hasilnya null.">
+                <legend class="kuis__tanya"><code>document.querySelector("#tidak-ada")</code> menghasilkan?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-dom-1" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Array kosong.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-dom-1" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span><code>undefined</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-dom-1" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span><code>null</code>.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="a"
+                data-penjelasan="Nama properti CSS bertanda hubung diubah menjadi camelCase.">
+                <legend class="kuis__tanya">Bagaimana menulis <code>background-color</code> lewat <code>style</code> di JavaScript?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-dom-2" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span><code>style.backgroundColor</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-dom-2" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span><code>style.background-color</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-dom-2" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span><code>style.background_color</code>.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="b"
+                data-penjelasan="Hasilnya daftar elemen yang bisa diulang dengan for.">
+                <legend class="kuis__tanya"><code>querySelectorAll</code> mengembalikan?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-dom-3" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Hanya elemen pertama.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-dom-3" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Daftar semua elemen yang cocok.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-dom-3" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Teks dari elemen pertama.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <div class="kuis__aksi">
+                <button class="btn btn--primary" type="button" data-kuis-periksa hidden>Periksa jawaban</button>
+                <button class="btn btn--ghost" type="button" data-kuis-ulangi hidden>Ulangi</button>
+              </div>
+              <p class="kuis__skor" data-kuis-skor role="status" aria-live="polite"></p>
+              <noscript>
+                <p class="kuis__catatan">
+                  JavaScript mati, jadi jawaban tidak bisa diperiksa otomatis.
+                  Kunci jawaban: 1C, 2A, 3B.
+                </p>
+              </noscript>
+            </form>
+          </section>
+
           <h2>Rangkuman</h2>
           <ul>
             <li><code>document.querySelector</code> memilih elemen pertama sesuai selector CSS.</li>
@@ -327,6 +408,7 @@ pesan.classList.add("sorot");</textarea>
   </footer>
 
   <script src="../../assets/js/latihan-dom.js"></script>
+  <script src="../../assets/js/kuis-pilihan.js"></script>
   <script src="../../assets/js/main.js"></script>
 </body>
 </html>

@@ -472,6 +472,87 @@
             </p>
           </div>
 
+          <section class="card cek-paham kuis" aria-labelledby="cek-judul">
+            <p class="card__label">Cek pemahaman</p>
+            <h2 class="card__title" id="cek-judul">Kuis pilihan ganda</h2>
+            <p>
+              Pilih satu jawaban untuk setiap soal, lalu klik <strong>Periksa jawaban</strong>.
+            </p>
+            <form class="kuis__form" data-kuis>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="b"
+                data-penjelasan="Selector berada sebelum kurung kurawal, misalnya h1 atau .catatan. Deklarasi dan nilai berada di dalam blok.">
+                <legend class="kuis__tanya">Bagian aturan CSS mana yang menentukan elemen yang akan diatur?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-mengenal-css-1" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Deklarasi.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-mengenal-css-1" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Selector.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-mengenal-css-1" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Nilai.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="c"
+                data-penjelasan="color adalah properti yang diatur; #433fd4 adalah nilainya.">
+                <legend class="kuis__tanya">Pada <code>h1 { color: #433fd4; }</code>, <code>color</code> disebut apa?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-mengenal-css-2" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Selector.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-mengenal-css-2" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Nilai.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-mengenal-css-2" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Properti.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="a"
+                data-penjelasan="Satu berkas terpisah bisa dipakai banyak halaman. Mengubah satu aturan cukup di satu tempat.">
+                <legend class="kuis__tanya">Halaman bertambah besar dan dipakai di banyak berkas HTML. Cara memasang CSS mana yang paling mudah dirawat?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-mengenal-css-3" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Berkas <code>.css</code> terpisah yang dihubungkan dengan <code>&lt;link&gt;</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-mengenal-css-3" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Atribut <code>style</code> di setiap tag.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-mengenal-css-3" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Blok <code>&lt;style&gt;</code> berulang di setiap halaman.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <div class="kuis__aksi">
+                <button class="btn btn--primary" type="button" data-kuis-periksa hidden>Periksa jawaban</button>
+                <button class="btn btn--ghost" type="button" data-kuis-ulangi hidden>Ulangi</button>
+              </div>
+              <p class="kuis__skor" data-kuis-skor role="status" aria-live="polite"></p>
+              <noscript>
+                <p class="kuis__catatan">
+                  JavaScript mati, jadi jawaban tidak bisa diperiksa otomatis.
+                  Kunci jawaban: 1B, 2C, 3A.
+                </p>
+              </noscript>
+            </form>
+          </section>
+
           <h2>Rangkuman</h2>
           <ul>
             <li>HTML menyusun isi; CSS mengatur tampilan.</li>
@@ -552,6 +633,7 @@
 
   <script src="../../assets/js/latihan-html.js"></script>
   <script src="../../assets/js/lab-warna.js"></script>
+  <script src="../../assets/js/kuis-pilihan.js"></script>
   <script src="../../assets/js/main.js"></script>
 </body>
 </html>

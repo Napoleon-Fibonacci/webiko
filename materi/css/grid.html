@@ -317,6 +317,87 @@
             </ul>
           </div>
 
+          <section class="card cek-paham kuis" aria-labelledby="cek-judul">
+            <p class="card__label">Cek pemahaman</p>
+            <h2 class="card__title" id="cek-judul">Kuis pilihan ganda</h2>
+            <p>
+              Pilih satu jawaban untuk setiap soal, lalu klik <strong>Periksa jawaban</strong>.
+            </p>
+            <form class="kuis__form" data-kuis>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="c"
+                data-penjelasan="repeat(3, 1fr) membuat tiga kolom, masing-masing satu bagian ruang.">
+                <legend class="kuis__tanya">Apa hasil <code>grid-template-columns: repeat(3, 1fr);</code>?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-grid-1" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Tiga baris sama tinggi.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-grid-1" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Satu kolom dengan tiga baris.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-grid-1" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Tiga kolom sama lebar.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="a"
+                data-penjelasan="Grid mengatur baris dan kolom sekaligus; flexbox paling pas untuk satu baris.">
+                <legend class="kuis__tanya">Susunan kartu dua dimensi lebih langsung dibuat dengan?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-grid-2" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Grid.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-grid-2" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Flexbox satu baris.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-grid-2" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Margin otomatis.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="b"
+                data-penjelasan="Browser menentukan jumlah kolom yang muat, dengan lebar minimal 8rem.">
+                <legend class="kuis__tanya">Apa fungsi <code>repeat(auto-fit, minmax(8rem, 1fr))</code>?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-grid-3" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Mengunci jumlah kolom menjadi tiga.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-grid-3" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Mengurangi jumlah kolom saat ruang tidak cukup.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-grid-3" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Menyembunyikan kartu yang tidak muat.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <div class="kuis__aksi">
+                <button class="btn btn--primary" type="button" data-kuis-periksa hidden>Periksa jawaban</button>
+                <button class="btn btn--ghost" type="button" data-kuis-ulangi hidden>Ulangi</button>
+              </div>
+              <p class="kuis__skor" data-kuis-skor role="status" aria-live="polite"></p>
+              <noscript>
+                <p class="kuis__catatan">
+                  JavaScript mati, jadi jawaban tidak bisa diperiksa otomatis.
+                  Kunci jawaban: 1C, 2A, 3B.
+                </p>
+              </noscript>
+            </form>
+          </section>
+
           <h2>Rangkuman</h2>
           <ul>
             <li>Grid mengatur baris dan kolom sekaligus.</li>
@@ -381,6 +462,7 @@
 
   <script src="../../assets/js/latihan-html.js"></script>
   <script src="../../assets/js/lab-warna.js"></script>
+  <script src="../../assets/js/kuis-pilihan.js"></script>
   <script src="../../assets/js/main.js"></script>
 </body>
 </html>

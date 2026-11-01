@@ -347,6 +347,87 @@ tampil();</textarea>
             <li>Menghapus dengan indeks yang salah karena daftar tidak digambar ulang sesudah perubahan.</li>
           </ul>
 
+          <section class="card cek-paham kuis" aria-labelledby="cek-judul">
+            <p class="card__label">Cek pemahaman</p>
+            <h2 class="card__title" id="cek-judul">Kuis pilihan ganda</h2>
+            <p>
+              Pilih satu jawaban untuk setiap soal, lalu klik <strong>Periksa jawaban</strong>.
+            </p>
+            <form class="kuis__form" data-kuis>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="c"
+                data-penjelasan="Penyimpanan hanya menerima teks; JSON.stringify mengubah array menjadi teks JSON.">
+                <legend class="kuis__tanya">Array akan disimpan di <code>localStorage</code>. Apa yang dipakai?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-latihan-pencatat-1" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span><code>String(catatan)</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-latihan-pencatat-1" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Menyimpan array langsung.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-latihan-pencatat-1" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span><code>JSON.stringify(catatan)</code>.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="a"
+                data-penjelasan="splice(i, 1) membuang satu elemen mulai indeks i.">
+                <legend class="kuis__tanya">Bagaimana menghapus satu catatan berdasarkan indeks?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-latihan-pencatat-2" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span><code>catatan.splice(i, 1)</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-latihan-pencatat-2" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span><code>catatan.push(i)</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-latihan-pencatat-2" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span><code>catatan.slice(i, 1)</code>.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="b"
+                data-penjelasan="trim() membuang spasi di ujung; hasil kosong tidak perlu masuk daftar.">
+                <legend class="kuis__tanya">Isian hanya berisi spasi. Apa yang sebaiknya dilakukan?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-latihan-pencatat-3" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Tetap <code>push</code> teks kosong.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-latihan-pencatat-3" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span><code>trim()</code>, lalu hentikan proses kalau hasilnya kosong.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-latihan-pencatat-3" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Biarkan browser menampilkan error.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <div class="kuis__aksi">
+                <button class="btn btn--primary" type="button" data-kuis-periksa hidden>Periksa jawaban</button>
+                <button class="btn btn--ghost" type="button" data-kuis-ulangi hidden>Ulangi</button>
+              </div>
+              <p class="kuis__skor" data-kuis-skor role="status" aria-live="polite"></p>
+              <noscript>
+                <p class="kuis__catatan">
+                  JavaScript mati, jadi jawaban tidak bisa diperiksa otomatis.
+                  Kunci jawaban: 1C, 2A, 3B.
+                </p>
+              </noscript>
+            </form>
+          </section>
+
           <h2>Rangkuman</h2>
           <ul>
             <li>Aplikasi kecil tersusun dari potongan yang sudah dikenal: array, fungsi, event, DOM, dan penyimpanan.</li>
@@ -411,6 +492,7 @@ tampil();</textarea>
   </footer>
 
   <script src="../../assets/js/latihan-dom.js"></script>
+  <script src="../../assets/js/kuis-pilihan.js"></script>
   <script src="../../assets/js/main.js"></script>
 </body>
 </html>

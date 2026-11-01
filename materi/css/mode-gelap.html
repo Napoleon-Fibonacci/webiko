@@ -301,6 +301,87 @@
             </ul>
           </div>
 
+          <section class="card cek-paham kuis" aria-labelledby="cek-judul">
+            <p class="card__label">Cek pemahaman</p>
+            <h2 class="card__title" id="cek-judul">Kuis pilihan ganda</h2>
+            <p>
+              Pilih satu jawaban untuk setiap soal, lalu klik <strong>Periksa jawaban</strong>.
+            </p>
+            <form class="kuis__form" data-kuis>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="c"
+                data-penjelasan="Variabel CSS ditulis dengan awalan --.">
+                <legend class="kuis__tanya">Nama variabel CSS diawali dengan?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-mode-gelap-1" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Tanda dolar, misalnya <code>$latar</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-mode-gelap-1" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Tanda at, misalnya <code>@latar</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-mode-gelap-1" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Dua tanda minus, misalnya <code>--latar</code>.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="a"
+                data-penjelasan="Fungsi var() membaca nilai variabel CSS.">
+                <legend class="kuis__tanya">Bagaimana cara memakai variabel <code>--teks</code>?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-mode-gelap-2" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span><code>var(--teks)</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-mode-gelap-2" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span><code>variable(--teks)</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-mode-gelap-2" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span><code>$teks</code>.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="b"
+                data-penjelasan="Semua aturan yang memakai var() ikut berubah saat nilai variabel ditukar.">
+                <legend class="kuis__tanya">Cara paling rapi membuat tema gelap adalah?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-mode-gelap-3" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Menduplikasi setiap aturan dengan warna gelap.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-mode-gelap-3" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Menimpa nilai variabel warna, bukan menulis ulang semua aturan.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-mode-gelap-3" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Membalik semua warna secara otomatis.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <div class="kuis__aksi">
+                <button class="btn btn--primary" type="button" data-kuis-periksa hidden>Periksa jawaban</button>
+                <button class="btn btn--ghost" type="button" data-kuis-ulangi hidden>Ulangi</button>
+              </div>
+              <p class="kuis__skor" data-kuis-skor role="status" aria-live="polite"></p>
+              <noscript>
+                <p class="kuis__catatan">
+                  JavaScript mati, jadi jawaban tidak bisa diperiksa otomatis.
+                  Kunci jawaban: 1C, 2A, 3B.
+                </p>
+              </noscript>
+            </form>
+          </section>
+
           <h2>Rangkuman</h2>
           <ul>
             <li>Variabel CSS ditulis dengan awalan <code>--</code> dan dipakai lewat <code>var()</code>.</li>
@@ -365,6 +446,7 @@
 
   <script src="../../assets/js/latihan-html.js"></script>
   <script src="../../assets/js/lab-warna.js"></script>
+  <script src="../../assets/js/kuis-pilihan.js"></script>
   <script src="../../assets/js/main.js"></script>
 </body>
 </html>

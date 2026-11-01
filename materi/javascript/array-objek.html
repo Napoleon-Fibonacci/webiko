@@ -291,6 +291,87 @@ for (let i = 0; i < jumlah; i++) {
             <li>Mengira <code>const</code> membuat isi array atau objek tidak bisa diubah.</li>
           </ul>
 
+          <section class="card cek-paham kuis" aria-labelledby="cek-judul">
+            <p class="card__label">Cek pemahaman</p>
+            <h2 class="card__title" id="cek-judul">Kuis pilihan ganda</h2>
+            <p>
+              Pilih satu jawaban untuk setiap soal, lalu klik <strong>Periksa jawaban</strong>.
+            </p>
+            <form class="kuis__form" data-kuis>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="b"
+                data-penjelasan="Array dimulai dari indeks 0, jadi buah[0] adalah isi pertama.">
+                <legend class="kuis__tanya">Indeks pertama sebuah array adalah?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-array-objek-1" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span><code>1</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-array-objek-1" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span><code>0</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-array-objek-1" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span><code>-1</code>.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="c"
+                data-penjelasan="length adalah properti; menulis buah.length() salah.">
+                <legend class="kuis__tanya">Apa itu <code>length</code> pada array?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-array-objek-2" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Fungsi yang harus dipanggil dengan kurung.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-array-objek-2" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Nama properti objek.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-array-objek-2" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Properti berisi jumlah isi.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="a"
+                data-penjelasan="siswa[i] mengambil satu objek, lalu .nama membaca propertinya.">
+                <legend class="kuis__tanya"><code>siswa[i].nama</code> mengambil apa?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-array-objek-3" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Properti <code>nama</code> dari objek ke-<code>i</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-array-objek-3" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Panjang array siswa.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-array-objek-3" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Nama variabel array.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <div class="kuis__aksi">
+                <button class="btn btn--primary" type="button" data-kuis-periksa hidden>Periksa jawaban</button>
+                <button class="btn btn--ghost" type="button" data-kuis-ulangi hidden>Ulangi</button>
+              </div>
+              <p class="kuis__skor" data-kuis-skor role="status" aria-live="polite"></p>
+              <noscript>
+                <p class="kuis__catatan">
+                  JavaScript mati, jadi jawaban tidak bisa diperiksa otomatis.
+                  Kunci jawaban: 1B, 2C, 3A.
+                </p>
+              </noscript>
+            </form>
+          </section>
+
           <h2>Rangkuman</h2>
           <ul>
             <li>Array menyimpan banyak nilai berurutan; indeksnya mulai dari <code>0</code>.</li>
@@ -353,6 +434,7 @@ for (let i = 0; i < jumlah; i++) {
   </footer>
 
   <script src="../../assets/js/latihan-js.js"></script>
+  <script src="../../assets/js/kuis-pilihan.js"></script>
   <script src="../../assets/js/main.js"></script>
 </body>
 </html>

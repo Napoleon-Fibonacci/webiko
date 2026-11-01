@@ -357,6 +357,87 @@
             </p>
           </div>
 
+          <section class="card cek-paham kuis" aria-labelledby="cek-judul">
+            <p class="card__label">Cek pemahaman</p>
+            <h2 class="card__title" id="cek-judul">Kuis pilihan ganda</h2>
+            <p>
+              Pilih satu jawaban untuk setiap soal, lalu klik <strong>Periksa jawaban</strong>.
+            </p>
+            <form class="kuis__form" data-kuis>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="a"
+                data-penjelasan="rem adalah kelipatan ukuran huruf akar, jadi 2 × 16px = 32px.">
+                <legend class="kuis__tanya">Ukuran huruf akar 16px. Berapa <code>2rem</code>?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-ukuran-dan-jarak-1" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>32px.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-ukuran-dan-jarak-1" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>16px.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-ukuran-dan-jarak-1" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>2px.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="b"
+                data-penjelasan="max-width memberi batas tanpa mengunci lebar, sehingga elemen tetap bisa menyusut.">
+                <legend class="kuis__tanya">Kartu harus mengikuti lebar induk tetapi tidak melebar tanpa batas. Properti mana yang dipakai?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-ukuran-dan-jarak-2" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span><code>width: 32rem;</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-ukuran-dan-jarak-2" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span><code>max-width: 32rem;</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-ukuran-dan-jarak-2" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span><code>height: 32rem;</code>.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="c"
+                data-penjelasan="Margin kiri dan kanan auto membagi sisa ruang, sehingga elemen berada di tengah.">
+                <legend class="kuis__tanya">Apa fungsi <code>margin: 0 auto;</code> pada elemen yang punya <code>max-width</code>?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-ukuran-dan-jarak-3" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Memberi jarak di dalam elemen.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-ukuran-dan-jarak-3" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Membuat garis tepi.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-ukuran-dan-jarak-3" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Menengahkan elemen secara mendatar.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <div class="kuis__aksi">
+                <button class="btn btn--primary" type="button" data-kuis-periksa hidden>Periksa jawaban</button>
+                <button class="btn btn--ghost" type="button" data-kuis-ulangi hidden>Ulangi</button>
+              </div>
+              <p class="kuis__skor" data-kuis-skor role="status" aria-live="polite"></p>
+              <noscript>
+                <p class="kuis__catatan">
+                  JavaScript mati, jadi jawaban tidak bisa diperiksa otomatis.
+                  Kunci jawaban: 1A, 2B, 3C.
+                </p>
+              </noscript>
+            </form>
+          </section>
+
           <h2>Rangkuman</h2>
           <ul>
             <li>
@@ -438,6 +519,7 @@
 
   <script src="../../assets/js/latihan-html.js"></script>
   <script src="../../assets/js/lab-warna.js"></script>
+  <script src="../../assets/js/kuis-pilihan.js"></script>
   <script src="../../assets/js/main.js"></script>
 </body>
 </html>

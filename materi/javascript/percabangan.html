@@ -267,6 +267,87 @@ if (nilai >= 90) {
             <li>Membandingkan isian formulir tanpa mengubahnya menjadi angka: <code>"14" === 14</code> bernilai <code>false</code>.</li>
           </ul>
 
+          <section class="card cek-paham kuis" aria-labelledby="cek-judul">
+            <p class="card__label">Cek pemahaman</p>
+            <h2 class="card__title" id="cek-judul">Kuis pilihan ganda</h2>
+            <p>
+              Pilih satu jawaban untuk setiap soal, lalu klik <strong>Periksa jawaban</strong>.
+            </p>
+            <form class="kuis__form" data-kuis>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="c"
+                data-penjelasan="= adalah penugasan, sedangkan === membandingkan nilai dan tipe.">
+                <legend class="kuis__tanya">Apa beda <code>=</code> dan <code>===</code>?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-percabangan-1" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Keduanya membandingkan nilai.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-percabangan-1" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span><code>===</code> mengisi nilai; <code>=</code> membandingkan.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-percabangan-1" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span><code>=</code> mengisi nilai; <code>===</code> membandingkan.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="a"
+                data-penjelasan="Titik koma mengakhiri if, sehingga blok sesudahnya berdiri sendiri.">
+                <legend class="kuis__tanya">Apa akibat <code>if (nilai &gt;= 75);</code> yang diberi titik koma?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-percabangan-2" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Blok berikutnya selalu dijalankan.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-percabangan-2" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Muncul <code>SyntaxError</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-percabangan-2" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Tidak ada akibat apa pun.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="b"
+                data-penjelasan="=== ikut memeriksa tipe: string tidak sama dengan number.">
+                <legend class="kuis__tanya">Apa hasil <code>"14" === 14</code>?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-percabangan-3" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span><code>true</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-percabangan-3" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span><code>false</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-percabangan-3" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span><code>TypeError</code>.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <div class="kuis__aksi">
+                <button class="btn btn--primary" type="button" data-kuis-periksa hidden>Periksa jawaban</button>
+                <button class="btn btn--ghost" type="button" data-kuis-ulangi hidden>Ulangi</button>
+              </div>
+              <p class="kuis__skor" data-kuis-skor role="status" aria-live="polite"></p>
+              <noscript>
+                <p class="kuis__catatan">
+                  JavaScript mati, jadi jawaban tidak bisa diperiksa otomatis.
+                  Kunci jawaban: 1C, 2A, 3B.
+                </p>
+              </noscript>
+            </form>
+          </section>
+
           <h2>Rangkuman</h2>
           <ul>
             <li><code>if</code> menjalankan blok hanya kalau kondisinya <code>true</code>.</li>
@@ -329,6 +410,7 @@ if (nilai >= 90) {
   </footer>
 
   <script src="../../assets/js/latihan-js.js"></script>
+  <script src="../../assets/js/kuis-pilihan.js"></script>
   <script src="../../assets/js/main.js"></script>
 </body>
 </html>

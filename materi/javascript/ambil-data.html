@@ -280,6 +280,87 @@ fetch("/data/contoh-kelas.json")
             <li>Tanpa <code>.catch</code>, kegagalan tidak terlihat dan halaman tetap menampilkan teks awal.</li>
           </ul>
 
+          <section class="card cek-paham kuis" aria-labelledby="cek-judul">
+            <p class="card__label">Cek pemahaman</p>
+            <h2 class="card__title" id="cek-judul">Kuis pilihan ganda</h2>
+            <p>
+              Pilih satu jawaban untuk setiap soal, lalu klik <strong>Periksa jawaban</strong>.
+            </p>
+            <form class="kuis__form" data-kuis>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="c"
+                data-penjelasan="fetch mengembalikan Promise; fungsi di .then berjalan setelah jawaban tiba.">
+                <legend class="kuis__tanya"><code>fetch(alamat)</code> mengembalikan apa?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-ambil-data-1" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Langsung objek JSON.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-ambil-data-1" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Teks HTML halaman.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-ambil-data-1" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span><code>Promise</code> yang jawabannya datang belakangan.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="a"
+                data-penjelasan="res.json() membaca dan mengurai isi; karena berupa Promise, perlu .then berikutnya.">
+                <legend class="kuis__tanya">Bagaimana membaca isi JSON dari <code>Response</code>?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-ambil-data-2" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span><code>res.json()</code>, yang juga mengembalikan <code>Promise</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-ambil-data-2" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span><code>res.data</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-ambil-data-2" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span><code>res.text</code> tanpa <code>.then</code>.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="b"
+                data-penjelasan="fetch tidak menganggap status 404 sebagai error. res.ok bernilai false.">
+                <legend class="kuis__tanya">Server menjawab 404. Apa yang dilakukan <code>fetch</code>?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-ambil-data-3" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Otomatis masuk ke <code>.catch</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-ambil-data-3" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Masuk ke <code>.then</code>; periksa <code>res.ok</code> sendiri.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-ambil-data-3" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Melempar <code>SyntaxError</code>.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <div class="kuis__aksi">
+                <button class="btn btn--primary" type="button" data-kuis-periksa hidden>Periksa jawaban</button>
+                <button class="btn btn--ghost" type="button" data-kuis-ulangi hidden>Ulangi</button>
+              </div>
+              <p class="kuis__skor" data-kuis-skor role="status" aria-live="polite"></p>
+              <noscript>
+                <p class="kuis__catatan">
+                  JavaScript mati, jadi jawaban tidak bisa diperiksa otomatis.
+                  Kunci jawaban: 1C, 2A, 3B.
+                </p>
+              </noscript>
+            </form>
+          </section>
+
           <h2>Rangkuman</h2>
           <ul>
             <li><code>fetch(alamat)</code> mengirim permintaan dan mengembalikan <code>Promise</code>.</li>
@@ -343,6 +424,7 @@ fetch("/data/contoh-kelas.json")
   </footer>
 
   <script src="../../assets/js/latihan-dom.js"></script>
+  <script src="../../assets/js/kuis-pilihan.js"></script>
   <script src="../../assets/js/main.js"></script>
 </body>
 </html>

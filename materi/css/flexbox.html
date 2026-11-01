@@ -312,6 +312,87 @@
             </ul>
           </div>
 
+          <section class="card cek-paham kuis" aria-labelledby="cek-judul">
+            <p class="card__label">Cek pemahaman</p>
+            <h2 class="card__title" id="cek-judul">Kuis pilihan ganda</h2>
+            <p>
+              Pilih satu jawaban untuk setiap soal, lalu klik <strong>Periksa jawaban</strong>.
+            </p>
+            <form class="kuis__form" data-kuis>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="b"
+                data-penjelasan="Elemen menjadi wadah fleksibel; anak langsungnya menjadi item fleksibel.">
+                <legend class="kuis__tanya">Apa yang terjadi pada anak langsung elemen setelah diberi <code>display: flex;</code>?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-flexbox-1" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Mereka otomatis menjadi grid tiga kolom.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-flexbox-1" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Mereka berjajar dalam satu baris atau satu kolom.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-flexbox-1" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Mereka disembunyikan.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="c"
+                data-penjelasan="justify-content mengatur sumbu utama; align-items mengatur sumbu silang.">
+                <legend class="kuis__tanya"><code>justify-content</code> mengatur posisi pada sumbu apa?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-flexbox-2" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Sumbu silang.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-flexbox-2" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Sumbu Z.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-flexbox-2" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Sumbu utama.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="a"
+                data-penjelasan="wrap memindahkan item yang tidak muat ke baris berikutnya.">
+                <legend class="kuis__tanya">Item flex tidak muat di layar sempit. Apa yang mencegahnya terpotong?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-flexbox-3" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span><code>flex-wrap: wrap;</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-flexbox-3" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span><code>flex-wrap: nowrap;</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-css-flexbox-3" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Memberi lebar tetap yang besar.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <div class="kuis__aksi">
+                <button class="btn btn--primary" type="button" data-kuis-periksa hidden>Periksa jawaban</button>
+                <button class="btn btn--ghost" type="button" data-kuis-ulangi hidden>Ulangi</button>
+              </div>
+              <p class="kuis__skor" data-kuis-skor role="status" aria-live="polite"></p>
+              <noscript>
+                <p class="kuis__catatan">
+                  JavaScript mati, jadi jawaban tidak bisa diperiksa otomatis.
+                  Kunci jawaban: 1B, 2C, 3A.
+                </p>
+              </noscript>
+            </form>
+          </section>
+
           <h2>Rangkuman</h2>
           <ul>
             <li><code>display: flex</code> membuat anak langsungnya berjajar.</li>
@@ -376,6 +457,7 @@
 
   <script src="../../assets/js/latihan-html.js"></script>
   <script src="../../assets/js/lab-warna.js"></script>
+  <script src="../../assets/js/kuis-pilihan.js"></script>
   <script src="../../assets/js/main.js"></script>
 </body>
 </html>

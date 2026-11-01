@@ -289,6 +289,87 @@ murid.forEach(function (orang) {
             <li>Meletakkan <code>data.murid.forEach</code> di luar <code>.then</code>. Data belum ada saat kode itu berjalan.</li>
           </ul>
 
+          <section class="card cek-paham kuis" aria-labelledby="cek-judul">
+            <p class="card__label">Cek pemahaman</p>
+            <h2 class="card__title" id="cek-judul">Kuis pilihan ganda</h2>
+            <p>
+              Pilih satu jawaban untuk setiap soal, lalu klik <strong>Periksa jawaban</strong>.
+            </p>
+            <form class="kuis__form" data-kuis>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="a"
+                data-penjelasan="createElement dipanggil pada document.">
+                <legend class="kuis__tanya">Bagaimana membuat elemen <code>li</code> baru?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-daftar-dari-data-1" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span><code>document.createElement("li")</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-daftar-dari-data-1" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span><code>document.newElement("li")</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-daftar-dari-data-1" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span><code>createElement("li")</code> tanpa <code>document</code>.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="b"
+                data-penjelasan="Elemen baru masuk halaman setelah ditempelkan dengan append.">
+                <legend class="kuis__tanya">Elemen sudah dibuat tetapi belum terlihat. Apa yang kurang?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-daftar-dari-data-2" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span><code>item.textContent</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-daftar-dari-data-2" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span><code>daftar.append(item)</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-daftar-dari-data-2" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span><code>item.push()</code>.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="c"
+                data-penjelasan="textContent menampilkan data sebagai teks, bukan HTML.">
+                <legend class="kuis__tanya">Data dari server berisi tanda <code>&lt;</code>. Properti mana yang aman?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-daftar-dari-data-3" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span><code>innerHTML</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-daftar-dari-data-3" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span><code>outerHTML</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-daftar-dari-data-3" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span><code>textContent</code>.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <div class="kuis__aksi">
+                <button class="btn btn--primary" type="button" data-kuis-periksa hidden>Periksa jawaban</button>
+                <button class="btn btn--ghost" type="button" data-kuis-ulangi hidden>Ulangi</button>
+              </div>
+              <p class="kuis__skor" data-kuis-skor role="status" aria-live="polite"></p>
+              <noscript>
+                <p class="kuis__catatan">
+                  JavaScript mati, jadi jawaban tidak bisa diperiksa otomatis.
+                  Kunci jawaban: 1A, 2B, 3C.
+                </p>
+              </noscript>
+            </form>
+          </section>
+
           <h2>Rangkuman</h2>
           <ul>
             <li>Array berisi objek diubah menjadi satu elemen untuk setiap isi.</li>
@@ -353,6 +434,7 @@ murid.forEach(function (orang) {
   </footer>
 
   <script src="../../assets/js/latihan-dom.js"></script>
+  <script src="../../assets/js/kuis-pilihan.js"></script>
   <script src="../../assets/js/main.js"></script>
 </body>
 </html>

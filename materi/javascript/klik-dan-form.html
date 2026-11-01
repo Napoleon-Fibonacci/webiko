@@ -248,6 +248,87 @@ form.addEventListener("submit", function (e) {
             <li>Menulis selector tanpa tanda: id butuh <code>#</code>, kelas butuh <code>.</code>.</li>
           </ul>
 
+          <section class="card cek-paham kuis" aria-labelledby="cek-judul">
+            <p class="card__label">Cek pemahaman</p>
+            <h2 class="card__title" id="cek-judul">Kuis pilihan ganda</h2>
+            <p>
+              Pilih satu jawaban untuk setiap soal, lalu klik <strong>Periksa jawaban</strong>.
+            </p>
+            <form class="kuis__form" data-kuis>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="a"
+                data-penjelasan="Kolom isian menyimpan isinya di value, bukan textContent.">
+                <legend class="kuis__tanya">Properti apa yang berisi teks yang diketik di kolom isian?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-klik-dan-form-1" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span><code>value</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-klik-dan-form-1" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span><code>textContent</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-klik-dan-form-1" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span><code>innerHTML</code>.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="b"
+                data-penjelasan="Formulir memakai event submit; memasangnya pada tombol tidak menangkap pengiriman lewat Enter.">
+                <legend class="kuis__tanya">Event apa yang dikirim saat formulir dikirim?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-klik-dan-form-2" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span><code>"click"</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-klik-dan-form-2" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span><code>"submit"</code>.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-klik-dan-form-2" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span><code>"change"</code>.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <fieldset class="kuis__soal" data-kuis-soal data-jawaban="c"
+                data-penjelasan="Bawaan browser adalah memuat ulang halaman setelah formulir dikirim.">
+                <legend class="kuis__tanya">Apa fungsi <code>e.preventDefault()</code> pada event <code>submit</code>?</legend>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-klik-dan-form-3" value="a">
+                  <span class="kuis__huruf" aria-hidden="true">A</span>
+                  <span>Menghapus isi formulir.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-klik-dan-form-3" value="b">
+                  <span class="kuis__huruf" aria-hidden="true">B</span>
+                  <span>Mematikan validasi browser.</span>
+                </label>
+                <label class="kuis__pilihan">
+                  <input type="radio" name="kuis-javascript-klik-dan-form-3" value="c">
+                  <span class="kuis__huruf" aria-hidden="true">C</span>
+                  <span>Menahan halaman agar tidak dimuat ulang.</span>
+                </label>
+                <p class="kuis__balikan" data-kuis-balikan hidden></p>
+              </fieldset>
+              <div class="kuis__aksi">
+                <button class="btn btn--primary" type="button" data-kuis-periksa hidden>Periksa jawaban</button>
+                <button class="btn btn--ghost" type="button" data-kuis-ulangi hidden>Ulangi</button>
+              </div>
+              <p class="kuis__skor" data-kuis-skor role="status" aria-live="polite"></p>
+              <noscript>
+                <p class="kuis__catatan">
+                  JavaScript mati, jadi jawaban tidak bisa diperiksa otomatis.
+                  Kunci jawaban: 1A, 2B, 3C.
+                </p>
+              </noscript>
+            </form>
+          </section>
+
           <h2>Rangkuman</h2>
           <ul>
             <li><code>addEventListener("click", fungsi)</code> menjalankan fungsi saat elemen diklik.</li>
@@ -311,6 +392,7 @@ form.addEventListener("submit", function (e) {
   </footer>
 
   <script src="../../assets/js/latihan-dom.js"></script>
+  <script src="../../assets/js/kuis-pilihan.js"></script>
   <script src="../../assets/js/main.js"></script>
 </body>
 </html>
