@@ -69,7 +69,8 @@ const KURIKULUM = [
     ringkas:
       "Bikin halaman yang merespons klik dan isian. Tiga belas bab, dari pengenalan sampai ambil data.",
     tingkat: "Lanjutan",
-    status: "segera",
+    status: "terbit",
+    tautan: "materi/javascript/apa-itu-javascript.html",
     bab: [
       { slug: "apa-itu-javascript", judul: "Apa itu JavaScript" },
       { slug: "variabel", judul: "Variabel dan tipe data" },
