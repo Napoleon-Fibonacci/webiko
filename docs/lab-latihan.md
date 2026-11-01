@@ -24,7 +24,7 @@ Lab latihan harus terasa seperti satu editor kecil yang konsisten:
 | `assets/css/style.css` | Token, panel lab, editor, pratinjau, dan batas tinggi minimum. |
 | `materi/css/*.html` | Lab CSS: 11 bab, dari `mengenal-css` sampai `mode-gelap`. |
 | `materi/html/*.html` | Lab HTML: `file-html-pertama`, `judul-dan-paragraf`, `gambar`, `tautan`, `daftar`, `tabel`, `halaman-lengkap`. |
-| `materi/javascript/*.html` | Materi JavaScript: `apa-itu-javascript` (lab + kuis), `variabel`, `fungsi`, `percabangan`, `perulangan`, `array-objek`, `dom`. Enam bab lain belum dibuat. |
+| `materi/javascript/*.html` | Materi JavaScript: `apa-itu-javascript` (lab + kuis), `variabel`, `fungsi`, `percabangan`, `perulangan`, `array-objek`, `dom`, `klik-dan-form`. Lima bab lain belum dibuat. |
 
 Bab konsep `apa-itu-website` dan `dari-server-ke-layar` memakai kuis pilihan
 ganda, bukan lab kode. `mengenal-tag-html` memakai latihan "Bedah satu tag"
@@ -87,12 +87,16 @@ lab khusus, bukan lab ini.
 
 ## Lab DOM
 
-Bab `dom` memakai penanda `data-lab-dom` dan `assets/js/latihan-dom.js`.
-Kode siswa butuh `document`, sedangkan Web Worker tidak punya DOM. Karena itu
-kode dijalankan di iframe pratinjau, bukan di halaman materi:
+Bab `dom` dan `klik-dan-form` memakai penanda `data-lab-dom` dan
+`assets/js/latihan-dom.js`. Kode siswa butuh `document`, sedangkan Web Worker
+tidak punya DOM. Karena itu kode dijalankan di iframe pratinjau, bukan di
+halaman materi:
 
 - iframe memakai `sandbox="allow-scripts"` tanpa `allow-same-origin`, jadi
   halaman materi tidak bisa menyentuh isinya dan sebaliknya;
+- bab `klik-dan-form` menambahkan `allow-forms`. Tanpa itu, menekan tombol
+  `type="submit"` tidak memicu pengiriman formulir, sehingga latihan
+  `preventDefault` tidak bisa dicoba;
 - `srcdoc` pratinjau sudah berisi contoh halaman kecil;
 - iframe mengirim pesan `selesai`, `galat`, `macet`, dan `tinggi` lewat
   `postMessage` dengan kunci acak per percobaan;
@@ -166,7 +170,9 @@ Jalankan `python -m http.server 8000`, lalu periksa:
    berhenti setelah 2 detik, dan Atur ulang mengembalikan kode awal.
 10. Lab DOM: pratinjau berubah, error selector tampil, `while (true)` berhenti
     sendiri, dan Jalankan lagi tetap bekerja setelahnya.
-11. Semua berkas tetap CRLF.
+11. Lab DOM formulir: klik tombol dan tombol Enter mengubah pesan; tanpa
+    `preventDefault` pratinjau dimuat ulang, lalu Jalankan lagi memulihkannya.
+12. Semua berkas tetap CRLF.
 
 ## Riwayat perubahan
 

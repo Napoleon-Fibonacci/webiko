@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bab 8 JavaScript dasar: addEventListener click, membaca value kolom isian, event submit, dan preventDefault. Materi Webiko untuk pelajar SMP dan SMA.">
+  <title>Klik dan isian formulir — JavaScript dasar · Webiko</title>
+
+  <script>
+    (function () {
+      try {
+        var pilihan = localStorage.getItem("tema");
+        var gelap =
+          pilihan === "gelap" ||
+          (pilihan === "sistem" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-tema", gelap ? "gelap" : "terang");
+      } catch (e) {
+        document.documentElement.setAttribute("data-tema", "terang");
+      }
+
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-siap");
+        window.setTimeout(function () {
+          if (!window.__wgReveal) {
+            document.documentElement.classList.remove("reveal-siap");
+          }
+        }, 2000);
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="../../index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        Webiko
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="../../index.html">Beranda</a>
+        <a class="navbar__link" href="../../index.html#kurikulum" aria-current="page">Kurikulum</a>
+        <a class="navbar__link" href="../../index.html#cara-pakai">Cara pakai</a>
+      </nav>
+
+      <div class="navbar__tools">
+        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
+          <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--terang" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--gelap" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
+          </svg>
+          <span class="theme-toggle__label">Terang</span>
+        </button>
+
+        <button class="navbar__btn navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section">
+      <div class="layout--with-sidebar">
+
+                                <aside class="sidebar" aria-label="Daftar bab JavaScript dasar">
+          <p class="sidebar__title">JavaScript dasar</p>
+          <ul class="sidebar__list">
+            <li><a class="sidebar__link" href="apa-itu-javascript.html">Apa itu JavaScript</a></li>
+            <li><a class="sidebar__link" href="variabel.html">Variabel dan tipe data</a></li>
+            <li><a class="sidebar__link" href="fungsi.html">Fungsi</a></li>
+            <li><a class="sidebar__link" href="percabangan.html">Percabangan if</a></li>
+            <li><a class="sidebar__link" href="perulangan.html">Perulangan</a></li>
+            <li><a class="sidebar__link" href="array-objek.html">Array dan objek</a></li>
+            <li><a class="sidebar__link" href="dom.html">Mengubah halaman dari kode</a></li>
+            <li><a class="sidebar__link" href="klik-dan-form.html" aria-current="page">Klik dan isian formulir</a></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Menyimpan data di browser</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Mengambil data dari server</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Membuat daftar dari data</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Membaca pesan error</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Latihan: pencatat belajar</span></li>
+          </ul>
+        </aside>
+
+                                <article class="materi">
+          <p class="label materi__eyebrow">JavaScript dasar · Bab 8 dari 13</p>
+          <h1>Klik dan isian formulir</h1>
+          <p class="materi__lead">
+            Halaman jadi hidup saat menunggu aksi pengunjung: klik tombol,
+            mengetik di kolom, lalu mengirim formulir. JavaScript mendengar
+            aksi itu lewat event.
+          </p>
+
+          <h2>Menunggu klik</h2>
+          <p>
+            <code>addEventListener</code> memasang pendengar pada elemen.
+            Argumen pertama nama event, misalnya <code>"click"</code>. Argumen
+            kedua fungsi yang dijalankan saat event terjadi.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">klik.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">const</span> tombol <span class="tok-punct">=</span> document<span class="tok-punct">.</span><span class="tok-fungsi">querySelector</span><span class="tok-punct">(</span><span class="tok-string">"#tombol"</span><span class="tok-punct">);</span></span><span class="code__line"><span class="tok-kunci">const</span> judul <span class="tok-punct">=</span> document<span class="tok-punct">.</span><span class="tok-fungsi">querySelector</span><span class="tok-punct">(</span><span class="tok-string">"#judul"</span><span class="tok-punct">);</span></span><span class="code__line"></span><span class="code__line">tombol<span class="tok-punct">.</span><span class="tok-fungsi">addEventListener</span><span class="tok-punct">(</span><span class="tok-string">"click"</span><span class="tok-punct">,</span> <span class="tok-kunci">function</span> <span class="tok-punct">()</span> <span class="tok-punct">{</span></span><span class="code__line">  judul<span class="tok-punct">.</span>textContent <span class="tok-punct">=</span> <span class="tok-string">"Tombol diklik!"</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-punct">}</span><span class="tok-punct">);</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Isi fungsi baru berjalan setelah tombol diklik, bukan saat
+              kode dibaca.
+            </p>
+          </div>
+
+          <h2>Membaca isian</h2>
+          <p>
+            Kolom isian menyimpan isinya di properti <code>value</code>, bukan
+            <code>textContent</code>. Nilai itu dibaca saat tombol ditekan,
+            jadi selalu mengikuti ketikan terbaru.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">sapa.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">const</span> nama <span class="tok-punct">=</span> document<span class="tok-punct">.</span><span class="tok-fungsi">querySelector</span><span class="tok-punct">(</span><span class="tok-string">"#nama"</span><span class="tok-punct">);</span></span><span class="code__line"><span class="tok-kunci">const</span> hasil <span class="tok-punct">=</span> document<span class="tok-punct">.</span><span class="tok-fungsi">querySelector</span><span class="tok-punct">(</span><span class="tok-string">"#hasil"</span><span class="tok-punct">);</span></span><span class="code__line"></span><span class="code__line">document<span class="tok-punct">.</span><span class="tok-fungsi">querySelector</span><span class="tok-punct">(</span><span class="tok-string">"#sapa"</span><span class="tok-punct">).</span><span class="tok-fungsi">addEventListener</span><span class="tok-punct">(</span><span class="tok-string">"click"</span><span class="tok-punct">,</span> <span class="tok-kunci">function</span> <span class="tok-punct">()</span> <span class="tok-punct">{</span></span><span class="code__line">  hasil<span class="tok-punct">.</span>textContent <span class="tok-punct">=</span> <span class="tok-string">"Halo, "</span> <span class="tok-punct">+</span> nama<span class="tok-punct">.</span>value <span class="tok-punct">+</span> <span class="tok-string">"!"</span><span class="tok-punct">;</span></span><span class="code__line"><span class="tok-punct">}</span><span class="tok-punct">);</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Kalau kolom kosong, hasilnya <code>Halo, !</code>. Nilai
+              <code>value</code> selalu berupa teks.
+            </p>
+          </div>
+
+          <h2>Formulir dan tombol Enter</h2>
+          <p>
+            Di dalam <code>&lt;form&gt;</code>, menekan Enter ikut mengirim
+            formulir. Kejadiannya bernama <code>"submit"</code>, bukan
+            <code>"click"</code>. Bawaan browser, pengiriman memuat ulang
+            halaman. Panggil <code>preventDefault()</code> untuk membatalkannya.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">form.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">const</span> form <span class="tok-punct">=</span> document<span class="tok-punct">.</span><span class="tok-fungsi">querySelector</span><span class="tok-punct">(</span><span class="tok-string">"#form"</span><span class="tok-punct">);</span></span><span class="code__line"></span><span class="code__line">form<span class="tok-punct">.</span><span class="tok-fungsi">addEventListener</span><span class="tok-punct">(</span><span class="tok-string">"submit"</span><span class="tok-punct">,</span> <span class="tok-kunci">function</span> <span class="tok-punct">(</span>e<span class="tok-punct">)</span> <span class="tok-punct">{</span></span><span class="code__line">  e<span class="tok-punct">.</span><span class="tok-fungsi">preventDefault</span><span class="tok-punct">();</span></span><span class="code__line">  <span class="tok-komentar">// kode lain di sini</span></span><span class="code__line"><span class="tok-punct">}</span><span class="tok-punct">);</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Parameter <code>e</code> berisi info event. <code>e</code> hanya
+              nama, boleh diganti asal konsisten.
+            </p>
+          </div>
+
+          <section class="lab" data-lab-dom aria-labelledby="lab-judul">
+            <p class="label">Latihan langsung</p>
+            <h2 id="lab-judul">Sapa dari formulir</h2>
+            <p>
+              Kode berjalan di pratinjau. Setelah menekan Jalankan, coba
+              ketik nama di kolom pratinjau lalu klik <strong>Sapa</strong>.
+            </p>
+            <ol>
+              <li>Klik <strong>Jalankan</strong>, lalu ketik <code>Ayu</code> di kolom nama dan klik <strong>Sapa</strong>. Muncul <code>Halo, Ayu!</code>.</li>
+              <li>Ganti nama menjadi <code>Bima</code>, klik <strong>Sapa</strong> lagi. Pesannya ikut berubah.</li>
+              <li>Hapus baris <code>e.preventDefault();</code>, jalankan, lalu klik <strong>Sapa</strong>. Pratinjau dimuat ulang dan pesan hilang.</li>
+            </ol>
+
+            <div class="lab__meja">
+              <div class="lab__panel lab__panel--kode">
+                <div class="lab__bar">
+                  <span class="lab__prompt" aria-hidden="true">&gt;_</span>
+                  <span class="lab__nama">sapa.js</span>
+                  <span class="lab__isyarat">bisa diubah</span>
+                </div>
+                <textarea class="lab__editor" data-lab-editor rows="14" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Kode JavaScript latihan" aria-describedby="lab-status">const form = document.querySelector("#form");
+const nama = document.querySelector("#nama");
+const pesan = document.querySelector("#pesan");
+
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  const teks = "Halo, " + nama.value + "!";
+  pesan.textContent = teks;
+});</textarea>
+              </div>
+
+              <div class="lab__panel lab__panel--hasil">
+                <div class="lab__bar">
+                  <span class="pane__dots" aria-hidden="true">
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                  </span>
+                  <span class="lab__nama">Pratinjau</span>
+                  <span class="lab__isyarat">halaman</span>
+                </div>
+                <iframe class="lab__pratinjau" data-lab-pratinjau title="Pratinjau halaman hasil kode" sandbox="allow-scripts allow-forms" srcdoc="<!DOCTYPE html><html lang='id'><head><meta charset='utf-8'><style>body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;margin:0;padding:16px;background:#ffffff;color:#1a1b33;}h1{margin-top:0;font-size:1.6rem;margin-bottom:12px;}form{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0;}label{font-weight:600;}input{font:inherit;padding:6px 8px;border:2px solid #1a1b33;border-radius:6px;width:150px;}button{font:inherit;font-weight:700;padding:6px 12px;border:2px solid #1a1b33;border-radius:6px;background:#ffe14d;color:#1a1b33;cursor:pointer;}#pesan{margin-top:16px;margin-bottom:0;}</style></head><body><h1 id='judul'>Sapa pengunjung</h1><form id='form'><label for='nama'>Nama</label><input id='nama' type='text' placeholder='Tulis namamu'><button id='sapa' type='submit'>Sapa</button></form><p id='pesan'>Belum ada sapaan.</p></body></html>"></iframe>
+              </div>
+            </div>
+
+            <div class="lab__aksi">
+              <button class="btn btn--primary" type="button" data-lab-jalankan hidden>Jalankan</button>
+              <button class="btn btn--ghost" type="button" data-lab-reset hidden>Atur ulang</button>
+              <p class="lab__status" id="lab-status" data-lab-status role="status">Klik Jalankan untuk melihat hasil.</p>
+            </div>
+
+            <div class="materi__latihan">
+              <p><strong>Cek hasil:</strong></p>
+              <ul>
+                <li>Nama <code>Ayu</code>: pesan menjadi <code>Halo, Ayu!</code>.</li>
+                <li>Nama <code>Bima</code>: pesan menjadi <code>Halo, Bima!</code>.</li>
+                <li>Tanpa <code>preventDefault</code>, pratinjau dimuat ulang dan pesan kembali ke contoh awal.</li>
+              </ul>
+            </div>
+
+            <noscript>
+              <p class="lab__catatan">
+                Editor butuh JavaScript. Salin kode di atas ke file .js yang
+                dimuat setelah HTML, lalu jalankan di browser.
+              </p>
+            </noscript>
+          </section>
+
+          <h2>Kesalahan umum</h2>
+          <ul>
+            <li>Menulis <code>tombol.addEventListener("click", sapa())</code>. Tanda kurung membuat fungsi langsung jalan; tulis <code>sapa</code> tanpa kurung.</li>
+            <li>Memakai <code>nama.textContent</code> untuk kolom isian. Yang benar <code>nama.value</code>.</li>
+            <li>Lupa <code>e.preventDefault()</code> di event <code>submit</code>, sehingga halaman dimuat ulang.</li>
+            <li>Memasang listener <code>submit</code> pada tombol, bukan pada <code>form</code>.</li>
+            <li>Menjalankan <code>querySelector</code> sebelum elemen ada, misalnya script di <code>&lt;head&gt;</code> tanpa menunggu halaman selesai.</li>
+            <li>Menulis selector tanpa tanda: id butuh <code>#</code>, kelas butuh <code>.</code>.</li>
+          </ul>
+
+          <h2>Rangkuman</h2>
+          <ul>
+            <li><code>addEventListener("click", fungsi)</code> menjalankan fungsi saat elemen diklik.</li>
+            <li>Isi kolom dibaca lewat <code>value</code>; teks biasa lewat <code>textContent</code>.</li>
+            <li>Formulir memakai event <code>"submit"</code>, bukan <code>"click"</code>.</li>
+            <li><code>e.preventDefault()</code> menahan halaman agar tidak dimuat ulang.</li>
+            <li>Pasang listener setelah elemen ada, misalnya script di akhir <code>&lt;body&gt;</code>.</li>
+          </ul>
+
+          <footer class="materi__kaki">
+            <section class="kaki__sumber" aria-labelledby="sumber-judul">
+              <h2 class="kaki__label" id="sumber-judul">Bacaan asli</h2>
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener">MDN — addEventListener()</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/click_event">MDN — click event</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/value">MDN — input value</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit_event">MDN — submit event</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault">MDN — preventDefault()</a></li>
+              </ul>
+            </section>
+
+            <nav class="kaki__pager" aria-label="Bab sebelumnya dan berikutnya">
+              <a class="kaki__bab kaki__bab--kembali" href="dom.html">
+                <span class="kaki__arah">Sebelumnya</span>
+                <span class="kaki__judul">Mengubah halaman dari kode</span>
+              </a>
+              <a class="kaki__bab kaki__bab--lanjut" href="../../index.html#kurikulum">
+                <span class="kaki__arah">Kembali</span>
+                <span class="kaki__judul">Kurikulum</span>
+              </a>
+            </nav>
+          </footer>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__row">
+      <div>
+        <p class="footer__wordmark">Webiko</p>
+        <p class="footer__tagline">
+          Belajar bikin website dari nol, dalam bahasa Indonesia.
+          Tanpa install, tanpa framework.
+        </p>
+      </div>
+      <nav class="footer__nav" aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="../../index.html#kurikulum">Kurikulum</a></li>
+          <li><a href="../../index.html#cara-pakai">Cara pakai</a></li>
+          <li><a href="../../index.html#progres">Progres</a></li>
+          <li><a href="../../index.html#daftar">Buat akun</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <p>© 2026 Webiko · Dibuat tanpa framework dan tanpa dependency.</p>
+      <p>Untuk pelajar SMP &amp; SMA</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/latihan-dom.js"></script>
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>
