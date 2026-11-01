@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bab 7 JavaScript dasar: memilih elemen dengan querySelector, mengubah textContent, style, classList, dan querySelectorAll. Materi Webiko untuk pelajar SMP dan SMA.">
+  <title>Mengubah halaman dari kode — JavaScript dasar · Webiko</title>
+
+  <script>
+    (function () {
+      try {
+        var pilihan = localStorage.getItem("tema");
+        var gelap =
+          pilihan === "gelap" ||
+          (pilihan === "sistem" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-tema", gelap ? "gelap" : "terang");
+      } catch (e) {
+        document.documentElement.setAttribute("data-tema", "terang");
+      }
+
+      if ("IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-siap");
+        window.setTimeout(function () {
+          if (!window.__wgReveal) {
+            document.documentElement.classList.remove("reveal-siap");
+          }
+        }, 2000);
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="../../index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </span>
+        Webiko
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="../../index.html">Beranda</a>
+        <a class="navbar__link" href="../../index.html#kurikulum" aria-current="page">Kurikulum</a>
+        <a class="navbar__link" href="../../index.html#cara-pakai">Cara pakai</a>
+      </nav>
+
+      <div class="navbar__tools">
+        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
+          <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--terang" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--gelap" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
+          </svg>
+          <span class="theme-toggle__label">Terang</span>
+        </button>
+
+        <button class="navbar__btn navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section">
+      <div class="layout--with-sidebar">
+
+                                <aside class="sidebar" aria-label="Daftar bab JavaScript dasar">
+          <p class="sidebar__title">JavaScript dasar</p>
+          <ul class="sidebar__list">
+            <li><a class="sidebar__link" href="apa-itu-javascript.html">Apa itu JavaScript</a></li>
+            <li><a class="sidebar__link" href="variabel.html">Variabel dan tipe data</a></li>
+            <li><a class="sidebar__link" href="fungsi.html">Fungsi</a></li>
+            <li><a class="sidebar__link" href="percabangan.html">Percabangan if</a></li>
+            <li><a class="sidebar__link" href="perulangan.html">Perulangan</a></li>
+            <li><a class="sidebar__link" href="array-objek.html">Array dan objek</a></li>
+            <li><a class="sidebar__link" href="dom.html" aria-current="page">Mengubah halaman dari kode</a></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Klik dan isian formulir</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Menyimpan data di browser</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Mengambil data dari server</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Membuat daftar dari data</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Membaca pesan error</span></li>
+            <li><span class="sidebar__link" aria-disabled="true" title="Segera">Latihan: pencatat belajar</span></li>
+          </ul>
+        </aside>
+
+                                <article class="materi">
+          <p class="label materi__eyebrow">JavaScript dasar · Bab 7 dari 13</p>
+          <h1>Mengubah halaman dari kode</h1>
+          <p class="materi__lead">
+            Halaman yang kamu lihat tersusun dari elemen. JavaScript bisa
+            memilih elemen itu, lalu mengubah teks, warna, atau kelasnya tanpa
+            memuat ulang halaman.
+          </p>
+
+          <h2>Memilih elemen</h2>
+          <p>
+            <code>document</code> adalah pintu masuk ke halaman.
+            <code>querySelector</code> memilih elemen pertama yang cocok dengan
+            selector CSS: <code>#judul</code> untuk id, <code>.pesan</code>
+            untuk kelas, atau <code>button</code> untuk nama tag.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">pilih.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">const</span> judul <span class="tok-punct">=</span> document<span class="tok-punct">.</span><span class="tok-fungsi">querySelector</span><span class="tok-punct">(</span><span class="tok-string">"#judul"</span><span class="tok-punct">);</span></span><span class="code__line"></span><span class="code__line">console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span>judul<span class="tok-punct">.</span>textContent<span class="tok-punct">);</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Kalau elemennya ada, hasilnya berupa elemen. Kalau selectornya
+              salah, hasilnya <code>null</code>.
+            </p>
+          </div>
+
+          <h2>Mengubah teks dan warna</h2>
+          <p>
+            <code>textContent</code> mengganti tulisan di dalam elemen.
+            <code>style</code> mengubah gaya langsung. Nama properti CSS yang
+            memakai tanda hubung ditulis tanpa tanda hubung dan huruf
+            berikutnya kapital: <code>background-color</code> menjadi
+            <code>backgroundColor</code>.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">ubah.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">const</span> judul <span class="tok-punct">=</span> document<span class="tok-punct">.</span><span class="tok-fungsi">querySelector</span><span class="tok-punct">(</span><span class="tok-string">"#judul"</span><span class="tok-punct">);</span></span><span class="code__line"></span><span class="code__line">judul<span class="tok-punct">.</span>textContent <span class="tok-punct">=</span> <span class="tok-string">"Halo, Webiko!"</span><span class="tok-punct">;</span></span><span class="code__line">judul<span class="tok-punct">.</span>style<span class="tok-punct">.</span>color <span class="tok-punct">=</span> <span class="tok-string">"crimson"</span><span class="tok-punct">;</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Hasilnya judul baru berwarna merah. Halaman tidak dimuat ulang.
+            </p>
+          </div>
+
+          <h2>Menambah dan melepas kelas</h2>
+          <p>
+            Untuk perubahan yang besar, lebih rapi menyiapkan kelas di CSS lalu
+            memakai <code>classList</code>. <code>add</code> menambah,
+            <code>remove</code> melepas, dan <code>toggle</code> berganti
+            sesuai keadaan sekarang.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">kelas.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">const</span> pesan <span class="tok-punct">=</span> document<span class="tok-punct">.</span><span class="tok-fungsi">querySelector</span><span class="tok-punct">(</span><span class="tok-string">".pesan"</span><span class="tok-punct">);</span></span><span class="code__line"></span><span class="code__line">pesan<span class="tok-punct">.</span>classList<span class="tok-punct">.</span><span class="tok-fungsi">add</span><span class="tok-punct">(</span><span class="tok-string">"sorot"</span><span class="tok-punct">);</span></span></code></pre>
+            </div>
+            <p class="materi__keterangan">
+              Kelas <code>sorot</code> sudah diatur di CSS. JavaScript hanya
+              memasang atau melepasnya.
+            </p>
+          </div>
+
+          <h2>Memilih banyak elemen</h2>
+          <p>
+            <code>querySelectorAll</code> mengembalikan semua yang cocok, bukan
+            satu elemen. Hasilnya bisa diulang dengan <code>for</code> seperti
+            array.
+          </p>
+          <div class="materi__gambar">
+            <div class="code-pane pane">
+              <div class="pane__bar">
+                <span class="pane__name">semua.js</span>
+                <span class="pane__badge">JS</span>
+              </div>
+              <pre class="code"><code><span class="code__line"><span class="tok-kunci">const</span> item <span class="tok-punct">=</span> document<span class="tok-punct">.</span><span class="tok-fungsi">querySelectorAll</span><span class="tok-punct">(</span><span class="tok-string">".item"</span><span class="tok-punct">);</span></span><span class="code__line"></span><span class="code__line"><span class="tok-kunci">for</span> <span class="tok-punct">(</span><span class="tok-kunci">let</span> i <span class="tok-punct">=</span> <span class="tok-angka">0</span><span class="tok-punct">;</span> i <span class="tok-punct">&lt;</span> item<span class="tok-punct">.</span>length<span class="tok-punct">;</span> i<span class="tok-punct">++</span><span class="tok-punct">)</span> <span class="tok-punct">{</span></span><span class="code__line">  console<span class="tok-punct">.</span><span class="tok-fungsi">log</span><span class="tok-punct">(</span>item<span class="tok-punct">[</span>i<span class="tok-punct">].</span>textContent<span class="tok-punct">);</span></span><span class="code__line"><span class="tok-punct">}</span></span></code></pre>
+            </div>
+          </div>
+
+          <section class="lab" data-lab-dom aria-labelledby="lab-judul">
+            <p class="label">Latihan langsung</p>
+            <h2 id="lab-judul">Ubah judul dan pesan</h2>
+            <p>
+              Kode berjalan di pratinjau kecil di bawah editor. Di sana
+              <code>document</code> menunjuk halaman pratinjau, bukan halaman
+              materi.
+            </p>
+            <ol>
+              <li>Klik <strong>Jalankan</strong>. Judul menjadi <code>Halo, Webiko!</code>.</li>
+              <li>Ganti teks itu menjadi <code>Belajar DOM</code>, lalu jalankan lagi.</li>
+              <li>Ganti <code>crimson</code> menjadi <code>seagreen</code>, lalu jalankan.</li>
+            </ol>
+
+            <div class="lab__meja">
+              <div class="lab__panel lab__panel--kode">
+                <div class="lab__bar">
+                  <span class="lab__prompt" aria-hidden="true">&gt;_</span>
+                  <span class="lab__nama">halaman.js</span>
+                  <span class="lab__isyarat">bisa diubah</span>
+                </div>
+                <textarea class="lab__editor" data-lab-editor rows="14" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Kode JavaScript latihan" aria-describedby="lab-status">const judul = document.querySelector("#judul");
+judul.textContent = "Halo, Webiko!";
+
+const pesan = document.querySelector("#pesan");
+pesan.style.color = "crimson";
+pesan.classList.add("sorot");</textarea>
+              </div>
+
+              <div class="lab__panel lab__panel--hasil">
+                <div class="lab__bar">
+                  <span class="pane__dots" aria-hidden="true">
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                    <span class="pane__dot"></span>
+                  </span>
+                  <span class="lab__nama">Pratinjau</span>
+                  <span class="lab__isyarat">halaman</span>
+                </div>
+                <iframe class="lab__pratinjau" data-lab-pratinjau title="Pratinjau halaman hasil kode" sandbox="allow-scripts" srcdoc="<!DOCTYPE html><html lang='id'><head><meta charset='utf-8'><style>body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;margin:0;padding:16px;background:#ffffff;color:#1a1b33;}h1{margin-top:0;font-size:1.6rem;}p{margin-bottom:0;}.sorot{display:inline-block;background:#ffe14d;padding:2px 6px;}</style></head><body><h1 id='judul'>Halo</h1><p id='pesan'>Teks ini akan berubah.</p></body></html>"></iframe>
+              </div>
+            </div>
+
+            <div class="lab__aksi">
+              <button class="btn btn--primary" type="button" data-lab-jalankan hidden>Jalankan</button>
+              <button class="btn btn--ghost" type="button" data-lab-reset hidden>Atur ulang</button>
+              <p class="lab__status" id="lab-status" data-lab-status role="status">Klik Jalankan untuk melihat hasil.</p>
+            </div>
+
+            <div class="materi__latihan">
+              <p><strong>Cek hasil:</strong></p>
+              <ul>
+                <li>Judul di pratinjau berubah menjadi <code>Halo, Webiko!</code>.</li>
+                <li>Pesan berwarna merah dan berlatar kuning.</li>
+                <li>Setelah diganti, judul menjadi <code>Belajar DOM</code> dan pesan berwarna hijau.</li>
+              </ul>
+            </div>
+
+            <noscript>
+              <p class="lab__catatan">
+                Editor butuh JavaScript. Salin kode di atas ke file .js yang
+                dimuat setelah HTML, lalu jalankan di browser.
+              </p>
+            </noscript>
+          </section>
+
+          <h2>Kesalahan umum</h2>
+          <ul>
+            <li>Lupa tanda selector: <code>judul</code> mencari tag, bukan id. Id butuh <code>#judul</code>, kelas butuh <code>.pesan</code>.</li>
+            <li>Selector tidak cocok sehingga hasilnya <code>null</code>, lalu muncul <code>Cannot read properties of null</code>.</li>
+            <li>Menulis <code>style.background-color</code>. Di JavaScript namanya <code>style.backgroundColor</code>.</li>
+            <li>Menjalankan kode sebelum elemen ada. Letakkan script di akhir <code>&lt;body&gt;</code> atau tunggu halaman selesai dimuat.</li>
+            <li>Mengira <code>querySelectorAll</code> memberi satu elemen; hasilnya daftar, jadi perlu diulang.</li>
+            <li>Memakai <code>innerHTML</code> dengan isian dari pengguna; teks biasa lebih aman memakai <code>textContent</code>.</li>
+          </ul>
+
+          <h2>Rangkuman</h2>
+          <ul>
+            <li><code>document.querySelector</code> memilih elemen pertama sesuai selector CSS.</li>
+            <li><code>textContent</code> mengganti teks; <code>style</code> mengubah gaya langsung.</li>
+            <li>Nama properti gaya memakai camelCase, misalnya <code>backgroundColor</code>.</li>
+            <li><code>classList.add</code>, <code>remove</code>, dan <code>toggle</code> mengatur kelas.</li>
+            <li><code>querySelectorAll</code> mengembalikan daftar elemen yang bisa diulang.</li>
+          </ul>
+
+          <footer class="materi__kaki">
+            <section class="kaki__sumber" aria-labelledby="sumber-judul">
+              <h2 class="kaki__label" id="sumber-judul">Bacaan asli</h2>
+              <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector">MDN — document.querySelector()</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent">MDN — textContent</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/classList">MDN — classList</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style">MDN — HTMLElement.style</a></li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction">MDN — Introduction to the DOM</a></li>
+              </ul>
+            </section>
+
+            <nav class="kaki__pager" aria-label="Bab sebelumnya dan berikutnya">
+              <a class="kaki__bab kaki__bab--kembali" href="array-objek.html">
+                <span class="kaki__arah">Sebelumnya</span>
+                <span class="kaki__judul">Array dan objek</span>
+              </a>
+              <a class="kaki__bab kaki__bab--lanjut" href="../../index.html#kurikulum">
+                <span class="kaki__arah">Kembali</span>
+                <span class="kaki__judul">Kurikulum</span>
+              </a>
+            </nav>
+          </footer>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__row">
+      <div>
+        <p class="footer__wordmark">Webiko</p>
+        <p class="footer__tagline">
+          Belajar bikin website dari nol, dalam bahasa Indonesia.
+          Tanpa install, tanpa framework.
+        </p>
+      </div>
+      <nav class="footer__nav" aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="../../index.html#kurikulum">Kurikulum</a></li>
+          <li><a href="../../index.html#cara-pakai">Cara pakai</a></li>
+          <li><a href="../../index.html#progres">Progres</a></li>
+          <li><a href="../../index.html#daftar">Buat akun</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <p>© 2026 Webiko · Dibuat tanpa framework dan tanpa dependency.</p>
+      <p>Untuk pelajar SMP &amp; SMA</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/latihan-dom.js"></script>
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>

@@ -19,11 +19,12 @@ Lab latihan harus terasa seperti satu editor kecil yang konsisten:
 | --- | --- |
 | `assets/js/latihan-html.js` | Menyalin editor ke iframe, mewarnai sintaks, mengukur tinggi editor dan pratinjau, tombol Jalankan/Reset, pemeriksaan struktur. |
 | `assets/js/latihan-js.js` | Menjalankan kode JavaScript di Web Worker dan menampilkan `console.log`/error di panel Keluaran. |
+| `assets/js/latihan-dom.js` | Menjalankan kode DOM di iframe ber-sandbox; `document` menunjuk dokumen pratinjau, perulangan dijaga penghitung. |
 | `assets/js/lab-warna.js` | Kotak warna kecil di dalam editor CSS. Tanpa JavaScript tidak ada kotak. |
 | `assets/css/style.css` | Token, panel lab, editor, pratinjau, dan batas tinggi minimum. |
 | `materi/css/*.html` | Lab CSS: 11 bab, dari `mengenal-css` sampai `mode-gelap`. |
 | `materi/html/*.html` | Lab HTML: `file-html-pertama`, `judul-dan-paragraf`, `gambar`, `tautan`, `daftar`, `tabel`, `halaman-lengkap`. |
-| `materi/javascript/*.html` | Materi JavaScript: `apa-itu-javascript` (lab + kuis), `variabel`, `fungsi`, `percabangan`, `perulangan`, `array-objek`. Tujuh bab lain belum dibuat. |
+| `materi/javascript/*.html` | Materi JavaScript: `apa-itu-javascript` (lab + kuis), `variabel`, `fungsi`, `percabangan`, `perulangan`, `array-objek`, `dom`. Enam bab lain belum dibuat. |
 
 Bab konsep `apa-itu-website` dan `dari-server-ke-layar` memakai kuis pilihan
 ganda, bukan lab kode. `mengenal-tag-html` memakai latihan "Bedah satu tag"
@@ -84,6 +85,29 @@ Karena dijalankan sebagai satu skrip, kode yang selesai lebih dulu tidak
 menunggu `setTimeout` atau Promise. Materi yang membutuhkan penantian perlu
 lab khusus, bukan lab ini.
 
+## Lab DOM
+
+Bab `dom` memakai penanda `data-lab-dom` dan `assets/js/latihan-dom.js`.
+Kode siswa butuh `document`, sedangkan Web Worker tidak punya DOM. Karena itu
+kode dijalankan di iframe pratinjau, bukan di halaman materi:
+
+- iframe memakai `sandbox="allow-scripts"` tanpa `allow-same-origin`, jadi
+  halaman materi tidak bisa menyentuh isinya dan sebaliknya;
+- `srcdoc` pratinjau sudah berisi contoh halaman kecil;
+- iframe mengirim pesan `selesai`, `galat`, `macet`, dan `tinggi` lewat
+  `postMessage` dengan kunci acak per percobaan;
+- tinggi iframe mengikuti isi, sama seperti lab HTML.
+
+Iframe yang terkunci `while (true)` tidak bisa dipulihkan dari luar: mengganti
+`srcdoc` atau membuat iframe baru tetap menunggu proses yang sama. Karena itu
+`beriPenjaga()` menyisipkan `__lanjut()` ke syarat `for` dan `while` sebelum
+kode dijalankan. Setelah 1.000.000 putaran, kode berhenti dengan pesan
+`Kode dihentikan karena berputar tanpa henti.` Timer 2 detik tetap ada sebagai
+jaring pengaman, tetapi tidak boleh diandalkan untuk memulihkan pratinjau.
+
+`for...of` dan `for...in` tidak dijaga karena mengulang data yang sudah ada.
+Teks di dalam string dan komentar tidak ikut diubah.
+
 ## Tinggi otomatis
 
 ### Pratinjau
@@ -140,7 +164,9 @@ Jalankan `python -m http.server 8000`, lalu periksa:
 8. Tanpa JavaScript: editor dan contoh kode tetap tampil.
 9. Lab JavaScript: keluaran benar, error sintaks tampil, `while (true) {}`
    berhenti setelah 2 detik, dan Atur ulang mengembalikan kode awal.
-10. Semua berkas tetap CRLF.
+10. Lab DOM: pratinjau berubah, error selector tampil, `while (true)` berhenti
+    sendiri, dan Jalankan lagi tetap bekerja setelahnya.
+11. Semua berkas tetap CRLF.
 
 ## Riwayat perubahan
 
