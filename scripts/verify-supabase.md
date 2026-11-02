@@ -107,28 +107,30 @@ reset role;
 
 ---
 
-## 5. Sambungkan ke Vercel (Integrasi Vercel ↔ Supabase)
+## 5. Sambungkan ke Vercel (env + build config)
 
-1. Buka dashboard Vercel → project Webiko → tab **Integrations** →
-   cari **Supabase** → **Add Integration** → pilih project Supabase Anda.
-2. Selesai. Integrasi ini berguna untuk akses dashboard/CLI, tetapi **tidak**
-   menyuntikkan URL/anon key ke file statis (tidak ada build step), jadi
-   situs tetap membaca `assets/js/supabase-config.js`.
-3. Karena `assets/js/supabase-config.js` di-.gitignore dan repo tidak memuat
-   kredensial, cara paling sederhana agar production punya config:
-   buat file yang sama di mesin Anda dengan nilai production, lalu
-   deploy dari folder itu (`vercel --prod` dari akar repo). Vercel
-   meng-upload isi folder apa adanya — file gitignored tetap ikut ter-upload
-   karena bukan dari git.
-4. (Opsional, jika nanti project dihubungkan lewat GitHub) tambahkan
-   `SUPABASE_URL` dan `SUPABASE_ANON_KEY` di **Vercel → Settings →
-   Environment Variables** sebagai catatan nilai production; nilainya tetap
-   harus ditulis ke `supabase-config.js` sebelum deploy karena tidak ada build
-   step untuk membacanya.
+1. Buka **Vercel → project Webiko → Settings → Environment Variables**.
+2. Tambahkan dua variabel, centang **Production** dan **Preview**:
+   - `SUPABASE_URL` → `https://<ref>.supabase.co`
+   - `SUPABASE_ANON_KEY` → anon/public key, **bukan** `service_role`
+3. Simpan, lalu **Deployments → Redeploy** (build ulang wajib, karena env
+   hanya terbaca saat build).
+4. Saat build, `buildCommand` di `vercel.json` menjalankan
+   `scripts/tulis-config.mjs`. Script itu menulis
+   `assets/js/supabase-config.js` dari dua env di atas. File hasilnya tetap
+   di-.gitignore dan tidak masuk repo.
+5. Tab **Integrations → Supabase** boleh dipasang, tetapi hanya untuk akses
+   dashboard/CLI; ia **tidak** mengisi config situs.
+
+Kalau build gagal dengan pesan `[tulis-config] SUPABASE_URL dan
+SUPABASE_ANON_KEY wajib diisi`, berarti env belum ada di environment yang
+sedang dipakai (Production/Preview) — lengkapi lalu Redeploy. Kalau muncul
+pesan `berisi service_role`, ganti key-nya dengan anon/public.
 
 **Tanda berhasil:** buka URL production, buka DevTools → **Console**.
 Tidak ada pesan `[supabase] window.__ENV__…` dan tidak ada error
-`Failed to fetch` saat memanggil auth.
+`Failed to fetch` saat memanggil auth. Di **View Source**, cari
+`supabase-config.js`; isinya `window.__ENV__` dengan URL project Anda.
 
 ---
 

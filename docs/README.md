@@ -17,8 +17,9 @@ oleh manusia, bukan generated docs.
 
 - Repo ini memakai **CRLF**. Setiap berkas baru, termasuk dokumen ini, harus
   berakhir CRLF. Cek dengan `grep -qU $'\r' <berkas>`; hasilnya harus cocok.
-- Tanpa framework, tanpa build step, tanpa dependency npm. Jangan menambah
-  alat baru hanya untuk dokumentasi.
+- Tanpa framework dan tanpa dependency npm. Satu-satunya build step adalah
+  `scripts/tulis-config.mjs` yang menulis config Supabase dari env Vercel.
+  Jangan menambah build lain.
 - Angka, path, perintah, dan nama token ditulis apa adanya. Kalau berubah,
   perbarui dokumen di commit yang sama.
 - Verifikasi tampilan dilakukan di lebar 1440/1024/900/768/390/320, tema

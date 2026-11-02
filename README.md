@@ -4,7 +4,8 @@ Website pembelajaran untuk anak sekolah yang ingin belajar membuat website dari 
 
 ## Stack
 
-- **Frontend:** HTML, CSS, dan JavaScript vanilla (tanpa framework, tanpa build step)
+- **Frontend:** HTML, CSS, dan JavaScript vanilla (tanpa framework)
+- **Build:** satu langkah kecil di Vercel, `scripts/tulis-config.mjs`, untuk menulis config Supabase dari env
 - **Backend:** [Supabase](https://supabase.com) (auth + database)
 - **Deploy:** [Vercel](https://vercel.com)
 
@@ -80,13 +81,17 @@ Isi `SUPABASE_URL` dan `SUPABASE_ANON_KEY` di `assets/js/supabase-config.js`
 dengan nilai dari langkah 1. File ini **di-.gitignore** dan tidak boleh
 di-commit.
 
-Untuk production di Vercel: situs ini statis tanpa build step, jadi file
-tersebut **tidak ditemukan lewat Environment Variables**. Buat file yang sama
-dengan nilai production, lalu deploy dari folder itu:
+Untuk production di Vercel, isi **Settings → Environment Variables**
+(Production dan Preview):
 
-```powershell
-vercel --prod
-```
+- `SUPABASE_URL` — `https://<ref>.supabase.co`
+- `SUPABASE_ANON_KEY` — anon/public key, **bukan** `service_role`
+
+Saat deploy, `buildCommand` di `vercel.json` menjalankan
+`scripts/tulis-config.mjs`, yang menulis `assets/js/supabase-config.js` dari
+dua variabel itu. File hasilnya tetap di-.gitignore dan tidak pernah masuk
+repo. Kalau variabel belum diisi, build berhenti dengan pesan `[tulis-config]`;
+isi env dulu lalu **Redeploy**.
 
 Integrasi **Vercel ↔ Supabase** (Vercel → Project → **Integrations**) tetap
 berguna untuk akses dashboard, tetapi tidak mengisi config situs ini.
