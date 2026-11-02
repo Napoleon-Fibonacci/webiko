@@ -23,14 +23,14 @@ JavaScript untuk membaca kartu, jadi ini syarat utamanya.
 Di `akun.html`:
 
 ```html
-<link rel="canonical" href="https://webiko.my.id/akun">
+<link rel="canonical" href="https://www.webiko.my.id/akun">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Webiko">
 <meta property="og:locale" content="id_ID">
 <meta property="og:title" content="Akun — Webiko">
 <meta property="og:description" content="Masuk atau buat akun Webiko dengan username dan password. Tanpa email, tanpa data pribadi. Progres bab, skor kuis, dan badge tersimpan di akunmu.">
-<meta property="og:url" content="https://webiko.my.id/akun">
-<meta property="og:image" content="https://webiko.my.id/assets/img/og-webiko.png">
+<meta property="og:url" content="https://www.webiko.my.id/akun">
+<meta property="og:image" content="https://www.webiko.my.id/assets/img/og-webiko.png">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -38,7 +38,7 @@ Di `akun.html`:
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Akun — Webiko">
 <meta name="twitter:description" content="Masuk atau buat akun Webiko dengan username dan password. Tanpa email, tanpa data pribadi. Progres bab, skor kuis, dan badge tersimpan di akunmu.">
-<meta name="twitter:image" content="https://webiko.my.id/assets/img/og-webiko.png">
+<meta name="twitter:image" content="https://www.webiko.my.id/assets/img/og-webiko.png">
 <meta name="twitter:image:alt" content="Kartu Webiko: kotak kuning bergambar huruf W, tulisan Bikin website pertamamu, baris demi baris, dan panel kode index.html.">
 ```
 
@@ -53,10 +53,16 @@ itu canonical dan `og:url` memakai bentuk tanpa `.html`:
 
 | Berkas | URL kanonis |
 | --- | --- |
-| `index.html` | `https://webiko.my.id/` |
-| `akun.html` | `https://webiko.my.id/akun` |
-| `styleguide.html` | `https://webiko.my.id/styleguide` |
-| `materi/html/daftar.html` | `https://webiko.my.id/materi/html/daftar` |
+| `index.html` | `https://www.webiko.my.id/` |
+| `akun.html` | `https://www.webiko.my.id/akun` |
+| `styleguide.html` | `https://www.webiko.my.id/styleguide` |
+| `materi/html/daftar.html` | `https://www.webiko.my.id/materi/html/daftar` |
+
+Host kanonis adalah `www.webiko.my.id`, sesuai domain utama di Vercel. Alamat
+apex `https://webiko.my.id/...` membalas `308` ke `https://www.webiko.my.id/...`,
+jadi canonical, `og:url`, `og:image`, sitemap, dan robots semuanya memakai
+`www` supaya crawler tidak perlu melewati pengalihan. Bagikan tautan `www`
+langsung.
 
 Bagikan URL bentuk bersih. Kalau yang dibagikan masih `.html`, Vercel
 mengalihkan ke bentuk bersih; sebagian crawler mengikuti pengalihan, sebagian
@@ -70,7 +76,7 @@ membaca versi pertama. Menghindari pengalihan lebih aman.
   Discord. Ukuran di bawah 300 KB supaya WhatsApp tidak menolak atau
   mengompres berlebihan.
 - URL di tag **wajib absolut**:
-  `https://webiko.my.id/assets/img/og-webiko.png`. Path relatif membuat
+  `https://www.webiko.my.id/assets/img/og-webiko.png`. Path relatif membuat
   WhatsApp dan Facebook tidak menampilkan gambar.
 - Isi: kotak kuning bergambar W, kata "WEBiko", headline "Bikin website
   pertamamu, baris demi baris." dengan marker kuning, panel kode `index.html`,
@@ -87,7 +93,7 @@ Mengganti gambar: timpa berkas dengan PNG 1200x630, jaga ukuran di bawah
 User-agent: *
 Allow: /
 
-Sitemap: https://webiko.my.id/sitemap.xml
+Sitemap: https://www.webiko.my.id/sitemap.xml
 ```
 
 Tidak ada halaman yang dilarang. `akun` tetap boleh dirayapi; isinya bukan

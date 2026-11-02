@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://webiko.my.id/sitemap.xml
+Sitemap: https://www.webiko.my.id/sitemap.xml
