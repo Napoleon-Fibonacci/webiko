@@ -27,7 +27,10 @@ Website pembelajaran untuk anak sekolah yang ingin belajar membuat website dari 
 │   └── kurikulum.js        # Jalur & bab materi (dirender oleh beranda)
 ├── materi/                 # Materi pelajaran (satu file HTML per bab)
 ├── docs/
-│   └── lab-latihan.md      # Catatan teknis lab latihan (editor & pratinjau)
+│   ├── README.md           # Indeks dokumentasi
+│   ├── lab-latihan.md      # Catatan teknis lab latihan (editor & pratinjau)
+│   ├── logo.md             # Spesifikasi logo navbar dan favicon
+│   └── perubahan-terbaru.md # Riwayat commit dan hasil verifikasi
 ├── scripts/
 │   └── verify-supabase.md  # Panduan setup Supabase untuk pemula
 └── supabase/               # SQL skema, policy RLS, dan lint
