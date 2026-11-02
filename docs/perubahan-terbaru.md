@@ -15,6 +15,15 @@ dokumen ini ditulis.
 | `fb1b9bc` | Navigasi | Tautan **Akun** ditambahkan di navbar semua halaman, setelah "Cara pakai". Di footer, tautan "Buat akun" diganti **Akun** supaya tetap 4 tautan dan tidak ada dua tautan bertujuan sama. 36 berkas diubah; `akun.html` sudah punya tautan itu. |
 | `35a296a` | Beranda | Tombol ketiga `btn btn--ghost` "Buat akun" di hero, selalu tampil dan boleh wrap di layar sempit. Kartu CTA "Buat akun" yang `disabled` + badge "Segera" tidak diubah. |
 | `96f3f78` | Logo | Mark orbit diganti monogram W di 37 halaman, plus `favicon.svg` di akar. Detail di [`logo.md`](logo.md). |
+| `87d8fca` | SEO | Canonical, Open Graph, dan Twitter Card di 37 halaman. Gambar OG 1200x630 di `assets/img/og-webiko.png`, `robots.txt`, `sitemap.xml` berisi 37 URL bersih, dan JSON-LD di beranda. Detail di [`seo.md`](seo.md). |
+
+## SEO dan kartu sosial
+
+Tag sosial ditulis statis di `<head>` 37 halaman. Canonical dan `og:url`
+memakai URL bersih tanpa `.html` sesuai `cleanUrls` di `vercel.json`. Gambar
+`assets/img/og-webiko.png` 1200x630 (85.600 byte) dipakai semua halaman;
+`robots.txt` dan `sitemap.xml` berisi 37 URL. Detail dan langkah setelah deploy
+ada di [`seo.md`](seo.md).
 
 ## Gerak masuk layar (fade-in)
 

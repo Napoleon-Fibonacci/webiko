@@ -16,13 +16,15 @@ Website pembelajaran untuk anak sekolah yang ingin belajar membuat website dari 
 ├── akun.html               # Masuk & daftar username + password
 ├── styleguide.html         # Design system (acuan komponen & token)
 ├── vercel.json             # Konfigurasi deploy Vercel
+├── robots.txt              # Aturan crawler + sitemap
+├── sitemap.xml             # 37 URL bersih
 ├── assets/
 │   ├── css/style.css       # Stylesheet utama (token + komponen)
 │   ├── js/main.js          # Script utama (menu navbar, render kurikulum)
 │   ├── js/akun.js          # Logika halaman akun (sesi, masuk, daftar, keluar)
 │   ├── js/supabase.js      # Klien Supabase (ESM)
 │   ├── js/supabase-config.example.js  # Contoh config (salin jadi supabase-config.js)
-│   └── img/                # Gambar
+│   └── img/                # Gambar, termasuk og-webiko.png (1200x630)
 ├── data/
 │   └── kurikulum.js        # Jalur & bab materi (dirender oleh beranda)
 ├── materi/                 # Materi pelajaran (satu file HTML per bab)
@@ -30,6 +32,7 @@ Website pembelajaran untuk anak sekolah yang ingin belajar membuat website dari 
 │   ├── README.md           # Indeks dokumentasi
 │   ├── lab-latihan.md      # Catatan teknis lab latihan (editor & pratinjau)
 │   ├── logo.md             # Spesifikasi logo navbar dan favicon
+│   ├── seo.md              # Metadata sosial, OG image, robots, sitemap
 │   └── perubahan-terbaru.md # Riwayat commit dan hasil verifikasi
 ├── scripts/
 │   └── verify-supabase.md  # Panduan setup Supabase untuk pemula

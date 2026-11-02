@@ -10,7 +10,8 @@ oleh manusia, bukan generated docs.
 | --- | --- |
 | [`lab-latihan.md`](lab-latihan.md) | Cara kerja lab editor + pratinjau di `materi/`, aturan tampilan, dan hal yang harus dicek sebelum mengubahnya. |
 | [`logo.md`](logo.md) | Logo Webiko: alasan memilih monogram W, spesifikasi mark navbar dan favicon, berkas yang disentuh, dan hasil verifikasi. |
-| [`perubahan-terbaru.md`](perubahan-terbaru.md) | Riwayat perubahan terakhir (kuis, jalur JavaScript, kartu jalur, akun, navbar, CTA, logo) beserta commit-nya. |
+| [`seo.md`](seo.md) | Metadata sosial, canonical, gambar OG 1200x630, `robots.txt`, `sitemap.xml`, JSON-LD, dan cara memaksa cache kartu setelah deploy. |
+| [`perubahan-terbaru.md`](perubahan-terbaru.md) | Riwayat perubahan terakhir (kuis, jalur JavaScript, kartu jalur, akun, navbar, CTA, logo, SEO) beserta commit-nya. |
 
 ## Aturan yang berlaku di semua dokumen
 
