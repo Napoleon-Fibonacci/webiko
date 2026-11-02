@@ -17,6 +17,7 @@ dokumen ini ditulis.
 | `96f3f78` | Logo | Mark orbit diganti monogram W di 37 halaman, plus `favicon.svg` di akar. Detail di [`logo.md`](logo.md). |
 | `87d8fca` | SEO | Canonical, Open Graph, dan Twitter Card di 37 halaman. Gambar OG 1200x630 di `assets/img/og-webiko.png`, `robots.txt`, `sitemap.xml` berisi 37 URL bersih, dan JSON-LD di beranda. Detail di [`seo.md`](seo.md). |
 | `66dfaa3` | SEO | Host kanonis disamakan ke `https://www.webiko.my.id` karena apex membalas `308` ke www. Canonical, `og:url`, gambar, JSON-LD, sitemap, dan robots ikut diperbarui. |
+| `c8a5a49` | Build | `scripts/tulis-config.mjs` + `buildCommand` di `vercel.json`: config Supabase dibuat dari `SUPABASE_URL` dan `SUPABASE_ANON_KEY` di Vercel, menolak `service_role`, dan hasilnya tetap di-.gitignore. |
 
 ## SEO dan kartu sosial
 
