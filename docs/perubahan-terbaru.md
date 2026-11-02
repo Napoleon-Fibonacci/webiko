@@ -16,6 +16,7 @@ dokumen ini ditulis.
 | `35a296a` | Beranda | Tombol ketiga `btn btn--ghost` "Buat akun" di hero, selalu tampil dan boleh wrap di layar sempit. Kartu CTA "Buat akun" yang `disabled` + badge "Segera" tidak diubah. |
 | `96f3f78` | Logo | Mark orbit diganti monogram W di 37 halaman, plus `favicon.svg` di akar. Detail di [`logo.md`](logo.md). |
 | `87d8fca` | SEO | Canonical, Open Graph, dan Twitter Card di 37 halaman. Gambar OG 1200x630 di `assets/img/og-webiko.png`, `robots.txt`, `sitemap.xml` berisi 37 URL bersih, dan JSON-LD di beranda. Detail di [`seo.md`](seo.md). |
+| `66dfaa3` | SEO | Host kanonis disamakan ke `https://www.webiko.my.id` karena apex membalas `308` ke www. Canonical, `og:url`, gambar, JSON-LD, sitemap, dan robots ikut diperbarui. |
 
 ## SEO dan kartu sosial
 
