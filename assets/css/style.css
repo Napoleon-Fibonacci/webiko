@@ -17,6 +17,48 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
    ============================================================ */
 
 /* ============================================================
+   0. FONT
+   Segoe UI lintas OS. local() dipakai lebih dulu supaya Windows
+   tidak mengunduh; OS lain mengambil berkas dari jsDelivr.
+   Berkas dipin ke commit tertentu agar isinya tidak berubah.
+   ============================================================ */
+@font-face {
+  font-family: "Segoe UI Web";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: local("Segoe UI"), local("SegoeUI"),
+    url("https://cdn.jsdelivr.net/gh/kindhub/segoe@864915bc5ff1e2b2a23cfdf8ca4fe453cb6a910a/Segoe%20UI.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Segoe UI Web";
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: local("Segoe UI Italic"), local("SegoeUIItalic"),
+    url("https://cdn.jsdelivr.net/gh/kindhub/segoe@864915bc5ff1e2b2a23cfdf8ca4fe453cb6a910a/Segoe%20UI%20Italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Segoe UI Web";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local("Segoe UI Bold"), local("SegoeUIBold"),
+    url("https://cdn.jsdelivr.net/gh/kindhub/segoe@864915bc5ff1e2b2a23cfdf8ca4fe453cb6a910a/Segoe%20UI%20Bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Segoe UI Web";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: local("Segoe UI Black"), local("SegoeUIBlack"),
+    url("https://cdn.jsdelivr.net/gh/Kyles-World/SegoeUI-Font@d1a3ebe66631f9e654cf4540f93edb46f75d8d4b/Original%20Version/SegoeUI-Black.ttf") format("truetype");
+}
+
+/* ============================================================
    1. TOKEN
    Semua warna, ukuran, dan jarak berasal dari sini.
    Jangan hardcode warna di luar blok ini — pakai var().
@@ -101,7 +143,7 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
   --color-shadow-accent: #3130b8;
 
   /* --- Tipografi ------------------------------------------- */
-  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-sans: "Segoe UI Web", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   /* Monospace hanya untuk potongan kode — bahannya memang kode. */
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
