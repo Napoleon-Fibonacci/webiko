@@ -58,7 +58,7 @@ jadi jika di kemudian hari policy diubah, cukup jalankan ulang file ini.
 3. Baca hasil pertama (satu baris, kolom `saklar`).
 
 **Tanda berhasil:** `saklar` = **`LULUS`** dan
-`tabel_ok = 5`, `policy_ok = 13`, `fungsi_ok = 2`, `trigger_ok = 1`.
+`tabel_ok = 5`, `policy_ok = 14`, `fungsi_ok = 2`, `trigger_ok = 1`.
 
 Kalau `GAGAL`, jalankan ulang langkah 1 lalu 2 (keduanya aman diulang),
 kemudian jalankan `lint.sql` lagi.

@@ -7,7 +7,7 @@
 --  Hasil yang diharapkan:
 --   - saklar "Webiko"  -> 'LULUS' (bukan 'GAGAL')
 --   - tabel_ok            -> 5 dari 5, semua rowsecurity = true
---   - policy_ok           -> 13 dari 13
+--   - policy_ok           -> 14 dari 14
 --   - fungsi_ok           -> 2 dari 2
 --   - trigger_ok          -> 1 dari 1
 --
@@ -46,12 +46,12 @@ pemicu as (
 )
 select
   s.nama,
-  t.tabel_ok,
-  p.policy_ok,
-  f.fungsi_ok,
-  g.trigger_ok,
+  s.tabel_ok,
+  s.policy_ok,
+  s.fungsi_ok,
+  s.trigger_ok,
   case
-    when t.tabel_ok = 5 and p.policy_ok = 13 and f.fungsi_ok = 2 and g.trigger_ok = 1
+    when s.tabel_ok = 5 and s.policy_ok = 14 and s.fungsi_ok = 2 and s.trigger_ok = 1
       then 'LULUS'
     else 'GAGAL — ulangi scripts/verify-supabase.md'
   end as saklar
@@ -61,11 +61,7 @@ from (
          (select count(*) from policy) as policy_ok,
          (select count(*) from fungsi) as fungsi_ok,
          (select count(*) from pemicu) as trigger_ok
-) s
-left join (select 1) t on true
-left join (select 1) p on true
-left join (select 1) f on true
-left join (select 1) g on true;
+) s;
 
 -- ------------------------------------------------------------
 -- Detail mentah (untuk disalin ke laporan/issue bila ada yang aneh).

@@ -53,7 +53,7 @@ where schemaname = 'public'
 order by tablename, policyname;
 ```
 
-Hasil yang diharapkan pada query ke-2 — 13 baris:
+Hasil yang diharapkan pada query ke-2 — 14 baris:
 
 | Tabel | Policy | `cmd` |
 | --- | --- | --- |
