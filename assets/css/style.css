@@ -19,8 +19,7 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
 /* ============================================================
    0. FONT
    Segoe UI lintas OS. local() dipakai lebih dulu supaya Windows
-   tidak mengunduh; OS lain mengambil berkas dari jsDelivr.
-   Berkas dipin ke commit tertentu agar isinya tidak berubah.
+   tidak mengunduh; OS lain memakai berkas lokal di assets/fonts.
    ============================================================ */
 @font-face {
   font-family: "Segoe UI Web";
@@ -28,7 +27,7 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
   font-weight: 500;
   font-display: swap;
   src: local("Segoe UI"), local("SegoeUI"),
-    url("https://cdn.jsdelivr.net/gh/kindhub/segoe@864915bc5ff1e2b2a23cfdf8ca4fe453cb6a910a/Segoe%20UI.woff2") format("woff2");
+    url("../fonts/segoe/segoe-ui-500.woff2") format("woff2");
 }
 
 @font-face {
@@ -37,7 +36,7 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
   font-weight: 500;
   font-display: swap;
   src: local("Segoe UI Italic"), local("SegoeUIItalic"),
-    url("https://cdn.jsdelivr.net/gh/kindhub/segoe@864915bc5ff1e2b2a23cfdf8ca4fe453cb6a910a/Segoe%20UI%20Italic.woff2") format("woff2");
+    url("../fonts/segoe/segoe-ui-500-italic.woff2") format("woff2");
 }
 
 @font-face {
@@ -46,7 +45,7 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
   font-weight: 700;
   font-display: swap;
   src: local("Segoe UI Bold"), local("SegoeUIBold"),
-    url("https://cdn.jsdelivr.net/gh/kindhub/segoe@864915bc5ff1e2b2a23cfdf8ca4fe453cb6a910a/Segoe%20UI%20Bold.woff2") format("woff2");
+    url("../fonts/segoe/segoe-ui-700.woff2") format("woff2");
 }
 
 @font-face {
@@ -55,7 +54,7 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
   font-weight: 900;
   font-display: swap;
   src: local("Segoe UI Black"), local("SegoeUIBlack"),
-    url("https://cdn.jsdelivr.net/gh/Kyles-World/SegoeUI-Font@d1a3ebe66631f9e654cf4540f93edb46f75d8d4b/Original%20Version/SegoeUI-Black.ttf") format("truetype");
+    url("../fonts/segoe/segoe-ui-900.ttf") format("truetype");
 }
 
 /* ============================================================
