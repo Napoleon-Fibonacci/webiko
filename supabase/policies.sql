@@ -1,6 +1,6 @@
 -- ============================================================
 --  Webiko — supabase/policies.sql
---  RLS (Row Level Security) + policy + trigger profil.
+--  RLS (Row Level Security) + policy + trigger profil + jumlah anggota.
 --
 --  Cara pakai: jalankan SETELAH supabase/schema.sql.
 --  File idempotent: policy di-drop lalu dibuat ulang, jadi aman
@@ -30,9 +30,27 @@ $$;
 grant execute on function public.username_taken(text) to anon, authenticated;
 
 -- ------------------------------------------------------------
+-- 0b. Angka anggota publik. Nama user tidak pernah dibuka;
+--     dashboard admin memakai service_role, bukan fungsi ini.
+-- ------------------------------------------------------------
+create or replace function public.jumlah_anggota()
+returns bigint
+language 'sql'
+security definer
+set search_path = public
+stable
+as $$
+  select count(*) from public.profiles;
+$$;
+
+grant execute on function public.jumlah_anggota() to anon, authenticated;
+
+-- ------------------------------------------------------------
 -- 1. Trigger: buat baris profiles otomatis setelah signup
 --    Username diambil dari user_metadata.username yang dikirim
 --    oleh supabase.auth.signUp({ options: { data: { username } } }).
+--    Untuk login Google (tanpa username) dipakai awalan email yang
+--    dibersihkan; kalau bentrok ditambah potongan id.
 -- ------------------------------------------------------------
 create or replace function public.handle_new_user()
 returns trigger
@@ -40,15 +58,32 @@ language 'plpgsql'
 security definer
 set search_path = public
 as $$
+declare
+  v_username text;
 begin
+  v_username := nullif(new.raw_user_meta_data ->> 'username', '');
+
+  if v_username is null then
+    v_username := regexp_replace(
+      split_part(coalesce(new.email, ''), '@', 1),
+      '[^A-Za-z0-9_]', '_', 'g'
+    );
+  end if;
+
+  v_username := left(v_username, 20);
+
+  if char_length(v_username) < 3 then
+    v_username := 'user_' || substr(new.id::text, 1, 8);
+  end if;
+
+  if exists (
+    select 1 from public.profiles where username = v_username::citext
+  ) then
+    v_username := left(v_username, 11) || '_' || substr(new.id::text, 1, 8);
+  end if;
+
   insert into public.profiles (id, username)
-  values (
-    new.id,
-    coalesce(
-      nullif(new.raw_user_meta_data ->> 'username', ''),
-      split_part(new.email, '@', 1)
-    )::citext
-  )
+  values (new.id, v_username::citext)
   on conflict (id) do nothing;
   return new;
 end;
@@ -66,12 +101,15 @@ alter table public.profiles      enable row level security;
 alter table public.progress      enable row level security;
 alter table public.quiz_attempts enable row level security;
 alter table public.comments      enable row level security;
+alter table public.suggestions   enable row level security;
 alter table public.badges        enable row level security;
+alter table public.admin_log     enable row level security;
 
 -- ------------------------------------------------------------
 -- 3. Hapus policy lama (idempotent re-run)
 -- ------------------------------------------------------------
 drop policy if exists "profiles_select_public"   on public.profiles;
+drop policy if exists "profiles_select_own"      on public.profiles;
 drop policy if exists "profiles_update_own"      on public.profiles;
 
 drop policy if exists "progress_select_own"      on public.progress;
@@ -86,6 +124,10 @@ drop policy if exists "comments_select_visible"  on public.comments;
 drop policy if exists "comments_insert_own"      on public.comments;
 drop policy if exists "comments_delete_own"      on public.comments;
 
+drop policy if exists "suggestions_select_own"   on public.suggestions;
+drop policy if exists "suggestions_insert_own"   on public.suggestions;
+drop policy if exists "suggestions_delete_own"   on public.suggestions;
+
 drop policy if exists "badges_select_own"        on public.badges;
 drop policy if exists "badges_insert_own"        on public.badges;
 drop policy if exists "badges_update_own"        on public.badges;
@@ -94,13 +136,14 @@ drop policy if exists "badges_update_own"        on public.badges;
 -- 4. Policy per tabel
 -- ------------------------------------------------------------
 
--- profiles: semua orang bisa melihat (username saja — jangan
--- simpan data pribadi lain di tabel ini), update hanya milik sendiri.
+-- profiles: HANYA baris milik sendiri. Username tidak dibuka ke
+-- publik; komentar/saran memakai nama yang diisi penulis. Daftar
+-- anggota hanya berupa angka lewat jumlah_anggota().
 -- Insert hanya lewat trigger handle_new_user() (SECURITY DEFINER).
-create policy "profiles_select_public"
+create policy "profiles_select_own"
   on public.profiles for select
-  to anon, authenticated
-  using (true);
+  to authenticated
+  using (auth.uid() = id);
 
 create policy "profiles_update_own"
   on public.profiles for update
@@ -159,6 +202,27 @@ create policy "comments_delete_own"
   on public.comments for delete
   to authenticated
   using (auth.uid() = user_id);
+
+-- suggestions: privat. Pengirim hanya bisa membaca dan menghapus
+-- kirimannya sendiri. Tidak ada policy SELECT publik; admin membaca
+-- lewat serverless function dengan service_role.
+create policy "suggestions_select_own"
+  on public.suggestions for select
+  to authenticated
+  using (auth.uid() = user_id);
+
+create policy "suggestions_insert_own"
+  on public.suggestions for insert
+  to authenticated
+  with check (auth.uid() = user_id);
+
+create policy "suggestions_delete_own"
+  on public.suggestions for delete
+  to authenticated
+  using (auth.uid() = user_id);
+
+-- admin_log: sengaja TANPA policy. RLS aktif = anon/authenticated
+-- tidak bisa membaca apa pun. Hanya service_role (server) yang bisa.
 
 -- badges: user boleh mencatat badge miliknya sendiri.
 -- (Validasi badge yang sah dilakukan di aplikasi; lihat catatan README.)

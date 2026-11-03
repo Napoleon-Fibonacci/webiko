@@ -34,8 +34,9 @@ chat, laporan, commit, atau file di repo. Yang dipakai frontend hanya
 `already exists` dan berhenti, berarti bagian "if not exists" hilang —
 laporkan, jangan dilewati.
 
-Bukti tambahan — buka **Table Editor**: kelima tabel ini harus ada:
-`profiles`, `progress`, `quiz_attempts`, `comments`, `badges`.
+Bukti tambahan — buka **Table Editor**: ketujuh tabel ini harus ada:
+`profiles`, `progress`, `quiz_attempts`, `comments`, `suggestions`, `badges`,
+`admin_log`.
 
 ---
 
@@ -58,7 +59,7 @@ jadi jika di kemudian hari policy diubah, cukup jalankan ulang file ini.
 3. Baca hasil pertama (satu baris, kolom `saklar`).
 
 **Tanda berhasil:** `saklar` = **`LULUS`** dan
-`tabel_ok = 5`, `policy_ok = 14`, `fungsi_ok = 2`, `trigger_ok = 1`.
+`tabel_ok = 7`, `policy_ok = 17`, `fungsi_ok = 3`, `trigger_ok = 1`.
 
 Kalau `GAGAL`, jalankan ulang langkah 1 lalu 2 (keduanya aman diulang),
 kemudian jalankan `lint.sql` lagi.
@@ -72,7 +73,7 @@ where schemaname = 'public'
 order by tablename;
 ```
 
-**Tanda berhasil:** kelima tabel menampilkan `rowsecurity = true`.
+**Tanda berhasil:** ketujuh tabel menampilkan `rowsecurity = true`.
 
 ```sql
 set local role anon;

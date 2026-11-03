@@ -119,14 +119,18 @@ pribadi lain). Pendekatan:
 | `profiles` | `id` (= `auth.users.id`), `username`, `created_at` |
 | `progress` | `user_id`, `bab_id`, `selesai`, `updated_at` |
 | `quiz_attempts` | `id`, `user_id`, `bab_id`, `skor`, `total`, `created_at` |
-| `comments` | `id`, `user_id`, `bab_id`, `isi`, `created_at`, `hidden` |
+| `comments` | `id`, `user_id`, `bab_id`, `nama`, `isi`, `created_at`, `hidden` |
+| `suggestions` | `id`, `user_id`, `nama`, `isi`, `created_at`, `dibaca` |
 | `badges` | `id`, `user_id`, `kode`, `earned_at` |
+| `admin_log` | `id`, `nama`, `aksi`, `ip`, `user_agent`, `created_at` |
 
 Semua tabel memakai RLS. Ringkasannya:
 
-- `profiles`: SELECT untuk semua (hanya berisi username), UPDATE hanya baris sendiri. INSERT hanya lewat trigger.
+- `profiles`: SELECT hanya baris sendiri (username tidak publik), UPDATE hanya baris sendiri. INSERT hanya lewat trigger. Jumlah anggota dibuka lewat `jumlah_anggota()`.
 - `progress`, `quiz_attempts`, `badges`: SELECT/INSERT/UPDATE hanya baris milik user login.
-- `comments`: SELECT semua komentar dengan `hidden = false`, INSERT/DELETE hanya milik sendiri.
+- `comments`: SELECT semua komentar dengan `hidden = false`, INSERT/DELETE hanya milik sendiri. Nama penulis diambil dari kolom `nama` yang diisi sendiri, bukan username.
+- `suggestions`: privat. SELECT/INSERT/DELETE hanya milik sendiri; tidak ada SELECT publik.
+- `admin_log`: tanpa policy, hanya `service_role` lewat serverless function.
 
 Cara membuktikan RLS benar-benar aktif (query `pg_tables` / `pg_policies`,
 plus uji `set local role anon`): lihat `supabase/README.md`.

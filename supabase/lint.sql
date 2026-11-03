@@ -6,9 +6,9 @@
 --
 --  Hasil yang diharapkan:
 --   - saklar "Webiko"  -> 'LULUS' (bukan 'GAGAL')
---   - tabel_ok            -> 5 dari 5, semua rowsecurity = true
---   - policy_ok           -> 14 dari 14
---   - fungsi_ok           -> 2 dari 2
+--   - tabel_ok            -> 7 dari 7, semua rowsecurity = true
+--   - policy_ok           -> 17 dari 17
+--   - fungsi_ok           -> 3 dari 3
 --   - trigger_ok          -> 1 dari 1
 --
 --  Kalau "saklar" = 'GAGAL', pesan errornya menyebut apa yang
@@ -20,7 +20,8 @@ tabel as (
   select tablename, rowsecurity
   from pg_tables
   where schemaname = 'public'
-    and tablename in ('profiles', 'progress', 'quiz_attempts', 'comments', 'badges')
+    and tablename in ('profiles', 'progress', 'quiz_attempts', 'comments',
+                      'suggestions', 'badges', 'admin_log')
 ),
 policy as (
   select schemaname, tablename, policyname, cmd, qual, with_check
@@ -32,7 +33,7 @@ fungsi as (
   from pg_proc
   join pg_namespace on pg_namespace.oid = pg_proc.pronamespace
   where nspname = 'public'
-    and proname in ('handle_new_user', 'username_taken')
+    and proname in ('handle_new_user', 'username_taken', 'jumlah_anggota')
 ),
 pemicu as (
   select tgname
@@ -51,7 +52,7 @@ select
   s.fungsi_ok,
   s.trigger_ok,
   case
-    when s.tabel_ok = 5 and s.policy_ok = 14 and s.fungsi_ok = 2 and s.trigger_ok = 1
+    when s.tabel_ok = 7 and s.policy_ok = 17 and s.fungsi_ok = 3 and s.trigger_ok = 1
       then 'LULUS'
     else 'GAGAL — ulangi scripts/verify-supabase.md'
   end as saklar

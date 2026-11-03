@@ -24,7 +24,7 @@ Panduan langkah-langkah lengkap (untuk orang awam): `scripts/verify-supabase.md`
 
 ## Kenapa RLS diaktifkan di dua file
 
-`schema.sql` menyalakan RLS untuk kelima tabel, dan `policies.sql` juga.
+`schema.sql` menyalakan RLS untuk ketujuh tabel, dan `policies.sql` juga.
 Tujuannya: menjalankan ulang `schema.sql` **selamanya** menutup celah
 "RLS mati" (misalnya tabel dibuat ulang/di-`alter` oleh orang lain), tanpa
 bergantung pada urutan run. RLS aktif tanpa policy = tidak ada baris yang
@@ -33,8 +33,9 @@ bisa dibaca/ditulis (fail-closed); policy-nya baru dipasang `policies.sql`.
 ## Membuktikan RLS aktif
 
 Jalankan query berikut di **SQL Editor** (atau cukup jalankan `lint.sql`).
-Kolom `rowsecurity` HARUS `true` untuk kelima tabel
-`profiles`, `progress`, `quiz_attempts`, `comments`, `badges`.
+Kolom `rowsecurity` HARUS `true` untuk ketujuh tabel
+`profiles`, `progress`, `quiz_attempts`, `comments`, `suggestions`, `badges`,
+`admin_log`.
 
 ```sql
 -- 1. RLS per tabel. Semua baris harus rowsecurity = true.
@@ -53,18 +54,18 @@ where schemaname = 'public'
 order by tablename, policyname;
 ```
 
-Hasil yang diharapkan pada query ke-2 — 14 baris:
+Hasil yang diharapkan pada query ke-2 — 17 baris:
 
 | Tabel | Policy | `cmd` |
 | --- | --- | --- |
-| `profiles` | `profiles_select_public` | `SELECT` |
-| `profiles` | `profiles_update_own` | `UPDATE` |
+| `profiles` | `profiles_select_own`, `profiles_update_own` | `SELECT`, `UPDATE` |
 | `progress` | `progress_select_own`, `progress_insert_own`, `progress_update_own` | `SELECT`, `INSERT`, `UPDATE` |
 | `quiz_attempts` | `quiz_attempts_select_own`, `quiz_attempts_insert_own`, `quiz_attempts_update_own` | `SELECT`, `INSERT`, `UPDATE` |
 | `comments` | `comments_select_visible`, `comments_insert_own`, `comments_delete_own` | `SELECT`, `INSERT`, `DELETE` |
+| `suggestions` | `suggestions_select_own`, `suggestions_insert_own`, `suggestions_delete_own` | `SELECT`, `INSERT`, `DELETE` |
 | `badges` | `badges_select_own`, `badges_insert_own`, `badges_update_own` | `SELECT`, `INSERT`, `UPDATE` |
 
-Tabel tanpa policy di daftar di atas = RLS aktif tapi tertutup total (fail-closed).
+`admin_log` tidak punya policy: RLS aktif, hanya `service_role` yang bisa.
 
 ## Bukti runtime: RLS benar-benar memblokir
 

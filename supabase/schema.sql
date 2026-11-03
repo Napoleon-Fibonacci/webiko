@@ -1,6 +1,6 @@
 -- ============================================================
 --  Webiko — supabase/schema.sql
---  Skema tabel untuk auth, progres, kuis, komentar, dan badge.
+--  Skema tabel untuk auth, progres, kuis, komentar, saran, dan badge.
 --
 --  Cara pakai: buka Supabase Dashboard → SQL Editor → tempel isi
 --  file ini → Run. File bersifat IDEMPOTENT, aman dijalankan
@@ -11,7 +11,9 @@
 create extension if not exists citext;
 
 -- ------------------------------------------------------------
--- 1. profiles — data publik tiap user
+-- 1. profiles — data akun (TIDAK bisa dibaca publik)
+--    Username hanya untuk login dan ditampilkan lewat nama
+--    yang diisi sendiri di komentar/saran. Lihat policies.sql.
 -- ------------------------------------------------------------
 create table if not exists public.profiles (
   id         uuid primary key references auth.users (id) on delete cascade,
@@ -49,18 +51,55 @@ create table if not exists public.quiz_attempts (
 
 -- ------------------------------------------------------------
 -- 4. comments — komentar per bab
+--    `nama` diisi sendiri oleh penulis (wajib), bukan username
+--    akun. Jadi username tidak pernah tampil di komentar.
 -- ------------------------------------------------------------
 create table if not exists public.comments (
   id         uuid primary key default gen_random_uuid(),
   user_id    uuid not null references public.profiles (id) on delete cascade,
   bab_id     text not null,
+  nama       text not null check (char_length(nama) between 2 and 40),
   isi        text not null check (char_length(isi) between 1 and 1000),
   created_at timestamptz not null default now(),
   hidden     boolean not null default false
 );
 
+-- Untuk project yang tabelnya sudah dibuat sebelum kolom `nama` ada.
+alter table public.comments add column if not exists nama text;
+alter table public.comments alter column nama set not null;
+alter table public.comments drop constraint if exists comments_nama_format;
+alter table public.comments add constraint comments_nama_format
+  check (char_length(nama) between 2 and 40);
+
 -- ------------------------------------------------------------
--- 5. badges — badge yang diraih user
+-- 5. suggestions — saran/kritik, privat (hanya pengirim yang bisa baca)
+-- ------------------------------------------------------------
+create table if not exists public.suggestions (
+  id         uuid primary key default gen_random_uuid(),
+  user_id    uuid not null references public.profiles (id) on delete cascade,
+  nama       text not null check (char_length(nama) between 2 and 40),
+  isi        text not null check (char_length(isi) between 1 and 2000),
+  created_at timestamptz not null default now(),
+  dibaca     boolean not null default false
+);
+
+-- ------------------------------------------------------------
+-- 6. admin_log — catatan masuk/keluar dashboard admin
+--    Hanya ditulis dan dibaca lewat serverless function dengan
+--    service_role. RLS aktif tanpa policy = tidak bisa diakses
+--    anon/authenticated.
+-- ------------------------------------------------------------
+create table if not exists public.admin_log (
+  id         bigint generated always as identity primary key,
+  nama       text not null check (char_length(nama) between 1 and 40),
+  aksi       text not null default 'masuk',
+  ip         text,
+  user_agent text,
+  created_at timestamptz not null default now()
+);
+
+-- ------------------------------------------------------------
+-- 7. badges — badge yang diraih user
 -- ------------------------------------------------------------
 create table if not exists public.badges (
   id        uuid primary key default gen_random_uuid(),
@@ -97,8 +136,19 @@ create index if not exists badges_user_id_idx
 create index if not exists badges_kode_idx
   on public.badges (kode);
 
+create index if not exists suggestions_created_at_idx
+  on public.suggestions (created_at desc);
+create index if not exists suggestions_user_id_idx
+  on public.suggestions (user_id);
+create index if not exists suggestions_belum_dibaca_idx
+  on public.suggestions (created_at desc)
+  where dibaca = false;
+
+create index if not exists admin_log_created_at_idx
+  on public.admin_log (created_at desc);
+
 -- ------------------------------------------------------------
--- 6. Aktifkan RLS di semua tabel
+-- 9. Aktifkan RLS di semua tabel
 --    Ditaruh di schema.sql juga (bukan hanya policies.sql) supaya
 --    menjalankan ulang schema.sql selalu menutup celah "RLS mati".
 --    Tanpa policy, RLS aktif = tidak ada baris yang bisa diakses
@@ -109,4 +159,6 @@ alter table public.profiles      enable row level security;
 alter table public.progress      enable row level security;
 alter table public.quiz_attempts enable row level security;
 alter table public.comments      enable row level security;
+alter table public.suggestions   enable row level security;
 alter table public.badges        enable row level security;
+alter table public.admin_log     enable row level security;
