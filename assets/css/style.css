@@ -20,14 +20,16 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
    0. FONT
    Segoe UI lintas OS. local() dipakai lebih dulu supaya Windows
    tidak mengunduh; OS lain memakai berkas lokal di assets/fonts.
+   Bobot 500 memakai Semibold: itu yang dipilih Windows untuk
+   --fw-regular: 500, jadi tampilannya sama dengan sebelumnya.
    ============================================================ */
 @font-face {
   font-family: "Segoe UI Web";
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: local("Segoe UI"), local("SegoeUI"),
-    url("../fonts/segoe/segoe-ui-500.woff2") format("woff2");
+  src: local("Segoe UI Semibold"), local("SegoeUISemibold"),
+    url("../fonts/segoe/segoe-ui-500.woff") format("woff");
 }
 
 @font-face {
