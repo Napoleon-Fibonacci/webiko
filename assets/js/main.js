@@ -218,4 +218,157 @@ document.querySelectorAll('[data-kurikulum]').forEach(function (host) {
   sasaran.forEach(function (el) { pengamat.observe(el); });
 })();
 
+/* Gerbang materi: tamu tidak melihat isi sama sekali, hanya layar
+   penuh berisi ajakan daftar/masuk. Isi HTML tetap ada supaya halaman
+   masih bisa dirayapi mesin pencari; yang ditutup hanya tampilannya.
+   JS mati = tidak ada yang disembunyikan (sesuai aturan situs). */
+(function () {
+  if (window.location.pathname.indexOf('/materi/') === -1) return;
+  if (!document.querySelector('article.materi')) return;
+
+  function alamatKembali() {
+    return window.location.pathname + window.location.search + window.location.hash;
+  }
+
+  function tautanAkun(tab) {
+    return (
+      '/akun.html?lanjut=' +
+      encodeURIComponent(alamatKembali()) +
+      '&tab=' +
+      tab
+    );
+  }
+
+  function buatLayar() {
+    var layar = document.createElement('div');
+    layar.className = 'gerbang-layar';
+    layar.setAttribute('role', 'dialog');
+    layar.setAttribute('aria-modal', 'true');
+    layar.setAttribute('aria-labelledby', 'gerbang-judul');
+    layar.setAttribute('tabindex', '-1');
+    layar.innerHTML = [
+      '<svg class="kar kar--1" viewBox="0 0 120 120" aria-hidden="true" focusable="false">',
+      '<rect class="kar__bayang" x="18" y="28" width="92" height="74" rx="12"></rect>',
+      '<rect class="kar__putih" x="10" y="20" width="92" height="74" rx="12"></rect>',
+      '<path class="kar__garis" d="M10 46h92"></path>',
+      '<circle class="kar__titik" cx="26" cy="33" r="4"></circle>',
+      '<circle class="kar__titik" cx="40" cy="33" r="4"></circle>',
+      '<circle class="kar__titik" cx="54" cy="33" r="4"></circle>',
+      '<circle class="kar__pipi" cx="35" cy="78" r="6"></circle>',
+      '<circle class="kar__pipi" cx="77" cy="78" r="6"></circle>',
+      '<circle class="kar__mata" cx="46" cy="67" r="8"></circle>',
+      '<circle class="kar__mata" cx="66" cy="67" r="8"></circle>',
+      '<circle class="kar__kilau" cx="49" cy="64" r="2.5"></circle>',
+      '<circle class="kar__kilau" cx="69" cy="64" r="2.5"></circle>',
+      '<path class="kar__mulut" d="M50 82q6 6 12 0"></path>',
+      '</svg>',
+
+      '<svg class="kar kar--2" viewBox="0 0 120 120" aria-hidden="true" focusable="false">',
+      '<path class="kar__bayang" transform="translate(7 7)" d="M58 12 L72.6 39.6 L103 44 L80.5 66 L85.4 96.2 L58 82.8 L30.6 96.2 L35.5 66 L13 44 L43.4 39.6 Z"></path>',
+      '<path class="kar__kuning" d="M58 12 L72.6 39.6 L103 44 L80.5 66 L85.4 96.2 L58 82.8 L30.6 96.2 L35.5 66 L13 44 L43.4 39.6 Z"></path>',
+      '<circle class="kar__mata" cx="48" cy="52" r="5"></circle>',
+      '<circle class="kar__mata" cx="68" cy="52" r="5"></circle>',
+      '<path class="kar__mulut" d="M50 64q8 6 16 0"></path>',
+      '<path class="kar__ungu" d="M104 18l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"></path>',
+      '<path class="kar__ungu" d="M14 84l1.5 4.5L20 90l-4.5 1.5L14 96l-1.5-4.5L8 90l4.5-1.5z"></path>',
+      '</svg>',
+
+      '<svg class="kar kar--3" viewBox="0 0 120 120" aria-hidden="true" focusable="false">',
+      '<g transform="rotate(10 60 60)">',
+      '<path class="kar__bayang" transform="translate(6 6)" d="M49 12H69A8 8 0 0 1 77 20V84L59 108L41 84V20A8 8 0 0 1 49 12Z"></path>',
+      '<path class="kar__kuning" d="M49 12H69A8 8 0 0 1 77 20V84L59 108L41 84V20A8 8 0 0 1 49 12Z"></path>',
+      '<path class="kar__pink" d="M41 27V20A8 8 0 0 1 49 12H69A8 8 0 0 1 77 20V27Z"></path>',
+      '<path class="kar__putih" d="M41 84L59 108L77 84Z"></path>',
+      '<path class="kar__ujung" d="M54 96L59 108L64 96Z"></path>',
+      '<circle class="kar__mata" cx="52" cy="48" r="4"></circle>',
+      '<circle class="kar__mata" cx="66" cy="48" r="4"></circle>',
+      '<path class="kar__mulut" d="M53 58q7 5 14 0"></path>',
+      '</g>',
+      '</svg>',
+
+      '<svg class="kar kar--4" viewBox="0 0 120 120" aria-hidden="true" focusable="false">',
+      '<g class="kar__roket">',
+      '<path class="kar__bayang" transform="translate(5 5)" d="M60 12c16 0 28 18 28 42v26H32V54c0-24 12-42 28-42z"></path>',
+      '<path class="kar__api" d="M46 78C46 90 52 98 60 106C68 98 74 90 74 78Z"></path>',
+      '<path class="kar__pink" d="M32 58L16 80H32Z"></path>',
+      '<path class="kar__pink" d="M88 58L104 80H88Z"></path>',
+      '<path class="kar__putih" d="M60 12c16 0 28 18 28 42v26H32V54c0-24 12-42 28-42z"></path>',
+      '<circle class="kar__ungu" cx="60" cy="44" r="11"></circle>',
+      '<circle class="kar__kilau" cx="56" cy="40" r="3"></circle>',
+      '<circle class="kar__mata" cx="54" cy="64" r="4"></circle>',
+      '<circle class="kar__mata" cx="66" cy="64" r="4"></circle>',
+      '<path class="kar__mulut" d="M56 72q4 4 8 0"></path>',
+      '</g>',
+      '</svg>',
+
+      '<div class="gerbang-layar__kartu">',
+      '<svg class="gerbang-layar__ikon" viewBox="0 0 92 104" aria-hidden="true" focusable="false">',
+      '<rect class="gerbang-layar__badan" x="8" y="46" width="76" height="52" rx="10"></rect>',
+      '<path class="gerbang-layar__gagang" d="M26 46V34a20 20 0 0 1 40 0v12"></path>',
+      '<circle class="gerbang-layar__lubang" cx="46" cy="68" r="7"></circle>',
+      '<path class="gerbang-layar__kunci" d="M46 72v12"></path>',
+      '</svg>',
+      '<p class="gerbang-layar__label">Materi khusus anggota</p>',
+      '<h2 class="gerbang-layar__judul" id="gerbang-judul">Daftar dulu untuk membuka materi</h2>',
+      '<p class="gerbang-layar__teks">Materi ini hanya bisa dibuka setelah kamu punya akun. Gratis, cukup username dan password. Setelah masuk, kamu langsung kembali ke halaman ini.</p>',
+      '<div class="gerbang-layar__aksi">',
+      '<a class="btn btn--primary" data-gerbang-daftar href="#">Daftar gratis</a>',
+      '<a class="btn btn--ghost" data-gerbang-masuk href="#">Sudah punya akun</a>',
+      '</div>',
+      '<p class="gerbang-layar__kecil"><a class="btn btn--ghost gerbang-layar__kembali" href="/">Kembali ke beranda</a></p>',
+      '</div>',
+    ].join('');
+
+    layar.querySelector('[data-gerbang-daftar]').href = tautanAkun('daftar');
+    layar.querySelector('[data-gerbang-masuk]').href = tautanAkun('masuk');
+    return layar;
+  }
+
+  function kunci() {
+    if (document.querySelector('.gerbang-layar')) return;
+
+    var layar = buatLayar();
+    document.body.appendChild(layar);
+    document.documentElement.classList.add('gerbang-aktif');
+
+    /* Cegah fokus keyboard masuk ke halaman di belakang layar. */
+    Array.prototype.forEach.call(document.body.children, function (el) {
+      if (el !== layar) el.setAttribute('inert', '');
+    });
+
+    layar.focus();
+  }
+
+  function adaSesiLokal() {
+    try {
+      for (var i = 0; i < window.localStorage.length; i++) {
+        var nama = window.localStorage.key(i) || '';
+        if (nama.indexOf('sb-') !== 0) continue;
+        if (nama.slice(-11) !== '-auth-token') continue;
+        var isi = JSON.parse(window.localStorage.getItem(nama) || 'null');
+        if (isi && isi.access_token) return true;
+      }
+    } catch (e) {
+      return false;
+    }
+    return false;
+  }
+
+  if (!adaSesiLokal()) {
+    kunci();
+    return;
+  }
+
+  import('./supabase.js')
+    .then(function (modul) {
+      return modul.getSession();
+    })
+    .then(function (sesi) {
+      if (!sesi) kunci();
+    })
+    .catch(function () {
+      kunci();
+    });
+})();
+
 

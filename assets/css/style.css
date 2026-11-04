@@ -112,6 +112,7 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
 
   /* --- Warna: permukaan & teks ------------------------------ */
   --color-background: #ecedfb;       /* latar halaman */
+  --color-backdrop: rgba(236, 237, 251, 0.86); /* layar gerbang materi */
   --color-surface: #ffffff;          /* kartu */
   --color-surface-soft: #d6d9fc;     /* panel lilac indigo muda */
   --color-surface-raised: #aab5f7;   /* header, CTA */
@@ -207,6 +208,7 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
   --shadow-focus: 5px 5px 0 0 var(--color-shadow-accent);
   --shadow-none: 0 0 0 0 var(--color-shadow);
   --shadow-tile: 4px 4px 0 var(--color-ink);
+  --blur-backdrop: 3px;
 
   /* --- Layout ---------------------------------------------- */
   --container-max: 1152px;           /* setara max-w-6xl */
@@ -269,6 +271,7 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
   color-scheme: dark;
 
   --color-background: #11132b;
+  --color-backdrop: rgba(17, 19, 43, 0.88); /* layar gerbang materi */
   --color-surface: #1a1d3a;
   --color-surface-soft: #242750;
   --color-surface-raised: #383a70;
@@ -516,7 +519,7 @@ b {
 
 /* --- Fokus keyboard --------------------------------------- */
 :focus-visible {
-  outline: var(--border-w) solid var(--color-accent-text);
+  outline: var(--border-w) solid var(--color-ink);
   outline-offset: 3px;
 }
 
@@ -605,7 +608,7 @@ b {
 }
 
 .btn:focus-visible {
-  outline: var(--border-w) solid var(--color-accent-text);
+  outline: var(--border-w) solid var(--color-ink);
   outline-offset: 4px;
 }
 
@@ -1333,7 +1336,7 @@ b {
 }
 
 .input:focus-visible {
-  outline: var(--border-w) solid var(--color-accent-text);
+  outline: var(--border-w) solid var(--color-ink);
   outline-offset: 2px;
   box-shadow: var(--shadow-focus);
 }
@@ -2340,6 +2343,303 @@ html[data-akun-siap] .akun__tab {
   color: var(--color-muted);
   font-size: var(--fs-lead);
   max-width: var(--measure);
+}
+
+/* Gerbang materi: layar penuh untuk tamu. Isi halaman tetap di DOM
+   supaya masih terbaca mesin pencari; yang menutup hanya tampilan. */
+html.gerbang-aktif,
+html.gerbang-aktif body {
+  overflow: hidden;
+}
+
+.gerbang-layar {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-4);
+  background: var(--color-backdrop);
+  -webkit-backdrop-filter: blur(var(--blur-backdrop));
+  backdrop-filter: blur(var(--blur-backdrop));
+}
+
+.gerbang-layar:focus,
+.gerbang-layar:focus-visible {
+  outline: none;
+}
+
+.gerbang-layar__kartu {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 40rem;
+  margin: auto;
+  padding: var(--space-8) var(--space-6);
+  background: var(--color-surface);
+  border: var(--border-w) solid var(--color-ink);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-hard-lg);
+  text-align: center;
+  animation: gerbang-muncul 240ms ease-out;
+}
+
+.gerbang-layar__ikon {
+  display: block;
+  width: 92px;
+  height: auto;
+  margin: 0 auto var(--space-4);
+}
+
+/* Karakter hias di kiri-kanan layar. Murni dekorasi: tanpa
+   pointer-events dan disembunyikan saat layar tidak cukup lebar. */
+.kar {
+  position: fixed;
+  z-index: 0;
+  width: clamp(84px, 9vw, 128px);
+  height: auto;
+  pointer-events: none;
+  animation: kar-apung 5.4s ease-in-out infinite;
+}
+
+.kar--1 {
+  left: 6vw;
+  top: 16vh;
+}
+
+.kar--2 {
+  left: 7vw;
+  bottom: 13vh;
+  animation-delay: -2.1s;
+  animation-duration: 6.1s;
+}
+
+.kar--3 {
+  right: 6vw;
+  top: 20vh;
+  animation-delay: -1.2s;
+  animation-duration: 5.8s;
+}
+
+.kar--4 {
+  right: 7vw;
+  bottom: 15vh;
+  animation-delay: -3.4s;
+  animation-duration: 6.6s;
+}
+
+.kar__bayang {
+  fill: var(--color-shadow);
+}
+
+.kar__putih {
+  fill: var(--color-surface);
+  stroke: var(--color-ink);
+  stroke-width: var(--border-w);
+}
+
+.kar__garis {
+  fill: none;
+  stroke: var(--color-ink);
+  stroke-width: var(--border-w);
+  stroke-linecap: round;
+}
+
+.kar__titik {
+  fill: var(--color-ink);
+}
+
+.kar__pipi {
+  fill: var(--color-secondary);
+}
+
+.kar__mata {
+  fill: var(--color-ink);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: kar-kedip 5.6s infinite;
+}
+
+.kar__kilau {
+  fill: var(--color-surface);
+}
+
+.kar__mulut {
+  fill: none;
+  stroke: var(--color-ink);
+  stroke-width: var(--border-w);
+  stroke-linecap: round;
+}
+
+.kar__kuning {
+  fill: var(--color-marker-bg);
+  stroke: var(--color-ink);
+  stroke-width: var(--border-w);
+  stroke-linejoin: round;
+}
+
+.kar__ungu {
+  fill: var(--color-primary);
+  stroke: var(--color-ink);
+  stroke-width: var(--border-w);
+  stroke-linejoin: round;
+}
+
+.kar__pink {
+  fill: var(--color-pink);
+  stroke: var(--color-ink);
+  stroke-width: var(--border-w);
+  stroke-linejoin: round;
+}
+
+.kar__ujung {
+  fill: var(--color-ink);
+}
+
+.kar__api {
+  fill: var(--color-marker-bg);
+  stroke: var(--color-ink);
+  stroke-width: var(--border-w);
+  stroke-linejoin: round;
+  transform-box: fill-box;
+  transform-origin: top center;
+  animation: kar-api 0.9s ease-in-out infinite alternate;
+}
+
+@keyframes kar-apung {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-3deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(3deg);
+  }
+}
+
+@keyframes kar-kedip {
+  0%,
+  90%,
+  100% {
+    transform: scaleY(1);
+  }
+  93% {
+    transform: scaleY(0.12);
+  }
+  96% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes kar-api {
+  from {
+    transform: scaleY(0.9);
+    opacity: 0.8;
+  }
+  to {
+    transform: scaleY(1.06);
+    opacity: 1;
+  }
+}
+
+.gerbang-layar__badan {
+  fill: var(--color-marker-bg);
+  stroke: var(--color-ink);
+  stroke-width: var(--border-w);
+}
+
+.gerbang-layar__gagang,
+.gerbang-layar__kunci {
+  fill: none;
+  stroke: var(--color-ink);
+  stroke-width: var(--border-w);
+  stroke-linecap: round;
+}
+
+.gerbang-layar__lubang {
+  fill: var(--color-ink);
+}
+
+.gerbang-layar__label {
+  display: inline-block;
+  margin: 0 0 var(--space-3);
+  padding: var(--space-1) var(--space-3);
+  background: var(--color-marker-bg);
+  border: var(--border-w-thin) solid var(--color-ink);
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+}
+
+.gerbang-layar__judul {
+  margin: 0 0 var(--space-3);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--tracking-tight);
+}
+
+.gerbang-layar__teks {
+  max-width: 32rem;
+  margin: 0 auto var(--space-6);
+  color: var(--color-muted);
+  font-size: var(--fs-lead);
+}
+
+.gerbang-layar__aksi {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.gerbang-layar__kecil {
+  max-width: none;
+  margin: 0;
+  font-size: var(--fs-xs);
+  color: var(--color-muted);
+}
+
+.gerbang-layar__kembali {
+  padding-block: var(--space-1);
+  font-size: var(--fs-xs);
+}
+
+@keyframes gerbang-muncul {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 1023px) {
+  .kar {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .gerbang-layar__kartu {
+    padding: var(--space-6) var(--space-4);
+  }
+
+  .gerbang-layar__aksi .btn {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gerbang-layar__kartu,
+  .kar,
+  .kar * {
+    animation: none !important;
+  }
 }
 
 .materi h2 {

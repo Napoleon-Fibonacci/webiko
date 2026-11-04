@@ -26,6 +26,23 @@
 
   var POLA_USERNAME = /^[A-Za-z0-9_]{3,20}$/;
   var modul = null;
+  var parameter = new URLSearchParams(window.location.search);
+  var tujuan = tujuanAman(parameter.get('lanjut'));
+  var tabAwal = parameter.get('tab') === 'daftar' ? 'daftar' : 'masuk';
+
+  /* Hanya izinkan kembali ke halaman materi di origin yang sama.
+     Mencegah open redirect lewat ?lanjut=//situs-lain. */
+  function tujuanAman(nilai) {
+    if (!nilai) return '';
+    try {
+      var alamat = new URL(nilai, window.location.origin);
+      if (alamat.origin !== window.location.origin) return '';
+      if (alamat.pathname.indexOf('/materi/') !== 0) return '';
+      return alamat.pathname + alamat.search + alamat.hash;
+    } catch (e) {
+      return '';
+    }
+  }
 
   /* ---------- Pesan ---------- */
 
@@ -103,11 +120,16 @@
   /* Tanpa sesi, tab Masuk yang aktif; panel Daftar disembunyikan.
      Tanpa JavaScript, pemanggilan ini tidak ada sehingga kedua
      formulir tetap tampil. */
-  pilihTab('masuk', false);
+  pilihTab(tabAwal, false);
 
   function tampilkanSudahMasuk(session) {
     var user = session && session.user;
     if (!user) return;
+
+    if (tujuan) {
+      window.location.replace(tujuan);
+      return;
+    }
 
     var meta = user.user_metadata || {};
     var nama =
@@ -189,7 +211,14 @@
         return m.getSession();
       })
       .then(function (session) {
-        if (session) tampilkanSudahMasuk(session);
+        if (session) {
+          tampilkanSudahMasuk(session);
+        } else if (tujuan) {
+          tampilkanPesan(
+            'Masuk atau daftar dulu untuk membuka materi.',
+            'warning'
+          );
+        }
       })
       .catch(function (err) {
         kunciTombol(true);
