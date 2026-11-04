@@ -69,17 +69,17 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
   color-scheme: light;
 
   /* --- Warna: brand & aksen ---------------------------------
-     Keluarga violet-nya condong ke biru (indigo), hue 231-242
+     Keluarga violet-nya condong ke biru (indigo), hue 220-226
      derajat, bukan ungu kemerahan. Kuning tetap jadi satu-satunya
      warna aksi supaya lawan warnanya makin kontras. */
   --color-primary: #433fd4;          /* violet aksen (fill), 7.24:1 di atas putih */
   --color-primary-hover: #332fc4;
   --color-primary-active: #2b27a8;
-  --color-primary-soft: #8e8bf0;     /* fill dekoratif / badge */
+  --color-primary-soft: #86a4f0;     /* fill dekoratif / badge */
 
-  --color-secondary: #b8befb;        /* lilac indigo, 9.45:1 dengan --color-ink */
-  --color-secondary-hover: #aab5f7;
-  --color-secondary-active: #97a4f2;
+  --color-secondary: #b6c9fd;        /* biru indigo, 10.22:1 dengan --color-ink */
+  --color-secondary-hover: #a3bbfb;
+  --color-secondary-active: #8faefa;
 
   --color-accent: #ffe14d;           /* kuning pop, 12.86:1 dengan --color-on-accent */
   --color-accent-hover: #ffe97a;
@@ -111,24 +111,24 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
   --color-pink: #ffb7c5;
 
   /* --- Warna: permukaan & teks ------------------------------ */
-  --color-background: #ecedfb;       /* latar halaman */
-  --color-backdrop: rgba(236, 237, 251, 0.86); /* layar gerbang materi */
+  --color-background: #e8eefc;       /* latar halaman */
+  --color-backdrop: rgba(232, 238, 252, 0.86); /* layar gerbang materi */
   --color-surface: #ffffff;          /* kartu */
-  --color-surface-soft: #d6d9fc;     /* panel lilac indigo muda */
-  --color-surface-raised: #aab5f7;   /* header, CTA */
+  --color-surface-soft: #d2dffd;     /* panel biru indigo muda */
+  --color-surface-raised: #a3bbfb;   /* header, CTA */
   --color-ink: #1a1b33;              /* teks utama & border, 14.48:1 di latar */
   --color-ink-inverse: #ffffff;      /* teks di atas fill gelap */
   --color-on-accent: #1f1a33;        /* teks di atas fill terang (canvas) */
   --color-border: #1a1b33;
-  --color-border-muted: #bdc1e3;     /* garis pembatas lembut */
-  --color-disabled-bg: #e3e4f3;      /* isian/tombol nonaktif */
+  --color-border-muted: #b9c7e6;     /* garis pembatas lembut */
+  --color-disabled-bg: #e0e6f4;      /* isian/tombol nonaktif */
 
   /* Teks sekunder / aksen teks. Nilai canvas digelapkan
      secukupnya agar lolos WCAG AA (lihat laporan di ticket). */
-  --color-muted: #3a3c7e;            /* 5.01:1 di --color-surface-raised */
-  --color-accent-text: #3130b8;      /* 5.25:1 di --color-secondary */
+  --color-muted: #3a3c7e;            /* 5.20:1 di --color-surface-raised */
+  --color-accent-text: #3130b8;      /* 5.68:1 di --color-secondary */
   --color-accent-text-brand: #433fd4; /* canvas primary; teks besar/aksen di atas background */
-  --color-placeholder: #595b73;      /* 4.79:1 di --color-surface-soft */
+  --color-placeholder: #595b73;      /* 4.96:1 di --color-surface-soft */
 
   /* --- Warna: status --------------------------------------- */
   --color-error: #b71c3a;
@@ -138,7 +138,7 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
   --color-warning: #7a4b00;
   --color-warning-bg: #fff3cf;
   --color-info: #2a2f8f;
-  --color-info-bg: #e3e3ff;
+  --color-info-bg: #e0eaff;
 
   /* --- Warna: shadow (hard, tanpa blur) --------------------- */
   --color-shadow: #1a1b33;
@@ -270,22 +270,22 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
 :root[data-tema="gelap"] {
   color-scheme: dark;
 
-  --color-background: #11132b;
-  --color-backdrop: rgba(17, 19, 43, 0.88); /* layar gerbang materi */
-  --color-surface: #1a1d3a;
-  --color-surface-soft: #242750;
-  --color-surface-raised: #383a70;
-  --color-ink: #f1efff;            /* 9.23:1 di --color-surface-raised */
+  --color-background: #10172b;
+  --color-backdrop: rgba(16, 23, 43, 0.88); /* layar gerbang materi */
+  --color-surface: #19223b;
+  --color-surface-soft: #242f50;
+  --color-surface-raised: #324376;
+  --color-ink: #f1efff;            /* 8.42:1 di --color-surface-raised */
   --color-ink-inverse: #12142d;    /* teks di atas fill terang, 5.14:1 di --color-primary */
   --color-on-accent: #1f1a33;
-  --color-border: #8a8dda;         /* lilac indigo, bukan putih: 5.99:1 di background */
-  --color-border-muted: #3a3f68;
-  --color-disabled-bg: #2b2e57;
+  --color-border: #889ddc;         /* biru indigo, bukan putih: 6.70:1 di background */
+  --color-border-muted: #37446b;
+  --color-disabled-bg: #2a3558;
 
-  --color-muted: #b4b5ea;          /* 5.35:1 di --color-surface-raised */
-  --color-accent-text: #c8c6ff;    /* 6.47:1 di --color-surface-raised */
+  --color-muted: #b4b5ea;          /* 4.88:1 di --color-surface-raised */
+  --color-accent-text: #c8c6ff;    /* 5.90:1 di --color-surface-raised */
   --color-accent-text-brand: #c8c6ff;
-  --color-placeholder: #a9aae4;    /* 6.45:1 di --color-surface-soft */
+  --color-placeholder: #a9aae4;    /* 5.98:1 di --color-surface-soft */
 
   /* Violet dinaikkan terangnya supaya teks --color-ink-inverse di
      atasnya lolos AA (5.14:1; tema sebelumnya cuma 2.62:1). */
@@ -294,9 +294,9 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
   --color-primary-active: #5352e6;
   --color-primary-soft: #9c9bf5;
 
-  --color-secondary: #383e8f;      /* 8.22:1 dengan --color-ink */
-  --color-secondary-hover: #3f44a0;
-  --color-secondary-active: #49489f;
+  --color-secondary: #374d90;      /* 7.05:1 dengan --color-ink */
+  --color-secondary-hover: #3d56a2;
+  --color-secondary-active: #405aa7;
 
   --color-mint: #a8f0d0;
   --color-pink: #ffb7c5;
@@ -326,17 +326,17 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
   --color-success-bg: #0b3021;
   --color-warning: #f0d264;        /* 9.14:1 di --color-warning-bg */
   --color-warning-bg: #3a2c06;
-  --color-info: #b9b3ff;           /* 7.70:1 di --color-info-bg */
-  --color-info-bg: #232059;
+  --color-info: #b9b3ff;           /* 6.73:1 di --color-info-bg */
+  --color-info-bg: #233056;
 
-  /* Shadow tetap offset keras, tapi jadi langkah violet-biru (2.41:1
+  /* Shadow tetap offset keras, tapi jadi langkah biru-indigo (2.75:1
      dari background) — bukan balok putih 8px yang bikin kartu
      menyilaukan. */
-  --color-shadow: #4a4d94;
-  --color-shadow-accent: #6f75f0;
+  --color-shadow: #495c95;
+  --color-shadow-accent: #7090ef;
 
   --color-code-bg: #0d0f22;
-  --color-code-bar: #1a1d3a;
+  --color-code-bar: #19223b;
 }
 
 /* ============================================================
