@@ -220,16 +220,16 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
   /* --- Kode (panel contoh) --------------------------------- */
   /* Panel kode sengaja gelap di kedua tema: potongan kode harus
      terbaca sama, dan warna di dalamnya memakai fill brand. */
-  --color-code-bg: #1a1b33;
-  --color-code-bar: #242750;
-  --color-code-ink: #f3efff;         /* 16.78:1 di --color-code-bg */
-  --color-code-muted: #a9aae4;       /* 7.65:1 di --color-code-bg */
-  --color-code-tag: #8e8bf0;         /* 5.69:1 di --color-code-bg */
+  --color-code-bg: #121a31;
+  --color-code-bar: #1b2746;
+  --color-code-ink: #f1f4ff;         /* 15.70:1 di --color-code-bg */
+  --color-code-muted: #a6b5dd;       /* 8.44:1 di --color-code-bg */
+  --color-code-tag: #86a5f5;         /* 7.16:1 di --color-code-bg */
   --color-code-attr: #ffe14d;
   --color-code-string: #a8f0d0;
   /* Sorotan pilihan di editor latihan; teks asli transparan, jadi
      warna ini yang terlihat saat blok teks dipilih. */
-  --color-code-select: rgba(142, 139, 240, 0.35);
+  --color-code-select: rgba(134, 165, 245, 0.35);
 
   /* Pratinjau latihan sengaja tetap putih di kedua tema: panel itu
      meniru halaman browser, bukan permukaan aplikasi. */
@@ -292,7 +292,7 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
   --color-primary: #7e7bf0;
   --color-primary-hover: #6765ec;
   --color-primary-active: #5352e6;
-  --color-primary-soft: #9c9bf5;
+  --color-primary-soft: #86a5f5;
 
   --color-secondary: #374d90;      /* 7.05:1 dengan --color-ink */
   --color-secondary-hover: #3d56a2;
@@ -335,8 +335,8 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
   --color-shadow: #495c95;
   --color-shadow-accent: #7090ef;
 
-  --color-code-bg: #0d0f22;
-  --color-code-bar: #19223b;
+  --color-code-bg: #0a1220;        /* 17.07:1 dengan --color-code-ink */
+  --color-code-bar: #141f38;
 }
 
 /* ============================================================
