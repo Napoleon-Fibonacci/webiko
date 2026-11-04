@@ -185,18 +185,21 @@ create policy "quiz_attempts_update_own"
   using (auth.uid() = user_id)
   with check (auth.uid() = user_id);
 
--- comments: baca hanya yang tidak di-hidden, tulis/hapus milik sendiri.
--- Catatan aman: policy SELECT hanya mengizinkan baris hidden = false,
--- sehingga UPDATE tidak berguna untuk menyembunyikan baris sendiri.
+-- comments: baca hanya yang SUDAH DISETUJUI admin dan tidak di-hidden,
+-- tulis/hapus milik sendiri. Komentar baru masuk antrean (disetujui = false).
 create policy "comments_select_visible"
   on public.comments for select
   to anon, authenticated
-  using (hidden = false);
+  using (disetujui = true and hidden = false);
 
 create policy "comments_insert_own"
   on public.comments for insert
   to authenticated
-  with check (auth.uid() = user_id);
+  with check (
+    auth.uid() = user_id
+    and disetujui = false
+    and hidden = false
+  );
 
 create policy "comments_delete_own"
   on public.comments for delete
@@ -214,7 +217,7 @@ create policy "suggestions_select_own"
 create policy "suggestions_insert_own"
   on public.suggestions for insert
   to authenticated
-  with check (auth.uid() = user_id);
+  with check (auth.uid() = user_id and dibaca = false);
 
 create policy "suggestions_delete_own"
   on public.suggestions for delete

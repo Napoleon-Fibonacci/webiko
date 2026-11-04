@@ -57,19 +57,22 @@ create table if not exists public.quiz_attempts (
 create table if not exists public.comments (
   id         uuid primary key default gen_random_uuid(),
   user_id    uuid not null references public.profiles (id) on delete cascade,
-  bab_id     text not null,
+  bab_id     text not null default 'umum',
   nama       text not null check (char_length(nama) between 2 and 40),
   isi        text not null check (char_length(isi) between 1 and 1000),
+  disetujui  boolean not null default false,
   created_at timestamptz not null default now(),
   hidden     boolean not null default false
 );
 
--- Untuk project yang tabelnya sudah dibuat sebelum kolom `nama` ada.
+-- Untuk project yang tabelnya sudah dibuat sebelum kolom ini ada.
 alter table public.comments add column if not exists nama text;
 alter table public.comments alter column nama set not null;
 alter table public.comments drop constraint if exists comments_nama_format;
 alter table public.comments add constraint comments_nama_format
   check (char_length(nama) between 2 and 40);
+alter table public.comments add column if not exists disetujui boolean not null default false;
+alter table public.comments alter column bab_id set default 'umum';
 
 -- ------------------------------------------------------------
 -- 5. suggestions — saran/kritik, privat (hanya pengirim yang bisa baca)
@@ -126,10 +129,13 @@ create index if not exists comments_bab_id_created_at_idx
   on public.comments (bab_id, created_at desc);
 create index if not exists comments_user_id_idx
   on public.comments (user_id);
--- Filter utama komentar adalah "yang tidak di-hidden" per bab.
+-- Filter utama komentar: yang sudah disetujui admin dan tidak di-hidden.
 create index if not exists comments_visible_idx
   on public.comments (bab_id, created_at desc)
-  where hidden = false;
+  where disetujui = true and hidden = false;
+create index if not exists comments_menunggu_idx
+  on public.comments (created_at desc)
+  where disetujui = false;
 
 create index if not exists badges_user_id_idx
   on public.badges (user_id);

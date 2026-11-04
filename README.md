@@ -15,14 +15,25 @@ Website pembelajaran untuk anak sekolah yang ingin belajar membuat website dari 
 .
 ├── index.html              # Halaman utama
 ├── akun.html               # Masuk & daftar username + password
+├── admin.html              # Dashboard admin (noindex, bukan bagian situs publik)
 ├── styleguide.html         # Design system (acuan komponen & token)
 ├── vercel.json             # Konfigurasi deploy Vercel
 ├── robots.txt              # Aturan crawler + sitemap
 ├── sitemap.xml             # 37 URL bersih
+├── api/                    # Serverless function Vercel (CommonJS)
+│   ├── _lib.js             # Sesi HMAC, service_role, audit, rate limit, Telegram
+│   ├── login.js            # POST password admin → cookie HttpOnly
+│   ├── sesi.js             # GET status sesi
+│   ├── logout.js           # POST hapus cookie + catat keluar
+│   ├── data.js             # GET ringkasan, pengguna, saran, komentar, log
+│   ├── aksi.js             # POST moderasi saran/komentar
+│   └── analytics.js        # GET ringkasan GA4 lewat service account
 ├── assets/
 │   ├── css/style.css       # Stylesheet utama (token + komponen)
+│   ├── css/admin.css       # Gaya dashboard admin
 │   ├── js/main.js          # Script utama (menu navbar, render kurikulum)
 │   ├── js/akun.js          # Logika halaman akun (sesi, masuk, daftar, keluar)
+│   ├── js/admin.js         # Logika dashboard admin (fetch /api)
 │   ├── js/supabase.js      # Klien Supabase (ESM)
 │   ├── js/supabase-config.example.js  # Contoh config (salin jadi supabase-config.js)
 │   └── img/                # Gambar, termasuk og-webiko.png (1200x630)
@@ -36,6 +47,7 @@ Website pembelajaran untuk anak sekolah yang ingin belajar membuat website dari 
 │   ├── seo.md              # Metadata sosial, OG image, robots, sitemap
 │   └── perubahan-terbaru.md # Riwayat commit dan hasil verifikasi
 ├── scripts/
+│   ├── tulis-config.mjs    # Menulis supabase-config.js dari env saat build
 │   └── verify-supabase.md  # Panduan setup Supabase untuk pemula
 └── supabase/               # SQL skema, policy RLS, dan lint
 ```
@@ -119,7 +131,7 @@ pribadi lain). Pendekatan:
 | `profiles` | `id` (= `auth.users.id`), `username`, `created_at` |
 | `progress` | `user_id`, `bab_id`, `selesai`, `updated_at` |
 | `quiz_attempts` | `id`, `user_id`, `bab_id`, `skor`, `total`, `created_at` |
-| `comments` | `id`, `user_id`, `bab_id`, `nama`, `isi`, `created_at`, `hidden` |
+| `comments` | `id`, `user_id`, `bab_id`, `nama`, `isi`, `disetujui`, `created_at`, `hidden` |
 | `suggestions` | `id`, `user_id`, `nama`, `isi`, `created_at`, `dibaca` |
 | `badges` | `id`, `user_id`, `kode`, `earned_at` |
 | `admin_log` | `id`, `nama`, `aksi`, `ip`, `user_agent`, `created_at` |
@@ -128,12 +140,53 @@ Semua tabel memakai RLS. Ringkasannya:
 
 - `profiles`: SELECT hanya baris sendiri (username tidak publik), UPDATE hanya baris sendiri. INSERT hanya lewat trigger. Jumlah anggota dibuka lewat `jumlah_anggota()`.
 - `progress`, `quiz_attempts`, `badges`: SELECT/INSERT/UPDATE hanya baris milik user login.
-- `comments`: SELECT semua komentar dengan `hidden = false`, INSERT/DELETE hanya milik sendiri. Nama penulis diambil dari kolom `nama` yang diisi sendiri, bukan username.
+- `comments`: SELECT hanya komentar yang sudah `disetujui` admin dan `hidden = false`, INSERT/DELETE hanya milik sendiri. Komentar baru masuk antrean. Nama penulis diambil dari kolom `nama`, bukan username.
 - `suggestions`: privat. SELECT/INSERT/DELETE hanya milik sendiri; tidak ada SELECT publik.
 - `admin_log`: tanpa policy, hanya `service_role` lewat serverless function.
 
 Cara membuktikan RLS benar-benar aktif (query `pg_tables` / `pg_policies`,
 plus uji `set local role anon`): lihat `supabase/README.md`.
+
+## Dashboard admin
+
+Dashboard ada di `/admin` (berkas `admin.html`). Halaman ini **tidak** ikut
+diindeks: ada `X-Robots-Tag: noindex, nofollow` untuk `/admin`, `/admin.html`,
+dan `/api/*` di `vercel.json`, plus `Disallow: /admin` dan `Disallow: /api/`
+di `robots.txt`.
+
+Login memakai **nama bebas + satu password** dari env, bukan akun Supabase.
+Sesi disimpan sebagai cookie `wg_admin` (HttpOnly, Secure, SameSite=Strict,
+umur 8 jam) yang ditandatangani HMAC. Semua data dibaca/ditulis lewat
+serverless function dengan `service_role`; browser tidak pernah menerima
+key itu.
+
+| Endpoint | Fungsi |
+| --- | --- |
+| `POST /api/login` | Cocokkan password, buat cookie, catat `masuk`/`gagal` |
+| `GET /api/sesi` | Status sesi yang aktif |
+| `POST /api/logout` | Hapus cookie, catat `keluar` |
+| `GET /api/data` | Ringkasan, pengguna, saran, komentar, log |
+| `POST /api/aksi` | `saran-dibaca`, `komentar-setujui`, `komentar-sembunyi` |
+| `GET /api/analytics` | Angka GA4 lewat service account |
+
+Isi **Settings → Environment Variables** di Vercel:
+
+- `SUPABASE_SERVICE_ROLE_KEY` — **hanya server**, jangan pernah ke browser.
+- `ADMIN_PASSWORD` — password dashboard.
+- `ADMIN_SESSION_SECRET` — string acak panjang (mis. 32+ karakter).
+- `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` — notifikasi masuk/keluar.
+- `GA_PROPERTY_ID`, `GA_CLIENT_EMAIL`, `GA_PRIVATE_KEY` — GA4 Data API
+  (service account harus diberi akses ke properti GA). Tanpa ini panel
+  trafik menampilkan pesan belum aktif, bukan error.
+
+Percobaan login dibatasi 8 kali / 10 menit per IP: pengecekan in-memory
+ditambah hitungan baris `admin_log` beraksi `gagal` (bertahan walau instance
+serverless berganti). Setiap masuk, keluar, dan gagal dicatat di `admin_log`
+beserta IP dan user-agent.
+
+Moderasi: komentar baru `disetujui = false` sehingga tidak tampil di situs;
+admin menyetujui atau menyembunyikannya dari dashboard. Saran hanya bisa
+dibaca di dashboard (tidak ada SELECT publik).
 
 ## Kode klien
 
