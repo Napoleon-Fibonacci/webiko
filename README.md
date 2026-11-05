@@ -1,4 +1,4 @@
-# Webiko
+## Webiko
 
 Website pembelajaran untuk anak sekolah yang ingin belajar membuat website dari dasar, ditulis dalam Bahasa Indonesia.
 
