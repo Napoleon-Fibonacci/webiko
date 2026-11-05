@@ -66,6 +66,12 @@ nilai `sistem`/`terang`/`gelap`; **bawaan terang**. Atribut `data-tema` di
    dan Chrome headless. Jangan biarkan menunggu putaran berikutnya; proses
    menganggur menguras baterai. Cek sebelum lanjut:
    `netstat -ano | grep -E ":8000|:8001|:9222" | grep LISTENING` harus kosong.
+6. **Bersihkan folder temp begitu tugas selesai.** Hapus semua berkas uji di
+   `C:\Users\Hype\AppData\Local\Temp\opencode`: screenshot, skrip harness
+   (`.mjs`), stub Supabase, salinan config, dan profil Chrome sementara.
+   Jangan biarkan sisa uji menumpuk untuk putaran berikutnya. Setelah bersih,
+   isi folder itu harus kosong kecuali user minta berkasnya disimpan. Cek:
+   `ls -A "C:/Users/Hype/AppData/Local/Temp/opencode"` tidak mengeluarkan apa pun.
 
 Pratinjau lokal: `python -m http.server 8000` lalu buka `http://localhost:8000`.
 
