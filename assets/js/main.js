@@ -525,4 +525,35 @@ document.querySelectorAll('[data-kurikulum]').forEach(function (host) {
   });
 })();
 
+/* ============================================================
+   Google Analytics 4 (gtag.js).
+   Dimuat dari satu file ini supaya 39 halaman ikut tanpa mengubah
+   tiap HTML. Tidak jalan di localhost, file lokal, dan /admin,
+   supaya data produksi bersih. Tanpa cookie iklan, IP dianonimkan.
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var ID = 'G-VBPXBRC5MX';
+  var hos = window.location.hostname;
+  if (!hos || hos === 'localhost' || hos === '127.0.0.1') return;
+  if (window.location.protocol === 'file:') return;
+  if (window.location.pathname.indexOf('/admin') === 0) return;
+  if (navigator.doNotTrack === '1') return;
+  if (window.gtag) return;
+
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () {
+    window.dataLayer.push(arguments);
+  };
+
+  var skrip = document.createElement('script');
+  skrip.async = true;
+  skrip.src = 'https://www.googletagmanager.com/gtag/js?id=' + ID;
+  document.head.appendChild(skrip);
+
+  window.gtag('js', new Date());
+  window.gtag('config', ID, { anonymize_ip: true });
+})();
+
 
