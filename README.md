@@ -15,6 +15,7 @@ Website pembelajaran untuk anak sekolah yang ingin belajar membuat website dari 
 .
 ├── index.html              # Halaman utama
 ├── akun.html               # Masuk & daftar username + password
+├── progres.html            # Progres pribadi: bab selesai & skor kuis (noindex)
 ├── admin.html              # Dashboard admin (noindex, bukan bagian situs publik)
 ├── styleguide.html         # Design system (acuan komponen & token)
 ├── vercel.json             # Konfigurasi deploy Vercel
@@ -33,6 +34,7 @@ Website pembelajaran untuk anak sekolah yang ingin belajar membuat website dari 
 │   ├── css/admin.css       # Gaya dashboard admin
 │   ├── js/main.js          # Script utama (menu navbar, render kurikulum)
 │   ├── js/akun.js          # Logika halaman akun (sesi, masuk, daftar, keluar)
+│   ├── js/progres.js       # Logika halaman progres (baca progress & quiz_attempts)
 │   ├── js/admin.js         # Logika dashboard admin (fetch /api)
 │   ├── js/supabase.js      # Klien Supabase (ESM)
 │   ├── js/supabase-config.example.js  # Contoh config (salin jadi supabase-config.js)
@@ -78,6 +80,11 @@ dan klik **Run**. Urutannya penting.
 
 Kedua file idempotent (aman dijalankan ulang). Detail + query cek RLS:
 [`supabase/README.md`](supabase/README.md).
+
+Skor kuis permanen: `schema.sql` memasang indeks unik
+`quiz_attempts (user_id, bab_id)`, jadi satu bab hanya bisa dikerjakan sekali.
+Kalau database sudah pernah dibuat sebelum fitur progres, jalankan ulang
+`schema.sql` supaya indeks itu ikut masuk.
 
 Tambahan di dashboard (bukan SQL): **Authentication → Sign In / Providers →
 Email** → matikan **Confirm email**. User mendaftar dengan username, tanpa

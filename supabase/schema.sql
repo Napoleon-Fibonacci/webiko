@@ -49,6 +49,12 @@ create table if not exists public.quiz_attempts (
   created_at timestamptz not null default now()
 );
 
+-- Satu kuis hanya boleh dikerjakan sekali per user. Skor pertama
+-- tersimpan permanen; percobaan kedua ditolak database, bukan cuma
+-- disembunyikan tombolnya di klien.
+create unique index if not exists quiz_attempts_user_bab_key
+  on public.quiz_attempts (user_id, bab_id);
+
 -- ------------------------------------------------------------
 -- 4. comments — komentar per bab
 --    `nama` diisi sendiri oleh penulis (wajib), bukan username

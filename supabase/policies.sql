@@ -179,11 +179,9 @@ create policy "quiz_attempts_insert_own"
   to authenticated
   with check (auth.uid() = user_id);
 
-create policy "quiz_attempts_update_own"
-  on public.quiz_attempts for update
-  to authenticated
-  using (auth.uid() = user_id)
-  with check (auth.uid() = user_id);
+-- Sengaja TIDAK ada policy update/delete: skor kuis permanen. Baris
+-- hanya bisa ditambah sekali (lihat indeks unik di schema.sql) dan
+-- tidak bisa diubah atau dihapus dari klien.
 
 -- comments: baca hanya yang SUDAH DISETUJUI admin dan tidak di-hidden,
 -- tulis/hapus milik sendiri. Komentar baru masuk antrean (disetujui = false).

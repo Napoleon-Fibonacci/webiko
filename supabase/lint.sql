@@ -7,7 +7,7 @@
 --  Hasil yang diharapkan:
 --   - saklar "Webiko"  -> 'LULUS' (bukan 'GAGAL')
 --   - tabel_ok            -> 7 dari 7, semua rowsecurity = true
---   - policy_ok           -> 17 dari 17
+--   - policy_ok           -> 16 dari 16
 --   - fungsi_ok           -> 3 dari 3
 --   - trigger_ok          -> 1 dari 1
 --
@@ -52,7 +52,7 @@ select
   s.fungsi_ok,
   s.trigger_ok,
   case
-    when s.tabel_ok = 7 and s.policy_ok = 17 and s.fungsi_ok = 3 and s.trigger_ok = 1
+    when s.tabel_ok = 7 and s.policy_ok = 16 and s.fungsi_ok = 3 and s.trigger_ok = 1
       then 'LULUS'
     else 'GAGAL — ulangi scripts/verify-supabase.md'
   end as saklar

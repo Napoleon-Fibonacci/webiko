@@ -371,4 +371,158 @@ document.querySelectorAll('[data-kurikulum]').forEach(function (host) {
     });
 })();
 
+/* ============================================================
+   Progres pribadi di halaman materi:
+   - tautan "Progres saya" di sidebar,
+   - blok "Tandai selesai" sebelum kaki artikel (hanya untuk
+     pengguna yang sudah masuk).
+   bab_id diturunkan dari path (/materi/<jalur>/<bab>.html) supaya
+   37 halaman materi tidak perlu diubah satu per satu.
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var artikel = document.querySelector('article.materi');
+  if (!artikel) return;
+
+  function bacaIdBab() {
+    var bagian = window.location.pathname.split('/').filter(Boolean);
+    var posisi = bagian.indexOf('materi');
+    if (posisi === -1 || bagian.length < posisi + 3) return '';
+    var jalur = bagian[posisi + 1];
+    var bab = bagian[posisi + 2].replace(/\.html$/, '');
+    if (!jalur || !bab) return '';
+    return jalur + '/' + bab;
+  }
+
+  var idBab = bacaIdBab();
+  if (!idBab) return;
+
+  /* Tautan ke halaman progres, sekali saja. */
+  var sidebar = document.querySelector('.sidebar');
+  if (sidebar && !sidebar.querySelector('.sidebar__progres')) {
+    var tautanProgres = document.createElement('a');
+    tautanProgres.className = 'sidebar__link sidebar__progres';
+    tautanProgres.href = '../../progres.html';
+    tautanProgres.textContent = 'Progres saya';
+    sidebar.appendChild(tautanProgres);
+  }
+
+  /* Blok tandai selesai. Tidak ada di HTML, jadi tanpa JavaScript
+     tidak ada tombol yang bisa diklik tetapi tidak bereaksi. */
+  var kotak = document.createElement('section');
+  kotak.className = 'tandai';
+  kotak.hidden = true;
+
+  var kiri = document.createElement('div');
+  var label = document.createElement('p');
+  label.className = 'tandai__label';
+  label.textContent = 'Progres bab';
+  var judul = document.createElement('h2');
+  judul.className = 'tandai__judul';
+  var keterangan = document.createElement('p');
+  keterangan.className = 'tandai__teks';
+  kiri.appendChild(label);
+  kiri.appendChild(judul);
+  kiri.appendChild(keterangan);
+  kotak.appendChild(kiri);
+
+  var aksi = document.createElement('div');
+  aksi.className = 'tandai__aksi';
+  kotak.appendChild(aksi);
+
+  var tombol = document.createElement('button');
+  tombol.type = 'button';
+  tombol.className = 'btn btn--primary';
+  tombol.textContent = 'Tandai selesai';
+
+  var kaki = artikel.querySelector('.materi__kaki');
+  if (kaki) kaki.before(kotak);
+  else artikel.appendChild(kotak);
+
+  function tampilkanBelum() {
+    kotak.hidden = false;
+    kotak.removeAttribute('data-selesai');
+    judul.textContent = 'Sudah selesai membaca?';
+    keterangan.textContent = 'Tandai bab ini selesai supaya tercatat di Progres saya.';
+    tombol.disabled = false;
+    tombol.textContent = 'Tandai selesai';
+    aksi.replaceChildren(tombol);
+  }
+
+  function tampilkanSelesai() {
+    kotak.hidden = false;
+    kotak.setAttribute('data-selesai', '');
+    judul.textContent = 'Bab ini sudah selesai';
+    keterangan.textContent = 'Progresnya tersimpan di akunmu.';
+
+    var status = document.createElement('span');
+    status.className = 'tandai__status';
+    status.textContent = '\u2713 Selesai';
+
+    var lihat = document.createElement('a');
+    lihat.className = 'btn btn--ghost';
+    lihat.href = '../../progres.html';
+    lihat.textContent = 'Lihat progres';
+
+    aksi.replaceChildren(status, lihat);
+  }
+
+  var sesiAktif = null;
+  var modulSiap = import('./supabase.js')
+    .then(function (modul) {
+      return modul.getSession().then(function (sesi) {
+        if (!sesi) return null;
+        sesiAktif = sesi;
+        return modul;
+      });
+    })
+    .catch(function () {
+      return null;
+    });
+
+  modulSiap.then(function (modul) {
+    if (!modul) return;
+    tampilkanBelum();
+
+    modul.supabase
+      .from('progress')
+      .select('selesai')
+      .eq('bab_id', idBab)
+      .maybeSingle()
+      .then(function (hasil) {
+        if (hasil.data && hasil.data.selesai) tampilkanSelesai();
+      })
+      .catch(function () {});
+
+    tombol.addEventListener('click', function () {
+      if (!sesiAktif) return;
+      tombol.disabled = true;
+      tombol.textContent = 'Menyimpan\u2026';
+
+      modul.supabase
+        .from('progress')
+        .upsert(
+          {
+            user_id: sesiAktif.user.id,
+            bab_id: idBab,
+            selesai: true,
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: 'user_id,bab_id' }
+        )
+        .then(function (hasil) {
+          if (hasil.error) throw hasil.error;
+          tampilkanSelesai();
+        })
+        .catch(function () {
+          keterangan.textContent =
+            'Gagal menyimpan progres. Periksa koneksi, lalu coba lagi.';
+          tombol.disabled = false;
+          tombol.textContent = 'Tandai selesai';
+        });
+    });
+  });
+})();
+
 

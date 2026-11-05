@@ -30,14 +30,17 @@
   var tujuan = tujuanAman(parameter.get('lanjut'));
   var tabAwal = parameter.get('tab') === 'daftar' ? 'daftar' : 'masuk';
 
-  /* Hanya izinkan kembali ke halaman materi di origin yang sama.
-     Mencegah open redirect lewat ?lanjut=//situs-lain. */
+  /* Hanya izinkan kembali ke halaman materi atau progres di origin
+     yang sama. Mencegah open redirect lewat ?lanjut=//situs-lain. */
   function tujuanAman(nilai) {
     if (!nilai) return '';
     try {
       var alamat = new URL(nilai, window.location.origin);
       if (alamat.origin !== window.location.origin) return '';
-      if (alamat.pathname.indexOf('/materi/') !== 0) return '';
+      var bahan = alamat.pathname.indexOf('/materi/') === 0;
+      var progres =
+        alamat.pathname === '/progres' || alamat.pathname === '/progres.html';
+      if (!bahan && !progres) return '';
       return alamat.pathname + alamat.search + alamat.hash;
     } catch (e) {
       return '';

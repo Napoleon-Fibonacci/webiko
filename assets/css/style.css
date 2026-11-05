@@ -3327,3 +3327,399 @@ html.gerbang-aktif body {
   font-size: var(--fs-small);
 }
 
+/* ============================================================
+   PROGRES PRIBADI (progres.html)
+   Ringkasan bab selesai, skor kuis, dan daftar bab per jalur.
+   Bab yang belum selesai disembunyikan di balik tombol per jalur.
+   ============================================================ */
+
+.progres {
+  padding-top: var(--space-8);
+}
+
+.progres__kepala {
+  display: grid;
+  gap: var(--space-6);
+  align-items: end;
+  margin-bottom: var(--space-8);
+}
+
+.progres__judul {
+  margin: var(--space-2) 0 var(--space-3);
+  font-size: clamp(1.9rem, 5vw, 2.9rem);
+  line-height: var(--lh-heading);
+  letter-spacing: -0.02em;
+}
+
+.progres__lead {
+  max-width: 34rem;
+}
+
+/* Kartu ringkasan: angka besar + bar. Latar raised, bukan putih,
+   supaya menonjol tanpa perlu warna baru. */
+.progres__ringkas {
+  padding: var(--space-4);
+  border: var(--border-w) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface-raised);
+  box-shadow: var(--shadow-hard-lg);
+}
+
+.progres__angka {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  margin: 0;
+  font-size: clamp(2.75rem, 7vw, 3.75rem);
+  font-weight: var(--fw-black);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.progres__angka span {
+  font-size: 1.25rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0;
+  color: var(--color-muted);
+}
+
+.progres__angka-label {
+  margin-top: var(--space-1);
+  font-weight: var(--fw-bold);
+}
+
+.progres__bar {
+  height: 18px;
+  margin-top: var(--space-3);
+  overflow: hidden;
+  border: var(--border-w-thin) solid var(--color-ink);
+  border-radius: var(--radius-pill);
+  background-color: var(--color-surface);
+}
+
+.progres__bar-isi {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-right: var(--border-w-thin) solid var(--color-ink);
+  background-color: var(--color-accent);
+}
+
+.progres__bar-isi--nol {
+  border-right: 0;
+}
+
+.progres__bar-ket {
+  margin-top: var(--space-2);
+  font-size: var(--fs-small);
+  color: var(--color-muted);
+}
+
+.progres__stat {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-8);
+  padding: 0;
+  list-style: none;
+}
+
+.progres__stat li {
+  padding: var(--space-3) var(--space-4);
+  border: var(--border-w) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-hard-sm);
+}
+
+.progres__stat-label {
+  display: block;
+  margin-bottom: var(--space-1);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-black);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.progres__stat-nilai {
+  font-size: 1.75rem;
+  font-weight: var(--fw-black);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.progres__stat-nilai small {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-bold);
+  letter-spacing: 0;
+  color: var(--color-muted);
+}
+
+.progres__jalur + .progres__jalur {
+  margin-top: var(--space-8);
+}
+
+.progres__jalur-kepala {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+/* Nomor jalur memakai warna jalur yang sama dengan kartu kurikulum.
+   --jalur-warna / --jalur-teks diisi dari JS. */
+.progres__jalur-no {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: var(--border-w) solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--jalur-warna);
+  color: var(--jalur-teks);
+  font-weight: var(--fw-black);
+  box-shadow: 3px 3px 0 var(--color-ink);
+}
+
+.progres__jalur-judul {
+  margin: 0;
+  font-size: var(--fs-h3);
+  line-height: var(--lh-heading);
+}
+
+.progres__jalur-kepala .badge {
+  margin-left: auto;
+}
+
+.progres__jalur .progres__bar {
+  height: 14px;
+  margin: 0 0 var(--space-4);
+}
+
+.progres__jalur .progres__bar-isi {
+  background-color: var(--jalur-warna);
+}
+
+.progres__bab {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.progres__bab-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: var(--border-w) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: transform var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.progres__bab-item:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-hard-sm);
+}
+
+.progres__bab-item:focus-visible {
+  outline: var(--border-w) solid var(--color-ink);
+  outline-offset: 2px;
+}
+
+.progres__bab-item--selesai {
+  background-color: var(--color-surface-soft);
+}
+
+.progres__no {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: var(--border-w-thin) solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-black);
+}
+
+.progres__bab-item--selesai .progres__no {
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.progres__bab-judul {
+  min-width: 0;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+  line-height: 1.35;
+}
+
+.progres__bab-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-left: auto;
+  flex: 0 0 auto;
+}
+
+.progres__belum {
+  font-size: var(--fs-small);
+  color: var(--color-muted);
+}
+
+.progres__toggle {
+  margin-top: var(--space-3);
+}
+
+/* State kosong: satu kartu ajakan, bukan deretan jalur kosong. */
+.progres__kosong {
+  padding: var(--space-8) var(--space-4);
+  border: var(--border-w) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-hard-lg);
+  text-align: center;
+}
+
+.progres__kosong-ikon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--space-4);
+  border: var(--border-w) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+  font-size: 1.75rem;
+  font-weight: var(--fw-black);
+  box-shadow: var(--shadow-hard-sm);
+}
+
+.progres__kosong h2 {
+  margin: 0 0 var(--space-2);
+  font-size: var(--fs-h3);
+}
+
+.progres__kosong p {
+  max-width: 30rem;
+  margin: 0 auto var(--space-4);
+}
+
+.progres__memuat {
+  color: var(--color-muted);
+}
+
+@media (min-width: 640px) {
+  .progres__stat {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 760px) {
+  .progres__kepala {
+    grid-template-columns: minmax(0, 1fr) 20rem;
+  }
+
+  .progres__bab {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Tautan progres di sidebar materi; beda dari daftar bab, jadi
+   garisnya putus-putus dan diberi jarak. */
+.sidebar__progres {
+  margin-top: var(--space-3);
+  border-style: dashed;
+}
+
+/* ============================================================
+   TANDAI SELESAI (halaman materi)
+   Muncul hanya untuk pengguna yang sudah masuk.
+   ============================================================ */
+
+.tandai {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-8);
+  padding: var(--space-4);
+  border: var(--border-w) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-secondary);
+  box-shadow: var(--shadow-hard);
+}
+
+.tandai[data-selesai] {
+  background-color: var(--color-accent);
+}
+
+/* Di tema gelap aksen tetap kuning terang, jadi teks harus memakai
+   on-accent (gelap) — bukan ink yang hampir putih. */
+.tandai[data-selesai],
+.tandai[data-selesai] .btn {
+  color: var(--color-on-accent);
+}
+
+.tandai[data-selesai] .btn {
+  border-color: var(--color-on-accent);
+}
+
+.tandai p {
+  max-width: none;
+}
+
+.tandai .tandai__label {
+  margin: 0 0 var(--space-1);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-black);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.tandai .tandai__judul {
+  margin: 0;
+  font-size: var(--fs-h4);
+  line-height: var(--lh-heading);
+}
+
+.tandai .tandai__teks {
+  margin: var(--space-1) 0 0;
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+}
+
+.tandai__aksi {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.tandai__status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: var(--fw-bold);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progres__bab-item {
+    transition: none;
+  }
+
+  .progres__bab-item:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
