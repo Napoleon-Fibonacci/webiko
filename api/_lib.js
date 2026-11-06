@@ -163,6 +163,43 @@ async function sbFetch(path, opsi = {}) {
   return data;
 }
 
+/* Panggilan ke Supabase Auth. Tanpa `token`, memakai service_role
+   (mis. hapus user dari dashboard admin). Dengan `token`, memakai
+   JWT pengguna (mis. memastikan pemilik sesi saat hapus akun sendiri). */
+async function authFetch(path, opsi = {}) {
+  const { url, service } = konfig();
+  if (!url || !service) {
+    throw new Error("SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY belum diisi");
+  }
+  const { method = "GET", body, token = "", headers = {} } = opsi;
+  const res = await fetch(`${url}/auth/v1/${path}`, {
+    method,
+    headers: {
+      apikey: service,
+      Authorization: `Bearer ${token || service}`,
+      "Content-Type": "application/json",
+      ...headers,
+    },
+    body: body === undefined ? undefined : JSON.stringify(body),
+  });
+  const teks = await res.text();
+  let data = null;
+  try {
+    data = teks ? JSON.parse(teks) : null;
+  } catch {
+    data = teks;
+  }
+  if (!res.ok) {
+    const galat = new Error(
+      "Supabase Auth " + res.status + ": " +
+        (typeof data === "string" ? data : JSON.stringify(data))
+    );
+    galat.status = res.status;
+    throw galat;
+  }
+  return data;
+}
+
 async function tulisLog({ nama, aksi, req }) {
   try {
     await sbFetch("admin_log", {
@@ -224,6 +261,7 @@ module.exports = {
   ipDari,
   bolehCoba,
   sbFetch,
+  authFetch,
   tulisLog,
   kirimBot,
   wajibPost,

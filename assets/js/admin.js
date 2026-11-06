@@ -115,13 +115,28 @@
   dash.addEventListener("click", async function (e) {
     var tombol = e.target.closest("[data-aksi]");
     if (!tombol) return;
+
+    var jenis = tombol.getAttribute("data-aksi");
+    if (jenis === "pengguna-hapus") {
+      var nama = tombol.getAttribute("data-nama") || "";
+      var ketik = window.prompt(
+        'Ketik username "' + nama + '" untuk menghapus akun ini secara permanen:'
+      );
+      if (ketik !== nama) {
+        if (ketik !== null) {
+          window.alert("Username tidak cocok. Penghapusan dibatalkan.");
+        }
+        return;
+      }
+    }
+
     tombol.disabled = true;
     try {
       await api("/api/aksi", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          jenis: tombol.getAttribute("data-aksi"),
+          jenis: jenis,
           id: tombol.getAttribute("data-id"),
           nilai: tombol.getAttribute("data-nilai") === "true",
         }),
@@ -233,7 +248,7 @@
     var isi = $("#tabel-pengguna");
     if (!baris.length) {
       isi.innerHTML =
-        '<tr><td colspan="5"><p class="kosong">Tidak ada pengguna.</p></td></tr>';
+        '<tr><td colspan="6"><p class="kosong">Tidak ada pengguna.</p></td></tr>';
       return;
     }
     isi.innerHTML = baris
@@ -243,7 +258,12 @@
           '<td class="angka">' + esc(u.babSelesai) + "</td>" +
           '<td class="angka">' + (u.rataSkor == null ? "—" : esc(u.rataSkor)) + "</td>" +
           '<td class="angka">' + esc(u.jumlahKuis) + "</td>" +
-          "<td>" + esc(waktu(u.terakhir)) + "</td></tr>"
+          "<td>" + esc(waktu(u.terakhir)) + "</td>" +
+          "<td>" +
+          '<button class="btn btn--kecil btn--bahaya" type="button" ' +
+          'data-aksi="pengguna-hapus" data-id="' + esc(u.id) + '" ' +
+          'data-nama="' + esc(u.username) + '">Hapus</button>' +
+          "</td></tr>"
         );
       })
       .join("");

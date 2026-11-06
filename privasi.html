@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kebijakan privasi Webiko: data yang disimpan, tujuan, pihak ketiga, cookie, dan cara menghapus akun.">
+  <title>Kebijakan privasi — Webiko</title>
+  <link rel="canonical" href="https://www.webiko.my.id/privasi">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Webiko">
+  <meta property="og:locale" content="id_ID">
+  <meta property="og:title" content="Kebijakan privasi — Webiko">
+  <meta property="og:description" content="Data apa yang disimpan Webiko, untuk apa, siapa yang bisa melihat, dan cara menghapusnya.">
+  <meta property="og:url" content="https://www.webiko.my.id/privasi">
+  <meta property="og:image" content="https://www.webiko.my.id/assets/img/og-webiko.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Kartu Webiko: kotak kuning bergambar huruf W, tulisan Bikin website pertamamu, baris demi baris, dan panel kode index.html.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kebijakan privasi — Webiko">
+  <meta name="twitter:description" content="Data apa yang disimpan Webiko, untuk apa, siapa yang bisa melihat, dan cara menghapusnya.">
+  <meta name="twitter:image" content="https://www.webiko.my.id/assets/img/og-webiko.png">
+  <meta name="twitter:image:alt" content="Kartu Webiko: kotak kuning bergambar huruf W, tulisan Bikin website pertamamu, baris demi baris, dan panel kode index.html.">
+
+  <!-- Pasang tema sebelum halaman digambar, supaya tidak berkedip. -->
+  <script>
+    (function () {
+      try {
+        var pilihan = localStorage.getItem("tema");
+        var gelap =
+          pilihan === "gelap" ||
+          (pilihan === "sistem" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.setAttribute("data-tema", gelap ? "gelap" : "terang");
+      } catch (e) {
+        document.documentElement.setAttribute("data-tema", "terang");
+      }
+    })();
+  </script>
+
+  <link rel="preload" href="assets/fonts/segoe/segoe-ui-500.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/segoe/segoe-ui-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+  <!-- ============ NAVBAR ============ -->
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="index.html">
+        <span class="navbar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 7l3.6 10L12 9.4 16.4 17 20 7"></path>
+          </svg>
+        </span>
+        Webiko
+      </a>
+
+      <nav class="navbar__links" aria-label="Navigasi utama">
+        <a class="navbar__link" href="index.html">Beranda</a>
+        <a class="navbar__link" href="index.html#kurikulum">Kurikulum</a>
+        <a class="navbar__link" href="index.html#cara-pakai">Cara pakai</a>
+        <a class="navbar__link" href="akun.html">Akun</a>
+        <a class="navbar__link" href="progres.html">Progres</a>
+      </nav>
+
+      <div class="navbar__tools">
+        <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
+          <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--terang" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path>
+          </svg>
+          <svg class="theme-toggle__ikon theme-toggle__ikon--gelap" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
+          </svg>
+          <span class="theme-toggle__label">Terang</span>
+        </button>
+
+        <button class="navbar__btn navbar__toggle" type="button" aria-label="Buka menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section privasi">
+
+      <div class="privasi__hero">
+        <div class="privasi__hero-copy">
+          <p class="label">Webiko · Privasi</p>
+          <h1>Kebijakan privasi</h1>
+          <p class="materi__lead">
+            Webiko hanya meminta username dan password. Halaman ini menjelaskan
+            data apa yang disimpan, untuk apa, siapa yang bisa melihat, dan cara
+            menghapusnya.
+          </p>
+          <p class="text-small text-muted">Terakhir diperbarui: 6 November 2026</p>
+        </div>
+
+        <aside class="card card--tint privasi__ringkas" aria-label="Ringkasan privasi">
+          <span class="badge badge--accent">Ringkasnya</span>
+          <p class="privasi__ringkas-teks">
+            Akun belajar, bukan profil media sosial.
+          </p>
+          <ul class="privasi__poin">
+            <li>Tanpa email asli, nomor HP, atau tanggal lahir.</li>
+            <li>Username tidak tampil di komentar publik.</li>
+            <li>Tidak ada cookie iklan dan data tidak dijual.</li>
+            <li>Akun dan seluruh datanya bisa dihapus sendiri.</li>
+          </ul>
+        </aside>
+      </div>
+
+      <article class="materi privasi__isi">
+
+          <h2 id="data">Data yang disimpan</h2>
+          <p>
+            Hanya yang dibutuhkan untuk belajar dan menjaga situs. Tidak ada
+            profil iklan.
+          </p>
+
+          <div class="privasi__grid">
+            <section class="card privasi__kartu" data-jenis="akun">
+              <span class="badge badge--primary">Akun</span>
+              <h3 class="card__title">Username</h3>
+              <p class="card__text">
+                Username dan tanggal daftar. Password diolah Supabase Auth dan
+                tidak disimpan sebagai teks biasa.
+              </p>
+            </section>
+
+            <section class="card privasi__kartu" data-jenis="belajar">
+              <span class="badge badge--accent">Belajar</span>
+              <h3 class="card__title">Progres dan skor</h3>
+              <p class="card__text">
+                Bab yang ditandai selesai, skor kuis, dan badge yang terbuka.
+              </p>
+            </section>
+
+            <section class="card privasi__kartu" data-jenis="kiriman">
+              <span class="badge badge--pink">Kiriman</span>
+              <h3 class="card__title">Komentar dan saran</h3>
+              <p class="card__text">
+                Nama tampilan dan isi yang kamu tulis. Nama tampilan bebas dan
+                tidak harus sama dengan username.
+              </p>
+            </section>
+
+            <section class="card privasi__kartu" data-jenis="keamanan">
+              <span class="badge badge--outline">Keamanan</span>
+              <h3 class="card__title">Log admin</h3>
+              <p class="card__text">
+                Alamat IP dan user-agent dicatat hanya saat admin masuk, keluar,
+                atau gagal masuk. Pengunjung biasa tidak dicatat.
+              </p>
+            </section>
+
+            <section class="card privasi__kartu" data-jenis="analitik">
+              <span class="badge badge--mint">Analitik</span>
+              <h3 class="card__title">Statistik kunjungan</h3>
+              <p class="card__text">
+                Halaman yang dibuka, jenis perangkat dan browser, perkiraan kota,
+                serta ID acak dari cookie Google Analytics.
+              </p>
+            </section>
+          </div>
+
+          <div class="alert alert--success privasi__catatan" role="note">
+            <div>
+              <span class="alert__title">Yang tidak kami minta</span>
+              <p class="alert__text">
+                Email asli, nomor HP, alamat, foto, dan tanggal lahir. Username
+                juga tidak ditampilkan ke publik.
+              </p>
+            </div>
+          </div>
+
+          <h2 id="tujuan">Tujuan</h2>
+          <div class="privasi__grid">
+            <section class="card privasi__kartu">
+              <span class="badge badge--primary">Belajar</span>
+              <p class="card__text">
+                Menyimpan progres bab, skor kuis, dan badge di akunmu.
+              </p>
+            </section>
+            <section class="card privasi__kartu">
+              <span class="badge badge--pink">Moderasi</span>
+              <p class="card__text">
+                Menampilkan komentar yang sudah disetujui dan menampung saran.
+              </p>
+            </section>
+            <section class="card privasi__kartu">
+              <span class="badge badge--outline">Keamanan</span>
+              <p class="card__text">
+                Menjaga dashboard admin dari akses yang tidak sah.
+              </p>
+            </section>
+            <section class="card privasi__kartu">
+              <span class="badge badge--mint">Perbaikan</span>
+              <p class="card__text">
+                Melihat halaman yang paling sering dibuka supaya materi bisa
+                diperbaiki.
+              </p>
+            </section>
+          </div>
+
+          <h2 id="dasar">Dasar pemrosesan</h2>
+          <p>
+            Data akun dan progres diproses karena kamu setuju saat membuat akun.
+            Catatan keamanan dashboard diproses untuk kepentingan yang sah, yaitu
+            mencegah penyalahgunaan. Analitik dipakai untuk statistik agregat:
+            tidak ada iklan, tidak ada profil iklan, dan data tidak dijual.
+          </p>
+
+          <h2 id="pihak-ketiga">Pihak ketiga</h2>
+          <div class="privasi__grid">
+            <section class="card privasi__kartu">
+              <span class="badge badge--primary">Auth &amp; database</span>
+              <h3 class="card__title">Supabase</h3>
+              <p class="card__text">
+                Menyimpan akun, progres, kuis, komentar, saran, dan badge.
+              </p>
+            </section>
+            <section class="card privasi__kartu">
+              <span class="badge badge--outline">Hosting</span>
+              <h3 class="card__title">Vercel</h3>
+              <p class="card__text">
+                Menyajikan situs dan menyimpan log akses teknis.
+              </p>
+            </section>
+            <section class="card privasi__kartu">
+              <span class="badge badge--mint">Statistik</span>
+              <h3 class="card__title">Google Analytics 4</h3>
+              <p class="card__text">
+                Menerima ID acak dari cookie, bukan username atau isi komentar.
+              </p>
+            </section>
+          </div>
+          <p class="text-small text-muted privasi__catatan">
+            Ketiganya memproses data atas nama Webiko dan punya kebijakan privasi
+            sendiri. Kami tidak menjual data ke pihak lain.
+          </p>
+
+          <h2 id="cookie">Cookie dan penyimpanan browser</h2>
+          <div class="privasi__grid">
+            <section class="card privasi__kartu">
+              <span class="badge badge--accent">Pilihan tema</span>
+              <p><span class="privasi__kode">tema</span></p>
+              <p class="card__text">
+                localStorage. Mengingat tema terang, gelap, atau sistem. Tidak
+                punya masa kedaluwarsa.
+              </p>
+            </section>
+            <section class="card privasi__kartu">
+              <span class="badge badge--primary">Sesi login</span>
+              <p><span class="privasi__kode">sb-…-auth-token</span></p>
+              <p class="card__text">
+                localStorage. Hilang saat kamu keluar atau menghapus data browser.
+              </p>
+            </section>
+            <section class="card privasi__kartu">
+              <span class="badge badge--mint">Google Analytics</span>
+              <p>
+                <span class="privasi__kode">_ga</span>
+                <span class="privasi__kode">_ga_VBPXBRC5MX</span>
+              </p>
+              <p class="card__text">
+                Cookie untuk membedakan pengunjung. Masa berlakunya hingga 2 tahun.
+              </p>
+            </section>
+          </div>
+          <p class="privasi__catatan">
+            Tidak ada cookie iklan. Kalau browser mengirim sinyal
+            <abbr title="Do Not Track">DNT</abbr>, script Google Analytics tidak
+            dimuat. Cookie GA juga bisa diblokir lewat setelan browser tanpa
+            mengganggu akun; memblokir semua cookie dan localStorage dapat membuat
+            login gagal.
+          </p>
+
+          <h2 id="simpan">Masa simpan</h2>
+          <div class="card privasi__kartu">
+            <span class="badge badge--outline">Selama akun aktif</span>
+            <ul>
+              <li>Data akun, progres, kuis, dan badge disimpan selama akun aktif.</li>
+              <li>Saat akun dihapus, data akun, progres, kuis, badge, komentar, dan saran ikut terhapus.</li>
+              <li>Akun yang melanggar ketentuan bisa dihapus oleh admin sebelum masa aktif berakhir.</li>
+              <li>Log admin disimpan terbatas untuk keperluan keamanan.</li>
+              <li>Data analitik mengikuti setelan retensi di properti Google Analytics.</li>
+            </ul>
+          </div>
+
+          <h2 id="hak">Hak kamu</h2>
+          <div class="card card--tint privasi__hak">
+            <div>
+              <span class="badge badge--accent">Bisa dilakukan sekarang</span>
+              <h3 class="card__title">Lihat dan hapus data</h3>
+              <p class="card__text">
+                Bab selesai dan skor kuis terlihat di halaman Progres. Untuk
+                menghapus akun beserta seluruh data, masuk lalu buka halaman Akun
+                dan tekan <strong>Hapus akun</strong>.
+              </p>
+            </div>
+            <div class="actions actions--spaced">
+              <a class="btn btn--primary" href="akun.html">Buka Akun</a>
+              <a class="btn btn--ghost" href="progres.html">Lihat Progres</a>
+            </div>
+          </div>
+          <div class="alert alert--warning privasi__catatan" role="note">
+            <div>
+              <span class="alert__title">Penghapusan permanen</span>
+              <p class="alert__text">
+                Akun yang dihapus tidak bisa dipulihkan. Karena Webiko tidak
+                memakai email, tombol <strong>Hapus akun</strong> adalah kanal
+                permintaan privasi yang tersedia.
+              </p>
+            </div>
+          </div>
+
+          <h2 id="pelanggaran">Pelanggaran ketentuan</h2>
+          <div class="alert alert--warning privasi__catatan" role="note">
+            <div>
+              <span class="alert__title">Akun bisa dihapus karena melanggar</span>
+              <p class="alert__text">
+                Webiko menghapus akun yang melanggar ketentuan, misalnya menyebar
+                spam, menulis komentar kasar atau menyinggung, mencoba masuk tanpa
+                izin, atau merusak situs. Penghapusan karena pelanggaran bersifat
+                permanen dan ikut menghapus progres, skor kuis, badge, komentar,
+                serta saran milik akun itu.
+              </p>
+            </div>
+          </div>
+
+          <h2 id="keamanan">Keamanan</h2>
+          <div class="card privasi__kartu">
+            <div class="actions actions--spaced">
+              <span class="badge badge--primary">HTTPS</span>
+              <span class="badge badge--primary">Row Level Security</span>
+              <span class="badge badge--primary">Service role di server</span>
+            </div>
+            <p class="card__text">
+              Setiap tabel memakai Row Level Security, jadi pengguna hanya bisa
+              membaca barisnya sendiri. Kunci <code>anon</code> aman berada di
+              browser; kunci <code>service_role</code> hanya dipakai di server dan
+              tidak pernah dikirim ke browser.
+            </p>
+          </div>
+
+          <h2 id="anak">Pelajar di bawah 18</h2>
+          <div class="card card--tint privasi__kartu">
+            <span class="badge badge--pink">Untuk pelajar</span>
+            <p class="card__text">
+              Webiko ditujukan untuk pelajar SMP dan SMA. Kami tidak meminta email,
+              nomor HP, atau tanggal lahir. Kalau kamu belum berusia 18 tahun,
+              minta izin orang tua atau wali sebelum membuat akun.
+            </p>
+          </div>
+
+          <h2>Perubahan</h2>
+          <p>
+            Kalau halaman ini berubah, tanggal di atas ikut diperbarui. Perubahan
+            penting akan terlihat di halaman ini sebelum berlaku.
+          </p>
+      </article>
+    </div>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer__row">
+      <div>
+        <p class="footer__wordmark">Webiko</p>
+        <p class="footer__tagline">
+          Belajar bikin website dari nol, dalam bahasa Indonesia.
+          Tanpa install, tanpa framework.
+        </p>
+      </div>
+      <nav class="footer__nav" aria-label="Navigasi footer">
+        <ul class="footer__links">
+          <li><a href="index.html#kurikulum">Kurikulum</a></li>
+          <li><a href="index.html#cara-pakai">Cara pakai</a></li>
+          <li><a href="progres.html">Progres</a></li>
+          <li><a href="akun.html">Akun</a></li>
+          <li><a href="privasi.html" aria-current="page">Privasi</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <p>© 2026 Webiko · Dibuat tanpa framework dan tanpa dependency.</p>
+      <p>Untuk pelajar SMP &amp; SMA</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

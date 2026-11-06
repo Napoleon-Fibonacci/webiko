@@ -2,12 +2,24 @@
    Webiko — api/aksi.js
    POST { jenis, id, nilai } -> moderasi dari dashboard admin.
    jenis: "saran-dibaca" | "komentar-sembunyi"
+        | "komentar-setujui" | "pengguna-hapus"
    ============================================================ */
-const { json, sbFetch, wajibPost, wajibSesi } = require("./_lib");
+const {
+  authFetch,
+  json,
+  sbFetch,
+  tulisLog,
+  wajibPost,
+  wajibSesi,
+} = require("./_lib");
+
+const POLA_UUID =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 module.exports = async (req, res) => {
   if (!wajibPost(req, res)) return;
-  if (!wajibSesi(req, res)) return;
+  const sesi = wajibSesi(req, res);
+  if (!sesi) return;
 
   try {
     const body =
@@ -41,6 +53,18 @@ module.exports = async (req, res) => {
         body: { disetujui: nilai },
         prefer: "return=minimal",
       });
+      return json(res, 200, { ok: true });
+    }
+
+    if (body.jenis === "pengguna-hapus") {
+      if (!POLA_UUID.test(id)) {
+        return json(res, 400, { error: "id pengguna tidak valid." });
+      }
+
+      await authFetch("admin/users/" + encodeURIComponent(id), {
+        method: "DELETE",
+      });
+      await tulisLog({ nama: sesi.nama, aksi: "hapus-akun", req });
       return json(res, 200, { ok: true });
     }
 

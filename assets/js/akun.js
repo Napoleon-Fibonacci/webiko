@@ -13,6 +13,7 @@
   var kotakPesan = document.querySelector('[data-akun-pesan]');
   var kotakConfig = document.querySelector('[data-akun-config]');
   var tombolKeluar = document.querySelector('[data-akun-keluar]');
+  var tombolHapus = document.querySelector('[data-akun-hapus]');
 
   var tab = Array.prototype.slice.call(
     document.querySelectorAll('[data-akun-tab]')
@@ -361,6 +362,64 @@
       .finally(function () {
         tombolKeluar.disabled = false;
         tombolKeluar.textContent = 'Keluar';
+      });
+  });
+
+  /* ---------- Hapus akun ---------- */
+
+  tombolHapus.addEventListener('click', function () {
+    if (!modul) return;
+
+    var nama = namaPengguna.textContent.trim();
+    var ketik = window.prompt(
+      'Ketik username "' + nama + '" untuk menghapus akun secara permanen:'
+    );
+    if (ketik !== nama) {
+      if (ketik !== null) {
+        tampilkanPesan('Username tidak cocok. Penghapusan dibatalkan.', 'warning');
+      }
+      return;
+    }
+
+    tombolHapus.disabled = true;
+    tombolHapus.textContent = 'Menghapus…';
+
+    modul
+      .getSession()
+      .then(function (session) {
+        if (!session) throw new Error('Sesi tidak ditemukan. Masuk ulang.');
+        return fetch('/api/hapus-akun', {
+          method: 'POST',
+          headers: { Authorization: 'Bearer ' + session.access_token },
+        });
+      })
+      .then(function (jawab) {
+        return jawab
+          .json()
+          .catch(function () {
+            return {};
+          })
+          .then(function (data) {
+            if (!jawab.ok) {
+              throw new Error(data.error || 'Gagal menghapus akun.');
+            }
+          });
+      })
+      .then(function () {
+        return modul.signOut().catch(function () {
+          /* sesi lokal tetap dibersihkan di bawah */
+        });
+      })
+      .then(function () {
+        tampilkanTamu();
+        tampilkanPesan('Akun dan seluruh datanya sudah dihapus.', 'success');
+      })
+      .catch(function (err) {
+        tampilkanPesan(pesanError(err), 'error');
+      })
+      .finally(function () {
+        tombolHapus.disabled = false;
+        tombolHapus.textContent = 'Hapus akun';
       });
   });
 

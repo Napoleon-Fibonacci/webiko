@@ -16,18 +16,20 @@ Website pembelajaran untuk anak sekolah yang ingin belajar membuat website dari 
 ├── index.html              # Halaman utama
 ├── akun.html               # Masuk & daftar username + password
 ├── progres.html            # Progres pribadi: bab selesai & skor kuis (noindex)
+├── privasi.html            # Kebijakan privasi & kanal hapus akun
 ├── admin.html              # Dashboard admin (noindex, bukan bagian situs publik)
 ├── styleguide.html         # Design system (acuan komponen & token)
 ├── vercel.json             # Konfigurasi deploy Vercel
 ├── robots.txt              # Aturan crawler + sitemap
-├── sitemap.xml             # 37 URL bersih
+├── sitemap.xml             # 38 URL bersih
 ├── api/                    # Serverless function Vercel (CommonJS)
 │   ├── _lib.js             # Sesi HMAC, service_role, audit, rate limit, Telegram
 │   ├── login.js            # POST password admin → cookie HttpOnly
 │   ├── sesi.js             # GET status sesi
 │   ├── logout.js           # POST hapus cookie + catat keluar
 │   ├── data.js             # GET ringkasan, pengguna, saran, komentar, log
-│   ├── aksi.js             # POST moderasi saran/komentar
+│   ├── aksi.js             # POST moderasi saran/komentar + hapus akun
+│   ├── hapus-akun.js       # POST hapus akun milik sesi pengguna sendiri
 │   └── analytics.js        # GET ringkasan GA4 lewat service account
 ├── assets/
 │   ├── css/style.css       # Stylesheet utama (token + komponen)
@@ -173,7 +175,8 @@ key itu.
 | `GET /api/sesi` | Status sesi yang aktif |
 | `POST /api/logout` | Hapus cookie, catat `keluar` |
 | `GET /api/data` | Ringkasan, pengguna, saran, komentar, log |
-| `POST /api/aksi` | `saran-dibaca`, `komentar-setujui`, `komentar-sembunyi` |
+| `POST /api/aksi` | `saran-dibaca`, `komentar-setujui`, `komentar-sembunyi`, `pengguna-hapus` |
+| `POST /api/hapus-akun` | Hapus akun pemilik token Supabase (self-service) |
 | `GET /api/analytics` | Angka GA4 lewat service account |
 
 Isi **Settings → Environment Variables** di Vercel:

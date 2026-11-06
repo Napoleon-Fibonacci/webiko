@@ -54,6 +54,7 @@ module.exports = async (req, res) => {
     const peta = new Map();
     for (const p of profiles) {
       peta.set(p.id, {
+        id: p.id,
         username: p.username,
         dibuat: p.created_at,
         babSelesai: 0,
@@ -79,6 +80,7 @@ module.exports = async (req, res) => {
 
     const pengguna = Array.from(peta.values())
       .map((u) => ({
+        id: u.id,
         username: u.username,
         babSelesai: u.babSelesai,
         rataSkor: u.jumlahKuis
