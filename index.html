@@ -53,6 +53,35 @@
           }
         }, 2000);
       }
+
+      // Pengguna yang sudah masuk: kalau ada token sesi tersimpan,
+      // tandai lebih dahulu supaya blok tamu tidak berkedip sebelum
+      // main.js membuka blok masuk. Kalau main.js gagal dimuat,
+      // tanda dilepas lagi setelah 2 detik (pola sama seperti
+      // reveal-siap di atas), jadi tampilan tamu tetap utuh.
+      try {
+        var adaSesi = false;
+        for (var i = 0; i < localStorage.length; i++) {
+          var namaSesi = localStorage.key(i) || "";
+          if (namaSesi.indexOf("sb-") !== 0) continue;
+          if (namaSesi.slice(-11) !== "-auth-token") continue;
+          var isiSesi = JSON.parse(localStorage.getItem(namaSesi) || "null");
+          if (isiSesi && isiSesi.access_token) {
+            adaSesi = true;
+            break;
+          }
+        }
+        if (adaSesi) {
+          document.documentElement.setAttribute("data-sesi", "masuk");
+          window.setTimeout(function () {
+            if (!window.__wgSesi) {
+              document.documentElement.removeAttribute("data-sesi");
+            }
+          }, 2000);
+        }
+      } catch (e) {
+        /* localStorage mati: tetap tampilan tamu. */
+      }
     })();
   </script>
 

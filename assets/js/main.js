@@ -42,6 +42,130 @@ document.querySelectorAll('.navbar').forEach(function (navbar) {
   if (desktop.matches) close();
 });
 
+/* ============================================================
+   Navbar pengguna yang sudah masuk, di semua halaman.
+   Sesi dibaca sinkron dari token yang tersimpan di localStorage,
+   jadi tampilan login dipakai sebelum halaman digambar dan tidak
+   ada kedipan tampilan tamu. Halaman beranda punya markup
+   [data-tamu]/[data-masuk] sendiri; halaman lain cuma punya satu
+   navbar tamu, jadi tautan "Cara pakai" dan "Akun" dilepas lalu
+   chip akun disisipkan. Validasi sesi yang butuh jaringan tetap
+   dilakukan di halaman yang memakainya sendiri (beranda, materi,
+   progres); di sini cukup penanda supaya tampilan tidak berkedip.
+   Tanpa JavaScript tidak ada satu pun yang diubah.
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var html = document.documentElement;
+
+  function bacaSesi() {
+    try {
+      for (var i = 0; i < window.localStorage.length; i++) {
+        var nama = window.localStorage.key(i) || '';
+        if (nama.indexOf('sb-') !== 0) continue;
+        if (nama.slice(-11) !== '-auth-token') continue;
+        var isi = JSON.parse(window.localStorage.getItem(nama) || 'null');
+        if (isi && isi.access_token) return isi;
+      }
+    } catch (e) {
+      /* localStorage mati: anggap tamu. */
+    }
+    return null;
+  }
+
+  function namaSesi(sesi) {
+    var user = (sesi && sesi.user) || {};
+    var meta = user.user_metadata || {};
+    return (
+      (meta.username && String(meta.username)) ||
+      String(user.email || '').split('@')[0] ||
+      'pelajar'
+    );
+  }
+
+  /* Tampilkan blok tamu. Dipakai juga untuk membatalkan tampilan
+     masuk kalau sesinya ternyata tidak sah. */
+  function tampilkanTamu() {
+    html.removeAttribute('data-sesi');
+    Array.prototype.forEach.call(document.querySelectorAll('[data-tamu]'), function (el) {
+      el.hidden = false;
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-masuk]'), function (el) {
+      el.hidden = true;
+    });
+  }
+
+  function tampilkanMasuk() {
+    html.setAttribute('data-sesi', 'masuk');
+    Array.prototype.forEach.call(document.querySelectorAll('[data-tamu]'), function (el) {
+      el.hidden = true;
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-masuk]'), function (el) {
+      el.hidden = false;
+    });
+  }
+
+  /* Halaman selain beranda: ubah navbar tamu tunggal jadi navbar
+     masuk. Aman dipanggil berulang; semua perubahan bisa dibalik. */
+  function aturNavbar(sesi) {
+    var nav = document.querySelector('.navbar__links');
+    if (!nav) return;
+
+    var tautanAkun = nav.querySelector('.navbar__link[href$="akun.html"]');
+    var hrefAkun = tautanAkun ? tautanAkun.getAttribute('href') : 'akun.html';
+
+    Array.prototype.forEach.call(nav.querySelectorAll('.navbar__link'), function (link) {
+      var href = link.getAttribute('href') || '';
+      var tamuSaja =
+        href.indexOf('#cara-pakai') !== -1 || /(^|\/)akun\.html$/.test(href);
+      link.hidden = !!sesi && tamuSaja;
+    });
+
+    var tools = document.querySelector('.navbar__tools');
+    if (tools) {
+      var chipLama = tools.querySelector('.navbar__user');
+      if (chipLama) chipLama.remove();
+    }
+    if (!sesi || !tools) return;
+
+    var nama = namaSesi(sesi);
+    var chip = document.createElement('a');
+    chip.className = 'navbar__user';
+    chip.href = hrefAkun;
+
+    var avatar = document.createElement('span');
+    avatar.className = 'navbar__avatar';
+    avatar.setAttribute('aria-hidden', 'true');
+    avatar.textContent = nama.trim().charAt(0).toUpperCase() || '?';
+
+    var label = document.createElement('span');
+    label.className = 'navbar__user-nama';
+    label.textContent = nama;
+
+    chip.append(avatar, label);
+    tools.insertBefore(chip, tools.firstChild);
+  }
+
+  /* Penanda bahwa main.js sudah jalan, dibaca fallback di <head>. */
+  window.__wgSesi = true;
+
+  var punyaMarkup = document.querySelector('.navbar__links[data-masuk]');
+  window.__wgNavbar = punyaMarkup
+    ? function (sesi) {
+        if (sesi) tampilkanMasuk();
+        else tampilkanTamu();
+      }
+    : aturNavbar;
+
+  window.__wgNavbar(bacaSesi());
+
+  /* akun.js mengirim ini setelah masuk atau keluar. */
+  document.addEventListener('webiko:sesi', function (e) {
+    window.__wgNavbar((e.detail && e.detail.sesi) || null);
+  });
+})();
+
 /* Daftar kurikulum di beranda (datanya di data/kurikulum.js).
    Elemennya dibangun lewat DOM API, bukan innerHTML, supaya isi
    data tidak pernah diperlakukan sebagai markup. */
@@ -746,7 +870,11 @@ document.querySelectorAll('[data-kurikulum]').forEach(function (host) {
   import('./supabase.js')
     .then(function (modul) {
       return modul.getSession().then(function (sesi) {
-        if (!sesi) return null;
+        if (!sesi) {
+          /* Token tersimpan ternyata tidak sah: kembalikan tampilan tamu. */
+          if (typeof window.__wgNavbar === 'function') window.__wgNavbar(null);
+          return null;
+        }
 
         function ambil(kueri) {
           return kueri
@@ -774,7 +902,8 @@ document.querySelectorAll('[data-kurikulum]').forEach(function (host) {
       });
     })
     .catch(function () {
-      /* Gagal cek sesi: biarkan tampilan tamu apa adanya. */
+      /* Gagal cek sesi (mis. jaringan): biarkan tampilan masuk apa
+         adanya, karena token tersimpan masih ada. */
     });
 })();
 

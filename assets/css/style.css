@@ -3903,6 +3903,15 @@ html.gerbang-aktif body {
    utuh; blok data-masuk baru ditampilkan setelah sesi dicek.
    ============================================================ */
 
+/* Penanda data-sesi dipasang script <head> dari token tersimpan,
+   supaya blok tamu tidak berkedip sebelum main.js membuka blok
+   masuk. Kalau main.js gagal dimuat, tanda dilepas lagi oleh
+   script yang sama. Tanpa JavaScript penanda tidak ada, jadi
+   tampilan tamu tetap utuh. */
+html[data-sesi="masuk"] [data-tamu] {
+  display: none !important;
+}
+
 .navbar__user {
   display: inline-flex;
   align-items: center;

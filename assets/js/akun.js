@@ -147,6 +147,7 @@
     bersihkanPesan();
     formMasuk.reset();
     formDaftar.reset();
+    kabarkanSesi(session);
   }
 
   function tampilkanTamu() {
@@ -154,6 +155,14 @@
     tamu.hidden = false;
     pilihTab('masuk', false);
     bersihkanPesan();
+    kabarkanSesi(null);
+  }
+
+  /* Beri tahu main.js supaya navbar ikut berubah tanpa muat ulang. */
+  function kabarkanSesi(sesi) {
+    document.dispatchEvent(
+      new CustomEvent('webiko:sesi', { detail: { sesi: sesi } })
+    );
   }
 
   /* ---------- Konfigurasi & modul ---------- */
