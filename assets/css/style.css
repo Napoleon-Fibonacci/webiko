@@ -242,6 +242,7 @@ Arah visual: neo-brutalist "indigo pop" (rujukan visual canvas saja,
   --dur-fast: 120ms;
   --dur-base: 180ms;
   --dur-reveal: 520ms;
+  --dur-pagein: 460ms;              /* isi halaman memudar masuk saat dimuat */
   --stagger: 70ms;                   /* jeda antar elemen saat muncul */
   --ease-out: cubic-bezier(0.2, 0.7, 0.3, 1);
   --transition: var(--dur-base) var(--ease-out);
@@ -2025,6 +2026,20 @@ html[data-akun-siap] .akun__tab {
 .reveal-siap [data-reveal].is-in {
   animation: wg-reveal var(--dur-reveal) var(--ease-out) backwards;
   animation-delay: calc(var(--stagger) * var(--reveal-step, 0));
+}
+
+/* Isi halaman memudar masuk saat dimuat. Hanya opacity, jadi tata
+   letak tidak bergeser; aturan global prefers-reduced-motion di
+   bagian 6 mematikannya total. Berlaku semua halaman tanpa markup
+   per halaman, termasuk materi yang tidak boleh diubah satu per satu. */
+@keyframes wg-pagein {
+  from {
+    opacity: 0;
+  }
+}
+
+main {
+  animation: wg-pagein var(--dur-pagein) var(--ease-out) both;
 }
 
 /* --- Langkah (urutan asli: 1 lalu 2 lalu 3) --------------- */
