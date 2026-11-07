@@ -556,4 +556,227 @@ document.querySelectorAll('[data-kurikulum]').forEach(function (host) {
   window.gtag('config', ID, { anonymize_ip: true });
 })();
 
+/* ============================================================
+   Beranda untuk pengguna yang sudah masuk.
+   Markup tamu (data-tamu) tetap jadi bawaan halaman. Blok
+   data-masuk baru dibuka setelah sesi Supabase terbukti ada,
+   jadi tanpa JavaScript tidak ada isi yang hilang. Angka di
+   ringkasan dibaca dari tabel progress, quiz_attempts, dan
+   badges milik user sendiri (dibatasi RLS).
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var hostJalur = document.querySelector('[data-ringkas-jalur]');
+  if (!hostJalur) return;
+
+  var daftarKurikulum =
+    typeof KURIKULUM !== 'undefined' && Array.isArray(KURIKULUM) ? KURIKULUM : [];
+
+  function adaSesiLokal() {
+    try {
+      for (var i = 0; i < window.localStorage.length; i++) {
+        var nama = window.localStorage.key(i) || '';
+        if (nama.indexOf('sb-') !== 0) continue;
+        if (nama.slice(-11) !== '-auth-token') continue;
+        var isi = JSON.parse(window.localStorage.getItem(nama) || 'null');
+        if (isi && isi.access_token) return true;
+      }
+    } catch (e) {
+      return false;
+    }
+    return false;
+  }
+
+  function el(tag, kelas, teks) {
+    var node = document.createElement(tag);
+    if (kelas) node.className = kelas;
+    if (teks != null) node.textContent = teks;
+    return node;
+  }
+
+  function babId(jalur, bab) {
+    return jalur + '/' + bab;
+  }
+
+  function skorTerbaik(daftar) {
+    var peta = new Map();
+    daftar.forEach(function (baris) {
+      var lama = peta.get(baris.bab_id);
+      var skor = Number(baris.skor);
+      if (!lama || skor > lama.skor) {
+        peta.set(baris.bab_id, { skor: skor, total: Number(baris.total) });
+      }
+    });
+    return peta;
+  }
+
+  function cariLanjut(selesaiSet) {
+    for (var i = 0; i < daftarKurikulum.length; i++) {
+      var jalur = daftarKurikulum[i];
+      for (var j = 0; j < jalur.bab.length; j++) {
+        var bab = jalur.bab[j];
+        if (!selesaiSet.has(babId(jalur.slug, bab.slug))) {
+          return 'materi/' + jalur.slug + '/' + bab.slug + '.html';
+        }
+      }
+    }
+    return '';
+  }
+
+  function isiAngka(kunci, teks) {
+    var node = document.querySelector('[data-ringkas="' + kunci + '"]');
+    if (node) node.textContent = teks;
+  }
+
+  function gambarJalur(selesaiSet, selesaiTotal) {
+    var fragmen = document.createDocumentFragment();
+    var aktifDitandai = false;
+
+    daftarKurikulum.forEach(function (jalur, nomor) {
+      var sudah = jalur.bab.filter(function (bab) {
+        return selesaiSet.has(babId(jalur.slug, bab.slug));
+      }).length;
+      var persen = jalur.bab.length
+        ? Math.round((sudah / jalur.bab.length) * 100)
+        : 0;
+
+      var aktif = !aktifDitandai && sudah < jalur.bab.length;
+      if (aktif) aktifDitandai = true;
+
+      var kartu = el('article', 'rel__node');
+      kartu.setAttribute('data-jalur', jalur.slug);
+      if (aktif) kartu.setAttribute('data-aktif', '');
+
+      var atas = el('div', 'rel__atas');
+      atas.appendChild(
+        el('span', 'rel__no', String(nomor + 1).padStart(2, '0'))
+      );
+      if (aktif) {
+        atas.appendChild(
+          el(
+            'span',
+            'badge badge--accent',
+            selesaiTotal ? 'Sedang di sini' : 'Mulai di sini'
+          )
+        );
+      }
+      kartu.appendChild(atas);
+
+      kartu.appendChild(
+        el('h3', 'rel__judul', String(jalur.judul).split(' ')[0])
+      );
+
+      var angka = el('p', 'rel__angka', String(sudah) + ' ');
+      angka.appendChild(el('span', null, '/ ' + jalur.bab.length + ' bab'));
+      kartu.appendChild(angka);
+
+      var bar = el('div', 'rel__bar');
+      bar.setAttribute('role', 'img');
+      bar.setAttribute('aria-label', sudah + ' dari ' + jalur.bab.length + ' bab selesai');
+      var isiBar = el('span');
+      isiBar.style.width = persen + '%';
+      bar.appendChild(isiBar);
+      kartu.appendChild(bar);
+
+      fragmen.appendChild(kartu);
+    });
+
+    return fragmen;
+  }
+
+  function tampilkan(sesi, progres, kuis, badge) {
+    var meta = sesi.user.user_metadata || {};
+    var nama =
+      (meta.username && String(meta.username)) ||
+      String(sesi.user.email || '').split('@')[0] ||
+      'pelajar';
+
+    document.querySelectorAll('[data-akun-nama]').forEach(function (node) {
+      node.textContent = nama;
+    });
+    document.querySelectorAll('[data-akun-inisial]').forEach(function (node) {
+      node.textContent = nama.trim().charAt(0).toUpperCase() || '?';
+    });
+
+    var selesaiSet = new Set(
+      progres.map(function (baris) {
+        return baris.bab_id;
+      })
+    );
+
+    var total = daftarKurikulum.reduce(function (jumlah, jalur) {
+      return jumlah + jalur.bab.length;
+    }, 0);
+
+    var selesaiTotal = 0;
+    daftarKurikulum.forEach(function (jalur) {
+      jalur.bab.forEach(function (bab) {
+        if (selesaiSet.has(babId(jalur.slug, bab.slug))) selesaiTotal++;
+      });
+    });
+
+    var skorPeta = skorTerbaik(kuis);
+    var skorJumlah = 0;
+    skorPeta.forEach(function (nilai) {
+      skorJumlah += nilai.skor;
+    });
+    var rata = skorPeta.size ? skorJumlah / skorPeta.size : null;
+
+    hostJalur.replaceChildren(gambarJalur(selesaiSet, selesaiTotal));
+
+    isiAngka('selesai', String(selesaiTotal));
+    isiAngka('selesai-ket', 'dari ' + total + ' bab selesai');
+    isiAngka('skor', rata == null ? '\u2014' : rata.toFixed(1));
+    isiAngka('badge', String(badge.length));
+
+    var lanjut = document.querySelector('[data-lanjut-belajar]');
+    if (lanjut) lanjut.href = cariLanjut(selesaiSet) || 'progres.html';
+
+    Array.prototype.forEach.call(document.querySelectorAll('[data-tamu]'), function (node) {
+      node.hidden = true;
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-masuk]'), function (node) {
+      node.hidden = false;
+    });
+  }
+
+  if (!adaSesiLokal()) return;
+
+  import('./supabase.js')
+    .then(function (modul) {
+      return modul.getSession().then(function (sesi) {
+        if (!sesi) return null;
+
+        function ambil(kueri) {
+          return kueri
+            .then(function (hasil) {
+              if (hasil.error) throw hasil.error;
+              return hasil.data || [];
+            })
+            .catch(function () {
+              return [];
+            });
+        }
+
+        return Promise.all([
+          ambil(modul.supabase.from('progress').select('bab_id').eq('selesai', true)),
+          ambil(
+            modul.supabase
+              .from('quiz_attempts')
+              .select('bab_id, skor, total')
+              .order('created_at', { ascending: true })
+          ),
+          ambil(modul.supabase.from('badges').select('kode'))
+        ]).then(function (hasil) {
+          tampilkan(sesi, hasil[0], hasil[1], hasil[2]);
+        });
+      });
+    })
+    .catch(function () {
+      /* Gagal cek sesi: biarkan tampilan tamu apa adanya. */
+    });
+})();
+
+
 

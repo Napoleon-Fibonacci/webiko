@@ -97,7 +97,7 @@
         Webiko
       </a>
 
-      <nav class="navbar__links" aria-label="Navigasi utama">
+      <nav class="navbar__links" aria-label="Navigasi utama" data-tamu>
         <a class="navbar__link" href="index.html" aria-current="page">Beranda</a>
         <a class="navbar__link" href="#kurikulum">Kurikulum</a>
         <a class="navbar__link" href="#cara-pakai">Cara pakai</a>
@@ -105,7 +105,18 @@
         <a class="navbar__link" href="progres.html">Progres</a>
       </nav>
 
+      <nav class="navbar__links" aria-label="Navigasi utama" data-masuk hidden>
+        <a class="navbar__link" href="index.html" aria-current="page">Beranda</a>
+        <a class="navbar__link" href="#kurikulum">Kurikulum</a>
+        <a class="navbar__link" href="progres.html">Progres</a>
+      </nav>
+
       <div class="navbar__tools">
+        <a class="navbar__user" href="akun.html" data-masuk hidden>
+          <span class="navbar__avatar" aria-hidden="true" data-akun-inisial>?</span>
+          <span class="navbar__user-nama" data-akun-nama>Akun</span>
+        </a>
+
         <button class="navbar__btn theme-toggle" type="button" data-tema-toggle data-pilihan="terang" aria-label="Tema: selalu terang. Ubah ke Gelap.">
           <svg class="theme-toggle__ikon theme-toggle__ikon--sistem" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="12" cy="12" r="9"></circle>
@@ -148,13 +159,20 @@
           </div>
 
           <div class="hero__extras">
-            <div class="actions actions--spaced">
+            <div class="actions actions--spaced" data-tamu>
               <a class="btn btn--primary" href="#kurikulum">Lihat kurikulum</a>
               <a class="btn btn--secondary" href="#cara-pakai">Cara pakai</a>
               <a class="btn btn--ghost" href="akun.html">Buat akun</a>
             </div>
-            <p class="hero__note text-small">
+            <div class="actions actions--spaced" data-masuk hidden>
+              <a class="btn btn--primary" href="#kurikulum">Lihat kurikulum</a>
+              <a class="btn btn--secondary" href="#kurikulum" data-lanjut-belajar>Lanjut belajar</a>
+            </div>
+            <p class="hero__note text-small" data-tamu>
               Gratis, berbahasa Indonesia, dan bisa dimulai tanpa akun.
+            </p>
+            <p class="hero__note text-small" data-masuk hidden>
+              Kamu sudah masuk. Progresmu tersimpan otomatis.
             </p>
 
             <!-- Hiasan: murni dekoratif, disembunyikan dari pembaca layar,
@@ -268,7 +286,7 @@
     </section>
 
     <!-- ============ CARA PAKAI ============ -->
-    <section class="section" id="cara-pakai" style="padding-top: 0;">
+    <section class="section" id="cara-pakai" style="padding-top: 0;" data-tamu>
       <div class="container">
         <div class="section__header" data-reveal>
           <div>
@@ -304,7 +322,7 @@
 
     <!-- ============ CONTOH PROGRES ============ -->
     <section class="section" id="progres" style="padding-top: 0;">
-      <div class="container">
+      <div class="container" data-tamu>
         <div class="section__header" data-reveal>
           <div>
             <h2>Kemajuanmu kelihatan</h2>
@@ -364,10 +382,39 @@
           </div>
         </div>
       </div>
+
+      <div class="container" data-masuk hidden>
+        <div class="section__header">
+          <div>
+            <h2>Ringkasan belajarmu</h2>
+          </div>
+          <p class="text-small text-muted">
+            Ringkas saja. Rincian per bab ada di <a href="progres.html">Progres</a>.
+          </p>
+        </div>
+
+        <div class="rel" data-ringkas-jalur aria-label="Progres per jalur"></div>
+
+        <div class="ringkas__bawah">
+          <div class="ringkas__kotak">
+            <span class="ringkas__nilai" data-ringkas="selesai">0</span>
+            <span class="ringkas__ket" data-ringkas="selesai-ket">dari 0 bab selesai</span>
+          </div>
+          <div class="ringkas__kotak">
+            <span class="ringkas__nilai" data-ringkas="skor">&mdash;</span>
+            <span class="ringkas__ket">rata-rata skor kuis</span>
+          </div>
+          <div class="ringkas__kotak">
+            <span class="ringkas__nilai" data-ringkas="badge">0</span>
+            <span class="ringkas__ket">badge terbuka</span>
+          </div>
+          <a class="btn btn--primary" href="progres.html">Buka Progres</a>
+        </div>
+      </div>
     </section>
 
     <!-- ============ AKUN ============ -->
-    <section class="section" id="daftar" style="padding-top: 0;">
+    <section class="section" id="daftar" style="padding-top: 0;" data-tamu>
       <div class="container">
         <div class="card card--tint" data-reveal>
           <h2>Progres, kuis, dan badge butuh akun</h2>
@@ -396,10 +443,16 @@
         </p>
       </div>
       <nav class="footer__nav" aria-label="Navigasi footer">
-        <ul class="footer__links">
+        <ul class="footer__links" data-tamu>
           <li><a href="#kurikulum">Kurikulum</a></li>
           <li><a href="#cara-pakai">Cara pakai</a></li>
           <li><a href="#progres">Progres</a></li>
+          <li><a href="akun.html">Akun</a></li>
+          <li><a href="privasi.html">Privasi</a></li>
+        </ul>
+        <ul class="footer__links" data-masuk hidden>
+          <li><a href="#kurikulum">Kurikulum</a></li>
+          <li><a href="progres.html">Progres</a></li>
           <li><a href="akun.html">Akun</a></li>
           <li><a href="privasi.html">Privasi</a></li>
         </ul>
