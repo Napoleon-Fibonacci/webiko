@@ -51,18 +51,22 @@ nilai `sistem`/`terang`/`gelap`; **bawaan terang**. Atribut `data-tema` di
 
 ## Alur kerja (wajib)
 
-1. **Mock dulu, jangan langsung sentuh repo.** Tulis CSS/HTML percobaan di
-   `C:\Users\Hype\AppData\Local\Temp\opencode`, suntik ke halaman asli (mis.
-   lewat Chrome DevTools Protocol), lalu **screenshot**.
-2. Tunjukkan opsi ke user dan **tunggu persetujuan** sebelum mengedit berkas
-   repo. Sertakan jalur berkas screenshot.
-3. Baru terapkan ke repo, lalu verifikasi:
+1. **Tanya dulu: mau di-mock atau langsung diterapkan?** Setelah paham tugas,
+   tanya singkat ke user. **Jangan otomatis mock, dan jangan mock terus-menerus
+   tanpa diminta.** Tiap tugas boleh beda.
+   - Pilih **mock**: tulis CSS/HTML percobaan di
+     `C:\Users\Hype\AppData\Local\Temp\opencode`, suntik ke halaman asli (mis.
+     lewat Chrome DevTools Protocol), lalu screenshot. Tunjukkan opsi + jalur
+     screenshot, dan **tunggu persetujuan** sebelum mengedit berkas repo.
+   - Pilih **langsung**: terapkan ke repo dulu, lalu verifikasi, lalu tunjukkan
+     hasilnya ke user.
+2. Setelah diterapkan (mock maupun langsung), verifikasi:
    - tinggi halaman + **nol overflow** di lebar 1440/1024/900/768/390/320;
    - tema **terang dan gelap**;
    - panel menu HP (dibuka) tetap benar;
    - CRLF utuh.
-4. Commit kecil per perubahan, lalu `git push` **hanya kalau diminta**.
-5. **Matikan semua proses uji begitu selesai** — server pratinjau, server mock,
+3. Commit kecil per perubahan, lalu `git push` **hanya kalau diminta**.
+4. **Matikan semua proses uji begitu selesai** — server pratinjau, server mock,
    dan Chrome headless. Jangan biarkan menunggu putaran berikutnya; proses
    menganggur menguras baterai. Cek sebelum lanjut:
    `netstat -ano | grep -E ":8000|:8001|:9222" | grep LISTENING` harus kosong.
@@ -72,7 +76,7 @@ nilai `sistem`/`terang`/`gelap`; **bawaan terang**. Atribut `data-tema` di
    `taskkill /PID <pid> /T /F`. Kalau PID tak terlacak, cari proses yang command
    line-nya memuat `--user-data-dir=<temp>` lalu bunuh itu saja. Server pratinjau
    juga: bunuh PID-nya, bukan semua `python.exe`.
-6. **Bersihkan folder temp begitu tugas selesai.** Hapus semua berkas uji di
+5. **Bersihkan folder temp begitu tugas selesai.** Hapus semua berkas uji di
    `C:\Users\Hype\AppData\Local\Temp\opencode`: screenshot, skrip harness
    (`.mjs`), stub Supabase, salinan config, dan profil Chrome sementara.
    Jangan biarkan sisa uji menumpuk untuk putaran berikutnya. Setelah bersih,
