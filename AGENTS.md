@@ -66,6 +66,12 @@ nilai `sistem`/`terang`/`gelap`; **bawaan terang**. Atribut `data-tema` di
    dan Chrome headless. Jangan biarkan menunggu putaran berikutnya; proses
    menganggur menguras baterai. Cek sebelum lanjut:
    `netstat -ano | grep -E ":8000|:8001|:9222" | grep LISTENING` harus kosong.
+   **Jangan pernah `taskkill /IM chrome.exe` / `killall chrome`** — itu membunuh
+   Chrome pribadi user juga. Matikan **hanya** proses uji: catat PID-nya saat
+   diluncurkan (mis. `--user-data-dir` khusus temp + simpan PID), lalu
+   `taskkill /PID <pid> /T /F`. Kalau PID tak terlacak, cari proses yang command
+   line-nya memuat `--user-data-dir=<temp>` lalu bunuh itu saja. Server pratinjau
+   juga: bunuh PID-nya, bukan semua `python.exe`.
 6. **Bersihkan folder temp begitu tugas selesai.** Hapus semua berkas uji di
    `C:\Users\Hype\AppData\Local\Temp\opencode`: screenshot, skrip harness
    (`.mjs`), stub Supabase, salinan config, dan profil Chrome sementara.
