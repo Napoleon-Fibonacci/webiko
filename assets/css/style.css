@@ -1136,6 +1136,28 @@ b {
   cursor: not-allowed;
 }
 
+/* Bab yang masih terkunci karena bab sebelumnya belum selesai. */
+.sidebar__link--kunci {
+  opacity: 0.55;
+}
+
+.sidebar__link--kunci:hover {
+  border-color: var(--color-border-muted);
+  transform: none;
+}
+
+.sidebar__gembok {
+  display: inline-flex;
+  flex: none;
+  margin-left: auto;
+}
+
+.sidebar__gembok svg {
+  display: block;
+  width: 15px;
+  height: 15px;
+}
+
 /* --- Footer ----------------------------------------------- */
 .footer {
   margin-top: var(--space-12);

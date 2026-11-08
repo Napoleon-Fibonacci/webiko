@@ -342,13 +342,39 @@ document.querySelectorAll('[data-kurikulum]').forEach(function (host) {
   sasaran.forEach(function (el) { pengamat.observe(el); });
 })();
 
-/* Gerbang materi: tamu tidak melihat isi sama sekali, hanya layar
-   penuh berisi ajakan daftar/masuk. Isi HTML tetap ada supaya halaman
-   masih bisa dirayapi mesin pencari; yang ditutup hanya tampilannya.
-   JS mati = tidak ada yang disembunyikan (sesuai aturan situs). */
+/* Gerbang dan kunci materi:
+   - Tamu: layar penuh berisi ajakan daftar/masuk (seperti semula).
+   - Pengguna masuk: bab dibuka berurutan HTML → CSS → JavaScript.
+     Bab ke-N baru terbuka setelah semua bab sebelumnya ditandai
+     selesai; bab yang masih terkunci menampilkan layar kunci + tautan
+     ke bab prasyarat, dan tautannya di sidebar digembok.
+   Isi HTML tetap ada supaya halaman masih bisa dirayapi mesin pencari;
+   yang ditutup hanya tampilannya. JS mati = tidak ada yang
+   disembunyikan (sesuai aturan situs). */
 (function () {
   if (window.location.pathname.indexOf('/materi/') === -1) return;
   if (!document.querySelector('article.materi')) return;
+
+  /* Akar situs + id bab diturunkan dari path, supaya 37 halaman materi
+     tidak perlu diubah satu per satu. */
+  var bagian = window.location.pathname.split('/').filter(Boolean);
+  var posisiMateri = bagian.indexOf('materi');
+  var jalurBab = posisiMateri !== -1 ? bagian[posisiMateri + 1] : '';
+  var slugBab =
+    posisiMateri !== -1 ? (bagian[posisiMateri + 2] || '').replace(/\.html$/, '') : '';
+  var idBab = jalurBab && slugBab ? jalurBab + '/' + slugBab : '';
+  var akarSitus =
+    posisiMateri <= 0 ? '/' : '/' + bagian.slice(0, posisiMateri).join('/') + '/';
+
+  /* Ikon gembok kartu gerbang/kunci. */
+  var IKON = [
+    '<svg class="gerbang-layar__ikon" viewBox="0 0 92 104" aria-hidden="true" focusable="false">',
+    '<rect class="gerbang-layar__badan" x="8" y="46" width="76" height="52" rx="10"></rect>',
+    '<path class="gerbang-layar__gagang" d="M26 46V34a20 20 0 0 1 40 0v12"></path>',
+    '<circle class="gerbang-layar__lubang" cx="46" cy="68" r="7"></circle>',
+    '<path class="gerbang-layar__kunci" d="M46 72v12"></path>',
+    '</svg>',
+  ].join('');
 
   function alamatKembali() {
     return window.location.pathname + window.location.search + window.location.hash;
@@ -363,7 +389,7 @@ document.querySelectorAll('[data-kurikulum]').forEach(function (host) {
     );
   }
 
-  function buatLayar() {
+  function buatLayar(kartuHtml) {
     var layar = document.createElement('div');
     layar.className = 'gerbang-layar';
     layar.setAttribute('role', 'dialog');
@@ -426,32 +452,16 @@ document.querySelectorAll('[data-kurikulum]').forEach(function (host) {
       '</svg>',
 
       '<div class="gerbang-layar__kartu">',
-      '<svg class="gerbang-layar__ikon" viewBox="0 0 92 104" aria-hidden="true" focusable="false">',
-      '<rect class="gerbang-layar__badan" x="8" y="46" width="76" height="52" rx="10"></rect>',
-      '<path class="gerbang-layar__gagang" d="M26 46V34a20 20 0 0 1 40 0v12"></path>',
-      '<circle class="gerbang-layar__lubang" cx="46" cy="68" r="7"></circle>',
-      '<path class="gerbang-layar__kunci" d="M46 72v12"></path>',
-      '</svg>',
-      '<p class="gerbang-layar__label">Materi khusus anggota</p>',
-      '<h2 class="gerbang-layar__judul" id="gerbang-judul">Daftar dulu untuk membuka materi</h2>',
-      '<p class="gerbang-layar__teks">Materi ini hanya bisa dibuka setelah kamu punya akun. Gratis, cukup username dan password. Setelah masuk, kamu langsung kembali ke halaman ini.</p>',
-      '<div class="gerbang-layar__aksi">',
-      '<a class="btn btn--primary" data-gerbang-daftar href="#">Daftar gratis</a>',
-      '<a class="btn btn--ghost" data-gerbang-masuk href="#">Sudah punya akun</a>',
-      '</div>',
-      '<p class="gerbang-layar__kecil"><a class="btn btn--ghost gerbang-layar__kembali" href="/">Kembali ke beranda</a></p>',
+      kartuHtml,
       '</div>',
     ].join('');
 
-    layar.querySelector('[data-gerbang-daftar]').href = tautanAkun('daftar');
-    layar.querySelector('[data-gerbang-masuk]').href = tautanAkun('masuk');
     return layar;
   }
 
-  function kunci() {
+  function pasang(layar) {
     if (document.querySelector('.gerbang-layar')) return;
 
-    var layar = buatLayar();
     document.body.appendChild(layar);
     document.documentElement.classList.add('gerbang-aktif');
 
@@ -461,6 +471,49 @@ document.querySelectorAll('[data-kurikulum]').forEach(function (host) {
     });
 
     layar.focus();
+  }
+
+  function kunciTamu() {
+    var layar = buatLayar(
+      IKON +
+        '<p class="gerbang-layar__label">Materi khusus anggota</p>' +
+        '<h2 class="gerbang-layar__judul" id="gerbang-judul">Daftar dulu untuk membuka materi</h2>' +
+        '<p class="gerbang-layar__teks">Materi ini hanya bisa dibuka setelah kamu punya akun. Gratis, cukup username dan password. Setelah masuk, kamu langsung kembali ke halaman ini.</p>' +
+        '<div class="gerbang-layar__aksi">' +
+        '<a class="btn btn--primary" data-gerbang-daftar href="#">Daftar gratis</a>' +
+        '<a class="btn btn--ghost" data-gerbang-masuk href="#">Sudah punya akun</a>' +
+        '</div>' +
+        '<p class="gerbang-layar__kecil"><a class="btn btn--ghost gerbang-layar__kembali" href="/">Kembali ke beranda</a></p>'
+    );
+    layar.querySelector('[data-gerbang-daftar]').href = tautanAkun('daftar');
+    layar.querySelector('[data-gerbang-masuk]').href = tautanAkun('masuk');
+    pasang(layar);
+  }
+
+  function kunciBab(prasyarat) {
+    var tautan = akarSitus + 'materi/' + prasyarat.jalur + '/' + prasyarat.slug + '.html';
+    var layar = buatLayar(
+      IKON +
+        '<p class="gerbang-layar__label">Bab terkunci</p>' +
+        '<h2 class="gerbang-layar__judul" id="gerbang-judul">Selesaikan bab sebelumnya dulu</h2>' +
+        '<p class="gerbang-layar__teks">Kurikulum Webiko berurutan: HTML dulu, lalu CSS, lalu JavaScript. Selesaikan \u201c' +
+        prasyarat.judul +
+        '\u201d untuk membuka bab ini.</p>' +
+        '<div class="gerbang-layar__aksi">' +
+        '<a class="btn btn--primary" href="' +
+        tautan +
+        '">Buka \u201c' +
+        prasyarat.judul +
+        '\u201d</a>' +
+        '<a class="btn btn--ghost" href="' +
+        akarSitus +
+        'progres.html">Progres saya</a>' +
+        '</div>' +
+        '<p class="gerbang-layar__kecil"><a class="btn btn--ghost gerbang-layar__kembali" href="' +
+        akarSitus +
+        'index.html#kurikulum">Lihat kurikulum</a></p>'
+    );
+    pasang(layar);
   }
 
   function adaSesiLokal() {
@@ -478,20 +531,141 @@ document.querySelectorAll('[data-kurikulum]').forEach(function (host) {
     return false;
   }
 
+  /* data/kurikulum.js tidak dimuat di halaman materi, jadi disuntik
+     dari sini (tidak perlu mengubah 37 berkas materi). */
+  function muatKurikulum() {
+    return new Promise(function (resolve) {
+      if (typeof KURIKULUM !== 'undefined' && Array.isArray(KURIKULUM)) {
+        resolve(KURIKULUM);
+        return;
+      }
+      var skrip = document.createElement('script');
+      skrip.src = akarSitus + 'data/kurikulum.js';
+      skrip.onload = function () {
+        resolve(typeof KURIKULUM !== 'undefined' && Array.isArray(KURIKULUM) ? KURIKULUM : null);
+      };
+      skrip.onerror = function () {
+        resolve(null);
+      };
+      document.head.appendChild(skrip);
+    });
+  }
+
+  /* Urutan global: semua bab HTML, lalu CSS, lalu JavaScript. */
+  function urutan(kurikulum) {
+    var daftar = [];
+    kurikulum.forEach(function (jalur) {
+      (jalur.bab || []).forEach(function (bab) {
+        daftar.push({
+          id: jalur.slug + '/' + bab.slug,
+          jalur: jalur.slug,
+          slug: bab.slug,
+          judul: bab.judul,
+        });
+      });
+    });
+    return daftar;
+  }
+
+  function cariIndeks(daftar, id) {
+    for (var i = 0; i < daftar.length; i++) {
+      if (daftar[i].id === id) return i;
+    }
+    return -1;
+  }
+
+  /* Bab ke-indeks terkunci selama masih ada bab sebelumnya yang belum
+     selesai. Yang dikembalikan: bab prasyarat paling awal yang belum. */
+  function prasyaratBelum(daftar, selesai, indeks) {
+    for (var i = 0; i < indeks; i++) {
+      if (!selesai.has(daftar[i].id)) return daftar[i];
+    }
+    return null;
+  }
+
+  /* Gembok tautan sidebar yang masih terkunci. */
+  function tandaiSidebar(daftar, selesai) {
+    Array.prototype.forEach.call(
+      document.querySelectorAll('.sidebar__link'),
+      function (link) {
+        if (link.classList.contains('sidebar__progres')) return;
+        var href = link.getAttribute('href') || '';
+        var nama = href.split('/').pop().replace(/\.html.*$/, '');
+        if (!nama) return;
+
+        var indeks = cariIndeks(daftar, jalurBab + '/' + nama);
+        if (indeks === -1) return;
+
+        var prasyarat = prasyaratBelum(daftar, selesai, indeks);
+        if (!prasyarat) return;
+
+        link.setAttribute('aria-disabled', 'true');
+        link.setAttribute('title', 'Selesaikan \u201c' + prasyarat.judul + '\u201d dulu');
+        link.classList.add('sidebar__link--kunci');
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+        });
+
+        if (!link.querySelector('.sidebar__gembok')) {
+          var gembok = document.createElement('span');
+          gembok.className = 'sidebar__gembok';
+          gembok.setAttribute('aria-hidden', 'true');
+          gembok.innerHTML =
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="10" rx="2"></rect><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"></path></svg>';
+          link.appendChild(gembok);
+        }
+      }
+    );
+  }
+
   if (!adaSesiLokal()) {
-    kunci();
+    kunciTamu();
     return;
   }
 
   import('./supabase.js')
     .then(function (modul) {
-      return modul.getSession();
+      return modul.getSession().then(function (sesi) {
+        return { modul: modul, sesi: sesi };
+      });
     })
-    .then(function (sesi) {
-      if (!sesi) kunci();
+    .then(function (hasil) {
+      if (!hasil.sesi) {
+        kunciTamu();
+        return;
+      }
+
+      return muatKurikulum().then(function (kurikulum) {
+        /* Kurikulum gagal dimuat: biarkan terbuka (fail-open). */
+        if (!kurikulum || !idBab) return;
+
+        return hasil.modul.supabase
+          .from('progress')
+          .select('bab_id')
+          .eq('selesai', true)
+          .then(function (progres) {
+            /* Gagal baca progres: biarkan terbuka (fail-open). */
+            if (!progres || progres.error) return;
+
+            var daftar = urutan(kurikulum);
+            var indeks = cariIndeks(daftar, idBab);
+            if (indeks === -1) return;
+
+            var selesai = new Set();
+            (progres.data || []).forEach(function (baris) {
+              selesai.add(baris.bab_id);
+            });
+
+            tandaiSidebar(daftar, selesai);
+
+            var prasyarat = prasyaratBelum(daftar, selesai, indeks);
+            if (prasyarat) kunciBab(prasyarat);
+          })
+          .catch(function () {});
+      });
     })
     .catch(function () {
-      kunci();
+      kunciTamu();
     });
 })();
 
