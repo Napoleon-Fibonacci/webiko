@@ -983,7 +983,106 @@ document.querySelectorAll('[data-kurikulum]').forEach(function (host) {
     return fragmen;
   }
 
-  function tampilkan(sesi, progres, kuis, badge) {
+  /* ----- Gembok kartu kurikulum (beranda) -----
+     Kartu jalur digembok kalau bab pertamanya masih terkunci, yaitu
+     masih ada bab sebelumnya (urutan HTML lalu CSS lalu JavaScript)
+     yang belum selesai. Jalur pertama selalu terbuka. */
+
+  function urutanGlobal() {
+    var daftar = [];
+    daftarKurikulum.forEach(function (jalur) {
+      (jalur.bab || []).forEach(function (bab) {
+        daftar.push({ id: babId(jalur.slug, bab.slug), judul: bab.judul });
+      });
+    });
+    return daftar;
+  }
+
+  function cariIndeks(daftar, id) {
+    for (var i = 0; i < daftar.length; i++) {
+      if (daftar[i].id === id) return i;
+    }
+    return -1;
+  }
+
+  function prasyaratBelum(daftar, selesaiSet, indeks) {
+    for (var i = 0; i < indeks; i++) {
+      if (!selesaiSet.has(daftar[i].id)) return daftar[i];
+    }
+    return null;
+  }
+
+  function gembokSvg() {
+    var ns = 'http://www.w3.org/2000/svg';
+    var svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', 'currentColor');
+    svg.setAttribute('stroke-width', '2.2');
+    svg.setAttribute('stroke-linecap', 'round');
+    svg.setAttribute('stroke-linejoin', 'round');
+    svg.setAttribute('aria-hidden', 'true');
+    var badan = document.createElementNS(ns, 'rect');
+    badan.setAttribute('x', '4.5');
+    badan.setAttribute('y', '10.5');
+    badan.setAttribute('width', '15');
+    badan.setAttribute('height', '10');
+    badan.setAttribute('rx', '2');
+    var gagang = document.createElementNS(ns, 'path');
+    gagang.setAttribute('d', 'M8 10.5V7a4 4 0 0 1 8 0v3.5');
+    svg.append(badan, gagang);
+    return svg;
+  }
+
+  function kunciKartu(kartu, prasyarat) {
+    if (kartu.classList.contains('card--kunci')) return;
+    kartu.classList.add('card--kunci');
+    kartu.setAttribute('aria-disabled', 'true');
+    kartu.setAttribute(
+      'title',
+      'Selesaikan \u201c' + prasyarat.judul + '\u201d dulu'
+    );
+
+    var meta = kartu.querySelector('.card__meta');
+    if (meta) {
+      var badge = el('span', 'badge badge--pink');
+      var ikon = el('span', 'card__gembok');
+      ikon.appendChild(gembokSvg());
+      badge.appendChild(ikon);
+      badge.appendChild(el('span', null, 'Terkunci'));
+      meta.appendChild(badge);
+    }
+
+    kartu.addEventListener('click', function (e) {
+      e.preventDefault();
+    });
+  }
+
+  function tandaiKunciJalur(selesaiSet) {
+    var daftar = urutanGlobal();
+    Array.prototype.forEach.call(
+      document.querySelectorAll('[data-kurikulum] a.card--tautan[data-jalur]'),
+      function (kartu) {
+        var slug = kartu.getAttribute('data-jalur');
+        var jalur = null;
+        for (var i = 0; i < daftarKurikulum.length; i++) {
+          if (daftarKurikulum[i].slug === slug) {
+            jalur = daftarKurikulum[i];
+            break;
+          }
+        }
+        if (!jalur || !jalur.bab || !jalur.bab.length) return;
+
+        var indeks = cariIndeks(daftar, babId(jalur.slug, jalur.bab[0].slug));
+        if (indeks === -1) return;
+
+        var prasyarat = prasyaratBelum(daftar, selesaiSet, indeks);
+        if (prasyarat) kunciKartu(kartu, prasyarat);
+      }
+    );
+  }
+
+  function tampilkan(sesi, progres, kuis, badge, progresGagal) {
     var meta = sesi.user.user_metadata || {};
     var nama =
       (meta.username && String(meta.username)) ||
@@ -1031,6 +1130,10 @@ document.querySelectorAll('[data-kurikulum]').forEach(function (host) {
     var lanjut = document.querySelector('[data-lanjut-belajar]');
     if (lanjut) lanjut.href = cariLanjut(selesaiSet) || 'progres.html';
 
+    /* Gembok kartu jalur yang bab pertamanya masih terkunci. Kalau
+       progres gagal dibaca, kartu dibiarkan terbuka (fail-open). */
+    if (!progresGagal) tandaiKunciJalur(selesaiSet);
+
     Array.prototype.forEach.call(document.querySelectorAll('[data-tamu]'), function (node) {
       node.hidden = true;
     });
@@ -1050,14 +1153,17 @@ document.querySelectorAll('[data-kurikulum]').forEach(function (host) {
           return null;
         }
 
+        /* Hasil tiap kueri dibungkus { data, gagal } supaya kegagalan
+           baca progres bisa dibedakan dari "belum ada progres": kalau
+           gagal, gembok kartu kurikulum tidak dipasang (fail-open). */
         function ambil(kueri) {
           return kueri
             .then(function (hasil) {
               if (hasil.error) throw hasil.error;
-              return hasil.data || [];
+              return { data: hasil.data || [], gagal: false };
             })
             .catch(function () {
-              return [];
+              return { data: [], gagal: true };
             });
         }
 
@@ -1071,7 +1177,13 @@ document.querySelectorAll('[data-kurikulum]').forEach(function (host) {
           ),
           ambil(modul.supabase.from('badges').select('kode'))
         ]).then(function (hasil) {
-          tampilkan(sesi, hasil[0], hasil[1], hasil[2]);
+          tampilkan(
+            sesi,
+            hasil[0].data,
+            hasil[1].data,
+            hasil[2].data,
+            hasil[0].gagal
+          );
         });
       });
     })
