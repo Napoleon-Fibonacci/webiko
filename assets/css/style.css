@@ -358,6 +358,10 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-behavior: smooth;
+  /* Ruang scrollbar selalu dipesan, jadi saat halaman memanjang dan
+     scrollbar muncul (mis. progres selesai memuat) lebar viewport
+     tidak menyusut dan navbar/konten tidak bergeser. */
+  scrollbar-gutter: stable;
 }
 
 body {
